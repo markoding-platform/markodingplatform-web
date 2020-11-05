@@ -1,0 +1,22 @@
+@use "styles/colors";
+
+.text {
+	font-size: 16px;
+	color: colors.$secondary;
+}
+
+.time {
+	font-size: 14px;
+	color: colors.$text-3rd;
+	margin-bottom: 20px;
+}
+
+.iconLike {
+	color: colors.$red;
+	margin-right: 12px;
+}
+
+.iconComment {
+	color: colors.$accent;
+	margin-right: 12px;
+}

@@ -1,7 +1,7 @@
 @use "styles/colors";
 
 .title {
-	height: 24px;
+	height: 72px;
 	overflow: hidden;
 }
 
@@ -13,8 +13,7 @@
 	color: colors.$secondary;
 }
 
-.icon {
+.date {
 	font-size: 16px;
-	color: colors.$dark;
-	margin-right: 14px;
+	color: colors.$text-3rd;
 }
