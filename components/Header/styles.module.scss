@@ -1,0 +1,21 @@
+@use "styles/colors";
+
+.innerHeader {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+.headerWrapper {
+	width: 100%;
+	padding: 20px;
+	background-color: colors.$primary;
+	height: 84px;
+}
+.rightControls {
+	display: flex;
+}
+
+.logo {
+	width: 242px;
+	height: 40px;
+}
