@@ -1,0 +1,21 @@
+@use "styles/colors";
+
+.card {
+	border-radius: 6px;
+}
+
+.title {
+	height: 48px;
+	overflow: hidden;
+}
+
+.text {
+	font-size: 14px;
+	color: colors.$text-3rd;
+	margin-bottom: 5px;
+}
+
+.icon {
+	color: colors.$text-3rd;
+	margin-right: 14px;
+}

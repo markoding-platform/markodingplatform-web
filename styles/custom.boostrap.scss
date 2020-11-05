@@ -1,6 +1,14 @@
+@use "colors";
+
 $theme-colors: (
-    "info": tomato,
-    "danger": teal
+	primary: colors.$primary,
+	secondary: colors.$secondary,
+	success: colors.$green,
+	info: colors.$cyan,
+	warning: colors.$yellow,
+	danger: colors.$red,
+	light: colors.$gray-100,
+	dark: colors.$dark
 );
 
 @import "~bootstrap/scss/bootstrap";
