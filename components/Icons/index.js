@@ -7,7 +7,7 @@ const Icon = ({ src, size, ...props }) => {
   <i
     className={styles.iconWrapper}
     style={{
-				'background-image': `url(${src})`,
+				backgroundImage: `url(${src})`,
 				width: `${size > 0 ? size : '40'}px`,
 				height: `${size > 0 ? size : '40'}px`,
 			}}
