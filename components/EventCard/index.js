@@ -1,15 +1,22 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card'
 import Link from 'next/link'
+import Image from 'next/image'
 import { BsCalendarFill, BsClockFill } from "react-icons/bs";
 import styles from './styles.module.scss'
 
 const EventCard = props => {
-	const {imageUrl, title, date, time, link} = props;
+	const { imageUrl, title, date, time, link} = props;
 	return (
   <Link href={link}>
     <Card className="rounded shadow">
-      <Card.Img variant="top" src={imageUrl} />
+      <Image
+        src={imageUrl}
+        alt={title}
+        width="auto"
+        height={200}
+      />
       <Card.Body>
         <Card.Title className={styles.title}>{title}</Card.Title>
         <Card.Text className={styles.text}>

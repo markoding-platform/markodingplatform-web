@@ -1,0 +1,74 @@
+@use '../../styles/colors';
+@use '../../styles/breakpoint';
+
+.embla__button {
+	background-color: transparent;
+	border: 0;
+	width: 3rem;
+	height: 3rem;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+	outline: 0;
+	&:active, &:hover, &:focus {
+		outline: 0;
+	}
+
+	@media (max-width: breakpoint.$lg) {
+		display: none;
+	}
+}
+
+.embla__button:not(:disabled) {
+	cursor: pointer;
+	fill: colors.$main;
+}
+
+.embla__button:disabled {
+	fill: #e0e0e0;
+}
+
+.embla__button__icon {
+	width: 2rem;
+	height: 2rem;
+	color: colors.$main;
+}
+
+.embla__dot {
+	background-color: transparent;
+	cursor: pointer;
+	position: relative;
+	padding: 0;
+	margin-right: 0.5rem;
+	margin-left: 0.5rem;
+	border: 0;
+	display: flex;
+	align-items: center;
+	outline: 0;
+	&:active, &:hover, &:focus {
+		outline: 0;
+	}
+}
+
+.embla__dot:after {
+	background-color: #e0e0e0;
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 50%;
+	content: "";
+	outline: 0;
+	&:active, &:hover, &:focus {
+		outline: 0;
+	}
+}
+
+.embla__dot {
+	&.isSelected:after {
+		background-color: colors.$accent;
+		opacity: 1;
+		outline: 0;
+		&:active, &:hover, &:focus {
+			outline: 0;
+		}
+	}
+}
