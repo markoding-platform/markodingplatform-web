@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { BsChevronDown } from 'react-icons/bs';
 import navItems from './navItems';
-import { rotateDown, rotate } from './styles.module.scss';
+import { rotateDown, rotate, bgPrimary } from './styles.module.scss';
 
 const NavMenu = () => {
   const [isShowNavTree, setShowNavTree] = useState(false);
@@ -10,9 +10,9 @@ const NavMenu = () => {
     setShowNavTree((prevState) => !prevState);
   };
   return (
-    <ul className="list-group list-group-flush bg-primary">
+    <ul className={`list-group list-group-flush ${bgPrimary}`}>
       {navItems.map((navItem) => (
-        <li key={navItem.id} className="list-group-item bg-primary">
+        <li key={navItem.id} className={`list-group-item ${bgPrimary}`}>
           {navItem?.children ? (
             <div
               role="presentation"
@@ -41,11 +41,11 @@ const NavMenu = () => {
           )}
 
           {navItem?.children && isShowNavTree && (
-            <ul className="list-group list-group-flush bg-primary">
+            <ul className="list-group list-group-flush">
               {navItem.children.map((item) => (
                 <li
                   key={item.id}
-                  className="list-group-item border-0 bg-primary justify-content-between align-items-center"
+                  className={`${bgPrimary} list-group-item border-0 justify-content-between align-items-center`}
                 >
                   <Link href={item.link}>
                     <a href={item.link}>{item.text}</a>
