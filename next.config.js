@@ -3,6 +3,10 @@ const withImages = require('next-images');
 
 module.exports = withPWA({
 	pwa: {
+		dest: 'public'
+	},
+	images: {
+		domains: ['articles.kalcare.com'],
 		dest: 'public',
 	},
 });

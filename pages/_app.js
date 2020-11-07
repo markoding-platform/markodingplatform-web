@@ -1,4 +1,3 @@
-import '../styles/custom.boostrap.scss'
 import '../styles/globals.scss'
 
 function MyApp({ Component, pageProps }) {

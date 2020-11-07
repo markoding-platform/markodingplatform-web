@@ -1,4 +1,5 @@
 @use "colors";
+@import "custom.boostrap";
 
 html,
 body {
@@ -20,4 +21,34 @@ a {
 
 .text-3rd {
 	color: colors.$text-3rd;
+}
+
+.nav-bottom {
+	.nav-item {
+		.nav-link {
+			color: #DFE4EA;
+			&.active {
+				color: colors.$blue;
+			}
+			&:hover {
+				color: colors.$blue;
+			}
+		}
+	}
+}
+
+.banner-slide {
+	position: relative;
+	min-width: 95%;
+	padding: 0.5rem;
+}
+
+.banner-slide-inner {
+	position: relative;
+	overflow: hidden;
+	border-radius: 0.5rem;
+	height: 270px;
+	@include media-breakpoint-down(lg) {
+		height: 200px;
+	}
 }
