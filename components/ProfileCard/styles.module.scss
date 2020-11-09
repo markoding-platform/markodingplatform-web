@@ -1,0 +1,25 @@
+@use "styles/colors";
+
+@mixin flex__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.topTitle {
+  @include flex__center;
+  width: 100%;
+  background-color: colors.$blue;
+}
+
+.content {
+  @include flex__center;
+  flex-direction: column;
+  margin-top: 16px;
+}
+
+.contentTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 16px 0 0 0;
+}
