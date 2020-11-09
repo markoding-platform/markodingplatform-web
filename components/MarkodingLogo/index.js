@@ -1,6 +1,6 @@
 import React from 'react';
 
-import markodingLogo from '../../assets/markoding-logo-min.png';
+import markodingLogo from 'public/assets/markoding-logo-min.png';
 import { logo } from './styles.module.scss';
 
 const MarkodingLogo = () => (

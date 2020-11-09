@@ -4,9 +4,9 @@ import { BsList } from 'react-icons/bs';
 import Icon from 'components/Icons';
 import MarkodingLogo from 'components/MarkodingLogo';
 import Drawer from 'components/Drawer';
-import skilvulLogo from 'assets/skilvulLogo.svg';
+import skilvulLogo from 'svgs/skilvulLogo.svg';
 import NavMenu from 'components/NavMenu';
-import notif from 'assets/notif.svg';
+import notif from 'svgs/notif.svg';
 
 import { innerHeader, headerWrapper, burgerBtn } from './styles.module.scss';
 

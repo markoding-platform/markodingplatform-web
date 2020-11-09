@@ -1,22 +1,22 @@
 @use "styles/colors";
 
 .innerHeader {
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 .headerWrapper {
-	width: 100%;
-	padding: 20px;
-	background-color: colors.$primary;
-	height: 84px;
+  width: 100%;
+  padding: 20px;
+  background-color: colors.$main;
+  height: 84px;
 }
 
 .logo {
-	width: 242px;
-	height: 40px;
+  width: 242px;
+  height: 40px;
 }
 .burgerBtn {
-	width: 56px;
-	height: 40px;
+  width: 56px;
+  height: 40px;
 }

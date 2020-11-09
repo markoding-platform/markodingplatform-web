@@ -1,5 +1,5 @@
-import Layout from '../components/Layout';
-import IdeaCard from '../components/IdeaCard';
+import Layout from 'components/Layout';
+import IdeaCard from 'components/IdeaCard';
 
 export default function Home() {
   return (
