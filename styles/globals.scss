@@ -37,18 +37,21 @@ a {
 	}
 }
 
-.banner-slide {
-	position: relative;
-	min-width: 95%;
-	padding: 0.5rem;
+.container-fluid {
+	max-width: 1400px;
+	padding-left: 0;
+	padding-right: 0;
 }
 
-.banner-slide-inner {
-	position: relative;
-	overflow: hidden;
-	border-radius: 0.5rem;
-	height: 270px;
-	@include media-breakpoint-down(lg) {
-		height: 200px;
+.desktop-left-section {
+	background-color: colors.$primary;
+	width: 100%;
+	@include media-breakpoint-up(lg) {
+		max-width: 290px;
 	}
+}
+
+.desktop-right-section {
+	padding-top: 20px;
+	padding-bottom: 20px;
 }

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
+import React from 'react';
 import Head from 'next/head';
 import Container from 'react-bootstrap/Container';
-
 import Header from '../Header';
 
 const Layout = ({ children }) => {
@@ -38,14 +38,22 @@ const Layout = ({ children }) => {
       <meta name="theme-color" content="#317EFB" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Header />
-    <Container fluid>{children}</Container>
+    <Container fluid>
+      <div className="d-block d-lg-flex justify-content-between">
+        <div className="desktop-left-section">
+          <Header />
+        </div>
+        <div className="flex-grow-1 desktop-right-section">
+          {children}
+        </div>
+      </div>
+    </Container>
   </>
 	);
 };
 
 Layout.propTypes = {
-	children: PropTypes.array.isRequired
+	children: PropTypes.object.isRequired
 };
 
 export default Layout;

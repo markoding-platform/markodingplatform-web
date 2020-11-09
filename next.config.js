@@ -1,18 +1,12 @@
 const withPWA = require('next-pwa');
 const withImages = require('next-images');
 
-module.exports = withPWA({
+module.exports = withPWA(withImages({
 	pwa: {
 		dest: 'public'
 	},
 	images: {
-		domains: ['articles.kalcare.com'],
+		domains: ['image.freepik.com'],
 		dest: 'public',
-	},
-});
-
-module.exports = withImages({
-	webpack(config) {
-		return config;
-	},
-});
+	}
+}));
