@@ -4,10 +4,10 @@ import { BsList } from 'react-icons/bs';
 import Icon from 'components/Icons';
 import MarkodingLogo from 'components/MarkodingLogo';
 import Drawer from 'components/Drawer';
-import skilvulLogo from 'assets/skilvulLogo.svg';
+import skilvulLogo from 'svgs/skilvulLogo.svg';
 import NavMenu from 'components/NavMenu';
-import notif from 'assets/notif.svg';
-import notifFill from 'assets/notif-fill.svg';
+import notifFill from 'svgs/notif-fill.svg';
+import notif from 'svgs/notif.svg';
 
 import { innerHeader, headerWrapper, burgerBtn, desktopLogo, desktopSkilvulIcon, desktopNotifIcon } from './styles.module.scss';
 

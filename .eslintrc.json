@@ -41,14 +41,12 @@
       "node": {
         "paths": ["."]
       },
-      "alias": [
-        ["components", "./components/*"],
-        ["assets", "./assets/*"]
-      ]
+      "alias": [["components", "./components/*"]]
     }
   },
   "plugins": ["react", "react-hooks", "unused-imports"],
   "rules": {
+    "no-trailing-spaces": "error",
     "react/prop-types": 1,
     "react/forbid-prop-types": 1,
     "react/no-unused-prop-types": 1,
