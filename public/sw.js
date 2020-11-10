@@ -15,11 +15,11 @@
 if (!self.define) {
   const singleRequire = name => {
     if (name !== 'require') {
-      name += '.js';
+      name = name + '.js';
     }
     let promise = Promise.resolve();
     if (!registry[name]) {
-
+      
         promise = new Promise(async resolve => {
           if ("document" in self) {
             const script = document.createElement("script");
@@ -31,7 +31,7 @@ if (!self.define) {
             resolve();
           }
         });
-
+      
     }
     return promise.then(() => {
       if (!registry[name]) {
@@ -45,7 +45,7 @@ if (!self.define) {
     Promise.all(names.map(singleRequire))
       .then(modules => resolve(modules.length === 1 ? modules[0] : modules));
   };
-
+  
   const registry = {
     require: Promise.resolve(require)
   };
@@ -56,7 +56,7 @@ if (!self.define) {
       return;
     }
     registry[moduleName] = Promise.resolve().then(() => {
-      const exports = {};
+      let exports = {};
       const module = {
         uri: location.origin + moduleName.slice(1)
       };
@@ -81,7 +81,7 @@ if (!self.define) {
     });
   };
 }
-define("./sw.js",['./workbox-f88dbe3b'], function (workbox) {
+define("./sw.js",['./workbox-f88dbe3b'], function (workbox) { 'use strict';
 
   /**
   * Welcome to your Workbox-powered service worker!
@@ -104,4 +104,4 @@ define("./sw.js",['./workbox-f88dbe3b'], function (workbox) {
   }), 'GET');
 
 });
-// # sourceMappingURL=sw.js.map
+//# sourceMappingURL=sw.js.map

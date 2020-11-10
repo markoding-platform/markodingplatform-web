@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 import useInterval from '../../hooks/useInterval';
 
 const EmblaCarousel = ({ children, withButton, slideToScroll, autoPlay, delay }) => {
-	const [viewportRef, embla] = useEmblaCarousel({ slidesToScroll: slideToScroll });
+	const [viewportRef, embla] = useEmblaCarousel({ slidesToScroll: slideToScroll, align: 0.02 });
 	const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
 	const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
 	const [selectedIndex, setSelectedIndex] = useState(0);
