@@ -53,6 +53,10 @@ a {
 
 .desktop-right-section {
 	position: relative;
+	padding-bottom: 50px;
+	@include media-breakpoint-up(lg) {
+		padding-bottom: 0;
+	}
 
 	.inner-section {
 		position: relative;

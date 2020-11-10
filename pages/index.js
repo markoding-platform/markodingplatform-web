@@ -15,7 +15,7 @@ const Home = ({ banners, dataDummy }) => {
 	const [alertShow, setAlertShow] = useState(true);
 
   return (
-    <Layout>
+    <Layout activeMenu="/">
       <div className="home">
         <div className="pb-4">
           <PointBadgeWrapper />
