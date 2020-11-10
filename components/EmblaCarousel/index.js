@@ -3,8 +3,9 @@ import React, { useEffect, useCallback, useState } from "react";
 import { useEmblaCarousel } from "embla-carousel/react";
 import { DotButton, PrevButton, NextButton } from "../EmblaCarouselButton";
 import styles from './styles.module.scss';
+import useInterval from '../../hooks/useInterval';
 
-const EmblaCarousel = ({ children, withButton, slideToScroll }) => {
+const EmblaCarousel = ({ children, withButton, slideToScroll, autoPlay, delay }) => {
 	const [viewportRef, embla] = useEmblaCarousel({ slidesToScroll: slideToScroll });
 	const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
 	const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
@@ -16,6 +17,17 @@ const EmblaCarousel = ({ children, withButton, slideToScroll }) => {
 	const scrollTo = useCallback((index) => embla && embla.scrollTo(index), [
 		embla
 	]);
+
+	useInterval(
+		() => {
+			if (selectedIndex === scrollSnaps.length - 1) {
+				scrollTo(0);
+			} else {
+				scrollNext();
+			}
+		},
+		autoPlay ? delay : null
+	);
 
 	const onSelect = useCallback(() => {
 		if (!embla) return;
@@ -60,11 +72,15 @@ const EmblaCarousel = ({ children, withButton, slideToScroll }) => {
 
 EmblaCarousel.defaultProps = {
 	withButton: false,
+	autoPlay: false,
+	delay: 8000,
 	slideToScroll: 1
 };
 
 EmblaCarousel.propTypes = {
 	withButton: PropTypes.bool,
+	autoPlay: PropTypes.bool,
+	delay: PropTypes.number,
 	slideToScroll: PropTypes.number,
 	children: PropTypes.array.isRequired
 };

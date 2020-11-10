@@ -1,10 +1,18 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-
 import markodingLogo from 'public/assets/markoding-logo-min.png';
-import { logo } from './styles.module.scss';
+import { logo, smallLogo } from './styles.module.scss';
 
-const MarkodingLogo = () => (
-  <img src={markodingLogo} className={logo} alt="markoding logo" />
+const MarkodingLogo = ({ isSmall }) => (
+  <img src={markodingLogo} className={isSmall ? smallLogo : logo} alt="markoding logo" />
 );
+
+MarkodingLogo.defaultProps = {
+	isSmall: false
+};
+
+MarkodingLogo.propTypes = {
+	isSmall: PropTypes.bool
+};
 
 export default MarkodingLogo;
