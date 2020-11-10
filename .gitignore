@@ -33,7 +33,7 @@ yarn-error.log*
 # vercel
 .vercel
 
-.idea
+/.idea
 
-public/sw.js
-public/sw.js.map
+/public/sw.js
+/public/sw.js.map

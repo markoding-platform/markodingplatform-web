@@ -1,0 +1,33 @@
+@use "styles/colors";
+@use "styles/breakpoint";
+
+.cardSection {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	margin-left: -10px;
+	margin-right: -10px;
+
+	>div {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+}
+
+.link {
+	color: colors.$blue !important;
+	&:hover {
+		color: colors.$blue;
+		text-decoration: underline;
+	}
+}
+
+.bannerSlide {
+	position: relative;
+	min-width: 33.33%;
+	padding-right: 2%;
+
+	@media (max-width: breakpoint.$lg) {
+		min-width: 47.5%;
+	}
+}

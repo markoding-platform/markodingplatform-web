@@ -52,6 +52,39 @@ a {
 }
 
 .desktop-right-section {
-	padding-top: 20px;
-	padding-bottom: 20px;
+	position: relative;
+	padding-bottom: 50px;
+	@include media-breakpoint-up(lg) {
+		padding-bottom: 0;
+	}
+
+	.inner-section {
+		position: relative;
+		padding-left: 20px;
+		padding-right: 20px;
+		width: 100%;
+		@include media-breakpoint-up(lg) {
+			width: 90%;
+			padding-right: 0;
+		}
+	}
+
+	.inner-full-section {
+		position: relative;
+		width: 100%;
+		padding-left: 20px;
+	}
+
+	.inner-full-section-card {
+		position: relative;
+		width: 100%;
+		padding-left: 20px;
+		@include media-breakpoint-up(lg) {
+			width: 90%;
+		}
+	}
+}
+
+.home {
+	background-color: colors.$bg;
 }

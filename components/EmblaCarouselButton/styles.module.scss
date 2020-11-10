@@ -19,19 +19,20 @@
 	}
 }
 
-.embla__button:not(:disabled) {
+.embla__button {
 	cursor: pointer;
-	fill: colors.$main;
-}
 
-.embla__button:disabled {
-	fill: #e0e0e0;
-}
+	.embla__button__icon {
+		width: 2rem;
+		height: 2rem;
+		color: colors.$main;
+	}
 
-.embla__button__icon {
-	width: 2rem;
-	height: 2rem;
-	color: colors.$main;
+	&:disabled {
+		.embla__button__icon {
+			color: colors.$gray-300;
+		}
+	}
 }
 
 .embla__dot {

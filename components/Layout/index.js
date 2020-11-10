@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Head from 'next/head';
 import Container from 'react-bootstrap/Container';
+import BottomNavigation from 'components/BottomNavigation';
 import Header from '../Header';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, activeMenu }) => {
 	return (
   <>
     <Head>
@@ -47,13 +48,21 @@ const Layout = ({ children }) => {
           {children}
         </div>
       </div>
+      <div className="bg-white fixed-bottom d-block d-lg-none">
+        <BottomNavigation activeKey={activeMenu} />
+      </div>
     </Container>
   </>
 	);
 };
 
+Layout.defaultProps = {
+	activeMenu: ''
+};
+
 Layout.propTypes = {
-	children: PropTypes.object.isRequired
+	children: PropTypes.object.isRequired,
+	activeMenu: PropTypes.string
 };
 
 export default Layout;

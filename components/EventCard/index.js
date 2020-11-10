@@ -10,25 +10,27 @@ const EventCard = props => {
 	const { imageUrl, title, date, time, link} = props;
 	return (
   <Link href={link}>
-    <Card className="rounded shadow">
-      <Image
-        src={imageUrl}
-        alt={title}
-        width="auto"
-        height={200}
-      />
-      <Card.Body>
-        <Card.Title className={styles.title}>{title}</Card.Title>
-        <Card.Text className={styles.text}>
-          <BsCalendarFill className={styles.icon} />
-          {date}
-        </Card.Text>
-        <Card.Text className={styles.text}>
-          <BsClockFill className={styles.icon} />
-          {time}
-        </Card.Text>
-      </Card.Body>
-    </Card>
+    <a href={link} className={styles.link}>
+      <Card className={styles.card}>
+        <Image
+          src={imageUrl}
+          alt={title}
+          width="auto"
+          height={200}
+        />
+        <Card.Body>
+          <Card.Title className={styles.title}>{title}</Card.Title>
+          <Card.Text className={styles.text}>
+            <BsCalendarFill className={styles.icon} />
+            {date}
+          </Card.Text>
+          <Card.Text className={styles.text}>
+            <BsClockFill className={styles.icon} />
+            {time}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </a>
   </Link>
 	);
 };
