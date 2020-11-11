@@ -10,6 +10,7 @@
 	@media (max-width: breakpoint.$lg) {
 		background-color: transparent;
 		box-shadow: none;
+		border-bottom: 1px solid colors.$gray-500;
 	}
 }
 

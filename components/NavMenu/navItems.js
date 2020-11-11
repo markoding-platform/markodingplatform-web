@@ -38,25 +38,25 @@ const navItems = [
 	{
 		id: 6,
 		text: 'Direktori',
-		link: 'to',
+		link: '/directory',
 		withBadge: false,
 		children: [
 			{
 				id: 0,
 				text: 'Siswa',
-				link: 'to',
+				link: '/directory/student',
 				withBadge: false,
 			},
 			{
 				id: 1,
 				text: 'Guru',
-				link: 'to',
+				link: '/directory/teacher',
 				withBadge: false,
 			},
 			{
 				id: 2,
 				text: 'Kakak Mentor',
-				link: 'to',
+				link: '/directory/mentor',
 				withBadge: false,
 			},
 		],

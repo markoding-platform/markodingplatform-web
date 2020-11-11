@@ -21,8 +21,6 @@ const Layout = ({ children, activeMenu }) => {
       />
       <meta name="keywords" content="Markoding" />
       <title>Markoding Platform</title>
-
-      <link rel="manifest" href="/manifest.json" />
       <link
         href="/favicon-16x16.png"
         rel="icon"
@@ -36,6 +34,7 @@ const Layout = ({ children, activeMenu }) => {
         sizes="32x32"
       />
       <link rel="apple-touch-icon" href="/apple-icon.png" />
+      <link rel="manifest" href="/manifest.json" />
       <meta name="theme-color" content="#317EFB" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
