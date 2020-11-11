@@ -1,0 +1,7 @@
+@use 'styles/breakpoint';
+
+.hidden {
+  @media (max-width: breakpoint.$md) {
+    display: none;
+  }
+}

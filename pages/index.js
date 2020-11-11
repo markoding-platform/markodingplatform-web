@@ -16,7 +16,7 @@ const Home = ({ banners, dataDummy }) => {
 
   return (
     <Layout activeMenu="/">
-      <div className="home">
+      <div className="main-content">
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>
