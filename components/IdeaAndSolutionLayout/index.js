@@ -1,17 +1,33 @@
-import { node } from 'prop-types';
 import IdeaAndSolutionContainer from 'components/IdeaAndSolutionContainer';
+import { useRouter } from 'next/router';
 
-const IdeaAndSolutionLayout = ({ children }) => {
+import DetailIdea from 'components/IdeaAndSolutionContainer/DetailIdea';
+import PointBadgeWrapper from 'components/PointBadgeWrapper';
+import { hidden } from './styles.module.scss';
+
+const IdeaAndSolutionLayout = () => {
+  const { pathname } = useRouter();
+  const isIdeaPageRoute = pathname === '/idea';
+
   return (
-    <div className="d-flex justify-content-between">
-      <IdeaAndSolutionContainer />
-      <div>{children}</div>
+    <div className="main-content">
+      <div className="pb-4">
+        <PointBadgeWrapper />
+      </div>
+      <div className="inner-section pb-5">
+        <div className="d-flex justify-content-between">
+          <div className={`${!isIdeaPageRoute ? hidden : undefined}`}>
+            <IdeaAndSolutionContainer />
+          </div>
+          <div className={`${isIdeaPageRoute ? hidden : undefined}`}>
+            <DetailIdea />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-IdeaAndSolutionLayout.propTypes = {
-  children: node.isRequired,
-};
+IdeaAndSolutionLayout.propTypes = {};
 
 export default IdeaAndSolutionLayout;
