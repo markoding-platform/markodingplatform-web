@@ -48,6 +48,7 @@ a {
 	width: 100%;
 	@include media-breakpoint-up(lg) {
 		max-width: 290px;
+		min-height: 100vh;
 	}
 }
 

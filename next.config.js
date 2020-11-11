@@ -3,6 +3,7 @@ const withImages = require('next-images');
 
 module.exports = withPWA(withImages({
 	pwa: {
+		disable: !process.env.PRODUCTION,
 		dest: 'public'
 	},
 	images: {
@@ -11,6 +12,10 @@ module.exports = withPWA(withImages({
 	},
 	inlineImageLimit: false, // Base4/Data URL encoding is not supported when using the next/image
 	fileExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg'],
+	env: {
+		TITLE: process.env.TITLE,
+		PRODUCTION: process.env.PRODUCTION,
+	},
 	webpack(config) {
 		return config;
 	},
