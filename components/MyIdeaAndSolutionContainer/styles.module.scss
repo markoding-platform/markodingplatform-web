@@ -1,0 +1,54 @@
+@use "styles/colors";
+@use 'styles/breakpoint';
+
+.cardStats {
+  background-color: colors.$main;
+  width: 116px;
+  height: 128px;
+  box-shadow: 0px 25px 50px rgba(35, 37, 96, 0.17);
+}
+.badgeValueText {
+  padding-top: 24px;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: center;
+}
+
+.profileWrapper {
+  display: flex;
+  width: 100%;
+  padding: 24px;
+  justify-content: space-between;
+  border-radius: 10px;
+  background-color: #ffffff;
+  @media (min-width: breakpoint.$lg) {
+    height: 180px;
+  }
+}
+
+.profileCard {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contentTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.btnEditProfile {
+  color: colors.$accent;
+  border: none;
+  margin-top: 24px;
+}
+
+.wrapperStats {
+  display: flex;
+  > div {
+    margin: 0px 6px;
+  }
+}
