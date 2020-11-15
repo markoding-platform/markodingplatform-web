@@ -1,13 +1,13 @@
 import { node, string } from 'prop-types';
 import Card from 'react-bootstrap/Card';
-import { panelCard, textTitle } from './styles.module.scss';
+import { panelWrapper, panelCard, textTitle } from './styles.module.scss';
 
 const Panel = ({ children, title }) => {
   return (
-    <div className={panelCard}>
-      <Card className="w-100 border-0">
+    <div className={panelWrapper}>
+      <Card className={panelCard}>
         {title && <Card.Header className={`${textTitle}`}>{title}</Card.Header>}
-        <div className="py-4">{children}</div>
+        <div className="p-4">{children}</div>
       </Card>
     </div>
   );

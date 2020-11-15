@@ -1,12 +1,17 @@
-.panelCard {
+.panelWrapper {
   display: flex;
   width: 100%;
-  padding: 24px;
   justify-content: space-between;
-  border-radius: 10px;
+  border-radius: 10px !important;
   background-color: #ffffff;
   margin-bottom: 24px;
   height: auto;
+}
+
+.panelCard {
+  width: 100%;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
 }
 
 .textTitle {

@@ -97,11 +97,11 @@ const DetailIdea = ({ likeCount, commentCount }) => {
         <div className="d-flex align-items-center justify-content-start">
           <div className="mr-4">
             <BsFillHeartFill />
-            <span className="text-secondary">{likeCount}</span>
+            <span className="pl-2 text-secondary">{likeCount}</span>
           </div>
-          <div>
+          <div className="mr-4">
             <IoMdChatbubbles />
-            <span className="text-secondary">{commentCount}</span>
+            <span className="pl-2 text-secondary">{commentCount}</span>
           </div>
         </div>
         <div className="d-flex">

@@ -12,6 +12,7 @@ import MyStats from './MyStats';
 import {
   paper,
   profileCard,
+  profileSection,
   contentTitle,
   btnEditProfile,
   wrapperStats,
@@ -32,7 +33,7 @@ const MyIdeaAndSolutionContainer = ({ courses }) => {
                 className="rounded-circle"
                 src={Avatar}
               />
-              <div className="px-3">
+              <div className={`px-3 ${profileSection}`}>
                 <p className={contentTitle}>Amanda Simandjuntak</p>
                 <p className="m-0">Co-founder Markoding</p>
                 <Button className={`bg-info ${btnEditProfile}`}>
@@ -48,7 +49,10 @@ const MyIdeaAndSolutionContainer = ({ courses }) => {
         </div>
       </div>
       <Panel title="Badges">
-        <Badges name="Javascript" />
+        <div className="d-flex">
+          <Badges name="Javascript" />
+          <Badges name="React JS" />
+        </div>
       </Panel>
       <Panel title="Ide Solusi Saya">
         <DetailIdea />
