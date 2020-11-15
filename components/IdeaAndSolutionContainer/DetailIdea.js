@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
+import { number } from 'prop-types';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Button from 'react-bootstrap/Button';
+import { BsFillHeartFill } from 'react-icons/bs';
+import { IoMdChatbubbles } from 'react-icons/io';
 
-import Avatar from 'public/assets/avatar-min.png';
+// import Avatar from 'public/assets/avatar-min.png';
 import { ideaImage } from './styles.module.scss';
 
 const dummyBlog = [
@@ -25,7 +29,7 @@ const dummyBlog = [
     title: 'Merdeka Belajar 2',
   },
 ];
-const DetailIdea = () => {
+const DetailIdea = ({ likeCount, commentCount }) => {
   const { query } = useRouter();
 
   const [blogContent, setBlogContent] = useState({});
@@ -50,10 +54,19 @@ const DetailIdea = () => {
 
   return (
     <div>
+      <div className="py-2">
+        <Image
+          src={blogContent.imageUrl}
+          alt={blogContent.title}
+          width={500}
+          height={200}
+          className={ideaImage}
+        />
+      </div>
       <div className="pb-4">
         <h4>{blogContent.title}</h4>
       </div>
-      <div className="d-flex py-2">
+      {/* <div className="d-flex py-2">
         <Image
           src={Avatar}
           alt="avatar-image"
@@ -65,16 +78,7 @@ const DetailIdea = () => {
           <h6 className="m-0 pb-2">Ariqah Hasanah</h6>
           <p className="text-3rd m-0">11/11/2020</p>
         </div>
-      </div>
-      <div className="py-2">
-        <Image
-          src={blogContent.imageUrl}
-          alt={blogContent.title}
-          width={500}
-          height={200}
-          className={ideaImage}
-        />
-      </div>
+      </div> */}
       <div>
         <p>
           We hold weekly group mentoring sessions in schools and communities in
@@ -89,12 +93,34 @@ const DetailIdea = () => {
           employers to deliver industry-relevant and up-to-date knowledge.
         </p>
       </div>
+      <div className="d-flex justify-content-between mt-5">
+        <div className="d-flex align-items-center justify-content-start">
+          <div className="mr-4">
+            <BsFillHeartFill />
+            <span className="text-secondary">{likeCount}</span>
+          </div>
+          <div>
+            <IoMdChatbubbles />
+            <span className="text-secondary">{commentCount}</span>
+          </div>
+        </div>
+        <div className="d-flex">
+          <Button variant="outline-primary mr-3">Lihat</Button>
+          <Button className="bg-primary">Edit</Button>
+        </div>
+      </div>
     </div>
   );
 };
 
-DetailIdea.defaultProps = {};
+DetailIdea.defaultProps = {
+  commentCount: 12,
+  likeCount: 3,
+};
 
-DetailIdea.propTypes = {};
+DetailIdea.propTypes = {
+  commentCount: number,
+  likeCount: number,
+};
 
 export default DetailIdea;
