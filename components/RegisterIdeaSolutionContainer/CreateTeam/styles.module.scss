@@ -1,0 +1,25 @@
+@use "styles/colors";
+
+@mixin flex__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circleBorder {
+  @include flex__center;
+  width: 114px;
+  height: 114px;
+  border-radius: 50%;
+  border: 1px solid colors.$dark;
+}
+
+.addTeamMateWrapper {
+  @include flex__center;
+}
+
+.teamMateText {
+  font-size: 1rem;
+  text-align: center;
+  margin: 10px 0 0 0;
+}

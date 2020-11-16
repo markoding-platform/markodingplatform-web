@@ -9,14 +9,21 @@
 .topTitle {
   @include flex__center;
   width: 100%;
-  background-color: colors.$blue;
+  background-color: colors.$primary;
+  > p {
+    padding: 4px 0 2px 4px;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0px;
+  }
 }
 
 .content {
   @include flex__center;
   flex-direction: column;
   margin-top: 16px;
-  position: absolute;
 }
 
 .contentTitle {
