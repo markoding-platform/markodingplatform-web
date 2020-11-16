@@ -2,10 +2,18 @@
   "name": "markoding-platform-web",
   "version": "0.1.0",
   "private": true,
+  "pre-commit": "lint-staged",
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
+    "lint-staged": "lint-staged",
     "lint": "eslint ./components/** ./pages/** ./helpers/** ./libraries/** ./utils/** -c .eslintrc.json --ext js,jsx",
     "lint-fix": "eslint ./components/** ./pages/** ./helpers/** ./libraries/** ./utils/** -c .eslintrc.json --fix --ext js,jsx"
   },
