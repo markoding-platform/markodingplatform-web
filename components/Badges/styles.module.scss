@@ -1,0 +1,17 @@
+@use "styles/colors";
+
+.circleImg {
+  border: 1px solid colors.$yellow;
+  border-radius: 50%;
+  background-color: colors.$yellow;
+  width: 98px;
+  height: 98px;
+}
+
+.badgesWrapper {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
