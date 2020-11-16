@@ -1,0 +1,40 @@
+@use "styles/colors";
+
+.card {
+	background: colors.$white;
+	border-radius: 6px;
+	border: 0;
+
+	img {
+		border-radius: 6px 6px 0 0;
+	}
+}
+
+.title {
+	height: 72px;
+	overflow: hidden;
+}
+
+.text {
+	font-size: 16px;
+	margin-bottom: 12px;
+	height: 48px;
+	overflow: hidden;
+	color: colors.$secondary;
+}
+
+.date {
+	font-size: 16px;
+	color: colors.$text-3rd;
+}
+
+.link {
+	&:hover {
+		color: inherit;
+		text-decoration: none;
+
+		.title {
+			color: colors.$blue;
+		}
+	}
+}

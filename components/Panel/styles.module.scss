@@ -1,0 +1,25 @@
+.panelWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border-radius: 10px !important;
+  background-color: #ffffff;
+  margin-bottom: 24px;
+  height: auto;
+}
+
+.panelCard {
+  width: 100%;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+}
+
+.textTitle {
+  background-color: #ffffff;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: left;
+}

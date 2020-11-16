@@ -1,0 +1,36 @@
+@use "colors";
+@use "breakpoint";
+
+.directory {
+	position: relative;
+	background-color: colors.$white;
+}
+
+.user {
+	position: relative;
+	background-color: colors.$white;
+}
+
+.backIcon {
+	font-size: 22px;
+	margin-right: 6px;
+}
+
+.socialIcon {
+	font-size: 32px;
+	margin: 0 6px;
+}
+
+.socialGroup {
+	display: flex;
+	justify-content: center;
+	margin: 0 auto 24px;
+}
+
+.chatButton {
+	max-width: 250px;
+	margin: 24px auto;
+	@media (max-width: breakpoint.$lg) {
+		max-width: 100%;
+	}
+}

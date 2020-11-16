@@ -1,0 +1,91 @@
+@use "colors";
+@import "custom.boostrap";
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	color: colors.$dark;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.text-3rd {
+	color: colors.$text-3rd;
+}
+
+.nav-bottom {
+	.nav-item {
+		.nav-link {
+			color: #DFE4EA;
+			&.active {
+				color: colors.$blue;
+			}
+			&:hover {
+				color: colors.$blue;
+			}
+		}
+	}
+}
+
+.container-fluid {
+	max-width: 1400px;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.desktop-left-section {
+	background-color: colors.$primary;
+	width: 100%;
+	@include media-breakpoint-up(lg) {
+		max-width: 290px;
+		min-height: 100vh;
+	}
+}
+
+.desktop-right-section {
+	position: relative;
+	padding-bottom: 50px;
+	@include media-breakpoint-up(lg) {
+		padding-bottom: 0;
+	}
+
+	.inner-section {
+		position: relative;
+		padding-left: 20px;
+		padding-right: 20px;
+		width: 100%;
+		@include media-breakpoint-up(lg) {
+			width: 90%;
+			padding-right: 0;
+		}
+	}
+
+	.inner-full-section {
+		position: relative;
+		width: 100%;
+		padding-left: 20px;
+	}
+
+	.inner-full-section-card {
+		position: relative;
+		width: 100%;
+		padding-left: 20px;
+		@include media-breakpoint-up(lg) {
+			width: 90%;
+		}
+	}
+}
+
+.main-content {
+	background-color: colors.$bg;
+}

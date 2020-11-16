@@ -1,0 +1,89 @@
+{
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "document": true,
+    "window": true,
+    "process": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/extensions": [".js", ".jsx"],
+    "import/resolver": {
+      "node": {
+        "paths": ["."]
+      },
+      "alias": [["components", "./components/*"]]
+    },
+		"flowtype": {
+			"onlyFilesWithFlowAnnotation": true
+		}
+  },
+  "plugins": ["react", "react-hooks", "unused-imports", "prettier", "import", "flowtype"],
+  "rules": {
+    "no-trailing-spaces": "error",
+    "react/prop-types": 1,
+    "react/forbid-prop-types": 1,
+    "react/no-unused-prop-types": 1,
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-indent": [2, 2],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/display-name": 1,
+    "react/jsx-props-no-spreading": 0,
+    "flowtype/define-flow-type": 0,
+		"class-methods-use-this": 0,
+		"no-unused-expressions": ["error", { "allowTaggedTemplates": true }],
+		"no-underscore-dangle": [
+			"error",
+			{
+				"allow": ["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__", "_allPostsMeta"]
+			}
+		],
+		"consistent-return": 0,
+		"import/no-extraneous-dependencies": 0,
+		"prettier/prettier": "error",
+		"react/destructuring-assignment": 0,
+		"no-param-reassign": 0,
+		"import/no-dynamic-require": 0,
+		"global-require": 0,
+		"import/no-unresolved": 0,
+		"no-nested-ternary": 0
+  },
+  "ignorePatterns": ["node_modules/", ".next/"]
+}

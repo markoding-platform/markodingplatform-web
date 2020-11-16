@@ -1,0 +1,38 @@
+@use "styles/colors";
+
+.card {
+	border: 0;
+	text-align: center;
+	img {
+		border-radius: 50%;
+		object-fit: cover;
+		object-position: center;
+		width: 150px;
+		height: 150px;
+	}
+}
+
+.title {
+	height: 24px;
+	overflow: hidden;
+	margin-top: 12px;
+}
+
+.text {
+	font-size: 14px;
+	margin-bottom: 12px;
+	height: 42px;
+	overflow: hidden;
+	color: colors.$secondary;
+}
+
+.link {
+	&:hover {
+		text-decoration: none;
+
+		.title {
+			color: colors.$blue;
+		}
+	}
+}
+
