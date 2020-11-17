@@ -1,11 +1,18 @@
-import React from "react";
-import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
-import styles from './styles.module.scss'
+import React from 'react';
+import {
+  IoIosArrowDropleftCircle,
+  IoIosArrowDroprightCircle,
+} from 'react-icons/io';
+import styles from './styles.module.scss';
 
 export const DotButton = ({ selected, onClick }) => (
   <button
     type="button"
-    className={selected ? `${styles.embla__dot} ${styles.isSelected}` : `${styles.embla__dot}`}
+    className={
+      selected
+        ? `${styles.embla__dot} ${styles.isSelected}`
+        : `${styles.embla__dot}`
+    }
     onClick={onClick}
   />
 );

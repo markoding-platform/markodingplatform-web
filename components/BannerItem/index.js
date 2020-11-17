@@ -1,29 +1,29 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import Image from 'next/image'
+import Image from 'next/image';
 import styles from './styles.module.scss';
 
-const BannerItem = props => {
-	const {title, imageUrl, link} = props;
-	return (
-  <div className={styles.bannerSlide}>
-    <div className={styles.bannerSlideInner}>
-      <Link href={link}>
-        <Image src={imageUrl} alt={title} layout="fill" />
-      </Link>
+const BannerItem = (props) => {
+  const { title, imageUrl, link } = props;
+  return (
+    <div className={styles.bannerSlide}>
+      <div className={styles.bannerSlideInner}>
+        <Link href={link}>
+          <Image src={imageUrl} alt={title} layout="fill" />
+        </Link>
+      </div>
     </div>
-  </div>
-	);
+  );
 };
 
 BannerItem.defaultProps = {
-	link: '/'
+  link: '/',
 };
 
 BannerItem.propTypes = {
-	title: PropTypes.string.isRequired,
-	imageUrl: PropTypes.string.isRequired,
-	link: PropTypes.string
+  title: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+  link: PropTypes.string,
 };
 
 export default BannerItem;
