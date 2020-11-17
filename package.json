@@ -5,8 +5,7 @@
   "pre-commit": "lint-staged",
   "lint-staged": {
     "*.js": [
-      "npm run lint-fix",
-      "git add"
+      "npm run lint-fix"
     ]
   },
   "scripts": {
