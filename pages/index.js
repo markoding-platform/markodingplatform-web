@@ -160,8 +160,8 @@ Home.defaultProps = {
 };
 
 Home.propTypes = {
-  banners: PropTypes.array,
-  dataDummy: PropTypes.array,
+  banners: PropTypes.instanceOf(Array),
+  dataDummy: PropTypes.instanceOf(Array),
 };
 
 export default Home;

@@ -43,7 +43,7 @@ Directory.defaultProps = {
 Directory.propTypes = {
   directorySlug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  users: PropTypes.array,
+  users: PropTypes.instanceOf(Array),
 };
 
 Directory.getInitialProps = async (ctx) => {

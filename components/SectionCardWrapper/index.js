@@ -34,7 +34,7 @@ const SectionCardWrapper = ({ title, link, children }) => {
 SectionCardWrapper.propTypes = {
   title: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
-  children: PropTypes.array.isRequired,
+  children: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default SectionCardWrapper;
