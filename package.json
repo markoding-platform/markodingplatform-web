@@ -5,17 +5,17 @@
   "pre-commit": "lint-staged",
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint -c .eslintrc --fix"
     ]
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
+    "export": "next export",
     "start": "next start",
     "lint-staged": "lint-staged",
-    "lint": "eslint ./components/** ./pages/** ./helpers/** ./libraries/** ./utils/** -c .eslintrc.json --ext js,jsx",
-    "lint-fix": "eslint ./components/** ./pages/** ./helpers/** ./libraries/** ./utils/** -c .eslintrc.json --fix --ext js,jsx"
+    "lint": "eslint ./components/** ./pages/** ./utils/** -c .eslintrc --ext js,jsx",
+    "lint-fix": "eslint ./components/** ./pages/** ./utils/** -c .eslintrc --fix --ext js,jsx"
   },
   "dependencies": {
     "bootstrap": "^4.5.3",

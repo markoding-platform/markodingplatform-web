@@ -9,7 +9,14 @@ import NavMenu from 'components/NavMenu';
 import notifFill from 'svgs/notif-fill.svg';
 import notif from 'svgs/notif.svg';
 
-import { innerHeader, headerWrapper, burgerBtn, desktopLogo, desktopSkilvulIcon, desktopNotifIcon } from './styles.module.scss';
+import {
+  innerHeader,
+  headerWrapper,
+  burgerBtn,
+  desktopLogo,
+  desktopSkilvulIcon,
+  desktopNotifIcon,
+} from './styles.module.scss';
 
 const Header = () => {
   const [isOpeDrawer, setIsOpenDrawer] = useState(false);
@@ -44,13 +51,13 @@ const Header = () => {
           </div>
         </div>
         {isOpeDrawer && (
-        <Drawer
-          isOpen={isOpeDrawer}
-          onClose={() => setIsOpenDrawer(!isOpeDrawer)}
-        >
-          <NavMenu />
-        </Drawer>
-				)}
+          <Drawer
+            isOpen={isOpeDrawer}
+            onClose={() => setIsOpenDrawer(!isOpeDrawer)}
+          >
+            <NavMenu />
+          </Drawer>
+        )}
       </div>
     </header>
   );
