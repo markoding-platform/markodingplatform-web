@@ -1,5 +1,6 @@
 import Panel from 'components/Panel';
 import CreateTeam from 'components/RegisterIdeaSolutionContainer/CreateTeam';
+import FormIdeaSolution from './FormIdeaSolution';
 
 const RegisterIdeaSolutionContainer = () => {
   return (
@@ -7,6 +8,7 @@ const RegisterIdeaSolutionContainer = () => {
       <Panel title="Team">
         <CreateTeam />
       </Panel>
+      <FormIdeaSolution />
     </>
   );
 };

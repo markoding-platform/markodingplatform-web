@@ -1,0 +1,26 @@
+@use "styles/colors";
+
+.radioBtn {
+  border: none !important;
+  background: colors.$white;
+  margin-right: 2px;
+  text-align: center;
+}
+.radioBtnWrapper {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  margin-right: 1rem;
+}
+
+.radioInputText {
+  border: none !important;
+  background: colors.$white;
+  padding: 6px;
+}
+
+.textArea {
+  width: 100% !important;
+  height: 200px !important;
+  resize: none;
+}
