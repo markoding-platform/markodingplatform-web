@@ -28,7 +28,7 @@ const NavMenu = () => {
           ) : (
             <Link href={navItem.link}>
               <a href={navItem.link}>
-                <div className="d-flex">
+                <div className="d-flex align-items-start">
                   {navItem.text}
                   {navItem.withBadge && (
                     <span className="ml-2 badge badge-danger text-right badge-pill">

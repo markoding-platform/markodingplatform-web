@@ -9,44 +9,50 @@ import {
 import Button from 'react-bootstrap/Button';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import Layout from 'components/Layout';
-import UserCard from 'components/UserCard';
 import styles from 'styles/directory.module.scss';
+import Image from 'next/image';
 
 const User = ({ directorySlug, user }) => {
   return (
     <Layout>
-      <div className={styles.user}>
+      <div className={styles.directoryContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>
-        <div className="pb-4">
-          <div className="inner-section">
+        <div className="inner-section">
+          <Link href={`/directory/${directorySlug}`}>
             <div className="d-flex align-items-center mb-3">
               <RiArrowLeftSLine className={styles.backIcon} />
-              <Link href={`/directory/${directorySlug}`}>
-                <a href={`/directory/${directorySlug}`}>{directorySlug}</a>
-              </Link>
+              <a
+                href={`/directory/${directorySlug}`}
+                className={styles.backTitle}
+              >
+                {directorySlug}
+              </a>
             </div>
-            <div className="text-center">
-              <UserCard
-                imageUrl={user.imageUrl}
-                name={user.name}
-                description={user.title}
-                link="/"
-              />
-              <div className={styles.socialGroup}>
-                <a href={user.linkedin} target="_blank" rel="noreferrer">
-                  <RiLinkedinBoxFill className={styles.socialIcon} />
-                </a>
-                <a href={user.instagram} target="_blank" rel="noreferrer">
-                  <RiInstagramFill className={styles.socialIcon} />
-                </a>
-              </div>
-              <div className="mb-3 text-3rd">{user.bio}</div>
-              <Button variant="primary" block className={styles.chatButton}>
-                Kirim Pesan
-              </Button>
+          </Link>
+          <div className={styles.directoryCard}>
+            <Image
+              src={user.imageUrl}
+              alt={user.name}
+              width={132}
+              height={132}
+              layout="fixed"
+            />
+            <h1 className="h4">{user.name}</h1>
+            <p>{user.email}</p>
+            <div className={styles.socialGroup}>
+              <a href={user.linkedin} target="_blank" rel="noreferrer">
+                <RiLinkedinBoxFill className={styles.socialIcon} />
+              </a>
+              <a href={user.instagram} target="_blank" rel="noreferrer">
+                <RiInstagramFill className={styles.socialIcon} />
+              </a>
             </div>
+            <div className="mb-3 text-3rd">{user.bio}</div>
+            <Button variant="warning" block className={styles.chatButton}>
+              Kirim Pesan
+            </Button>
           </div>
         </div>
       </div>
@@ -56,15 +62,16 @@ const User = ({ directorySlug, user }) => {
 
 User.propTypes = {
   directorySlug: PropTypes.string.isRequired,
-  userSlug: PropTypes.string.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.instanceOf(Object).isRequired,
 };
 
 User.getInitialProps = async (ctx) => {
-  const { directorySlug, userSlug } = ctx.query;
+  const { directorySlug, userSlug } = await ctx.query;
   const user = {
+    slug: 'ariqah',
     name: `My name ${userSlug}`,
     title: 'Manager Product of Markoding Platform',
+    email: 'ariqah@gmail.com',
     imageUrl:
       'https://image.freepik.com/free-photo/close-up-portrait-surprised-dark-eyed-girl-summer-hat-indoor-shot-funny-curly-female-model-white-t-shirt-posing-with-fingers-up-purple-wall_197531-5173.jpg',
     bio:
@@ -74,7 +81,6 @@ User.getInitialProps = async (ctx) => {
   };
   return {
     directorySlug,
-    userSlug,
     user,
   };
 };

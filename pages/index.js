@@ -9,14 +9,15 @@ import IdeaCard from 'components/IdeaCard';
 import CoursesCard from 'components/CoursesCard';
 import BlogCard from 'components/BlogCard';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import Layout from '../components/Layout';
+import Layout from 'components/Layout';
+import styles from 'styles/home.module.scss';
 
 const Home = ({ banners, dataDummy }) => {
   const [alertShow, setAlertShow] = useState(true);
 
   return (
     <Layout activeMenu="/">
-      <div className="main-content">
+      <div className={styles.homeContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>
@@ -43,15 +44,15 @@ const Home = ({ banners, dataDummy }) => {
           </EmblaCarousel>
         </div>
         <div className="pb-5">
-          <SectionCardWrapper title="Event Terdekat" link="/events">
+          <SectionCardWrapper title="Event Terdekat" link="/event">
             {dataDummy.map((event) => (
               <EventCard
                 key={event.id}
                 imageUrl={event.src}
-                title={event.title}
+                title={`Event ${event.id}`}
                 date={event.date}
                 time={event.time}
-                link={event.link}
+                link={`/event/${event.id}`}
               />
             ))}
           </SectionCardWrapper>
@@ -63,19 +64,19 @@ const Home = ({ banners, dataDummy }) => {
                 key={idea.id}
                 link={idea.link}
                 imageUrl={idea.src}
-                title={idea.title}
+                title={`Idea ${idea.id}`}
                 description={idea.description}
               />
             ))}
           </SectionCardWrapper>
         </div>
         <div className="pb-5">
-          <SectionCardWrapper title="Kelas Online" link="/skilvul">
+          <SectionCardWrapper title="Kelas Online" link="/course">
             {dataDummy.map((course) => (
               <CoursesCard
                 key={course.id}
                 imageUrl={course.src}
-                title={course.title}
+                title={`Course ${course.id}`}
                 description={course.description}
                 link={course.link}
               />
@@ -88,10 +89,10 @@ const Home = ({ banners, dataDummy }) => {
               <BlogCard
                 key={blog.id}
                 imageUrl={blog.src}
-                title={blog.title}
+                title={`Blog ${blog.id}`}
                 description={blog.description}
                 date={blog.date}
-                link={blog.link}
+                link={`/blog/${blog.id}`}
               />
             ))}
           </SectionCardWrapper>

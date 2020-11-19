@@ -54,7 +54,7 @@ a {
 
 .desktop-right-section {
 	position: relative;
-	padding-bottom: 50px;
+	padding-bottom: 64px;
 	@include media-breakpoint-up(lg) {
 		padding-bottom: 0;
 	}
@@ -86,6 +86,6 @@ a {
 	}
 }
 
-.main-content {
-	background-color: colors.$bg;
+.rounded {
+	border-radius: 10px !important;
 }

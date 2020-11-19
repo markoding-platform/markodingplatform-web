@@ -15,9 +15,4 @@
 	position: relative;
 	overflow: hidden;
 	border-radius: 6px;
-	height: 270px;
-
-	@media (max-width: breakpoint.$lg) {
-		height: 200px;
-	}
 }

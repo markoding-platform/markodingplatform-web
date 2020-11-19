@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,7 +10,13 @@ const BannerItem = (props) => {
     <div className={styles.bannerSlide}>
       <div className={styles.bannerSlideInner}>
         <Link href={link}>
-          <Image src={imageUrl} alt={title} layout="fill" />
+          <Image
+            src={imageUrl}
+            alt={title}
+            width={955}
+            height={276}
+            layout="responsive"
+          />
         </Link>
       </div>
     </div>

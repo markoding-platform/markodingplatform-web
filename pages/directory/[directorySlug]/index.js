@@ -4,28 +4,32 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import Layout from 'components/Layout';
-import styles from 'styles/directory.module.scss';
 import UserCard from 'components/UserCard';
+import styles from 'styles/directory.module.scss';
 
 const Directory = ({ directorySlug, title, users }) => {
   return (
     <Layout>
-      <div className={styles.directory}>
+      <div className={styles.directoryContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>
         <div className="pb-4">
           <div className="inner-section">
-            <h2 className="text-center mb-5">{title}</h2>
+            <div className="d-flex align-items-center mb-4">
+              <h1 className="h3">{title}</h1>
+            </div>
             <Row>
               {users.map((user) => (
                 <Col key={user} xs={6} lg={4}>
-                  <UserCard
-                    imageUrl="https://image.freepik.com/free-photo/close-up-portrait-surprised-dark-eyed-girl-summer-hat-indoor-shot-funny-curly-female-model-white-t-shirt-posing-with-fingers-up-purple-wall_197531-5173.jpg"
-                    name={`User ${user}`}
-                    description={`VP ${user} of Markoding Platform`}
-                    link={`/directory/${directorySlug}/user-${user}`}
-                  />
+                  <div className={styles.directoryGrid}>
+                    <UserCard
+                      imageUrl="https://image.freepik.com/free-photo/close-up-portrait-surprised-dark-eyed-girl-summer-hat-indoor-shot-funny-curly-female-model-white-t-shirt-posing-with-fingers-up-purple-wall_197531-5173.jpg"
+                      name={`User ${user}`}
+                      description={`VP ${user} of Markoding Platform`}
+                      link={`/directory/${directorySlug}/user-${user}`}
+                    />
+                  </div>
                 </Col>
               ))}
             </Row>
