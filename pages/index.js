@@ -9,14 +9,15 @@ import IdeaCard from 'components/IdeaCard';
 import CoursesCard from 'components/CoursesCard';
 import BlogCard from 'components/BlogCard';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import Layout from '../components/Layout';
+import Layout from 'components/Layout';
+import styles from 'styles/home.module.scss';
 
 const Home = ({ banners, dataDummy }) => {
   const [alertShow, setAlertShow] = useState(true);
 
   return (
     <Layout activeMenu="/">
-      <div className="main-content">
+      <div className={styles.homeContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>

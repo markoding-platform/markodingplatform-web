@@ -54,7 +54,7 @@ a {
 
 .desktop-right-section {
 	position: relative;
-	padding-bottom: 50px;
+	padding-bottom: 64px;
 	@include media-breakpoint-up(lg) {
 		padding-bottom: 0;
 	}
@@ -84,8 +84,4 @@ a {
 			width: 90%;
 		}
 	}
-}
-
-.main-content {
-	background-color: colors.$bg;
 }

@@ -1,19 +1,42 @@
 @use "colors";
 @use "breakpoint";
 
-.directory {
+.directoryContent {
 	position: relative;
-	background-color: colors.$white;
+	background-color: colors.$bg;
+	display: flow-root;
+	min-height: 100%;
 }
 
-.user {
-	position: relative;
+.directoryGrid {
+	margin-bottom: 30px;
+}
+
+.directoryCard {
+	border: 0;
+	text-align: center;
 	background-color: colors.$white;
+	padding: 1rem;
+	border-radius: 10px;
+	margin-bottom: 30px;
+
+	img {
+		border-radius: 50%;
+		object-fit: cover;
+		object-position: center;
+		width: 120px;
+		height: 120px;
+	}
 }
 
 .backIcon {
 	font-size: 22px;
 	margin-right: 6px;
+}
+
+.backTitle {
+	text-transform: capitalize;
+	font-weight: 500;
 }
 
 .socialIcon {
@@ -28,9 +51,5 @@
 }
 
 .chatButton {
-	max-width: 250px;
 	margin: 24px auto;
-	@media (max-width: breakpoint.$lg) {
-		max-width: 100%;
-	}
 }
