@@ -2,13 +2,13 @@ const navItems = [
   {
     id: 0,
     text: 'Pengumuman',
-    link: 'to',
+    link: '/information',
     withBadge: true,
   },
   {
     id: 1,
     text: 'Beranda',
-    link: 'to',
+    link: '/',
     withBadge: false,
   },
   {
@@ -20,19 +20,19 @@ const navItems = [
   {
     id: 3,
     text: 'Kelas Online',
-    link: 'to',
+    link: '/course',
     withBadge: false,
   },
   {
     id: 4,
     text: 'Leaderboard',
-    link: 'to',
+    link: '/leader-board',
     withBadge: false,
   },
   {
     id: 5,
     text: 'Chat',
-    link: 'to',
+    link: '/chat',
     withBadge: false,
   },
   {
@@ -64,13 +64,7 @@ const navItems = [
   {
     id: 7,
     text: 'Setting',
-    link: 'to',
-    withBadge: false,
-  },
-  {
-    id: 8,
-    text: 'Follow US',
-    link: 'to',
+    link: '/setting',
     withBadge: false,
   },
 ];

@@ -10,7 +10,13 @@ const UserCard = (props) => {
     <Link href={link}>
       <a href={link} className={styles.link}>
         <div className={styles.card}>
-          <Image src={imageUrl} alt={name} width={150} height={150} />
+          <Image
+            src={imageUrl}
+            alt={name}
+            width={115}
+            height={115}
+            layout="fixed"
+          />
           <h5 className={styles.title}>{name}</h5>
           <p className={styles.text}>{description}</p>
         </div>

@@ -17,7 +17,7 @@ const Directory = ({ directorySlug, title, users }) => {
         <div className="pb-4">
           <div className="inner-section">
             <div className="d-flex align-items-center mb-4">
-              <h2>{title}</h2>
+              <h1 className="h3">{title}</h1>
             </div>
             <Row>
               {users.map((user) => (

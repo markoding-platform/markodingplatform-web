@@ -35,8 +35,9 @@ const User = ({ directorySlug, user }) => {
             <Image
               src={user.imageUrl}
               alt={user.name}
-              width={150}
-              height={150}
+              width={132}
+              height={132}
+              layout="fixed"
             />
             <h1 className="h4">{user.name}</h1>
             <p>{user.email}</p>
@@ -65,7 +66,7 @@ User.propTypes = {
 };
 
 User.getInitialProps = async (ctx) => {
-  const { directorySlug, userSlug } = ctx.query;
+  const { directorySlug, userSlug } = await ctx.query;
   const user = {
     slug: 'ariqah',
     name: `My name ${userSlug}`,

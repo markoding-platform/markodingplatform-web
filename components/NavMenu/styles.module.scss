@@ -4,6 +4,7 @@
   -moz-transition: all 0.3s linear;
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
+	cursor: pointer;
 }
 .rotateDown {
   transform: rotate(180deg);
@@ -11,4 +12,10 @@
 
 .bgPrimary {
   background-color: colors.$main;
+
+	a {
+		&:hover {
+			text-decoration: none;
+		}
+	}
 }
