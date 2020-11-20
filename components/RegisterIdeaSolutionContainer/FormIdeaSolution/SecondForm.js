@@ -81,7 +81,7 @@ const SecondFormIdeaSolution = () => {
           />
         </Panel>
         <Panel title="Gambar/Foto Pendukung Ide Solusi">
-          <div className={`d-flex justify-content-center ${dropArea}`}>
+          <div className={dropArea}>
             {/* <input
               type="file"
               id="fileElem"

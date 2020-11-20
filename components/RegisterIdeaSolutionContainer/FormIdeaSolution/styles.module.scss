@@ -32,6 +32,8 @@
 }
 
 .dropArea {
+  display: flex;
+  justify-content: center;
   border: 1px dashed #9ea0a5;
   box-sizing: border-box;
   border-radius: 8px;
