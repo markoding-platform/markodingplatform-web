@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import { Button } from 'react-bootstrap';
 
@@ -16,6 +16,7 @@ import {
 } from './styles.module.scss';
 
 const SecondFormIdeaSolution = () => {
+  const { push } = useRouter();
   const [solutionSummary, setSolutionSummary] = useState('');
   const [solutionVision, setSolutionVision] = useState('');
   const [targetOutcomes, setTargetOutcomes] = useState('');
@@ -26,6 +27,9 @@ const SecondFormIdeaSolution = () => {
 
   const handleOnClick = () => {
     console.log('masuk sini');
+  };
+  const handleBack = () => {
+    push('/register-idea');
   };
   return (
     <>
@@ -76,7 +80,7 @@ const SecondFormIdeaSolution = () => {
             onEmit={setSolutionPitchUrl}
           />
         </Panel>
-        <Panel title="Alasan Masalah">
+        <Panel title="Gambar/Foto Pendukung Ide Solusi">
           <div className={`d-flex justify-content-center ${dropArea}`}>
             {/* <input
               type="file"
@@ -110,8 +114,11 @@ const SecondFormIdeaSolution = () => {
           />
         </Panel>
         <div className="d-flex justify-content-end">
+          <Button variant="outline-primary mr-2" onClick={handleBack}>
+            Kembali
+          </Button>
           <Button variant="primary" onClick={() => handleOnClick()}>
-            Kirim
+            Kirim Ide Solusi
           </Button>
         </div>
       </form>

@@ -27,7 +27,14 @@
 }
 
 .contentTitle {
+  text-align: center;
   font-size: 1rem;
   font-weight: 800;
   margin: 16px 0 0 0;
+}
+.contentDesc {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.875rem;
+  line-height: 20px;
 }

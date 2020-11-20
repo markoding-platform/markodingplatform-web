@@ -11,12 +11,18 @@
   align-items: center;
   width: auto;
   margin-right: 1rem;
+  padding: 0 4px;
+}
+
+.isRadioActive {
+  border: 1px solid #e2e5ed;
 }
 
 .radioInputText {
   border: none !important;
   background: colors.$white;
   padding: 6px;
+  font-size: 12px;
 }
 
 .textArea {

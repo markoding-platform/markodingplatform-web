@@ -1,0 +1,36 @@
+@use "styles/colors";
+@use 'styles/breakpoint';
+
+.pagingText {
+  color: colors.$secondary;
+  margin-left: 4px;
+  padding-top: 2px;
+  width: 100px;
+}
+
+.progressBarWrapper {
+  width: 100%;
+  padding-top: 0.5rem;
+}
+.progressBar {
+  background: #dfedff;
+  border-radius: 10px;
+}
+
+.topHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  > h2 {
+    width: 450px;
+  }
+
+  @media (max-width: breakpoint.$md) {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    > h2 {
+      width: 100%;
+    }
+  }
+}

@@ -10,6 +10,7 @@ import {
   radioBtn,
   radioInputText,
   textArea,
+  isRadioActive,
 } from './styles.module.scss';
 
 const FormIdeaSolution = () => {
@@ -57,7 +58,12 @@ const FormIdeaSolution = () => {
         <Panel title="Pilihan Tipe Solusi Digital yang Ingin Kamu Buat">
           <div className="d-flex justify-content-start">
             {SOLUTION_TYPES.map(({ text, id }) => (
-              <InputGroup key={id} className={radioBtnWrapper}>
+              <InputGroup
+                key={id}
+                className={`${
+                  id === solutionType && isRadioActive
+                } ${radioBtnWrapper}`}
+              >
                 <input
                   className={radioBtn}
                   type="radio"

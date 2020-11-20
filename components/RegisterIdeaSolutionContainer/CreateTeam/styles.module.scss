@@ -6,6 +6,13 @@
   align-items: center;
 }
 
+.teamWrapper {
+  display: grid;
+  grid-auto-columns: 146px;
+  grid-auto-flow: column;
+  gap: 32px;
+}
+
 .circleBorder {
   @include flex__center;
   width: 114px;
@@ -19,7 +26,7 @@
 }
 
 .teamMateText {
-  font-size: 1rem;
+  font-size: 0.75rem;
   text-align: center;
   margin: 10px 0 0 0;
 }

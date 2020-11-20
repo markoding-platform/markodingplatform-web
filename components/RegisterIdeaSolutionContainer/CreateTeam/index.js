@@ -5,27 +5,28 @@ import {
   circleBorder,
   addTeamMateWrapper,
   teamMateText,
+  teamWrapper,
 } from './styles.module.scss';
 
 const CreateTeam = () => {
   return (
     <div>
-      <div className="d-flex justify-content-center">
-        <div className="w-50">
+      <div className={teamWrapper}>
+        <div>
           <ProfileCard
-            title="ketua Tim"
+            title="Ketua Tim"
             primaryText="Amanda Simandjuntak"
             secondaryText="Siswa SMK"
           />
         </div>
 
-        <div className="w-50">
-          <div className="my-5">
+        <div>
+          <div className="my-4">
             <Card className={`${addTeamMateWrapper} border-0 py-4`}>
               <div className={circleBorder}>
                 <BsPlus size={40} className="text-dark" />
               </div>
-              <p className={teamMateText}>Tambahkan team member</p>
+              <p className={teamMateText}>Tambah anggota baru</p>
             </Card>
           </div>
         </div>
