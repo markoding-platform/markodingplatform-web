@@ -1,0 +1,59 @@
+@use "styles/colors";
+
+.radioBtn {
+  border: none !important;
+  background: colors.$white;
+  margin-right: 2px;
+  text-align: center;
+}
+.radioBtnWrapper {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  margin-right: 1rem;
+  padding: 0 4px;
+}
+
+.isRadioActive {
+  border: 1px solid #e2e5ed;
+}
+
+.radioInputText {
+  border: none !important;
+  background: colors.$white;
+  padding: 6px;
+  font-size: 12px;
+}
+
+.textArea {
+  width: 100% !important;
+  height: 200px !important;
+  resize: none;
+}
+
+.dropArea {
+  display: flex;
+  justify-content: center;
+  border: 1px dashed #9ea0a5;
+  box-sizing: border-box;
+  border-radius: 8px;
+  height: 288px;
+  background: no-repeat url('../../../svgs/file-uploader.svg');
+  background-position: 50% 25%;
+  position: relative;
+}
+
+.infoUploader {
+  position: absolute;
+  bottom: 0;
+  transform: translate(-6px, -75px);
+  text-align: center;
+  font-size: 1rem;
+}
+
+.infoText {
+  width: 13ch;
+  text-align: left;
+  font-size: 0.625rem;
+  margin: 0px 4px 0 4px;
+}
