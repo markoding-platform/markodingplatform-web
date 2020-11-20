@@ -24,3 +24,28 @@
   height: 200px !important;
   resize: none;
 }
+
+.dropArea {
+  border: 1px dashed #9ea0a5;
+  box-sizing: border-box;
+  border-radius: 8px;
+  height: 288px;
+  background: no-repeat url('../../../svgs/file-uploader.svg');
+  background-position: 50% 25%;
+  position: relative;
+}
+
+.infoUploader {
+  position: absolute;
+  bottom: 0;
+  transform: translate(-6px, -75px);
+  text-align: center;
+  font-size: 1rem;
+}
+
+.infoText {
+  width: 13ch;
+  text-align: left;
+  font-size: 0.625rem;
+  margin: 0px 4px 0 4px;
+}
