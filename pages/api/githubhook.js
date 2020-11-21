@@ -9,7 +9,7 @@ if (dotEnvResult.error) {
 
 const deployAction = async () => {
   exec(
-    'cd /home/ubuntu/markodingplatform-web/ && git reset –hard HEAD && git pull develop && npm install && npm run build && pm2 restart web',
+    'cd /home/ubuntu/markodingplatform-web/ && git reset -–hard HEAD && git pull develop && npm install && npm run build && pm2 restart web',
     (error, stdout, stderr) => {
       if (error) {
         console.log(`error: ${error.message}`);
@@ -33,15 +33,17 @@ export default (req, res) => {
       process.env.SECRET
     );
     const localSig = `sha1=${CryptoJS.enc.Hex.stringify(hash)}`;
+    console.log('githubEvent', githubEvent);
     console.log('github Signature', githubSig);
     console.log('local Signature', localSig);
     if (githubSig === localSig) {
-      const action = req.body.action || '';
-      const merged = req.body.pull_request || '';
-      console.log('githubEvent', merged);
+      // eslint-disable-next-line camelcase
+      const { action, pull_request } = req.body || {};
+      // eslint-disable-next-line camelcase
+      const { merged } = pull_request || false;
       console.log('merged status', merged);
       console.log('action status', action);
-      if (action === 'closed' && githubEvent === 'push' && merged) {
+      if (action === 'closed' && githubEvent === 'pull_requests' && merged) {
         deployAction().catch().then();
       }
     }
