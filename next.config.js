@@ -9,7 +9,7 @@ if (dotEnvResult.error) {
 module.exports = withPWA(
   withImages({
     pwa: {
-      disable: process.env.NODE_ENV !== 'production',
+      disable: process.env.STAGE !== 'production',
       dest: 'public',
     },
     images: {
@@ -20,6 +20,8 @@ module.exports = withPWA(
     fileExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg'],
     env: {
       TITLE: process.env.TITLE,
+      BRANCH: process.env.BRANCH,
+      SECRET: process.env.SECRET,
     },
     webpack(config) {
       return config;

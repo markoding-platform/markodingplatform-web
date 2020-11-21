@@ -1,8 +1,15 @@
 const { exec } = require('child_process');
+const CryptoJS = require('crypto-js');
+
+const dotEnvResult = require('dotenv').config();
+
+if (dotEnvResult.error) {
+  throw dotEnvResult.error;
+}
 
 const deployAction = async () => {
   exec(
-    'cd /home/ubuntu/markodingplatform-web/ && git reset –hard HEAD && git pull && npm install && npm run build && pm2 restart web',
+    'cd /home/ubuntu/markodingplatform-web/ && git reset –hard HEAD && git pull develop && npm install && npm run build && pm2 restart web',
     (error, stdout, stderr) => {
       if (error) {
         console.log(`error: ${error.message}`);
@@ -19,12 +26,24 @@ const deployAction = async () => {
 
 export default (req, res) => {
   if (req.method === 'POST') {
-    const gihubSecret = req.headers['x-hub-signature'] || '';
+    const githubSig = req.headers['x-hub-signature'] || '';
     const githubEvent = req.headers['x-github-event'] || '';
-    const merged = req.body.pull_request || '';
-    console.log(gihubSecret);
-    if (githubEvent === 'push' && merged) {
-      deployAction().catch().then();
+    const hash = CryptoJS.HmacSHA1(
+      JSON.stringify(req.body),
+      process.env.SECRET
+    );
+    const localSig = `sha1=${CryptoJS.enc.Hex.stringify(hash)}`;
+    console.log('github Signature', githubSig);
+    console.log('local Signature', localSig);
+    if (githubSig === localSig) {
+      const action = req.body.action || '';
+      const merged = req.body.pull_request || '';
+      console.log('githubEvent', merged);
+      console.log('merged status', merged);
+      console.log('action status', action);
+      if (action === 'closed' && githubEvent === 'push' && merged) {
+        deployAction().catch().then();
+      }
     }
     res.statusCode = 200;
     res.json({
