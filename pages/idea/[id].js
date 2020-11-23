@@ -1,5 +1,5 @@
 import Layout from 'components/Layout';
-import DetailIdea from 'components/IdeaAndSolutionContainer/DetailIdea';
+import IdeaDetails from 'components/IdeaAndSolutionContainer/IdeaDetails';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 
 export default function IdeaDetail() {
@@ -10,7 +10,7 @@ export default function IdeaDetail() {
           <PointBadgeWrapper />
         </div>
         <div className="inner-section pb-5">
-          <DetailIdea />
+          <IdeaDetails />
         </div>
       </div>
     </Layout>
