@@ -7,7 +7,7 @@ import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
 // import Avatar from 'public/assets/avatar-min.png';
-import { ideaImage } from './styles.module.scss';
+import { ideaImage } from './style.module.scss';
 
 const dummyBlog = [
   {

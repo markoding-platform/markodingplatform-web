@@ -1,0 +1,47 @@
+@use 'styles/breakpoint';
+@use 'styles/colors';
+
+.ideasWrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+.ideaCardWrapper {
+  flex: 1 1 246px;
+  margin: 8px;
+}
+
+.textTitle {
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 1.2px;
+  text-align: left;
+}
+
+.ideaImage {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.btnTopAction {
+  display: flex;
+  height: 48px;
+  width: auto;
+  border-radius: 4px;
+  padding: 8px;
+  background: #ffffff;
+  justify-content: center;
+  align-items: center;
+  &:first-of-type {
+    margin-right: 8px;
+  }
+}
+
+.textAction {
+  margin-left: 8px;
+  color: colors.$secondary;
+  @media (max-width: breakpoint.$sm) {
+    display: none;
+  }
+}
