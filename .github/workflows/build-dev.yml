@@ -22,15 +22,15 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout 🛎️
       - uses: actions/checkout@v2
-      - name: Use Node.js 12
+      - name: Install and Build with node 12 🔧 👷🏾‍♂️
         uses: actions/setup-node@v1
         with:
           node-version: 12
-
       - run: npm install
-      - run: npm run build --if-present
-      - env:
+      - run: npm run build
+        env:
           STAGE: production
           TITLE: Markoding
           BRANCH: develop
