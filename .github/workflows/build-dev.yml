@@ -28,10 +28,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-        env:
-          STAGE: production
-          TITLE: Markoding
-          BRANCH: develop
-          SECRET: dummy
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_STAGE: production
+          envkey_TITLE: Markoding
+          envkey_BRANCH: develop
+          envkey_SECRET: dummy
+          file_name: .env
       - run: npm install
       - run: npm run build
