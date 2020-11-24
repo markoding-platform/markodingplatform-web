@@ -13,7 +13,7 @@ module.exports = withPWA(
       dest: 'public',
     },
     images: {
-      domains: ['image.freepik.com'], // next/image for external link freepick just for dummy
+      domains: ['image.freepik.com'],
       dest: 'public',
     },
     inlineImageLimit: false,
