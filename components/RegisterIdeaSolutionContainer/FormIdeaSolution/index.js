@@ -20,6 +20,7 @@ const FormIdeaSolution = () => {
   const [solutionName, setSolutionName] = useState();
   const [solutionType, setSolutionType] = useState('');
   const [problemSelection, setProblemSelection] = useState('');
+  const [problemArea, setProblemArea] = useState('');
   const [problemReason, setProblemReason] = useState('');
   const [targetCustomer, setTargetCustomer] = useState('');
 
@@ -83,8 +84,8 @@ const FormIdeaSolution = () => {
         <Panel title="Bidang Masalah">
           <TextField
             placeholder="Tulis bidang masalah yang ingin kamu selesaikan"
-            defaultVal={problemSelection}
-            onEmit={setProblemSelection}
+            defaultVal={problemArea}
+            onEmit={setProblemArea}
           />
         </Panel>
         <Panel title="Pemilihan Masalah">

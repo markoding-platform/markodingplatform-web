@@ -1,10 +1,18 @@
 import Layout from 'components/Layout';
-import IdeaAndSolutionLayout from 'components/IdeaAndSolutionLayout';
+import PointBadgeWrapper from 'components/PointBadgeWrapper';
+import IdeaAndSolutionContainer from 'components/IdeaAndSolutionContainer';
 
 export default function Idea() {
   return (
     <Layout activeMenu="/idea">
-      <IdeaAndSolutionLayout />
+      <div className="main-content">
+        <div className="pb-4">
+          <PointBadgeWrapper />
+        </div>
+        <div className="inner-section pb-5">
+          <IdeaAndSolutionContainer />
+        </div>
+      </div>
     </Layout>
   );
 }

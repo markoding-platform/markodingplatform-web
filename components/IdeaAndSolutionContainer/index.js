@@ -1,21 +1,32 @@
 import IdeaCard from 'components/IdeaCard';
 import { arrayOf, shape, string } from 'prop-types';
-import { ideasWrapper } from './styles.module.scss';
+import FilterIdea from './Filter';
+import SortIdea from './Sort';
+import { ideasWrapper, ideaCardWrapper } from './style.module.scss';
 
 const IdeaAndSolutionContainer = ({ items }) => {
+  const dummies = [...items, ...items, ...items];
   return (
     <>
+      <div className="d-flex justify-content-between">
+        <h2>Galeri Ide Solusi</h2>
+        <div className="d-flex">
+          <SortIdea />
+          <FilterIdea />
+        </div>
+      </div>
       <div className={ideasWrapper}>
-        {items.map((idea) => {
+        {dummies.map((idea) => {
           const { id, title, src, link, description } = idea;
           return (
-            <IdeaCard
-              key={id}
-              title={title}
-              imageUrl={src}
-              link={link}
-              description={description}
-            />
+            <div key={id} className={ideaCardWrapper}>
+              <IdeaCard
+                title={title}
+                imageUrl={src}
+                link={link}
+                description={description}
+              />
+            </div>
           );
         })}
       </div>

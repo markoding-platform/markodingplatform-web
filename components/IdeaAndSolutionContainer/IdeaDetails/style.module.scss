@@ -1,0 +1,39 @@
+@use 'styles/breakpoint';
+@use 'styles/colors';
+
+.ideaSection {
+  margin-top: 32px;
+  > h4 {
+    margin-bottom: 16px;
+  }
+}
+
+.teamInfo {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.infoItem {
+  flex-basis: calc(33.33% - 16px);
+  margin-bottom: 16px;
+  > .info__text {
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 1.2px;
+    text-align: left;
+  }
+  @media (max-width: breakpoint.$sm) {
+    flex-basis: calc(50% - 16px);
+  }
+}
+
+.voteBtn {
+  width: 100%;
+  background: colors.$primary;
+  color: colors.$dark;
+  border: 0;
+  border-radius: 6px;
+  margin-top: 64px;
+}

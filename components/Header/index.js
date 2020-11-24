@@ -16,6 +16,7 @@ import {
   desktopLogo,
   desktopSkilvulIcon,
   desktopNotifIcon,
+  grayish,
 } from './styles.module.scss';
 
 const Header = () => {
@@ -27,7 +28,7 @@ const Header = () => {
         <div className={desktopLogo}>
           <MarkodingLogo isSmall />
           <div className="d-flex align-items-center">
-            <Icon src={skilvulLogo} size={25} className={desktopSkilvulIcon} />
+            <Icon src={skilvulLogo} size={30} className={desktopSkilvulIcon} />
             <Icon src={notifFill} size={24} className={desktopNotifIcon} />
           </div>
         </div>
@@ -45,7 +46,7 @@ const Header = () => {
             </button>
             <MarkodingLogo />
             <div className="d-flex">
-              <Icon src={skilvulLogo} size={30} />
+              <Icon src={skilvulLogo} size={30} className={grayish} />
               <Icon src={notif} size={30} />
             </div>
           </div>

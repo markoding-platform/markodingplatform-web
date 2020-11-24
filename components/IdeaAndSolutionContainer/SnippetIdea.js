@@ -7,7 +7,7 @@ import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
 // import Avatar from 'public/assets/avatar-min.png';
-import { ideaImage } from './styles.module.scss';
+import { ideaImage } from './style.module.scss';
 
 const dummyBlog = [
   {
@@ -59,7 +59,8 @@ const DetailIdea = ({ likeCount, commentCount }) => {
           src={blogContent.imageUrl}
           alt={blogContent.title}
           width={500}
-          height={200}
+          height={300}
+          layout="responsive"
           className={ideaImage}
         />
       </div>
