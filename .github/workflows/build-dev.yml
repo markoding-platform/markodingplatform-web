@@ -28,7 +28,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Setup ENV
         env:
           STAGE: production
           TITLE: Markoding
