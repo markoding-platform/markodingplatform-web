@@ -1,11 +1,11 @@
 import React from 'react';
 import { string, number } from 'prop-types';
-import styles from './styles.module.scss';
+import { iconWrapper } from './style.module.scss';
 
-const Icon = ({ src, size, ...props }) => {
+const Icon = ({ src, size, className, ...props }) => {
   return (
     <i
-      className={styles.iconWrapper}
+      className={`${iconWrapper} ${className}`}
       style={{
         backgroundImage: `url(${src})`,
         width: `${size > 0 ? size : '40'}px`,
@@ -17,11 +17,13 @@ const Icon = ({ src, size, ...props }) => {
 };
 
 Icon.propTypes = {
+  className: string,
   size: number,
   src: string.isRequired,
 };
 
 Icon.defaultProps = {
+  className: '',
   size: 0,
 };
 

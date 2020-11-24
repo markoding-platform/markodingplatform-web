@@ -59,7 +59,8 @@ const DetailIdea = ({ likeCount, commentCount }) => {
           src={blogContent.imageUrl}
           alt={blogContent.title}
           width={500}
-          height={200}
+          height={300}
+          layout="responsive"
           className={ideaImage}
         />
       </div>

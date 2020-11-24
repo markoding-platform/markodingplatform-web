@@ -1,10 +1,13 @@
 @use "styles/colors";
 
+@mixin gray__filter {
+  filter: grayscale(100%);
+}
 .innerHeader {
   display: flex;
   width: 100%;
   justify-content: space-between;
-	align-items: center;
+  align-items: center;
 }
 .headerWrapper {
   width: 100%;
@@ -19,23 +22,28 @@
 }
 
 .burgerBtn {
-  width: 56px;
+  width: 48px;
   height: 40px;
+  padding: 4px 8px;
 }
 
 .desktopLogo {
-	display: flex;
-	justify-content: space-between;
-	padding: 15px 1.25rem;
-	margin-bottom: 50px;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 1.25rem;
+  margin-bottom: 50px;
 }
 
 .desktopSkilvulIcon {
-	filter: grayscale(100%);
-	height: 26px !important;
+  @include gray__filter;
+  height: 26px !important;
 }
 
 .desktopNotifIcon {
-	margin-left: 10px;
-	height: 22px !important;
+  margin-left: 10px;
+  height: 22px !important;
+}
+
+.grayish {
+  @include gray__filter;
 }

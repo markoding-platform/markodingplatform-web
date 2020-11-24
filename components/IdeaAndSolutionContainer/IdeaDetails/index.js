@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { number } from 'prop-types';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-// import Button from 'react-bootstrap/Button';
+
+import Button from 'react-bootstrap/Button';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
 import Avatar from 'public/assets/avatar-min.png';
 import { ideaImage } from '../style.module.scss';
-import { ideaSection, teamInfo, infoItem } from './style.module.scss';
+import { ideaSection, teamInfo, infoItem, voteBtn } from './style.module.scss';
 
 import Teams from '../Teams';
 import data from './mocks';
@@ -115,8 +116,9 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
           src={blogContent.imageUrl}
           alt={blogContent.title}
           width={500}
-          height={200}
+          height={320}
           className={ideaImage}
+          layout="responsive"
         />
       </div>
       <div className="d-flex align-items-center justify-content-between">
@@ -161,36 +163,41 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       <hr />
       <Teams items={additionalTeams} />
       <hr />
-      <div className={ideaSection} id="problemReason">
-        <h4>Alasan Masalah</h4>
-        <p className="text-secondary m-0">{data.problemReason}</p>
+      <div>
+        <div className={ideaSection} id="problemReason">
+          <h4>Alasan Masalah</h4>
+          <p className="text-secondary m-0">{data.problemReason}</p>
+        </div>
+        <div className={ideaSection} id="solutionSummary">
+          <h4>Solusi Singkat</h4>
+          <p className="text-secondary m-0">{data.solutionSummary}</p>
+        </div>
+        <div className={ideaSection} id="solutionVision">
+          <h4>Ide Solusi</h4>
+          <p className="text-secondary m-0">{data.solutionVision}</p>
+        </div>
+        <div className={ideaSection}>
+          <h4>Link Video</h4>
+        </div>
+        <div className={ideaSection}>
+          <h4>Target Customer</h4>
+          <p className="text-secondary m-0">{data.targetCustomer}</p>
+        </div>
+        <div className={ideaSection}>
+          <h4>Kelebihan Ide Solusi</h4>
+          <p className="text-secondary m-0">{data.solutionBenefit}</p>
+        </div>
+        <div className={ideaSection}>
+          <h4>Kendala</h4>
+          <p className="text-secondary m-0">{data.solutionObstacle}</p>
+        </div>
+        <div className={ideaSection}>
+          <h4>Kolaborasi</h4>
+          <p className="text-secondary m-0">{data.potentialCollaboration}</p>
+        </div>
       </div>
-      <div className={ideaSection} id="solutionSummary">
-        <h4>Solusi Singkat</h4>
-        <p className="text-secondary m-0">{data.solutionSummary}</p>
-      </div>
-      <div className={ideaSection} id="solutionVision">
-        <h4>Ide Solusi</h4>
-        <p className="text-secondary m-0">{data.solutionVision}</p>
-      </div>
-      <div className={ideaSection}>
-        <h4>Link Video</h4>
-      </div>
-      <div className={ideaSection}>
-        <h4>Target Customer</h4>
-        <p className="text-secondary m-0">{data.targetCustomer}</p>
-      </div>
-      <div className={ideaSection}>
-        <h4>Kelebihan Ide Solusi</h4>
-        <p className="text-secondary m-0">{data.solutionBenefit}</p>
-      </div>
-      <div className={ideaSection}>
-        <h4>Kendala</h4>
-        <p className="text-secondary m-0">{data.solutionObstacle}</p>
-      </div>
-      <div className={ideaSection}>
-        <h4>Kolaborasi</h4>
-        <p className="text-secondary m-0">{data.potentialCollaboration}</p>
+      <div>
+        <Button className={voteBtn}>Vote Ide Solusi</Button>
       </div>
     </div>
   );
