@@ -2,8 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Head from 'next/head';
 import Container from 'react-bootstrap/Container';
+
+import Footer from 'components/Footer';
 import BottomNavigation from 'components/BottomNavigation';
-import Header from '../Header';
+import Header from 'components/Header';
 
 const Layout = ({ children, activeMenu }) => {
   return (
@@ -43,8 +45,12 @@ const Layout = ({ children, activeMenu }) => {
           <div className="desktop-left-section">
             <Header />
           </div>
-          <div className="flex-grow-1 desktop-right-section">{children}</div>
+          <div className="flex-grow-1 desktop-right-section">
+            {children}
+            <Footer />
+          </div>
         </div>
+
         <div className="bg-white fixed-bottom d-block d-lg-none">
           <BottomNavigation activeKey={activeMenu} />
         </div>

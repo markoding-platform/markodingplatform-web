@@ -1,0 +1,41 @@
+@use 'styles/colors';
+
+.footerContainer {
+  width: 100%;
+  height: 426px;
+  background: #ffffff;
+}
+
+.leftSide {
+  width: 400px;
+}
+.markodingMessage {
+  height: 120px;
+
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  text-align: left;
+}
+
+.innerFooter {
+  padding: 24px;
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.footerItem {
+  flex: 1 1 100%;
+}
+.footerChild {
+  display: flex;
+  flex-direction: column;
+}
+
+.textBold {
+  font-weight: bold;
+  color: colors.$dark;
+}
