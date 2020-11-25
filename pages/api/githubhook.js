@@ -9,7 +9,7 @@ if (dotEnvResult.error) {
 
 const deployAction = async () => {
   exec(
-    'cd /home/ubuntu/markodingplatform-web/ && git clean && git pull && npm install && npm run build && pm2 restart web',
+    'cd /home/ubuntu/markodingplatform-web/ && git pull && npm install && npm run build && pm2 restart web',
     (error, stdout, stderr) => {
       if (error) {
         console.log(`error: ${error.message}`);
