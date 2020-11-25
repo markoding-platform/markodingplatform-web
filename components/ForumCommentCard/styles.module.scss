@@ -1,11 +1,5 @@
 @use "styles/colors";
 
-.root {
-  background-color: colors.$white;
-  box-shadow: 0 25px 50px rgba(35, 37, 96, 0.07);
-  border-radius: 0.25rem;
-}
-
 .avatar {
 	position: relative;
   min-width: 52px;
@@ -15,13 +9,13 @@
 .text {
   font-size: 16px;
   color: colors.$secondary;
-  margin-bottom: 0;
 }
 
 .time {
   font-size: 14px;
   color: colors.$text-3rd;
-  margin-bottom: 15px;
+	display: block;
+	margin: 0 8px;
 }
 
 .iconLike {

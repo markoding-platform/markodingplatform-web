@@ -1,3 +1,5 @@
+import React from 'react';
+import Image from 'next/image';
 import PropTypes from 'prop-types';
 import Media from 'react-bootstrap/Media';
 import { BsFillHeartFill } from 'react-icons/bs';
@@ -7,22 +9,25 @@ import styles from './styles.module.scss';
 const ForumCard = (props) => {
   const { imageUrl, name, comment, likeCount, commentCount, time } = props;
   return (
-    <div className="shadow rounded">
+    <div className={styles.root}>
       <Media className="p-3">
-        <img
-          width={52}
-          height={52}
-          className="mr-3 rounded"
-          src={imageUrl}
-          alt={name}
-        />
+        <div className={styles.avatar}>
+          <Image
+            src={imageUrl}
+            alt={name}
+            width={52}
+            height={52}
+            layout="responsive"
+            className="rounded"
+          />
+        </div>
         <Media.Body>
           <h5>{name}</h5>
           <p className={styles.time}>{time}</p>
           <p className={styles.text}>{comment}</p>
         </Media.Body>
       </Media>
-      <div className="d-flex justify-content-start border-top p-3">
+      <div className="d-flex justify-content-start border-top pt-2 pb-2 pl-3 pr-3">
         <div className="mr-5">
           <BsFillHeartFill className={styles.iconLike} />
           {`${likeCount} Likes`}
