@@ -47,7 +47,9 @@ const Layout = ({ children, activeMenu }) => {
           </div>
           <div className="flex-grow-1 desktop-right-section">
             {children}
-            <Footer />
+            <div className="d-none d-lg-block">
+              <Footer />
+            </div>
           </div>
         </div>
 
