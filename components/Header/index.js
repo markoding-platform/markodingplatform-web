@@ -17,13 +17,14 @@ import {
   desktopSkilvulIcon,
   desktopNotifIcon,
   grayish,
+  rootHeader,
 } from './styles.module.scss';
 
 const Header = () => {
   const [isOpeDrawer, setIsOpenDrawer] = useState(false);
 
   return (
-    <header>
+    <header className={rootHeader}>
       <div className="d-none d-lg-block">
         <div className={desktopLogo}>
           <MarkodingLogo isSmall />

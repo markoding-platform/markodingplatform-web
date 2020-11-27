@@ -5,9 +5,11 @@ import navItems from './navItems';
 import { rotateDown, rotate, bgPrimary } from './styles.module.scss';
 
 const NavMenu = () => {
-  const [isShowNavTree, setShowNavTree] = useState(false);
-  const handleShowNavTree = () => {
-    setShowNavTree((prevState) => !prevState);
+  const [showNavTreeId, setShowNavTreeId] = useState(null);
+  const handleShowNavTree = (val) => {
+    setShowNavTreeId((prevState) =>
+      prevState !== null && prevState === val ? null : val
+    );
   };
   return (
     <ul className={`list-group list-group-flush ${bgPrimary}`}>
@@ -17,11 +19,13 @@ const NavMenu = () => {
             <div
               role="presentation"
               className="d-flex justify-content-between"
-              onClick={handleShowNavTree}
+              onClick={() => handleShowNavTree(navItem.id)}
             >
               {navItem.text}
               <BsChevronDown
-                className={`${rotate} ${isShowNavTree && rotateDown}`}
+                className={`${rotate} ${
+                  showNavTreeId === navItem.id && rotateDown
+                }`}
                 size={20}
               />
             </div>
@@ -40,7 +44,7 @@ const NavMenu = () => {
             </Link>
           )}
 
-          {navItem?.children && isShowNavTree && (
+          {navItem?.children && showNavTreeId === navItem.id && (
             <ul className="list-group list-group-flush">
               {navItem.children.map((item) => (
                 <li

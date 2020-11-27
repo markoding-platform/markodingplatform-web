@@ -1,7 +1,14 @@
 @use "styles/colors";
+@use "styles/breakpoint";
 
 @mixin gray__filter {
   filter: grayscale(100%);
+}
+.rootHeader {
+	position: fixed;
+	@media (min-width: breakpoint.$lg) {
+		max-width: 290px;
+	}
 }
 .innerHeader {
   display: flex;

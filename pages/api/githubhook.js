@@ -33,17 +33,12 @@ export default (req, res) => {
       process.env.SECRET
     );
     const localSig = `sha1=${CryptoJS.enc.Hex.stringify(hash)}`;
-    console.log('githubEvent', githubEvent);
-    console.log('github Signature', githubSig);
-    console.log('local Signature', localSig);
     if (githubSig === localSig) {
       // eslint-disable-next-line camelcase
       const { action, pull_request } = req.body || {};
       // eslint-disable-next-line camelcase
       const { merged } = pull_request || false;
-      console.log('merged status', merged);
-      console.log('action status', action);
-      if (action === 'closed' && githubEvent === 'pull_requests' && merged) {
+      if (action === 'closed' && githubEvent === 'pull_request' && merged) {
         deployAction().catch().then();
       }
     }

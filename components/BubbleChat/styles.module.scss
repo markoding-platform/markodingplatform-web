@@ -1,0 +1,37 @@
+@use "styles/colors";
+
+.root {
+	width: 100%;
+	display: flex;
+	align-items: start;
+	&.left {
+		justify-content: flex-start;
+	}
+	&.right {
+		justify-content: flex-end;
+	}
+}
+
+.bubbleGroup {
+	position: relative;
+	margin-left: 8px;
+}
+
+.bubble {
+	width: inherit;
+	max-width: 300px;
+	padding: 15px;
+	&.left {
+		background-color: colors.$white;
+		border-radius: 20px 20px 20px 0;
+	}
+	&.right {
+		background-color: colors.$main;
+		border-radius: 20px 20px 0 20px;
+	}
+}
+
+.dateTime {
+	font-size: 12px;
+	color: colors.$text-3rd;
+}
