@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import CourseCard from 'components/CoursesCard';
+import CourseCard from 'components/CourseCard';
 import Layout from 'components/Layout';
 import styles from 'styles/blog.module.scss';
 

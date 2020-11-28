@@ -1,198 +1,20 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import Alert from 'react-bootstrap/Alert';
-import EmblaCarousel from 'components/EmblaCarousel';
-import BannerItem from 'components/BannerItem';
-import SectionCardWrapper from 'components/SectionCardWrapper';
-import EventCard from 'components/EventCard';
-import IdeaCard from 'components/IdeaCard';
-import BlogCard from 'components/BlogCard';
+import React from 'react';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import CourseCard from 'components/CoursesCard';
 import Layout from 'components/Layout';
 import styles from 'styles/home.module.scss';
+import HomeContainer from 'components/HomeContainer';
 
-const Home = ({ banners, dataDummy }) => {
-  const [alertShow, setAlertShow] = useState(true);
-
-  const courses = [
-    {
-      id: 'javascript-dasar',
-      title: 'Javascript Dasar',
-      src:
-        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/jpFTJLRtjyRGYMpLwUPKR.jpg',
-      link: 'https://www.skilvul.com/courses/javascript-dasar',
-      description:
-        'Di kelas ini kita akan belajar bagaimana membuat sebuah website menjadi lebih interaktif dengan menambahkan beberapa program yang ditulis menggunakan JavaScript',
-    },
-    {
-      id: 'html-dasar',
-      title: 'HTML Dasar',
-      src:
-        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/FwqK3W86sKns3jn-3qmN3.jpg',
-      link: 'https://www.skilvul.com/courses/html-dasar',
-      description:
-        'Di kelas ini, kita akan belajar bagaimana membuat sebuah website dari awal dengan menggunakan HTML.',
-    },
-    {
-      id: 'css-dasar',
-      title: 'CSS Dasar',
-      src:
-        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/fnf0dPehzaPgyRjr1hZb1.jpg',
-      link: 'https://www.skilvul.com/courses/css-dasar',
-      description:
-        'Di kelas ini kita akan belajar bagaimana cara memberikan style pada setiap element di website dengan menggunakan CSS',
-    },
-  ];
-
+const Home = () => {
   return (
     <Layout activeMenu="/">
       <div className={styles.homeContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>
-        <div className="inner-section">
-          <Alert
-            show={alertShow}
-            variant="primary"
-            onClose={() => setAlertShow(false)}
-            dismissible
-          >
-            <p className="mb-0">Lengkapi Profile mu</p>
-          </Alert>
-        </div>
-        <div className="inner-full-section pb-5">
-          <EmblaCarousel slideToScroll={1} withButton>
-            {banners.map((banner) => (
-              <BannerItem
-                key={banner.id}
-                imageUrl={banner.src}
-                title={banner.title}
-                link={banner.link}
-              />
-            ))}
-          </EmblaCarousel>
-        </div>
-        <div className="pb-5">
-          <SectionCardWrapper title="Event Terdekat" link="/event">
-            {dataDummy.map((event) => (
-              <EventCard
-                key={event.id}
-                imageUrl={event.src}
-                title={`Event ${event.id}`}
-                date={event.date}
-                time={event.time}
-                link={`/event/${event.id}`}
-              />
-            ))}
-          </SectionCardWrapper>
-        </div>
-        <div className="pb-5">
-          <SectionCardWrapper title="Galeri Ide Solusi" link="/idea">
-            {dataDummy.map((idea) => (
-              <IdeaCard
-                key={idea.id}
-                link={idea.link}
-                imageUrl={idea.src}
-                title={`Idea ${idea.id}`}
-                description={idea.description}
-              />
-            ))}
-          </SectionCardWrapper>
-        </div>
-        <div className="pb-5">
-          <SectionCardWrapper title="Kelas Online" link="/course">
-            {courses.map((course) => (
-              <CourseCard
-                key={course.id}
-                imageUrl={course.src}
-                title={course.title}
-                description={course.description}
-                link={course.link}
-              />
-            ))}
-          </SectionCardWrapper>
-        </div>
-        <div className="pb-5">
-          <SectionCardWrapper title="Cerita Markoding" link="/blog">
-            {dataDummy.map((blog) => (
-              <BlogCard
-                key={blog.id}
-                imageUrl={blog.src}
-                title={`Blog ${blog.id}`}
-                description={blog.description}
-                date={blog.date}
-                link={`/blog/${blog.id}`}
-              />
-            ))}
-          </SectionCardWrapper>
-        </div>
+        <HomeContainer />
       </div>
     </Layout>
   );
-};
-
-Home.defaultProps = {
-  banners: [
-    {
-      id: 'one',
-      title: 'dummy one',
-      src:
-        'https://image.freepik.com/free-photo/teacher-pointing-her-with-copy-space_23-2148668633.jpg',
-      link: '/todo',
-    },
-    {
-      id: 'two',
-      title: 'dummy two',
-      src:
-        'https://image.freepik.com/free-photo/back-school-concept-books-colored-pencils-clock_155003-9212.jpg',
-      link: '/todo',
-    },
-    {
-      id: 'three',
-      title: 'dummy three',
-      src:
-        'https://image.freepik.com/free-photo/young-schoolgirl-eyeglasses-holding-her-books-makes-confused-face_114579-14906.jpg',
-      link: '/todo',
-    },
-  ],
-  dataDummy: [
-    {
-      id: 'one',
-      title: 'Event One',
-      src:
-        'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg',
-      link: '/todo',
-      date: '25 April 2021',
-      time: '2PM - 5PM',
-      description: 'Terra, Social enterprise, manufatrues and sells...',
-    },
-    {
-      id: 'two',
-      title: 'Event Two',
-      src:
-        'https://image.freepik.com/free-psd/girl-doing-stretching-exercises_23-2148253770.jpg',
-      link: '/todo',
-      date: '3 Mei 2021',
-      time: '1PM - 5PM',
-      description: 'Terra, Social enterprise, manufatrues and sells...',
-    },
-    {
-      id: 'three',
-      title: 'Event Three',
-      src:
-        'https://image.freepik.com/free-photo/smiling-teacher-with-drink-classroom_23-2148201042.jpg',
-      link: '/todo',
-      date: '25 Jun 2021',
-      time: '1PM - 4PM',
-      description: 'Terra, Social enterprise, manufatrues and sells...',
-    },
-  ],
-};
-
-Home.propTypes = {
-  banners: PropTypes.instanceOf(Array),
-  dataDummy: PropTypes.instanceOf(Array),
 };
 
 export default Home;
