@@ -11,13 +11,9 @@ const BlogCard = (props) => {
     <Link href={link}>
       <a href={link} className={styles.link}>
         <Card className={styles.card}>
-          <Image
-            src={imageUrl}
-            alt={title}
-            width={308}
-            height={177}
-            layout="responsive"
-          />
+          <div className={styles.image}>
+            <Image src={imageUrl} alt={title} layout="fill" />
+          </div>
           <Card.Body>
             <Card.Title className={styles.title}>{title}</Card.Title>
             <Card.Text className={styles.text}>{description}</Card.Text>

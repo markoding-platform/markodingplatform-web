@@ -5,8 +5,8 @@
   filter: grayscale(100%);
 }
 .rootHeader {
-	position: fixed;
 	@media (min-width: breakpoint.$lg) {
+		position: fixed;
 		max-width: 290px;
 	}
 }

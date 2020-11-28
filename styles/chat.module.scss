@@ -1,9 +1,13 @@
 @use "colors";
+@use "breakpoint";
 
 .chatContent {
   position: relative;
   background-color: colors.$bg;
   display: flow-root;
+	@media (max-width: breakpoint.$lg) {
+		min-height: 550px;
+	}
 }
 
 .searchGroup {

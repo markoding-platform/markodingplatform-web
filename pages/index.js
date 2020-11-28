@@ -6,14 +6,44 @@ import BannerItem from 'components/BannerItem';
 import SectionCardWrapper from 'components/SectionCardWrapper';
 import EventCard from 'components/EventCard';
 import IdeaCard from 'components/IdeaCard';
-import CoursesCard from 'components/CoursesCard';
 import BlogCard from 'components/BlogCard';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
+import CourseCard from 'components/CoursesCard';
 import Layout from 'components/Layout';
 import styles from 'styles/home.module.scss';
 
 const Home = ({ banners, dataDummy }) => {
   const [alertShow, setAlertShow] = useState(true);
+
+  const courses = [
+    {
+      id: 'javascript-dasar',
+      title: 'Javascript Dasar',
+      src:
+        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/jpFTJLRtjyRGYMpLwUPKR.jpg',
+      link: 'https://www.skilvul.com/courses/javascript-dasar',
+      description:
+        'Di kelas ini kita akan belajar bagaimana membuat sebuah website menjadi lebih interaktif dengan menambahkan beberapa program yang ditulis menggunakan JavaScript',
+    },
+    {
+      id: 'html-dasar',
+      title: 'HTML Dasar',
+      src:
+        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/FwqK3W86sKns3jn-3qmN3.jpg',
+      link: 'https://www.skilvul.com/courses/html-dasar',
+      description:
+        'Di kelas ini, kita akan belajar bagaimana membuat sebuah website dari awal dengan menggunakan HTML.',
+    },
+    {
+      id: 'css-dasar',
+      title: 'CSS Dasar',
+      src:
+        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/fnf0dPehzaPgyRjr1hZb1.jpg',
+      link: 'https://www.skilvul.com/courses/css-dasar',
+      description:
+        'Di kelas ini kita akan belajar bagaimana cara memberikan style pada setiap element di website dengan menggunakan CSS',
+    },
+  ];
 
   return (
     <Layout activeMenu="/">
@@ -72,11 +102,11 @@ const Home = ({ banners, dataDummy }) => {
         </div>
         <div className="pb-5">
           <SectionCardWrapper title="Kelas Online" link="/course">
-            {dataDummy.map((course) => (
-              <CoursesCard
+            {courses.map((course) => (
+              <CourseCard
                 key={course.id}
                 imageUrl={course.src}
-                title={`Course ${course.id}`}
+                title={course.title}
                 description={course.description}
                 link={course.link}
               />

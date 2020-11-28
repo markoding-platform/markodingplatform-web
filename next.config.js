@@ -13,7 +13,10 @@ module.exports = withPWA(
       dest: 'public',
     },
     images: {
-      domains: ['image.freepik.com'],
+      domains: [
+        'image.freepik.com',
+        'skilvul-prod-01.s3.ap-southeast-1.amazonaws.com',
+      ],
       dest: 'public',
     },
     inlineImageLimit: false,

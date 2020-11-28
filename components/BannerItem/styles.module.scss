@@ -16,3 +16,11 @@
 	overflow: hidden;
 	border-radius: 6px;
 }
+
+.image {
+	position: relative;
+	height: 276px;
+	@media (max-width: breakpoint.$lg) {
+		height: 145px;
+	}
+}

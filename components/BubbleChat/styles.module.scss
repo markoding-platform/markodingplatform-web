@@ -1,4 +1,5 @@
 @use "styles/colors";
+@use "styles/breakpoint";
 
 .root {
 	width: 100%;
@@ -28,6 +29,9 @@
 	&.right {
 		background-color: colors.$main;
 		border-radius: 20px 20px 0 20px;
+	}
+	@media (max-width: breakpoint.$lg) {
+		max-width: 240px;
 	}
 }
 
