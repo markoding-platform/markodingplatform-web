@@ -8,7 +8,7 @@ import CourseWidget from './CourseWidget/CourseWidget';
 import GalleryIdeaWidget from './GalleryIdeaWidget';
 import BlogWidget from './BlogWidget';
 
-const HomeContainer = ({ banners, dataDummy }) => {
+const HomeContainer = ({ banners, dataDummy, courses }) => {
   const [alertShow, setAlertShow] = useState(true);
 
   return (
@@ -26,7 +26,7 @@ const HomeContainer = ({ banners, dataDummy }) => {
       <HomeTopCarousel banners={banners} />
       <EventWidget events={dataDummy} />
       <GalleryIdeaWidget ideas={dataDummy} />
-      <CourseWidget courses={dataDummy} />
+      <CourseWidget courses={courses} />
       <BlogWidget blogs={dataDummy} />
     </>
   );
@@ -88,11 +88,41 @@ HomeContainer.defaultProps = {
       description: 'Terra, Social enterprise, manufatrues and sells...',
     },
   ],
+  courses: [
+    {
+      id: 'javascript-dasar',
+      title: 'Javascript Dasar',
+      src:
+        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/jpFTJLRtjyRGYMpLwUPKR.jpg',
+      link: 'https://www.skilvul.com/courses/javascript-dasar',
+      description:
+        'Di kelas ini kita akan belajar bagaimana membuat sebuah website menjadi lebih interaktif dengan menambahkan beberapa program yang ditulis menggunakan JavaScript',
+    },
+    {
+      id: 'html-dasar',
+      title: 'HTML Dasar',
+      src:
+        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/FwqK3W86sKns3jn-3qmN3.jpg',
+      link: 'https://www.skilvul.com/courses/html-dasar',
+      description:
+        'Di kelas ini, kita akan belajar bagaimana membuat sebuah website dari awal dengan menggunakan HTML.',
+    },
+    {
+      id: 'css-dasar',
+      title: 'CSS Dasar',
+      src:
+        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/fnf0dPehzaPgyRjr1hZb1.jpg',
+      link: 'https://www.skilvul.com/courses/css-dasar',
+      description:
+        'Di kelas ini kita akan belajar bagaimana cara memberikan style pada setiap element di website dengan menggunakan CSS',
+    },
+  ],
 };
 
 HomeContainer.propTypes = {
   banners: PropTypes.instanceOf(Array),
   dataDummy: PropTypes.instanceOf(Array),
+  courses: PropTypes.instanceOf(Array),
 };
 
 export default HomeContainer;

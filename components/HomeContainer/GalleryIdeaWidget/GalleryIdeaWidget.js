@@ -14,9 +14,10 @@ const GalleryIdeaWidget = ({ ideas }) => {
               key={idea.id}
               imageUrl={idea.src}
               title={`Ide Solusi ${idea.id}`}
-              date={idea.date}
-              time={idea.time}
               link={`/idea/${idea.id}`}
+              description={idea.description}
+              likeCount={14}
+              commentCount={22}
             />
           ))}
         </SectionCardWrapper>

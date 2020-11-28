@@ -11,11 +11,19 @@
 	}
 }
 
+.image {
+	position: relative;
+	height: 165px;
+	@media (max-width: breakpoint.$lg) {
+		height: 125px;
+	}
+}
+
 .title {
-	height: 48px;
+	max-height: 48px;
 	overflow: hidden;
 	@media (max-width: breakpoint.$lg) {
-		height: 72px;
+		max-height: 72px;
 	}
 }
 

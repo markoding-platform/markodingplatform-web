@@ -15,7 +15,7 @@ const BlogWidget = ({ blogs }) => {
               imageUrl={blog.src}
               title={`Blog ${blog.id}`}
               date={blog.date}
-              time={blog.time}
+              description={blog.description}
               link={`/blog/${blog.id}`}
             />
           ))}

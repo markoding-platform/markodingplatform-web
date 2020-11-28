@@ -26,7 +26,7 @@ a {
 .nav-bottom {
 	.nav-item {
 		.nav-link {
-			color: #DFE4EA;
+			color: colors.$text-3rd;
 			&.active {
 				color: colors.$blue;
 			}

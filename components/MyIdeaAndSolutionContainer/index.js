@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Panel from 'components/Panel';
 import Badges from 'components/Badges';
 import SnippetIdea from 'components/IdeaAndSolutionContainer/SnippetIdea';
-import CoursesCard from 'components/CoursesCard';
+import CourseCard from 'components/CourseCard';
 import Avatar from 'public/assets/avatar-min.png';
 import MyStats from './MyStats';
 
@@ -61,7 +61,7 @@ const MyIdeaAndSolutionContainer = ({ courses }) => {
         <div className="d-flex">
           {courses.map((course) => (
             <div key={course.id} className={courseCardWrapper}>
-              <CoursesCard
+              <CourseCard
                 imageUrl={course.src}
                 title={course.title}
                 description={course.description}

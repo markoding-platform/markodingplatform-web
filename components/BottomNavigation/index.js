@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Nav from 'react-bootstrap/Nav';
@@ -12,7 +13,7 @@ const BottomNavigation = (props) => {
     <Nav className="justify-content-between nav-bottom" activeKey={activeKey}>
       <Nav.Item>
         <Link href="/">
-          <Nav.Link href="/" className={styles.item}>
+          <Nav.Link href="/">
             <AiFillHome className={styles.icon} />
             Beranda
           </Nav.Link>
@@ -20,7 +21,7 @@ const BottomNavigation = (props) => {
       </Nav.Item>
       <Nav.Item>
         <Link href="/idea">
-          <Nav.Link href="/idea" className={styles.item}>
+          <Nav.Link href="/idea">
             <FaLightbulb className={styles.icon} />
             Idea
           </Nav.Link>
@@ -28,15 +29,15 @@ const BottomNavigation = (props) => {
       </Nav.Item>
       <Nav.Item>
         <Link href="/chat">
-          <Nav.Link href="/chat" className={styles.item}>
+          <Nav.Link href="/chat">
             <IoMdChatbubbles className={styles.icon} />
             Chat
           </Nav.Link>
         </Link>
       </Nav.Item>
       <Nav.Item>
-        <Link href="/kelas">
-          <Nav.Link href="/kelas" className={styles.item}>
+        <Link href="/course">
+          <Nav.Link href="/course">
             <FaBook className={styles.icon} />
             Kelas
           </Nav.Link>
@@ -44,7 +45,7 @@ const BottomNavigation = (props) => {
       </Nav.Item>
       <Nav.Item>
         <Link href="/account">
-          <Nav.Link href="/account" className={styles.item}>
+          <Nav.Link href="/account">
             <FaUserCircle className={styles.icon} />
             Akun
           </Nav.Link>
