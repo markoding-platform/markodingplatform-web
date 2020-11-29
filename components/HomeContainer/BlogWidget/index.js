@@ -4,7 +4,7 @@ import WidgetLoader from '../WidgetLoader';
 const DynamicBlogWidget = dynamic(
   () => import(/* webpackChunkName: "blog-widget-component" */ './BlogWidget'),
   {
-    loading: <WidgetLoader />,
+    loading: () => <WidgetLoader />,
   }
 );
 
