@@ -8,8 +8,15 @@ import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
 import Avatar from 'public/assets/avatar-min.png';
+import YoutubeIframe from 'components/YoutubeIframe';
 import { ideaImage } from '../style.module.scss';
-import { ideaSection, teamInfo, infoItem, voteBtn } from './style.module.scss';
+import {
+  ideaSection,
+  teamInfo,
+  infoItem,
+  voteBtn,
+  videoWrapper,
+} from './style.module.scss';
 
 import Teams from '../Teams';
 import data from './mocks';
@@ -178,6 +185,9 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
         </div>
         <div className={ideaSection}>
           <h4>Link Video</h4>
+          <div className={videoWrapper}>
+            <YoutubeIframe solutionPitchUrl={data.solutionPitchUrl} />
+          </div>
         </div>
         <div className={ideaSection}>
           <h4>Target Customer</h4>

@@ -5,7 +5,7 @@ const DynamicCourseWidget = dynamic(
   () =>
     import(/* webpackChunkName: "course-widget-component" */ './CourseWidget'),
   {
-    loading: <WidgetLoader />,
+    loading: () => <WidgetLoader />,
   }
 );
 

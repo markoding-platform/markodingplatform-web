@@ -7,7 +7,7 @@ const DynamicGalleryIdeaWidget = dynamic(
       /* webpackChunkName: "gallery-idea-component" */ './GalleryIdeaWidget'
     ),
   {
-    loading: <WidgetLoader />,
+    loading: () => <WidgetLoader />,
   }
 );
 
