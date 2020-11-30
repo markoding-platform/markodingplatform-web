@@ -1,0 +1,69 @@
+@use 'styles/breakpoint';
+
+.styVideoContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: black;
+
+  iframe,
+  .empty-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  > #playBtn:hover {
+    cursor: pointer;
+  }
+  &:hover {
+    cursor: pointer;
+    .styPlayBtn {
+      background: #db4437;
+      opacity: 1;
+    }
+  }
+}
+
+.styArrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-left: 20px solid #f3f1e7;
+  border-bottom: 10px solid transparent;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.styPlayBtn {
+  position: absolute;
+  background: #000;
+  opacity: 0.8;
+  left: 50%;
+  top: 50%;
+  width: 68px;
+  height: 48px;
+  margin-left: -34px;
+  margin-top: -24px;
+  transition: opacity 0.25s cubic-bezier(0, 0, 0.2, 1);
+  border-radius: 50px/100px;
+}
+
+.styThumbnail {
+  background-color: black;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  min-width: 50%;
+  height: 384px;
+
+  @media (max-width: breakpoint.$lg) {
+    height: 296px;
+  }
+}

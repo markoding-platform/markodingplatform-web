@@ -5,7 +5,7 @@ const DynamicEventWidget = dynamic(
   () =>
     import(/* webpackChunkName: "Event-widget-component" */ './EventWidget'),
   {
-    loading: <WidgetLoader />,
+    loading: () => <WidgetLoader />,
   }
 );
 
