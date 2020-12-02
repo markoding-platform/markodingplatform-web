@@ -1,0 +1,32 @@
+@use 'styles/colors';
+
+.styCardHeader {
+  background: #ffffff;
+  text-align: center;
+  border: none;
+  > h2 {
+    margin: 0;
+    color: colors.$blue;
+  }
+}
+
+.styAccountTypesContainer {
+  list-style: none;
+  padding: 0;
+  > li {
+    display: flex;
+    padding: 0 16px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 16px;
+  }
+}
+
+.styIcon {
+  background-color: colors.$primary;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  padding: 19px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
