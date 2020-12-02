@@ -2,39 +2,46 @@
 @use "styles/breakpoint";
 
 .pointBadge {
-	background-color: colors.$white;
-	box-shadow: 0 25px 50px rgba(35, 37, 96, 0.07);
-	padding-top: 15px;
-	padding-bottom: 15px;
+  background-color: colors.$white;
+  box-shadow: 0 25px 50px rgba(35, 37, 96, 0.07);
+  padding-top: 15px;
+  padding-bottom: 15px;
 
-	@media (max-width: breakpoint.$lg) {
-		background-color: transparent;
-		box-shadow: none;
-		border-bottom: 1px solid colors.$gray-500;
-	}
+  @media (max-width: breakpoint.$lg) {
+    background-color: transparent;
+    box-shadow: none;
+    border-bottom: 1px solid colors.$gray-500;
+  }
 }
 
 .container {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
-	@media (max-width: breakpoint.$lg) {
-		justify-content: space-between;
-	}
+  @media (max-width: breakpoint.$lg) {
+    justify-content: space-between;
+  }
 }
 
 .searchGroup {
-	position: relative;
+  position: relative;
 }
 
 .search {
-	padding-right: 30px;
+  padding-right: 30px;
 }
 
 .searchIcon {
-	position: absolute;
-	right: 10px;
-	top: 8px;
-	font-size: 22px;
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  font-size: 22px;
+}
+
+.account, .dropDown {
+  &:hover, &:focus, &:active, &:active {
+		text-decoration: none;
+		outline: none !important;
+	}
 }

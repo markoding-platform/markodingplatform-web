@@ -1,7 +1,7 @@
 import cookie from 'cookie';
 
 /**
- *
+ * can only be used from the client side
  * @param data Array[{label, value, age}]
  */
 

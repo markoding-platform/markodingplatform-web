@@ -6,7 +6,7 @@ import cookie from 'cookie';
  * @param labelOfCookie String of cookie name/label
  */
 
-export default function getCookie(req, labelOfCookie) {
+export default function getCookie(labelOfCookie, req = {}) {
   const cookies = cookie.parse(
     req && req.headers ? req.headers.cookie || '' : document.cookie
   );

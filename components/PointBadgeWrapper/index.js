@@ -2,6 +2,7 @@ import Form from 'react-bootstrap/Form';
 import { DiHtml53DEffects } from 'react-icons/di';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { RiArrowRightSLine, RiMedalFill } from 'react-icons/ri';
+import AuthButton from 'components/AuthButton';
 import styles from './styles.module.scss';
 
 const PointBadgeWrapper = () => {
@@ -28,6 +29,9 @@ const PointBadgeWrapper = () => {
               />
               <BiSearchAlt2 className={styles.searchIcon} />
             </div>
+          </div>
+          <div className="d-none d-lg-flex align-items-center ml-4">
+            <AuthButton />
           </div>
         </div>
       </div>
