@@ -33,8 +33,12 @@ jobs:
         with:
           envkey_STAGE: production
           envkey_TITLE: Markoding
-          envkey_BRANCH: develop
-          envkey_SECRET: dummy
+          envkey_GITHUB_HOOK_BRANCH: develop
+          envkey_GITHUB_HOOK_SECRET: dummy
+          envkey_WEB_URL: http://localhost:3000
+          envkey_SSO_CLIENT_ID: xxx-xxx-xxx
+          envkey_SSO_CLIENT_SECRET: xxx-xxx-xxx
+          envkey_SSO_WEB_URL: http://beta.skilvul.com/sso/markoding
           file_name: .env
       - run: npm install
       - run: npm run build
