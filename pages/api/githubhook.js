@@ -30,7 +30,7 @@ export default (req, res) => {
     const githubEvent = req.headers['x-github-event'] || '';
     const hash = CryptoJS.HmacSHA1(
       JSON.stringify(req.body),
-      process.env.SECRET
+      process.env.GITHUB_HOOK_BRANCH
     );
     const localSig = `sha1=${CryptoJS.enc.Hex.stringify(hash)}`;
     if (githubSig === localSig) {

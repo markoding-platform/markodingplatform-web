@@ -23,8 +23,8 @@ module.exports = withPWA(
     fileExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg'],
     env: {
       TITLE: process.env.TITLE,
-      BRANCH: process.env.BRANCH,
-      SECRET: process.env.SECRET,
+      WEB_URL: process.env.WEB_URL,
+      SSO_WEB_URL: process.env.SSO_WEB_URL,
     },
     webpack(config) {
       return config;
