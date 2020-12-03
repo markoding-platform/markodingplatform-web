@@ -1,0 +1,27 @@
+@use 'styles/colors';
+
+.dropdownBtn {
+  width: 265px;
+  height: 52px;
+  background: #ffffff;
+  border: 1px solid #e2e5ed;
+  box-sizing: border-box;
+  border-radius: 4px;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  &:hover,
+  :active {
+    background: #ffffff;
+  }
+}
+
+.rotate {
+  -moz-transition: all 0.3s linear;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  cursor: pointer;
+}
+.rotateDown {
+  transform: rotate(180deg);
+}

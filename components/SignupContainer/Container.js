@@ -1,11 +1,22 @@
+import { useMemo } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import RegisterAsComponent from './RegisterAs';
+import SignupForm from './SignupForm';
+import { ACCOUNT_TYPE } from './contants';
 
 const SignupContainer = () => {
+  const router = useRouter();
+  const { slug } = router.query;
+
+  const accountTypeIndex = useMemo(() => {
+    return ACCOUNT_TYPE.findIndex((el) => el === slug);
+  });
+
   return (
     <>
       <Head>
@@ -42,7 +53,11 @@ const SignupContainer = () => {
         <Row>
           <Col />
           <Col xs={6}>
-            <RegisterAsComponent />
+            {slug && accountTypeIndex !== -1 ? (
+              <SignupForm registerAs={ACCOUNT_TYPE[accountTypeIndex]} />
+            ) : (
+              <RegisterAsComponent />
+            )}
           </Col>
           <Col />
         </Row>
