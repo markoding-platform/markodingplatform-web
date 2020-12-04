@@ -70,6 +70,7 @@
         "aspects": ["invalidHref", "preferButton"]
       }
     ],
+    "jsx-a11y/label-has-associated-control": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/display-name": 1,
     "react/jsx-props-no-spreading": 0,

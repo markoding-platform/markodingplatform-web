@@ -10,10 +10,9 @@ import { dropdownBtn, rotate, rotateDown } from './styles.module.scss';
 const CustomToggle = forwardRef(({ children, onClick }, ref) => {
   const [isClick, setIsClick] = useState(false);
   return (
-    // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <Button
       aria-hidden="true"
-      className={`btn ${dropdownBtn}`}
+      className={`bg-transparent ${dropdownBtn}`}
       ref={ref}
       onClick={(e) => {
         e.preventDefault();
@@ -32,17 +31,17 @@ const CustomToggle = forwardRef(({ children, onClick }, ref) => {
   );
 });
 
-const DropdownComponent = ({ onSelected, defaultVal, dropdownItem }) => {
+const DropdownComponent = ({ placeholder, onSelected, dropdownItem }) => {
   // const [selectedDropdown, setSelectedDropdown] = useState(defaultVal);
   return (
     <Dropdown>
       <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-        <span className="text-3rd">Custom toggle</span>
+        <span className="text-3rd">{placeholder}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
         {dropdownItem.map((item) => (
           <Dropdown.Item key={item.key} onSelected={onSelected}>
-            {item.text || defaultVal}
+            {item.text}
           </Dropdown.Item>
         ))}
       </Dropdown.Menu>
@@ -51,12 +50,12 @@ const DropdownComponent = ({ onSelected, defaultVal, dropdownItem }) => {
 };
 
 DropdownComponent.defaultProps = {
-  defaultVal: 'Pilih',
+  placeholder: 'Pilih',
   dropdownItem: [],
 };
 
 DropdownComponent.propTypes = {
-  defaultVal: string,
+  placeholder: string,
   dropdownItem: arrayOf(
     shape({
       key: number,

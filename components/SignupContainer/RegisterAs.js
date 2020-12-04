@@ -51,7 +51,7 @@ const RegisterAsComponent = () => {
         <Card.Header className={styCardHeader}>
           <h2>Daftar Sebagai</h2>
         </Card.Header>
-        <div className="border-bottom mb-3">
+        <div className="mb-3">
           <p className="text-center text-secondary">
             Sebelum memulai perjalananmu yuk cerita tentang dirimu
           </p>

@@ -15,9 +15,15 @@
   padding: 0;
   > li {
     display: flex;
-    padding: 0 16px;
+    padding: 16px;
     border-bottom: 1px solid #e0e0e0;
-    margin-bottom: 16px;
+    &:hover {
+      cursor: pointer;
+      background-color: #f3f4f5;
+    }
+    &:first-of-type {
+      border-top: 1px solid #e0e0e0;
+    }
   }
 }
 
@@ -28,5 +34,35 @@
   border-radius: 50%;
   padding: 19px;
   margin-right: 16px;
-  margin-bottom: 16px;
+}
+
+.styLabel {
+  margin-bottom: 8px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 24px;
+  &.required:after {
+    content: ' *';
+    color: red;
+  }
+}
+
+.styTextfield {
+  height: 52px;
+  width: 100%;
+  background: colors.$white !important;
+  border: 1px solid #e2e5ed !important;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.styTerm {
+  > input[type='checkbox'] {
+    width: 28px;
+    height: 28px;
+  }
+  > label {
+    margin-left: 23px;
+    word-break: break-all;
+  }
 }

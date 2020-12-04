@@ -1,19 +1,16 @@
 @use 'styles/colors';
 
 .dropdownBtn {
-  width: 265px;
+  width: 100%;
   height: 52px;
-  background: #ffffff;
+  background: colors.$white;
   border: 1px solid #e2e5ed;
   box-sizing: border-box;
   border-radius: 4px;
   text-align: left;
   display: flex;
   justify-content: space-between;
-  &:hover,
-  :active {
-    background: #ffffff;
-  }
+  outline: none;
 }
 
 .rotate {
