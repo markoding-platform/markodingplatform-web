@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
-// import StepsComponent from './Steps';
+import StepsComponent from './Steps';
 import {
   styCardHeader,
   styLabel,
@@ -15,7 +15,6 @@ import {
   required,
 } from './styles.module.scss';
 import { LIST_FORM } from './contants';
-import StepsComponent from './Steps';
 
 const SignupForm = ({ registerAs }) => {
   const [isStudentSupporter, setIsStudentSupporter] = useState(false);
