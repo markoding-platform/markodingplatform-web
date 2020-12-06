@@ -15,6 +15,7 @@ import {
   required,
 } from './styles.module.scss';
 import { LIST_FORM } from './contants';
+import StepsComponent from './Steps';
 
 const SignupForm = ({ registerAs }) => {
   const [isStudentSupporter, setIsStudentSupporter] = useState(false);
@@ -40,9 +41,12 @@ const SignupForm = ({ registerAs }) => {
     return [];
   }, [isStudentSupporter, registerAs]);
 
-  const handleSelectSupporter = (e) => {
-    console.log(e);
+  const handleSelectSupporter = () => {
     setIsStudentSupporter(true);
+  };
+
+  const handleSelectDropdown = (payload) => {
+    console.log({ payload });
   };
 
   return (
@@ -59,7 +63,8 @@ const SignupForm = ({ registerAs }) => {
             Sebelum memulai perjalananmu yuk cerita tentang dirimu
           </p>
         </div>
-        <div className="container px-5 mb-4">
+        <div className="container px-3 mb-4">
+          <StepsComponent />
           <div className="row">
             <>
               {registerAs === 'supporter' && (
@@ -87,7 +92,10 @@ const SignupForm = ({ registerAs }) => {
                     <TextField placeholder="smk" className={styTextfield} />
                   )}
                   {item.as === 'dropdown' && (
-                    <DropdownComponent dropdownItem={schools} />
+                    <DropdownComponent
+                      dropdownItem={schools}
+                      onSelected={handleSelectDropdown}
+                    />
                   )}
                 </div>
               );

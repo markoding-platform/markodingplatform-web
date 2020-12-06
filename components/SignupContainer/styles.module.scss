@@ -1,5 +1,11 @@
 @use 'styles/colors';
 
+.styRegisterContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 24px;
+}
+
 .styCardHeader {
   background: #ffffff;
   text-align: center;
@@ -63,6 +69,21 @@
   }
   > label {
     margin-left: 23px;
-    word-break: break-all;
+    word-break: break-word;
   }
+}
+
+.ordered {
+  border: 1px solid colors.$blue;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin-right: 6px;
+  padding: 0px 7px;
+  background: colors.$blue;
+  color: colors.$white;
+}
+
+.styStepsInfo {
+  font-size: 0.875rem;
 }

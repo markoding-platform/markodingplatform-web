@@ -3,11 +3,10 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import RegisterAsComponent from './RegisterAs';
 import SignupForm from './SignupForm';
 import { ACCOUNT_TYPE } from './contants';
+import { styRegisterContainer } from './styles.module.scss';
 
 const SignupContainer = () => {
   const router = useRouter();
@@ -50,17 +49,13 @@ const SignupContainer = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container fluid>
-        <Row>
-          <Col />
-          <Col xs={6}>
-            {slug && accountTypeIndex !== -1 ? (
-              <SignupForm registerAs={ACCOUNT_TYPE[accountTypeIndex]} />
-            ) : (
-              <RegisterAsComponent />
-            )}
-          </Col>
-          <Col />
-        </Row>
+        <div className={styRegisterContainer}>
+          {slug && accountTypeIndex !== -1 ? (
+            <SignupForm registerAs={ACCOUNT_TYPE[accountTypeIndex]} />
+          ) : (
+            <RegisterAsComponent />
+          )}
+        </div>
       </Container>
     </>
   );

@@ -32,15 +32,19 @@ const CustomToggle = forwardRef(({ children, onClick }, ref) => {
 });
 
 const DropdownComponent = ({ placeholder, onSelected, dropdownItem }) => {
-  // const [selectedDropdown, setSelectedDropdown] = useState(defaultVal);
+  const [selectedDropdown, setSelectedDropdown] = useState(placeholder);
+  const handleOnClick = (payload) => {
+    setSelectedDropdown(payload.text);
+    onSelected(payload);
+  };
   return (
     <Dropdown>
       <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-        <span className="text-3rd">{placeholder}</span>
+        <span className="text-3rd">{selectedDropdown}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
         {dropdownItem.map((item) => (
-          <Dropdown.Item key={item.key} onSelected={onSelected}>
+          <Dropdown.Item key={item.key} onClick={() => handleOnClick(item)}>
             {item.text}
           </Dropdown.Item>
         ))}
