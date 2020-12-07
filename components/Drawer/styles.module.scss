@@ -1,7 +1,6 @@
 @use "styles/colors";
 
 .drawerWrapper {
-  padding: 8px;
   position: fixed;
   top: 0px;
   left: 0px;
@@ -9,7 +8,8 @@
   height: 100%;
   background-color: colors.$main;
   box-shadow: rgba(0, 0, 0, 0.16) 0px -1px 7px 0px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   z-index: 50;
   backface-visibility: hidden;
   transition: transform 0.24s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;

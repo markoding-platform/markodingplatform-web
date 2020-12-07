@@ -1,13 +1,33 @@
 @use 'styles/colors';
+@use 'styles/breakpoint';
 
 .footerContainer {
   width: 90%;
   height: auto;
   background: #ffffff;
+  @media (max-width: breakpoint.$md) {
+    width: 100%;
+    padding-top: 40px;
+  }
+}
+
+.footerInner {
+  padding: 0 1.5rem;
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: breakpoint.$md) {
+    flex-direction: column;
+    margin-top: 0;
+  }
 }
 
 .leftSide {
   width: 400px;
+  @media (max-width: breakpoint.$md) {
+    width: 100%;
+    word-wrap: break-word;
+  }
 }
 .markodingMessage {
   height: 120px;
@@ -48,4 +68,16 @@
   display: flex;
   justify-content: space-between;
   width: 400px;
+}
+
+.footerInfo {
+  display: flex;
+  width: 50%;
+  @media (max-width: breakpoint.$md) {
+    width: 100%;
+    flex-direction: column;
+    > .footerItem {
+      margin-bottom: 8px;
+    }
+  }
 }
