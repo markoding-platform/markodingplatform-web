@@ -1,0 +1,89 @@
+@use 'styles/colors';
+
+.styRegisterContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 24px;
+}
+
+.styCardHeader {
+  background: #ffffff;
+  text-align: center;
+  border: none;
+  > h2 {
+    margin: 0;
+    color: colors.$blue;
+  }
+}
+
+.styAccountTypesContainer {
+  list-style: none;
+  padding: 0;
+  > li {
+    display: flex;
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    &:hover {
+      cursor: pointer;
+      background-color: #f3f4f5;
+    }
+    &:first-of-type {
+      border-top: 1px solid #e0e0e0;
+    }
+  }
+}
+
+.styIcon {
+  background-color: colors.$primary;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  padding: 19px;
+  margin-right: 16px;
+}
+
+.styLabel {
+  margin-bottom: 8px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 24px;
+  &.required:after {
+    content: ' *';
+    color: red;
+  }
+}
+
+.styTextfield {
+  height: 52px;
+  width: 100%;
+  background: colors.$white !important;
+  border: 1px solid #e2e5ed !important;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.styTerm {
+  > input[type='checkbox'] {
+    width: 28px;
+    height: 28px;
+  }
+  > label {
+    margin-left: 23px;
+    word-break: break-word;
+  }
+}
+
+.ordered {
+  border: 1px solid colors.$blue;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin-right: 6px;
+  padding: 0px 7px;
+  background: colors.$blue;
+  color: colors.$white;
+}
+
+.styStepsInfo {
+  font-size: 0.875rem;
+}
