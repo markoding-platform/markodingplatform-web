@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { useFormContext } from 'react-hook-form';
+import { useGlobalFormContext } from 'components/context/FormContext';
 
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
@@ -15,14 +17,9 @@ import {
 
 const FormIdeaSolution = () => {
   const { push } = useRouter();
-  const [schools, setSchools] = useState('');
-  const [teacher, setTeacher] = useState('');
-  const [solutionName, setSolutionName] = useState();
+  const { register, handleSubmit } = useFormContext();
+  const { inputs, setInputs } = useGlobalFormContext();
   const [solutionType, setSolutionType] = useState('');
-  const [problemSelection, setProblemSelection] = useState('');
-  const [problemArea, setProblemArea] = useState('');
-  const [problemReason, setProblemReason] = useState('');
-  const [targetCustomer, setTargetCustomer] = useState('');
 
   const SOLUTION_TYPES = [
     { id: 0, text: 'Aplikasi Mobile' },
@@ -32,28 +29,35 @@ const FormIdeaSolution = () => {
   const handleOnClick = () => {
     push('/register-idea/2');
   };
+  const onSubmit = (data) => {
+    setInputs({ ideaSolution: { ...data } });
+    handleOnClick();
+  };
   return (
     <>
       <form>
         <Panel title="Nama Sekolah">
           <TextField
             placeholder="Tulis nama sekolah kamu"
-            defaultVal={schools}
-            onEmit={setSchools}
+            defaultVal={inputs.schools}
+            name="schoolsId"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Nama Guru Pembimbing">
           <TextField
             placeholder="Tulis nama guru pembimbing kamu"
-            defaultVal={teacher}
-            onEmit={setTeacher}
+            defaultVal={inputs.teacher}
+            name="teacherId"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Nama Solusi Digital">
           <TextField
             placeholder="Tulis nama solusi digital kamu"
-            defaultVal={solutionName}
-            onEmit={setSolutionName}
+            defaultVal={inputs.solutionName}
+            name="solutionName"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Pilihan Tipe Solusi Digital yang Ingin Kamu Buat">
@@ -68,8 +72,9 @@ const FormIdeaSolution = () => {
                 <input
                   className={radioBtn}
                   type="radio"
-                  name={solutionType}
+                  name="solutionType"
                   value={solutionType}
+                  ref={register({ required: true })}
                   onChange={() => setSolutionType(id)}
                 />
                 <InputGroup.Append aria-label="Radio button">
@@ -84,24 +89,27 @@ const FormIdeaSolution = () => {
         <Panel title="Bidang Masalah">
           <TextField
             placeholder="Tulis bidang masalah yang ingin kamu selesaikan"
-            defaultVal={problemArea}
-            onEmit={setProblemArea}
+            defaultVal={inputs.problemArea}
+            name="problemArea"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Pemilihan Masalah">
           <TextField
             placeholder="Apa masalah yang ingin kamu selesaikan"
-            defaultVal={problemSelection}
-            onEmit={setProblemSelection}
+            defaultVal={inputs.problemSelection}
             as="textarea"
             className={textArea}
+            name="problemSelection"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Alasan Masalah">
           <TextField
             placeholder="Mengapa kamu ingin menyelesaikan masalah ini"
-            defaultVal={problemReason}
-            onEmit={setProblemReason}
+            defaultVal={inputs.problemReason}
+            name="problemReason"
+            ref={register({ required: true })}
             as="textarea"
             className={textArea}
           />
@@ -109,12 +117,13 @@ const FormIdeaSolution = () => {
         <Panel title="Target Customer">
           <TextField
             placeholder="Siapa yang ingin kamu bantu"
-            defaultVal={targetCustomer}
-            onEmit={setTargetCustomer}
+            defaultVal={inputs.targetCustomer}
+            name="targetCustomer"
+            ref={register({ required: true })}
           />
         </Panel>
         <div className="d-flex justify-content-end">
-          <Button variant="primary" onClick={handleOnClick}>
+          <Button variant="primary" onClick={handleSubmit(onSubmit)}>
             Selanjutnya
           </Button>
         </div>

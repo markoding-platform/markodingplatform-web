@@ -4,6 +4,8 @@ import App from 'next/app';
 import NextNprogress from 'nextjs-progressbar';
 import SkilvulToken from '../libraries/SkilvulToken';
 
+import { GlobalFormProvider } from 'components/context/FormContext';
+
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     const pageProps = {
@@ -36,7 +38,9 @@ export default class MyApp extends App {
             showSpinner: false,
           }}
         />
-        <Component {...pageProps} />
+        <GlobalFormProvider>
+          <Component {...pageProps} />
+        </GlobalFormProvider>
       </>
     );
   }

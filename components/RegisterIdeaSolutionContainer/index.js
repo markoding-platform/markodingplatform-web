@@ -1,7 +1,10 @@
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { number } from 'prop-types';
+import { useForm, FormProvider } from 'react-hook-form';
+
 import Panel from 'components/Panel';
 import CreateTeam from 'components/RegisterIdeaSolutionContainer/CreateTeam';
-import { number } from 'prop-types';
+
 import FormIdeaSolution from './FormIdeaSolution';
 import SecondFormIdeaSolution from './FormIdeaSolution/SecondForm';
 import {
@@ -12,6 +15,7 @@ import {
 } from './styles.module.scss';
 
 const RegisterIdeaSolutionContainer = ({ page }) => {
+  const methods = useForm();
   return (
     <>
       <div className={topHeader}>
@@ -27,12 +31,15 @@ const RegisterIdeaSolutionContainer = ({ page }) => {
           </div>
         </div>
       </div>
-      {page === 1 && (
-        <Panel title="Team">
-          <CreateTeam />
-        </Panel>
-      )}
-      {page === 2 ? <SecondFormIdeaSolution /> : <FormIdeaSolution />}
+
+      <FormProvider {...methods}>
+        {page === 1 && (
+          <Panel title="Team">
+            <CreateTeam />
+          </Panel>
+        )}
+        {page === 2 ? <SecondFormIdeaSolution /> : <FormIdeaSolution />}
+      </FormProvider>
     </>
   );
 };

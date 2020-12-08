@@ -1,40 +1,39 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { func, string } from 'prop-types';
 
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 
-import useDebounce from 'hooks/useDebounce';
-
 import { inputField } from './styles.module.scss';
 
-const TextField = ({ placeholder, defaultVal, onEmit, as, className }) => {
-  const [textValue, setTextValue] = useState(defaultVal);
+// eslint-disable-next-line react/display-name
+const TextField = React.forwardRef(
+  ({ name, placeholder, defaultVal, as, className }, ref) => {
+    const [textValue, setTextValue] = useState(defaultVal);
 
-  const debouncedTextValue = useDebounce(textValue, 200);
+    const handleOnChange = (e) => {
+      const {
+        target: { value },
+      } = e;
+      setTextValue(value);
+    };
 
-  const handleOnChange = (e) => {
-    const {
-      target: { value },
-    } = e;
-    setTextValue(value);
-  };
-
-  useEffect(() => onEmit(debouncedTextValue), [debouncedTextValue, onEmit]);
-
-  return (
-    <InputGroup>
-      <FormControl
-        className={`${inputField} ${className}`}
-        as={as}
-        placeholder={placeholder}
-        value={textValue}
-        aria-describedby="inputGroup-sizing"
-        onChange={handleOnChange}
-      />
-    </InputGroup>
-  );
-};
+    return (
+      <InputGroup>
+        <FormControl
+          className={`${inputField} ${className}`}
+          as={as}
+          name={name}
+          placeholder={placeholder}
+          value={textValue}
+          ref={ref}
+          aria-describedby="inputGroup-sizing"
+          onChange={handleOnChange}
+        />
+      </InputGroup>
+    );
+  }
+);
 
 TextField.defaultProps = {
   as: 'input',
