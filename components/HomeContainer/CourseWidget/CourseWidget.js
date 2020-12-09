@@ -12,7 +12,7 @@ const CourseWidget = ({ courses }) => {
           {courses.map((course) => (
             <CourseCard
               key={course.id}
-              imageUrl={course.src}
+              imageUrl={course.imageUrl}
               title={course.title}
               description={course.description}
               link={course.link}
@@ -29,7 +29,7 @@ CourseWidget.propTypes = {
     shape({
       id: string,
       title: string,
-      src: string,
+      imageUrl: string,
       link: string,
       description: string,
     })

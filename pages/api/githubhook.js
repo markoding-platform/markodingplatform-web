@@ -1,4 +1,6 @@
-const { exec } = require('child_process');
+import nextConnect from 'next-connect';
+import { deploy } from '../../middleware/deployment';
+
 const CryptoJS = require('crypto-js');
 
 const dotEnvResult = require('dotenv').config();
@@ -7,25 +9,8 @@ if (dotEnvResult.error) {
   throw dotEnvResult.error;
 }
 
-const deployAction = async () => {
-  exec(
-    'cd /home/ubuntu/markodingplatform-web/ && git pull && npm install && npm run build && pm2 restart web',
-    (error, stdout, stderr) => {
-      if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-      }
-      if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-      }
-      console.log(`stdout: ${stdout}`);
-    }
-  );
-};
-
-export default (req, res) => {
-  if (req.method === 'POST') {
+const authApi = nextConnect()
+  .post(async (req, res) => {
     const githubSig = req.headers['x-hub-signature'] || '';
     const githubEvent = req.headers['x-github-event'] || '';
     const hash = CryptoJS.HmacSHA1(
@@ -39,19 +24,16 @@ export default (req, res) => {
       // eslint-disable-next-line camelcase
       const { merged } = pull_request || false;
       if (action === 'closed' && githubEvent === 'pull_request' && merged) {
-        deployAction().catch().then();
+        deploy();
       }
     }
-    res.statusCode = 200;
-    res.json({
-      success: true,
-      data: [],
+    res.status(200).json({
+      error: false,
+      message: 'success',
     });
-  } else {
-    res.statusCode = 404;
-    res.json({
-      success: false,
-      message: 'Data not found',
-    });
-  }
-};
+  })
+  .patch(async () => {
+    throw new Error('Throws me around! Error can be caught and handled.');
+  });
+
+export default authApi;

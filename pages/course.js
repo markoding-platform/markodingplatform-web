@@ -1,49 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import CourseCard from 'components/CourseCard';
 import Layout from 'components/Layout';
 import styles from 'styles/blog.module.scss';
+import useSWR from 'swr';
+import SkilvulFetch from 'libraries/SkilvulFetch';
+import CardLoader from 'components/Shimmer/Card';
+import courseMap from '../map/courseMap';
 
 const Course = () => {
-  const [courses, setCourses] = useState([]);
-  const getCourses = () => {
-    const dataDummy = [
-      {
-        id: 'javascript-dasar',
-        title: 'Javascript Dasar',
-        src:
-          'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/jpFTJLRtjyRGYMpLwUPKR.jpg',
-        link: 'https://www.skilvul.com/courses/javascript-dasar',
-        description:
-          'Di kelas ini kita akan belajar bagaimana membuat sebuah website menjadi lebih interaktif dengan menambahkan beberapa program yang ditulis menggunakan JavaScript',
-      },
-      {
-        id: 'html-dasar',
-        title: 'HTML Dasar',
-        src:
-          'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/FwqK3W86sKns3jn-3qmN3.jpg',
-        link: 'https://www.skilvul.com/courses/html-dasar',
-        description:
-          'Di kelas ini, kita akan belajar bagaimana membuat sebuah website dari awal dengan menggunakan HTML.',
-      },
-      {
-        id: 'css-dasar',
-        title: 'CSS Dasar',
-        src:
-          'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/fnf0dPehzaPgyRjr1hZb1.jpg',
-        link: 'https://www.skilvul.com/courses/css-dasar',
-        description:
-          'Di kelas ini kita akan belajar bagaimana cara memberikan style pada setiap element di website dengan menggunakan CSS',
-      },
-    ];
-    setCourses(dataDummy);
-  };
-
-  useEffect(() => {
-    getCourses();
-  }, []);
+  let courses;
+  const { data: courseRes, isValidating } = useSWR(
+    '/api/course?limit=6&offset=1',
+    SkilvulFetch
+  );
+  if (courseRes && courseRes.products) {
+    courses = courseRes.products.map(courseMap);
+  }
 
   return (
     <Layout activeMenu="/course">
@@ -57,18 +32,28 @@ const Course = () => {
               <h1 className="h3">Kelas Online</h1>
             </div>
             <Row>
-              {courses.map((course) => (
-                <Col key={course.id} xs={6} lg={4}>
-                  <div className={styles.blogGrid}>
-                    <CourseCard
-                      imageUrl={course.src}
-                      title={course.title}
-                      description={course.description}
-                      link={course.link}
-                    />
-                  </div>
-                </Col>
-              ))}
+              {courses &&
+                courses.map((course) => (
+                  <Col key={course.id} xs={6} lg={4}>
+                    <div className={styles.blogGrid}>
+                      <CourseCard
+                        imageUrl={course.imageUrl}
+                        title={course.title}
+                        description={course.description}
+                        link={course.link}
+                      />
+                    </div>
+                  </Col>
+                ))}
+
+              {isValidating &&
+                [1, 2, 3].map((i) => (
+                  <Col key={i} xs={6} lg={4}>
+                    <div className={styles.blogGrid}>
+                      <CardLoader />
+                    </div>
+                  </Col>
+                ))}
             </Row>
           </div>
         </div>

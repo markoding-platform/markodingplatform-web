@@ -16,6 +16,7 @@ module.exports = withPWA(
       domains: [
         'image.freepik.com',
         'skilvul-prod-01.s3.ap-southeast-1.amazonaws.com',
+        'skilvul-dev-01.s3.ap-southeast-1.amazonaws.com',
       ],
       dest: 'public',
     },
