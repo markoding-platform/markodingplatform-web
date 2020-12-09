@@ -14,22 +14,26 @@ import {
   textArea,
   isRadioActive,
 } from './styles.module.scss';
+// import useIdeaSolution from '../hooks/useIdeaSolution';
 
 const FormIdeaSolution = () => {
   const { push } = useRouter();
+
   const { register, handleSubmit } = useFormContext();
   const { inputs, setInputs } = useGlobalFormContext();
   const [solutionType, setSolutionType] = useState('');
 
   const SOLUTION_TYPES = [
-    { id: 0, text: 'Aplikasi Mobile' },
-    { id: 1, text: 'Aplikasi Web' },
-    { id: 2, text: 'Aplikasi Game' },
+    { id: 0, text: 'Aplikasi Mobile', value: 'mobile' },
+    { id: 1, text: 'Aplikasi Web', value: 'web' },
+    { id: 2, text: 'Aplikasi Game', value: 'game' },
   ];
+
   const handleOnClick = () => {
     push('/register-idea/2');
   };
   const onSubmit = (data) => {
+    data.solutionType = solutionType;
     setInputs({ ideaSolution: { ...data } });
     handleOnClick();
   };
@@ -39,15 +43,15 @@ const FormIdeaSolution = () => {
         <Panel title="Nama Sekolah">
           <TextField
             placeholder="Tulis nama sekolah kamu"
-            defaultVal={inputs.schools}
-            name="schoolsId"
+            defaultVal={inputs.schoolId}
+            name="schoolId"
             ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Nama Guru Pembimbing">
           <TextField
             placeholder="Tulis nama guru pembimbing kamu"
-            defaultVal={inputs.teacher}
+            defaultVal={inputs.teacherId}
             name="teacherId"
             ref={register({ required: true })}
           />
@@ -62,7 +66,7 @@ const FormIdeaSolution = () => {
         </Panel>
         <Panel title="Pilihan Tipe Solusi Digital yang Ingin Kamu Buat">
           <div className="d-flex justify-content-start">
-            {SOLUTION_TYPES.map(({ text, id }) => (
+            {SOLUTION_TYPES.map(({ text, id, value }) => (
               <InputGroup
                 key={id}
                 className={`${
@@ -75,7 +79,7 @@ const FormIdeaSolution = () => {
                   name="solutionType"
                   value={solutionType}
                   ref={register({ required: true })}
-                  onChange={() => setSolutionType(id)}
+                  onChange={() => setSolutionType(value)}
                 />
                 <InputGroup.Append aria-label="Radio button">
                   <InputGroup.Text className={radioInputText}>
@@ -107,8 +111,8 @@ const FormIdeaSolution = () => {
         <Panel title="Alasan Masalah">
           <TextField
             placeholder="Mengapa kamu ingin menyelesaikan masalah ini"
-            defaultVal={inputs.problemReason}
-            name="problemReason"
+            defaultVal={inputs.problemReasoning}
+            name="problemReasoning"
             ref={register({ required: true })}
             as="textarea"
             className={textArea}

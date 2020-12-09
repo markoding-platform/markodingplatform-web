@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { number } from 'prop-types';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -9,6 +8,7 @@ import { IoMdChatbubbles } from 'react-icons/io';
 
 import Avatar from 'public/assets/avatar-min.png';
 import YoutubeIframe from 'components/YoutubeIframe';
+import useIdeaSolution from '../hooks/useIdeaSolution';
 import { ideaImage } from '../style.module.scss';
 import {
   ideaSection,
@@ -19,28 +19,6 @@ import {
 } from './style.module.scss';
 
 import Teams from '../Teams';
-import data from './mocks';
-
-const dummyBlog = [
-  {
-    id: 1,
-    imageUrl:
-      'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg',
-    title: 'Merdeka Belajar',
-  },
-  {
-    id: 2,
-    imageUrl:
-      'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg',
-    title: 'Belajar coding is fun',
-  },
-  {
-    id: 3,
-    imageUrl:
-      'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg',
-    title: 'Merdeka Belajar 2',
-  },
-];
 
 const dummyTeams = [
   {
@@ -77,33 +55,18 @@ const additionalTeams = [
     studentStatus: 'Gojek',
   },
 ];
+
+const defaultPic =
+  'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
+
 const IdeaDetails = ({ likeCount, commentCount }) => {
   const { query } = useRouter();
-
-  const [blogContent, setBlogContent] = useState({});
-
-  useEffect(() => {
-    function getDummyBlogById() {
-      const content = dummyBlog.find((c) => c.id === Number(query.id)) || {};
-      if (Object.keys(content).length) {
-        setBlogContent(content);
-      }
-    }
-    if (query.id) {
-      getDummyBlogById();
-    } else {
-      setBlogContent(dummyBlog[0]);
-    }
-  }, [query.id]);
-
-  if (!Object.keys(blogContent).length) {
-    return 'Loading...';
-  }
-
+  const ideaId = query.id;
+  const { data = {} } = useIdeaSolution({ url: `/ideas/${ideaId}` });
   return (
     <div>
       <div className="pb-2">
-        <h4>{blogContent.title}</h4>
+        <h4>{data.solutionName}</h4>
       </div>
       <div className="d-flex py-2">
         <Image
@@ -120,8 +83,8 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       </div>
       <div className="py-2">
         <Image
-          src={blogContent.imageUrl}
-          alt={blogContent.title}
+          src={data.imageUrl || defaultPic}
+          alt={data.title}
           width={500}
           height={320}
           className={ideaImage}
@@ -148,7 +111,7 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Nama Sekolah</p>
-          <p className="info__text m-0">{data.school}</p>
+          <p className="info__text m-0">{data.schoolName}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Tipe Solusi Digital</p>
@@ -173,22 +136,24 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       <div>
         <div className={ideaSection} id="problemReason">
           <h4>Alasan Masalah</h4>
-          <p className="text-secondary m-0">{data.problemReason}</p>
+          <p className="text-secondary m-0">{data.problemReasoning}</p>
         </div>
         <div className={ideaSection} id="solutionSummary">
           <h4>Solusi Singkat</h4>
-          <p className="text-secondary m-0">{data.solutionSummary}</p>
+          <p className="text-secondary m-0">{data.solutionVision}</p>
         </div>
         <div className={ideaSection} id="solutionVision">
           <h4>Ide Solusi</h4>
-          <p className="text-secondary m-0">{data.solutionVision}</p>
+          <p className="text-secondary m-0">{data.solutionMission}</p>
         </div>
-        <div className={ideaSection}>
-          <h4>Link Video</h4>
-          <div className={videoWrapper}>
-            <YoutubeIframe solutionPitchUrl={data.solutionPitchUrl} />
+        {data.solutionPitchUrl && (
+          <div className={ideaSection}>
+            <h4>Link Video</h4>
+            <div className={videoWrapper}>
+              <YoutubeIframe solutionPitchUrl={data.solutionPitchUrl} />
+            </div>
           </div>
-        </div>
+        )}
         <div className={ideaSection}>
           <h4>Target Customer</h4>
           <p className="text-secondary m-0">{data.targetCustomer}</p>

@@ -16,19 +16,41 @@ import {
   infoText,
 } from './styles.module.scss';
 
+const BASE_URL = 'http://0.0.0.0:8080';
+
 const SecondFormIdeaSolution = () => {
   const { push } = useRouter();
   const { inputs } = useGlobalFormContext();
   const { register, handleSubmit } = useFormContext();
 
-  const handleOnClick = () => {
-    console.log('masuk sini');
+  const handlePostIdeas = async (payload) => {
+    try {
+      const res = await fetch(`${BASE_URL}/ideas`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      res.json().then((data) => {
+        if (data.error) {
+          console.error({ error: data.message });
+        } else {
+          push('/idea');
+        }
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const onSubmit = (payload) => {
+    const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
+    newIdeaSolution.solutionSupportingPhotos = []; //  upload photos not supported from BE yet
+    newIdeaSolution.isDraft = false;
+    handlePostIdeas(newIdeaSolution);
   };
 
-  const onSubmit = (data) => {
-    console.log({ data, ...inputs.ideaSolution });
-    handleOnClick();
-  };
   const handleBack = () => {
     push('/register-idea');
   };
@@ -38,18 +60,18 @@ const SecondFormIdeaSolution = () => {
         <Panel title="Solusi Singkat">
           <TextField
             placeholder="Jelaskan solusi dalam 1 kalimat"
-            defaultVal={inputs.solutionSummary}
-            name="solutionSummary"
+            defaultVal={inputs.solutionVision}
+            name="solutionVision"
             ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Ide Solusi">
           <TextField
             placeholder="Ceritakan tentang ide solusimu dan bagaimana cara bekerjanya"
-            defaultVal={inputs.solutionVision}
+            defaultVal={inputs.solutionMission}
             as="textarea"
             className={textArea}
-            name="solutionVision"
+            name="solutionMission"
             ref={register({ required: true })}
           />
         </Panel>
