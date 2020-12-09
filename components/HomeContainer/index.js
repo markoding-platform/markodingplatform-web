@@ -93,35 +93,7 @@ HomeContainer.defaultProps = {
       description: 'Terra, Social enterprise, manufatrues and sells...',
     },
   ],
-  courses: [
-    {
-      id: 'javascript-dasar',
-      title: 'Javascript Dasar',
-      src:
-        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/jpFTJLRtjyRGYMpLwUPKR.jpg',
-      link: 'https://www.skilvul.com/courses/javascript-dasar',
-      description:
-        'Di kelas ini kita akan belajar bagaimana membuat sebuah website menjadi lebih interaktif dengan menambahkan beberapa program yang ditulis menggunakan JavaScript',
-    },
-    {
-      id: 'html-dasar',
-      title: 'HTML Dasar',
-      src:
-        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/FwqK3W86sKns3jn-3qmN3.jpg',
-      link: 'https://www.skilvul.com/courses/html-dasar',
-      description:
-        'Di kelas ini, kita akan belajar bagaimana membuat sebuah website dari awal dengan menggunakan HTML.',
-    },
-    {
-      id: 'css-dasar',
-      title: 'CSS Dasar',
-      src:
-        'https://skilvul-prod-01.s3.ap-southeast-1.amazonaws.com/course/fnf0dPehzaPgyRjr1hZb1.jpg',
-      link: 'https://www.skilvul.com/courses/css-dasar',
-      description:
-        'Di kelas ini kita akan belajar bagaimana cara memberikan style pada setiap element di website dengan menggunakan CSS',
-    },
-  ],
+  courses: [],
 };
 
 HomeContainer.propTypes = {
