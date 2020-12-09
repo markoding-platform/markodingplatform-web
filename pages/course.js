@@ -7,11 +7,12 @@ import Layout from 'components/Layout';
 import styles from 'styles/blog.module.scss';
 import useSWR from 'swr';
 import SkilvulFetch from 'libraries/SkilvulFetch';
+import CardLoader from 'components/Shimmer/Card';
 import courseMap from '../map/courseMap';
 
 const Course = () => {
   let courses;
-  const { data: courseRes } = useSWR(
+  const { data: courseRes, isValidating } = useSWR(
     '/api/course?limit=6&offset=1',
     SkilvulFetch
   );
@@ -41,6 +42,15 @@ const Course = () => {
                         description={course.description}
                         link={course.link}
                       />
+                    </div>
+                  </Col>
+                ))}
+
+              {isValidating &&
+                [1, 2, 3].map((i) => (
+                  <Col key={i} xs={6} lg={4}>
+                    <div className={styles.blogGrid}>
+                      <CardLoader />
                     </div>
                   </Col>
                 ))}
