@@ -7,6 +7,7 @@ import { useGlobalFormContext } from 'components/context/FormContext';
 
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
+import DropdownComponent from 'components/Dropdown';
 import {
   radioBtnWrapper,
   radioBtn,
@@ -14,6 +15,7 @@ import {
   textArea,
   isRadioActive,
 } from './styles.module.scss';
+
 // import useIdeaSolution from '../hooks/useIdeaSolution';
 
 const FormIdeaSolution = () => {
@@ -37,23 +39,56 @@ const FormIdeaSolution = () => {
     setInputs({ ideaSolution: { ...data } });
     handleOnClick();
   };
+
+  const schoolsList = [
+    {
+      key: 0,
+      text: 'Sekolah Rimba',
+    },
+    {
+      key: 1,
+      text: 'Sekolah Jalanan',
+    },
+    {
+      key: 1,
+      text: 'Sekolah Terbang',
+    },
+  ];
+
+  const handleSearchSchools = (e) => {
+    return e;
+  };
   return (
     <>
       <form>
         <Panel title="Nama Sekolah">
-          <TextField
+          {/* <TextField
             placeholder="Tulis nama sekolah kamu"
             defaultVal={inputs.schoolId}
             name="schoolId"
             ref={register({ required: true })}
+          /> */}
+          <DropdownComponent
+            placeholder="Nama sekolah kamu"
+            onSelected={() => {}}
+            dropdownItem={schoolsList}
+            onSearch={handleSearchSchools}
+            withSearch
           />
         </Panel>
         <Panel title="Nama Guru Pembimbing">
-          <TextField
+          {/* <TextField
             placeholder="Tulis nama guru pembimbing kamu"
             defaultVal={inputs.teacherId}
             name="teacherId"
             ref={register({ required: true })}
+          /> */}
+          <DropdownComponent
+            placeholder="Nama guru kamu"
+            onSelected={() => {}}
+            dropdownItem={schoolsList}
+            onSearch={handleSearchSchools}
+            withSearch
           />
         </Panel>
         <Panel title="Nama Solusi Digital">

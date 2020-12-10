@@ -48,6 +48,8 @@ const SecondFormIdeaSolution = () => {
     const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
     newIdeaSolution.solutionSupportingPhotos = []; //  upload photos not supported from BE yet
     newIdeaSolution.isDraft = false;
+    newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
+    newIdeaSolution.schoolId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
     handlePostIdeas(newIdeaSolution);
   };
 
