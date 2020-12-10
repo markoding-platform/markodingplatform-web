@@ -16,7 +16,7 @@ import {
   infoText,
 } from './styles.module.scss';
 
-const BASE_URL = 'http://0.0.0.0:8080';
+const BASE_URL = process.env.MARKODING_API_URL;
 
 const SecondFormIdeaSolution = () => {
   const { push } = useRouter();

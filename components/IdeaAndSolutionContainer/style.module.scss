@@ -2,12 +2,12 @@
 @use 'styles/colors';
 
 .ideasWrapper {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(308px, 1fr));
+  grid-gap: 16px;
 }
 .ideaCardWrapper {
-  flex: 1 1 246px;
-  margin: 8px;
+  width: 100%;
 }
 
 .textTitle {
