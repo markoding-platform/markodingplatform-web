@@ -2,7 +2,7 @@ const navItems = [
   {
     id: 0,
     text: 'Pengumuman',
-    link: '/information',
+    link: '/announcement',
     withBadge: true,
   },
   {
