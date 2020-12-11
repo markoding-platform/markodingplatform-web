@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { func, string } from 'prop-types';
+import { string } from 'prop-types';
 
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
@@ -39,16 +39,16 @@ TextField.defaultProps = {
   as: 'input',
   className: '',
   defaultVal: '',
+  name: '',
   placeholder: '',
-  onEmit: () => {},
 };
 
 TextField.propTypes = {
   as: string,
   className: string,
   defaultVal: string,
+  name: string,
   placeholder: string,
-  onEmit: func,
 };
 
 export default TextField;

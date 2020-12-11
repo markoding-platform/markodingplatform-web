@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-const BASE_URL = 'https://api.markoding.com';
+const BASE_URL = process.env.MARKODING_API_URL;
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 

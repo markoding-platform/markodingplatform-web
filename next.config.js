@@ -25,6 +25,7 @@ module.exports = withPWA(
     env: {
       TITLE: process.env.TITLE,
       WEB_URL: process.env.WEB_URL,
+      MARKODING_API_URL: process.env.MARKODING_API_URL,
       SSO_WEB_URL: process.env.SSO_WEB_URL,
     },
     webpack(config) {
