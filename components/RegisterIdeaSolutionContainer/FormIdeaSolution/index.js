@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { useFormContext } from 'react-hook-form';
+import { useGlobalFormContext } from 'components/context/FormContext';
 
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
+import DropdownComponent from 'components/Dropdown';
 import {
   radioBtnWrapper,
   radioBtn,
@@ -13,52 +16,92 @@ import {
   isRadioActive,
 } from './styles.module.scss';
 
+// import useIdeaSolution from '../hooks/useIdeaSolution';
+
 const FormIdeaSolution = () => {
   const { push } = useRouter();
-  const [schools, setSchools] = useState('');
-  const [teacher, setTeacher] = useState('');
-  const [solutionName, setSolutionName] = useState();
+
+  const { register, handleSubmit } = useFormContext();
+  const { inputs, setInputs } = useGlobalFormContext();
   const [solutionType, setSolutionType] = useState('');
-  const [problemSelection, setProblemSelection] = useState('');
-  const [problemArea, setProblemArea] = useState('');
-  const [problemReason, setProblemReason] = useState('');
-  const [targetCustomer, setTargetCustomer] = useState('');
 
   const SOLUTION_TYPES = [
-    { id: 0, text: 'Aplikasi Mobile' },
-    { id: 1, text: 'Aplikasi Web' },
-    { id: 2, text: 'Aplikasi Game' },
+    { id: 0, text: 'Aplikasi Mobile', value: 'mobile' },
+    { id: 1, text: 'Aplikasi Web', value: 'web' },
+    { id: 2, text: 'Aplikasi Game', value: 'game' },
   ];
+
   const handleOnClick = () => {
     push('/register-idea/2');
+  };
+  const onSubmit = (data) => {
+    data.solutionType = solutionType;
+    setInputs({ ideaSolution: { ...data } });
+    handleOnClick();
+  };
+
+  const schoolsList = [
+    {
+      key: 0,
+      text: 'Sekolah Rimba',
+    },
+    {
+      key: 1,
+      text: 'Sekolah Jalanan',
+    },
+    {
+      key: 1,
+      text: 'Sekolah Terbang',
+    },
+  ];
+
+  const handleSearchSchools = (e) => {
+    return e;
   };
   return (
     <>
       <form>
         <Panel title="Nama Sekolah">
-          <TextField
+          {/* <TextField
             placeholder="Tulis nama sekolah kamu"
-            defaultVal={schools}
-            onEmit={setSchools}
+            defaultVal={inputs.schoolId}
+            name="schoolId"
+            ref={register({ required: true })}
+          /> */}
+          <DropdownComponent
+            placeholder="Nama sekolah kamu"
+            onSelected={() => {}}
+            dropdownItem={schoolsList}
+            onSearch={handleSearchSchools}
+            withSearch
           />
         </Panel>
         <Panel title="Nama Guru Pembimbing">
-          <TextField
+          {/* <TextField
             placeholder="Tulis nama guru pembimbing kamu"
-            defaultVal={teacher}
-            onEmit={setTeacher}
+            defaultVal={inputs.teacherId}
+            name="teacherId"
+            ref={register({ required: true })}
+          /> */}
+          <DropdownComponent
+            placeholder="Nama guru kamu"
+            onSelected={() => {}}
+            dropdownItem={schoolsList}
+            onSearch={handleSearchSchools}
+            withSearch
           />
         </Panel>
         <Panel title="Nama Solusi Digital">
           <TextField
             placeholder="Tulis nama solusi digital kamu"
-            defaultVal={solutionName}
-            onEmit={setSolutionName}
+            defaultVal={inputs.solutionName}
+            name="solutionName"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Pilihan Tipe Solusi Digital yang Ingin Kamu Buat">
           <div className="d-flex justify-content-start">
-            {SOLUTION_TYPES.map(({ text, id }) => (
+            {SOLUTION_TYPES.map(({ text, id, value }) => (
               <InputGroup
                 key={id}
                 className={`${
@@ -68,9 +111,10 @@ const FormIdeaSolution = () => {
                 <input
                   className={radioBtn}
                   type="radio"
-                  name={solutionType}
+                  name="solutionType"
                   value={solutionType}
-                  onChange={() => setSolutionType(id)}
+                  ref={register({ required: true })}
+                  onChange={() => setSolutionType(value)}
                 />
                 <InputGroup.Append aria-label="Radio button">
                   <InputGroup.Text className={radioInputText}>
@@ -84,24 +128,27 @@ const FormIdeaSolution = () => {
         <Panel title="Bidang Masalah">
           <TextField
             placeholder="Tulis bidang masalah yang ingin kamu selesaikan"
-            defaultVal={problemArea}
-            onEmit={setProblemArea}
+            defaultVal={inputs.problemArea}
+            name="problemArea"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Pemilihan Masalah">
           <TextField
             placeholder="Apa masalah yang ingin kamu selesaikan"
-            defaultVal={problemSelection}
-            onEmit={setProblemSelection}
+            defaultVal={inputs.problemSelection}
             as="textarea"
             className={textArea}
+            name="problemSelection"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Alasan Masalah">
           <TextField
             placeholder="Mengapa kamu ingin menyelesaikan masalah ini"
-            defaultVal={problemReason}
-            onEmit={setProblemReason}
+            defaultVal={inputs.problemReasoning}
+            name="problemReasoning"
+            ref={register({ required: true })}
             as="textarea"
             className={textArea}
           />
@@ -109,12 +156,13 @@ const FormIdeaSolution = () => {
         <Panel title="Target Customer">
           <TextField
             placeholder="Siapa yang ingin kamu bantu"
-            defaultVal={targetCustomer}
-            onEmit={setTargetCustomer}
+            defaultVal={inputs.targetCustomer}
+            name="targetCustomer"
+            ref={register({ required: true })}
           />
         </Panel>
         <div className="d-flex justify-content-end">
-          <Button variant="primary" onClick={handleOnClick}>
+          <Button variant="primary" onClick={handleSubmit(onSubmit)}>
             Selanjutnya
           </Button>
         </div>

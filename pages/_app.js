@@ -2,6 +2,7 @@ import '../styles/globals.scss';
 import React from 'react';
 import App from 'next/app';
 import NextNprogress from 'nextjs-progressbar';
+import { GlobalFormProvider } from 'components/context/FormContext';
 import SkilvulToken from '../libraries/SkilvulToken';
 
 export default class MyApp extends App {
@@ -36,7 +37,9 @@ export default class MyApp extends App {
             showSpinner: false,
           }}
         />
-        <Component {...pageProps} />
+        <GlobalFormProvider>
+          <Component {...pageProps} />
+        </GlobalFormProvider>
       </>
     );
   }

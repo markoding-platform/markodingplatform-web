@@ -1,43 +1,57 @@
 import React from 'react';
-import { arrayOf, string, shape } from 'prop-types';
 
+import range from 'utils/range';
+
+import CardLoader from 'components/Shimmer/Card';
 import SectionCardWrapper from 'components/SectionCardWrapper';
 import IdeaCard from 'components/IdeaCard';
+import useIdeaSolution from 'components/IdeaAndSolutionContainer/hooks/useIdeaSolution';
 
-const GalleryIdeaWidget = ({ ideas }) => {
+const defaultPic =
+  'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
+
+const GalleryIdeaWidget = () => {
+  const { data = [], error } = useIdeaSolution({ url: '/ideas' });
+
+  const renderLoader = () => {
+    const loaderArr = [];
+    range(1, 6).forEach((item) => {
+      loaderArr.push(<CardLoader key={item} className="m-4" />);
+    });
+    return loaderArr;
+  };
+
   return (
     <>
       <div className="pb-5">
-        <SectionCardWrapper title="Galeri Ide Solusi" link="/idea">
-          {ideas.map((idea) => (
-            <IdeaCard
-              key={idea.id}
-              imageUrl={idea.src}
-              title={`Ide Solusi ${idea.id}`}
-              link={`/idea/${idea.id}`}
-              description={idea.description}
-              likeCount={14}
-              commentCount={22}
-            />
-          ))}
-        </SectionCardWrapper>
+        {data.length && !error ? (
+          <SectionCardWrapper title="Galeri Ide Solusi" link="/idea">
+            {data.map((idea) => {
+              const {
+                id,
+                solutionName,
+                solutionSupportingPhotos,
+                solutionMission,
+              } = idea;
+              return (
+                <IdeaCard
+                  key={id}
+                  title={solutionName}
+                  imageUrl={solutionSupportingPhotos?.[1] || defaultPic}
+                  link={`/idea/${id}`}
+                  description={solutionMission}
+                  likeCount={14}
+                  commentCount={22}
+                />
+              );
+            })}
+          </SectionCardWrapper>
+        ) : (
+          renderLoader()
+        )}
       </div>
     </>
   );
-};
-
-GalleryIdeaWidget.propTypes = {
-  ideas: arrayOf(
-    shape({
-      id: string,
-      title: string,
-      src: string,
-      link: string,
-      date: string,
-      time: string,
-      description: string,
-    })
-  ).isRequired,
 };
 
 export default GalleryIdeaWidget;

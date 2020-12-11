@@ -17,14 +17,15 @@ const SectionCardWrapper = ({ title, link, children }) => {
       </div>
       <div className="inner-full-section-card">
         <EmblaCarousel slideToScroll={2}>
-          {children.map((child, index) => {
-            const key = `child-${index}`;
-            return (
-              <div key={key} className={styles.bannerSlide}>
-                {child}
-              </div>
-            );
-          })}
+          {children.length &&
+            children.map((child, index) => {
+              const key = `child-${index}`;
+              return (
+                <div key={key} className={styles.bannerSlide}>
+                  {child}
+                </div>
+              );
+            })}
         </EmblaCarousel>
       </div>
     </>

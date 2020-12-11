@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useFormContext } from 'react-hook-form';
 
 import { Button } from 'react-bootstrap';
 
@@ -8,6 +8,7 @@ import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import photoPlaceholder from 'svgs/photo-placeholder.svg';
 import expands from 'svgs/expands.svg';
+import { useGlobalFormContext } from 'components/context/FormContext';
 import {
   dropArea,
   textArea,
@@ -15,19 +16,43 @@ import {
   infoText,
 } from './styles.module.scss';
 
+const BASE_URL = process.env.MARKODING_API_URL;
+
 const SecondFormIdeaSolution = () => {
   const { push } = useRouter();
-  const [solutionSummary, setSolutionSummary] = useState('');
-  const [solutionVision, setSolutionVision] = useState('');
-  const [targetOutcomes, setTargetOutcomes] = useState('');
-  const [solutionBenefit, setSolutionBenefit] = useState('');
-  const [solutionObstacle, setSolutionObstacle] = useState('');
-  const [solutionPitchUrl, setSolutionPitchUrl] = useState('');
-  const [potentialCollaboration, setPotentialCollaboration] = useState('');
+  const { inputs } = useGlobalFormContext();
+  const { register, handleSubmit } = useFormContext();
 
-  const handleOnClick = () => {
-    console.log('masuk sini');
+  const handlePostIdeas = async (payload) => {
+    try {
+      const res = await fetch(`${BASE_URL}/ideas`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      res.json().then((data) => {
+        if (data.error) {
+          console.error({ error: data.message });
+        } else {
+          push('/idea');
+        }
+      });
+    } catch (e) {
+      console.error(e);
+    }
   };
+  const onSubmit = (payload) => {
+    const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
+    newIdeaSolution.solutionSupportingPhotos = []; //  upload photos not supported from BE yet
+    newIdeaSolution.isDraft = false;
+    newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
+    newIdeaSolution.schoolId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
+    handlePostIdeas(newIdeaSolution);
+  };
+
   const handleBack = () => {
     push('/register-idea');
   };
@@ -37,31 +62,35 @@ const SecondFormIdeaSolution = () => {
         <Panel title="Solusi Singkat">
           <TextField
             placeholder="Jelaskan solusi dalam 1 kalimat"
-            defaultVal={solutionSummary}
-            onEmit={setSolutionSummary}
+            defaultVal={inputs.solutionVision}
+            name="solutionVision"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Ide Solusi">
           <TextField
             placeholder="Ceritakan tentang ide solusimu dan bagaimana cara bekerjanya"
-            defaultVal={solutionVision}
-            onEmit={setSolutionVision}
+            defaultVal={inputs.solutionMission}
             as="textarea"
             className={textArea}
+            name="solutionMission"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Target Outcomes">
           <TextField
             placeholder="Apa yang ingin kamu capai dengan ide solusimu?"
-            defaultVal={targetOutcomes}
-            onEmit={setTargetOutcomes}
+            defaultVal={inputs.targetOutcomes}
+            name="targetOutcomes"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Kelebihan Ide Solusi">
           <TextField
             placeholder="Apa kelebihan ide solusimu dibangding solusi yang sudah ada?"
-            defaultVal={solutionBenefit}
-            onEmit={setSolutionBenefit}
+            defaultVal={inputs.solutionBenefit}
+            name="solutionBenefit"
+            ref={register({ required: true })}
             as="textarea"
             className={textArea}
           />
@@ -69,15 +98,17 @@ const SecondFormIdeaSolution = () => {
         <Panel title="Kendala">
           <TextField
             placeholder="Apa saja kendala yang akan kamu hadapi dalam menjalankan ide solusi ini dan jelaskan rencanamu untuk mengatasinya?"
-            defaultVal={solutionObstacle}
-            onEmit={setSolutionObstacle}
+            defaultVal={inputs.solutionObstacle}
+            name="solutionObstacle"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Link Video">
           <TextField
             placeholder="Sertakan link video pitch tentang ide solusimu"
-            defaultVal={solutionPitchUrl}
-            onEmit={setSolutionPitchUrl}
+            defaultVal={inputs.solutionPitchUrl}
+            name="solutionPitchUrl"
+            ref={register({ required: true })}
           />
         </Panel>
         <Panel title="Gambar/Foto Pendukung Ide Solusi">
@@ -107,8 +138,9 @@ const SecondFormIdeaSolution = () => {
         <Panel title="Kolaborasi Customer">
           <TextField
             placeholder="Siapa saja yang ingin kamu ajak kolaborasi dan jelaskan alasannya untuk mewujudkan ide solusimu?"
-            defaultVal={potentialCollaboration}
-            onEmit={setPotentialCollaboration}
+            defaultVal={inputs.potentialCollaboration}
+            name="potentialCollaboration"
+            ref={register({ required: true })}
             as="textarea"
             className={textArea}
           />
@@ -117,7 +149,7 @@ const SecondFormIdeaSolution = () => {
           <Button variant="outline-primary mr-2" onClick={handleBack}>
             Kembali
           </Button>
-          <Button variant="primary" onClick={() => handleOnClick()}>
+          <Button variant="primary" onClick={handleSubmit(onSubmit)}>
             Kirim Ide Solusi
           </Button>
         </div>

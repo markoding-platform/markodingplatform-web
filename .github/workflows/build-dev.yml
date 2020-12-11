@@ -36,6 +36,7 @@ jobs:
           envkey_GITHUB_HOOK_BRANCH: develop
           envkey_GITHUB_HOOK_SECRET: dummy
           envkey_WEB_URL: http://localhost:3000
+          envkey_MARKODING_API_URL: https://api.markoding.com
           envkey_SSO_CLIENT_ID: xxx-xxx-xxx
           envkey_SSO_CLIENT_SECRET: xxx-xxx-xxx
           envkey_SSO_WEB_URL: http://beta.skilvul.com/sso/markoding
