@@ -1,0 +1,21 @@
+.logo {
+	position: relative;
+	.badge {
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 2;
+		border-radius: 50%;
+		width: 13px;
+		height: 13px;
+	}
+}
+
+.wording {
+	flex: 2;
+	padding: 0 15px;
+}
+
+.button {
+	flex: 1;
+}
