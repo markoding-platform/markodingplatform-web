@@ -9,7 +9,7 @@ const MarkodingFetch = async (url, options = {}, ctx) => {
   const { headers, ...otherOptions } = options || {};
   return fetch(process.env.MARKODING_API_URL + url, {
     headers: {
-      Authorization: `Bearer ${markodingToken}`,
+      Authorization: markodingToken,
       ...headers,
     },
     ...otherOptions,
