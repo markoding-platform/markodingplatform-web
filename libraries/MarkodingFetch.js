@@ -27,7 +27,7 @@ const MarkodingFetch = async (url, options = {}, ctx) => {
     return {
       status: r.status,
       ok: r.ok,
-      ...result,
+      result,
     };
   });
 };
