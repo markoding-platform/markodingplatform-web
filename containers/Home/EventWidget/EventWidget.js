@@ -9,7 +9,7 @@ import WidgetLoader from '../WidgetLoader';
 const EventWidget = () => {
   const { data, error } = useEvents({ url: '/events' });
   const result = data?.result || [];
-  const isLoading = !result && !error;
+  const isLoading = !data && !error;
 
   return (
     <>
@@ -17,7 +17,7 @@ const EventWidget = () => {
       {!isLoading && result.length ? (
         <div className="pb-5">
           <SectionCardWrapper title="Event Terdekat" link="/event">
-            {data?.result.map((event) => (
+            {result.map((event) => (
               <EventCard
                 key={event.id}
                 imageUrl="https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg"
