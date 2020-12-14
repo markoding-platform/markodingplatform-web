@@ -2,7 +2,7 @@ import React from 'react';
 import useSWR from 'swr';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import Layout from 'components/Layout';
-import HomeContainer from 'components/HomeContainer';
+import HomeContainer from 'containers/Home';
 import SkilvulFetch from 'libraries/SkilvulFetch';
 import styles from 'styles/home.module.scss';
 import courseMap from '../map/courseMap';

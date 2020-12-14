@@ -11,7 +11,8 @@ const defaultPic =
   'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
 
 const IdeaAndSolutionContainer = () => {
-  const { data = [], error } = useIdeaSolution({ url: '/ideas' });
+  const { data, error } = useIdeaSolution({ url: '/ideas' });
+  const isLoading = !data && !error;
 
   const renderLoader = () => {
     const loaderArr = [];
@@ -35,26 +36,29 @@ const IdeaAndSolutionContainer = () => {
         </div>
       </div>
       <div className={ideasWrapper}>
-        {data.length && !error
-          ? data.map((idea) => {
-              const {
-                id,
-                solutionName,
-                solutionSupportingPhotos,
-                solutionMission,
-              } = idea;
-              return (
-                <div key={id} className={ideaCardWrapper}>
-                  <IdeaCard
-                    title={solutionName}
-                    imageUrl={solutionSupportingPhotos?.[1] || defaultPic}
-                    link={`/idea/${id}`}
-                    description={solutionMission}
-                  />
-                </div>
-              );
-            })
-          : renderLoader()}
+        {isLoading && renderLoader()}
+        {!isLoading && data.length ? (
+          data.map((idea) => {
+            const {
+              id,
+              solutionName,
+              solutionSupportingPhotos,
+              solutionMission,
+            } = idea;
+            return (
+              <div key={id} className={ideaCardWrapper}>
+                <IdeaCard
+                  title={solutionName}
+                  imageUrl={solutionSupportingPhotos?.[1] || defaultPic}
+                  link={`/idea/${id}`}
+                  description={solutionMission}
+                />
+              </div>
+            );
+          })
+        ) : (
+          <div>Oppss! Belum ada data</div>
+        )}
       </div>
     </>
   );
