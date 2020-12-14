@@ -21,7 +21,6 @@ const MarkodingFetch = async (url, options = {}, ctx) => {
     let result;
     try {
       result = await r.json();
-      console.log('result', result);
     } catch (e) {
       result = {};
     }
