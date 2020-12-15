@@ -68,6 +68,11 @@
   display: flex;
   justify-content: space-between;
   width: 400px;
+  flex-wrap: wrap;
+  @media (max-width: breakpoint.$md) {
+    width: 100%;
+    flex-direction: column;
+  }
 }
 
 .footerInfo {

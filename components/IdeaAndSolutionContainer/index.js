@@ -57,7 +57,7 @@ const IdeaAndSolutionContainer = () => {
             );
           })
         ) : (
-          <div>Oppss! Belum ada data</div>
+          <div>Oops! Belum ada data</div>
         )}
       </div>
     </>

@@ -118,7 +118,7 @@ const Footer = () => (
       </div>
     </div>
     <hr />
-    <div className="d-flex justify-content-between px-4">
+    <div className="d-flex justify-content-between flex-wrap px-4 mb-5">
       <p className="text-secondary">
         {/* eslint-disable react/jsx-one-expression-per-line */}©
         <span className={textBold}>2020 MARKODING</span>. All Rights Reserved

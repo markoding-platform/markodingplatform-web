@@ -8,7 +8,7 @@ const Drawer = ({ onClose, children }) => {
   return (
     <div className={drawerWrapper}>
       <div className={card}>
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between p-2">
           <MarkodingLogo />
           <button type="button" onClick={onClose} className="btn">
             <BsX size="2rem" />
