@@ -2,8 +2,10 @@ import '../styles/globals.scss';
 import React from 'react';
 import App from 'next/app';
 import NextNprogress from 'nextjs-progressbar';
+import { ToastContainer, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { GlobalFormProvider } from 'components/context/FormContext';
-import SkilvulToken from '../libraries/SkilvulToken';
+import SkilvulToken from 'libraries/SkilvulToken';
 
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -36,6 +38,16 @@ export default class MyApp extends App {
           options={{
             showSpinner: false,
           }}
+        />
+        <ToastContainer
+          transition={Flip}
+          position="top-center"
+          autoClose={false}
+          hideProgressBar={false}
+          closeOnClick={false}
+          pauseOnHover
+          draggable
+          progress="undefined"
         />
         <GlobalFormProvider>
           <Component {...pageProps} />
