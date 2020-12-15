@@ -13,7 +13,7 @@ const Box = (props) => {
 
 Box.defaultProps = {
   width: '100%',
-  height: 420,
+  height: '420',
 };
 
 Box.propTypes = {

@@ -11,7 +11,8 @@ const defaultPic =
   'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
 
 const GalleryIdeaWidget = () => {
-  const { data = [], error } = useIdeaSolution({ url: '/ideas' });
+  const { data, error } = useIdeaSolution({ url: '/ideas' });
+  const isLoading = !data && !error;
 
   const renderLoader = () => {
     const loaderArr = [];
@@ -23,8 +24,9 @@ const GalleryIdeaWidget = () => {
 
   return (
     <>
-      <div className="pb-5">
-        {data.length && !error ? (
+      {isLoading && renderLoader()}
+      {!isLoading && data.length && !error ? (
+        <div className="pb-5">
           <SectionCardWrapper title="Galeri Ide Solusi" link="/idea">
             {data.map((idea) => {
               const {
@@ -46,10 +48,10 @@ const GalleryIdeaWidget = () => {
               );
             })}
           </SectionCardWrapper>
-        ) : (
-          renderLoader()
-        )}
-      </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 };
