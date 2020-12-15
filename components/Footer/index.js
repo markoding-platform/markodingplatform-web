@@ -16,6 +16,8 @@ import {
   leftSide,
   textBold,
   contacts,
+  footerInner,
+  footerInfo,
 } from './style.module.scss';
 
 const footerData = [
@@ -80,7 +82,7 @@ const footerData = [
 ];
 const Footer = () => (
   <section className={footerContainer}>
-    <div className="px-4 mt-5 d-flex justify-content-between">
+    <div className={footerInner}>
       <div className={leftSide}>
         <MarkodingLogo />
         <h6 className={markodingMessage}>
@@ -89,7 +91,7 @@ const Footer = () => (
           Indonesia.
         </h6>
       </div>
-      <div className="d-flex w-50">
+      <div className={footerInfo}>
         {footerData.map((item, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <div key={index} className={footerItem}>
@@ -116,7 +118,7 @@ const Footer = () => (
       </div>
     </div>
     <hr />
-    <div className="d-flex justify-content-between px-4">
+    <div className="d-flex justify-content-between flex-wrap px-4 mb-5">
       <p className="text-secondary">
         {/* eslint-disable react/jsx-one-expression-per-line */}©
         <span className={textBold}>2020 MARKODING</span>. All Rights Reserved

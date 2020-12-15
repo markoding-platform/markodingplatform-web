@@ -66,7 +66,7 @@ Layout.defaultProps = {
 };
 
 Layout.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
   activeMenu: PropTypes.string,
 };
 
