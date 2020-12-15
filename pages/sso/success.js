@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 import MarkodingFetch from 'libraries/MarkodingFetch';
-import { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { Login } from 'utils/auth';
 import Loading from 'components/Loading';
 
 const SsoSuccess = ({ sso, sig }) => {
-  const [errorMessage, setErrorMessage] = useState(null);
-
   const getToken = async () => {
     const response = await MarkodingFetch('/auth/finish', {
       headers: {
@@ -19,12 +19,13 @@ const SsoSuccess = ({ sso, sig }) => {
       }),
     });
 
-    if (response.ok && response.token && response.data) {
-      const { user } = response.data;
-      await Login({}, response.token, user);
+    if (response.ok && response.result) {
+      const { token, data } = response.result;
+      await Login({}, token, data.user);
     } else {
       const message = response.message || 'Login gagal diproses';
-      setErrorMessage(message);
+      toast.error(message);
+      Router.push('/');
     }
   };
 
@@ -37,9 +38,6 @@ const SsoSuccess = ({ sso, sig }) => {
       <div className="center w-25">
         <Loading />
       </div>
-      {errorMessage && (
-        <p className="text-center text-danger">{errorMessage}</p>
-      )}
     </div>
   );
 };

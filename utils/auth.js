@@ -50,7 +50,7 @@ export const SSO = (context) => {
       method: 'POST',
     }).then((response) => {
       if (response.ok) {
-        const { sso, sig } = response;
+        const { sso, sig } = response.result;
         window.location.replace(
           `${process.env.SSO_WEB_URL}?sso=${sso}&sig=${sig}`
         );
