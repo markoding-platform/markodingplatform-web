@@ -1,6 +1,7 @@
 import '../styles/globals.scss';
 import React from 'react';
 import App from 'next/app';
+import Head from 'next/head';
 import NextNprogress from 'nextjs-progressbar';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,6 +31,20 @@ export default class MyApp extends App {
     const { Component, pageProps } = this.props;
     return (
       <>
+        <Head>
+          <link
+            rel="preload"
+            href="/fonts/Poppins/Poppins-Regular.ttf"
+            as="font"
+            crossOrigin=""
+          />
+          <link
+            rel="preload"
+            href="/fonts/Poppins/Poppins-SemiBold.ttf"
+            as="font"
+            crossOrigin=""
+          />
+        </Head>
         <NextNprogress
           color="#2F80ED"
           startPosition={0.4}

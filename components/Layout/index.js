@@ -22,18 +22,6 @@ const Layout = ({ children, activeMenu }) => {
           content="A social learning community platform"
         />
         <meta name="keywords" content="Markoding" />
-        <link
-          rel="preload"
-          href="/fonts/Poppins/Poppins-Regular.ttf"
-          as="font"
-          crossOrigin=""
-        />
-        <link
-          rel="preload"
-          href="/fonts/Poppins/Poppins-SemiBold.ttf"
-          as="font"
-          crossOrigin=""
-        />
         <title>Markoding Platform</title>
         <link
           href="/favicon-16x16.png"
