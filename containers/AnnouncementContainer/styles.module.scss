@@ -1,0 +1,19 @@
+@use 'styles/colors';
+
+.wrapper {
+	margin-bottom: 15px;
+	border-bottom: 1px solid colors.$gray-600;
+	padding: 10px 0;
+}
+
+.emptyState {
+	max-width: 320px;
+	margin: 15px auto;
+	padding: 15px;
+	text-align: center;
+}
+
+.textInfo {
+	font-weight: 300;
+	color: colors.$gray-600;
+}

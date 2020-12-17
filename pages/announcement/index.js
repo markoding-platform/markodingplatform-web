@@ -1,6 +1,6 @@
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import AnnouncementContainer from 'containers/announcementContainer';
+import AnnouncementContainer from 'containers/AnnouncementContainer';
 
 export default function Announcement() {
   return (
