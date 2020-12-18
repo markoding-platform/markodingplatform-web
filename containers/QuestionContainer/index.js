@@ -1,18 +1,19 @@
 import { string } from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import { BiSearchAlt2 } from 'react-icons/bi';
-import Link from 'next/link';
 import ForumCard from 'components/ForumCard';
 import React from 'react';
 import useQuestion from 'hooks/useQuestion';
 import range from 'utils/range';
 import BoxLoader from 'components/Shimmer/Box';
+import MarkodingFetch from 'libraries/MarkodingFetch';
+import { mutate } from 'swr';
 import questionMap from '../../map/questionMap';
 import styles from './styles.module.scss';
 
 const QuestionContainer = ({ channelSlug }) => {
   const { data, error } = useQuestion({
-    url: `/questions/channel/${channelSlug}`,
+    url: `/questions/channel/${channelSlug}?limit=6&offset=0`,
   });
   const result = data?.result || [];
   const isLoading = !data && !error;
@@ -28,6 +29,23 @@ const QuestionContainer = ({ channelSlug }) => {
       );
     });
     return loaderArr;
+  };
+
+  const onLikeQuestion = async (questionSlug) => {
+    const likeResult = await MarkodingFetch('/questions/likes', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        isLike: true,
+        question: questionSlug,
+      }),
+    });
+
+    if (likeResult.ok) {
+      await mutate(`/questions/channel/${channelSlug}?limit=6&offset=0`);
+    }
   };
 
   return (
@@ -47,21 +65,16 @@ const QuestionContainer = ({ channelSlug }) => {
         {!isLoading && result.length > 0 ? (
           questions.map((q) => (
             <div key={q.id} className="mb-3">
-              <Link href={`/chat/${q.channelSlug}/${q.id}`}>
-                <a
-                  href={`/chat/${q.channelSlug}/${q.id}`}
-                  className={styles.link}
-                >
-                  <ForumCard
-                    imageUrl={q.imageUrl}
-                    comment={q.comment}
-                    name={q.name}
-                    time={q.time}
-                    commentCount={q.commentCount}
-                    likeCount={q.likeCount}
-                  />
-                </a>
-              </Link>
+              <ForumCard
+                imageUrl={q.imageUrl}
+                comment={q.comment}
+                name={q.name}
+                time={q.time}
+                commentCount={q.commentCount}
+                likeCount={q.likeCount}
+                link={`/chat/${channelSlug}/${q.id}`}
+                onLike={() => onLikeQuestion(q.id)}
+              />
             </div>
           ))
         ) : (

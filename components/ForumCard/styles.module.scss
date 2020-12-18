@@ -27,6 +27,10 @@
 .iconLike {
   color: colors.$red;
   margin-right: 12px;
+	cursor: pointer;
+	&:hover {
+		opacity: 0.8;
+	}
 }
 
 .iconComment {
