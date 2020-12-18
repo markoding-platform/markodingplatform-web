@@ -1,0 +1,21 @@
+.searchGroup {
+	position: relative;
+	margin: 15px 0;
+}
+
+.searchIcon {
+	position: absolute;
+	right: 10px;
+	top: 8px;
+	font-size: 22px;
+}
+
+.search {
+	padding-right: 30px;
+}
+
+.link {
+	&:hover {
+		text-decoration: none;
+	}
+}

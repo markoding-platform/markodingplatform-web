@@ -3,9 +3,28 @@ import Link from 'next/link';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
+import useChannels from 'hooks/useChannel';
+import range from 'utils/range';
+import BoxLoader from 'components/Shimmer/Box';
 import styles from '../../styles/chat.module.scss';
 
 const Chat = () => {
+  const { data, error } = useChannels({ url: '/channels' });
+  const result = data?.result || [];
+  const isLoading = !data && !error;
+
+  const renderLoader = () => {
+    const loaderArr = [];
+    range(1, 4).forEach((item) => {
+      loaderArr.push(
+        <div key={item} className="mb-3">
+          <BoxLoader height="60" />
+        </div>
+      );
+    });
+    return loaderArr;
+  };
+
   return (
     <Layout activeMenu="/chat">
       <div className={styles.chatContent}>
@@ -17,28 +36,19 @@ const Chat = () => {
             <div className="d-flex justify-content-between align-items-center mb-4">
               <h1 className="h3">Chat</h1>
             </div>
-            <ListGroup>
-              <Link href="/chat/HTML">
-                <ListGroup.Item action href="/chat/HTML">
-                  #HTML
-                </ListGroup.Item>
-              </Link>
-              <Link href="/chat/CSS">
-                <ListGroup.Item action href="/chat/CSS">
-                  #CSS
-                </ListGroup.Item>
-              </Link>
-              <Link href="/chat/Javascript">
-                <ListGroup.Item action href="/chat/Javascript">
-                  #Javascript
-                </ListGroup.Item>
-              </Link>
-              <Link href="/chat/Other">
-                <ListGroup.Item action href="/chat/Other">
-                  #Other
-                </ListGroup.Item>
-              </Link>
-            </ListGroup>
+            {isLoading && renderLoader()}
+
+            {!isLoading && result.length && (
+              <ListGroup>
+                {result.map((channel) => (
+                  <Link key={channel.id} href={`/chat/${channel.id}`}>
+                    <ListGroup.Item action href={`/chat/${channel.id}`}>
+                      {`#${channel.name}`}
+                    </ListGroup.Item>
+                  </Link>
+                ))}
+              </ListGroup>
+            )}
           </div>
         </div>
       </div>

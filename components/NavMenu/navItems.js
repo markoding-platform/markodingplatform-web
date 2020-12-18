@@ -34,26 +34,7 @@ const navItems = [
     text: 'Chat',
     link: '/chat',
     withBadge: false,
-    children: [
-      {
-        id: 0,
-        text: '#HTML',
-        link: '/chat/html',
-        withBadge: false,
-      },
-      {
-        id: 1,
-        text: '#CSS',
-        link: '/chat/css',
-        withBadge: false,
-      },
-      {
-        id: 2,
-        text: '#Javascript',
-        link: '/chat/javascript',
-        withBadge: false,
-      },
-    ],
+    children: [],
   },
   {
     id: 6,
