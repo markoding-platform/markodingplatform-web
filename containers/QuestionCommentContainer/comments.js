@@ -16,10 +16,9 @@ const QuestionComments = ({ questionSlug }) => {
   return (
     <>
       {isLoading && <Loading />}
-      {!isLoading &&
-        result.length &&
+      {!isLoading && result.length > 0 ? (
         comments.map((c) => (
-          <div key={c.id} className="ml-xs-0 ml-5 mb-4">
+          <div key={c.id} className="ml-lg-5 mb-4">
             <ForumCommentCard
               avatarUrl={c.avatarUrl}
               name={c.name}
@@ -27,7 +26,10 @@ const QuestionComments = ({ questionSlug }) => {
               payload={c.payload}
             />
           </div>
-        ))}
+        ))
+      ) : (
+        <p className="text-danger ml-lg-5 mb-4">Belum ada komentar</p>
+      )}
     </>
   );
 };

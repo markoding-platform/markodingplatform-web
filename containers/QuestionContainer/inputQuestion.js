@@ -55,8 +55,10 @@ const InputQuestion = ({ show, onClose, channelSlug }) => {
           Batal
         </Button>
         <Button variant="primary" onClick={submitQuestion} disabled={isLoading}>
-          {isLoading && <Loading withText={false} />}
-          <span className="ml-2">Kirim</span>
+          <div className="d-flex align-items-center">
+            {isLoading && <Loading withText={false} />}
+            <span className="ml-2">Kirim</span>
+          </div>
         </Button>
       </Modal.Footer>
     </Modal>

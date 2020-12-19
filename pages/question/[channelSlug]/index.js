@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import TabLink from 'components/TabLink';
 import styles from 'styles/chat.module.scss';
 import QuestionContainer from 'containers/QuestionContainer';
 import useChannels from 'hooks/useChannel';
@@ -11,28 +10,13 @@ import Loading from 'components/Loading';
 import InputQuestion from 'containers/QuestionContainer/inputQuestion';
 
 const ChatThread = ({ channelSlug }) => {
-  const tabLinks = [
-    {
-      id: 1,
-      label: 'Tanya Jawab',
-      link: `/chat/${channelSlug}`,
-      active: true,
-    },
-    {
-      id: 2,
-      label: 'Chat',
-      link: `/chat/${channelSlug}/random`,
-      active: false,
-    },
-  ];
-
   const [showFormQuestion, setShowFormQuestion] = useState(false);
   const { data, error } = useChannels({ url: `/channels/${channelSlug}` });
   const result = data?.result || {};
   const isLoading = !data && !error;
 
   return (
-    <Layout activeMenu="/chat">
+    <Layout activeMenu="/question">
       <div className={styles.chatContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
@@ -53,7 +37,6 @@ const ChatThread = ({ channelSlug }) => {
                     Tanya Pertanyaan Baru
                   </Button>
                 </div>
-                <TabLink items={tabLinks} />
                 <QuestionContainer channelSlug={channelSlug} />
               </>
             ) : (

@@ -6,7 +6,6 @@ import MarkodingLogo from 'components/MarkodingLogo';
 import Drawer from 'components/Drawer';
 import skilvulLogo from 'svgs/skilvulLogo.svg';
 import NavMenu from 'components/NavMenu';
-import notifFill from 'svgs/notif-fill.svg';
 import notif from 'svgs/notif.svg';
 
 import {
@@ -14,8 +13,6 @@ import {
   headerWrapper,
   burgerBtn,
   desktopLogo,
-  desktopSkilvulIcon,
-  desktopNotifIcon,
   grayish,
   rootHeader,
 } from './styles.module.scss';
@@ -28,10 +25,6 @@ const Header = () => {
       <div className="d-none d-lg-block">
         <div className={desktopLogo}>
           <MarkodingLogo isSmall />
-          <div className="d-flex align-items-center">
-            <Icon src={skilvulLogo} size={30} className={desktopSkilvulIcon} />
-            <Icon src={notifFill} size={24} className={desktopNotifIcon} />
-          </div>
         </div>
         <NavMenu />
       </div>

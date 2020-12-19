@@ -13,31 +13,49 @@ const navItems = [
   },
   {
     id: 2,
+    text: 'Event Terdekat',
+    link: '/event',
+    withBadge: false,
+  },
+  {
+    id: 3,
     text: 'Ide Solusi',
     link: '/idea',
     withBadge: false,
   },
   {
-    id: 3,
+    id: 4,
     text: 'Kelas Online',
     link: '/course',
     withBadge: false,
   },
   {
-    id: 4,
+    id: 5,
+    text: 'Cerita MARKODING',
+    link: '/blog',
+    withBadge: false,
+  },
+  {
+    id: 6,
     text: 'Leaderboard',
     link: '/leader-board',
     withBadge: false,
   },
   {
-    id: 5,
-    text: 'Chat',
-    link: '/chat',
+    id: 7,
+    text: 'Tanya Jawab',
+    link: '/question',
     withBadge: false,
     children: [],
   },
   {
-    id: 6,
+    id: 8,
+    text: 'Chat',
+    link: '/chat',
+    withBadge: false,
+  },
+  {
+    id: 9,
     text: 'Direktori',
     link: '/directory',
     withBadge: false,
@@ -61,12 +79,6 @@ const navItems = [
         withBadge: false,
       },
     ],
-  },
-  {
-    id: 7,
-    text: 'Setting',
-    link: '/setting',
-    withBadge: false,
   },
 ];
 

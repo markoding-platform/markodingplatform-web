@@ -17,6 +17,7 @@ module.exports = withPWA(
         'image.freepik.com',
         'skilvul-prod-01.s3.ap-southeast-1.amazonaws.com',
         'skilvul-dev-01.s3.ap-southeast-1.amazonaws.com',
+        'inovasi.markoding.com',
       ],
       dest: 'public',
     },
