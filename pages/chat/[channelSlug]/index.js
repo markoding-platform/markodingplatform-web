@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Layout from 'components/Layout';
@@ -8,6 +8,7 @@ import styles from 'styles/chat.module.scss';
 import QuestionContainer from 'containers/QuestionContainer';
 import useChannels from 'hooks/useChannel';
 import Loading from 'components/Loading';
+import InputQuestion from 'containers/QuestionContainer/inputQuestion';
 
 const ChatThread = ({ channelSlug }) => {
   const tabLinks = [
@@ -25,6 +26,7 @@ const ChatThread = ({ channelSlug }) => {
     },
   ];
 
+  const [showFormQuestion, setShowFormQuestion] = useState(false);
   const { data, error } = useChannels({ url: `/channels/${channelSlug}` });
   const result = data?.result || {};
   const isLoading = !data && !error;
@@ -43,7 +45,11 @@ const ChatThread = ({ channelSlug }) => {
               <>
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <h1 className="h3">{`#${result.name}`}</h1>
-                  <Button type="button" variant="warning">
+                  <Button
+                    type="button"
+                    variant="warning"
+                    onClick={() => setShowFormQuestion(true)}
+                  >
                     Tanya Pertanyaan Baru
                   </Button>
                 </div>
@@ -56,6 +62,11 @@ const ChatThread = ({ channelSlug }) => {
           </div>
         </div>
       </div>
+      <InputQuestion
+        show={showFormQuestion}
+        onClose={() => setShowFormQuestion(false)}
+        channelSlug={channelSlug}
+      />
     </Layout>
   );
 };
