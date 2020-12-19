@@ -19,7 +19,7 @@ const GalleryIdeaWidget = () => {
       {!isLoading && result.length ? (
         <div className="pb-5">
           <SectionCardWrapper title="Galeri Ide Solusi" link="/idea">
-            {data.map((idea) => {
+            {result.map((idea) => {
               const {
                 id,
                 solutionName,
