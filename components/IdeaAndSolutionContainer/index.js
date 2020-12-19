@@ -12,6 +12,8 @@ const defaultPic =
 
 const IdeaAndSolutionContainer = () => {
   const { data, error } = useIdeaSolution({ url: '/ideas' });
+  const result = data?.result || [];
+
   const isLoading = !data && !error;
 
   const renderLoader = () => {
@@ -37,8 +39,8 @@ const IdeaAndSolutionContainer = () => {
       </div>
       <div className={ideasWrapper}>
         {isLoading && renderLoader()}
-        {!isLoading && data.length ? (
-          data.map((idea) => {
+        {!isLoading && result.length && !error ? (
+          result.map((idea) => {
             const {
               id,
               solutionName,
