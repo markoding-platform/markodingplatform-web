@@ -72,7 +72,7 @@ const QuestionContainer = ({ channelSlug }) => {
                 time={q.time}
                 commentCount={q.commentCount}
                 likeCount={q.likeCount}
-                link={`/chat/${channelSlug}/${q.id}`}
+                link={`/question/${channelSlug}/${q.id}`}
                 onLike={() => onLikeQuestion(q.id)}
               />
             </div>

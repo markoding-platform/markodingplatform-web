@@ -8,6 +8,7 @@
 	@media (min-width: breakpoint.$lg) {
 		position: fixed;
 		max-width: 290px;
+		width: 290px;
 	}
 }
 .innerHeader {
@@ -39,16 +40,6 @@
   justify-content: space-between;
   padding: 15px 1.25rem;
   margin-bottom: 50px;
-}
-
-.desktopSkilvulIcon {
-  @include gray__filter;
-  height: 26px !important;
-}
-
-.desktopNotifIcon {
-  margin-left: 10px;
-  height: 22px !important;
 }
 
 .grayish {

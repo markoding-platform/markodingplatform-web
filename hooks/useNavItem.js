@@ -7,13 +7,13 @@ const useNavItem = () => {
   const { data } = useSWR('/channels', MarkodingFetch);
   if (data && data.ok && data.result) {
     menus[
-      menus.map((m, i) => [i, m]).filter((m) => m[1].id === 5)[0][0]
+      menus.map((m, i) => [i, m]).filter((m) => m[1].id === 7)[0][0]
     ].children = [
       ...data.result.map((c) => {
         return {
           id: c.id,
           text: `#${c.name}`,
-          link: `/chat/${c.id}`,
+          link: `/question/${c.id}`,
           withBadge: false,
         };
       }),

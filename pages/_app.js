@@ -7,6 +7,7 @@ import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { GlobalFormProvider } from 'components/context/FormContext';
 import SkilvulToken from 'libraries/SkilvulToken';
+import FirebaseInitial from 'libraries/FirebaseInital';
 
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -25,6 +26,7 @@ export default class MyApp extends App {
 
   componentDidMount() {
     SkilvulToken();
+    FirebaseInitial();
   }
 
   render() {
