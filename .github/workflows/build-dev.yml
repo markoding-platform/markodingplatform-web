@@ -40,6 +40,15 @@ jobs:
           envkey_SSO_CLIENT_ID: xxx-xxx-xxx
           envkey_SSO_CLIENT_SECRET: xxx-xxx-xxx
           envkey_SSO_WEB_URL: http://beta.skilvul.com/sso/markoding
+          envkey_FIREBASE_API_KEY: AIzaSyCLnv3L7Q6rzpcXHXjPfivFurqh9SodySI
+          envkey_FIREBASE_AUTH_DOMAIN: markoding-platform.firebaseapp.com
+          envkey_FIREBASE_DATABASE_URL: https://markoding-platform.firebaseio.com
+          envkey_FIREBASE_PROJECT_ID: markoding-platform
+          envkey_FIREBASE_STORAGE_BUCKET: markoding-platform.appspot.com
+          envkey_FIREBASE_MESSAGING_SENDER_ID: 443874020256
+          envkey_FIREBASE_APP_ID: 1:443874020256:web:4cf164c3c518a36af5f2c5
+          envkey_FIREBASE_MEASUREMENT_ID: G-VB1LHJPLSX
+          envkey_FIREBASE_VAPID_KEY: BFhkEoQEjWVj5GCX2NIGzslBtCRqyVbplBpbtxUpEuaJfnGy5dk-bIY5LeC_PYWc_iIonoHAc4bS0MZMpbCYGdg
           file_name: .env
       - run: npm install
       - run: npm run build

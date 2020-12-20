@@ -6,14 +6,14 @@ import Image from 'next/image';
 
 const FirebaseInitial = () => {
   const config = {
-    apiKey: 'AIzaSyCLnv3L7Q6rzpcXHXjPfivFurqh9SodySI',
-    authDomain: 'markoding-platform.firebaseapp.com',
-    databaseURL: 'https://markoding-platform.firebaseio.com',
-    projectId: 'markoding-platform',
-    storageBucket: 'markoding-platform.appspot.com',
-    messagingSenderId: '443874020256',
-    appId: '1:443874020256:web:4cf164c3c518a36af5f2c5',
-    measurementId: 'G-VB1LHJPLSX',
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID,
   };
 
   if (typeof window !== 'undefined' && !firebase.apps.length) {
@@ -54,8 +54,7 @@ const FirebaseInitial = () => {
     const getFcmToken = () => {
       messaging
         .getToken({
-          vapidKey:
-            'BFhkEoQEjWVj5GCX2NIGzslBtCRqyVbplBpbtxUpEuaJfnGy5dk-bIY5LeC_PYWc_iIonoHAc4bS0MZMpbCYGdg',
+          vapidKey: process.env.FIREBASE_VAPID_KEY,
         })
         .then((currentToken) => {
           localforage.setItem('FCM_TOKEN', currentToken);
