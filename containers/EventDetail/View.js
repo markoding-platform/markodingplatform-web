@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { BsCalendarFill, BsClockFill } from 'react-icons/bs';
 
 import styles from 'styles/event.module.scss';
-import useEvents from 'containers/hooks/useEvents';
+import useEvents from 'hooks/useEvents';
 import EventLoader from './Loader';
 
 dayjs.locale('id');

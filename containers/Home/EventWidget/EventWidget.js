@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useEvents from 'containers/hooks/useEvents';
+import useEvents from 'hooks/useEvents';
 
 import SectionCardWrapper from 'components/SectionCardWrapper';
 import EventCard from 'components/EventCard';

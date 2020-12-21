@@ -1,7 +1,7 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import useEvents from 'containers/hooks/useEvents';
+import useEvents from 'hooks/useEvents';
 import range from 'utils/range';
 import CardLoader from 'components/Shimmer/Card';
 import EventCard from 'components/EventCard';
