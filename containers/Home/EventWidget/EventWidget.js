@@ -17,13 +17,14 @@ const EventWidget = () => {
       {!isLoading && result.length ? (
         <div className="pb-5">
           <SectionCardWrapper title="Event Terdekat" link="/event">
-            {result.map((event) => (
+            {result.map((event = {}) => (
               <EventCard
                 key={event.id}
                 imageUrl="https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg"
                 title={event.title}
                 date={event.date}
-                time={event.time}
+                startAt={event.startAt}
+                finishAt={event.finishAt}
                 link={`/event/${event.id}`}
               />
             ))}

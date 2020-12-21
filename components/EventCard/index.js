@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BsCalendarFill, BsClockFill } from 'react-icons/bs';
+import dayjs from 'dayjs';
 import styles from './styles.module.scss';
 
+dayjs.locale('id');
+
 const EventCard = (props) => {
-  const { imageUrl, title, date, time, link } = props;
+  const { imageUrl, title, date, startAt, finishAt, link } = props;
+
+  const handleFormatTime = useCallback((time) => {
+    if (!time) return '';
+    const splitTime = time.split(':');
+    return `${splitTime[0]}:${splitTime[1]}`;
+  }, []);
+
+  const timeString =
+    (startAt &&
+      finishAt &&
+      `${handleFormatTime(startAt)} - ${handleFormatTime(finishAt)}`) ||
+    '';
   return (
     <Link href={link}>
       <a href={link} className={styles.link}>
@@ -19,11 +34,11 @@ const EventCard = (props) => {
             <Card.Title className={styles.title}>{title}</Card.Title>
             <Card.Text className={styles.text}>
               <BsCalendarFill className={styles.icon} />
-              {date}
+              {dayjs(date).format('MMMM DD, YYYY')}
             </Card.Text>
             <Card.Text className={styles.text}>
               <BsClockFill className={styles.icon} />
-              {time}
+              {timeString}
             </Card.Text>
           </Card.Body>
         </Card>
@@ -32,11 +47,17 @@ const EventCard = (props) => {
   );
 };
 
+EventCard.defaultProps = {
+  finishAt: '',
+  startAt: '',
+};
+
 EventCard.propTypes = {
   imageUrl: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  time: PropTypes.string.isRequired,
+  startAt: PropTypes.string,
+  finishAt: PropTypes.string,
   link: PropTypes.string.isRequired,
 };
 
