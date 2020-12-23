@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import Image from 'next/image';
@@ -18,10 +19,23 @@ const EventDetail = () => {
   // TODO: handle not found slug
   const event = data?.result || {};
 
+  const handleFormatTime = useCallback((time) => {
+    if (!time) return '';
+    const splitTime = time.split(':');
+    return `${splitTime[0]}:${splitTime[1]}`;
+  }, []);
+
   const isLoading = !data && !error;
   if (isLoading) {
     return <EventLoader />;
   }
+
+  const { startAt, finishAt } = event;
+  const timeString =
+    (startAt &&
+      finishAt &&
+      `${handleFormatTime(startAt)} - ${handleFormatTime(finishAt)}`) ||
+    '';
 
   return (
     <>
@@ -49,8 +63,7 @@ const EventDetail = () => {
           <p className={styles.dateTime}>
             <BsClockFill />
             <div className="d-flex">
-              <span className="pr-2">{event.startAt}</span>
-              <span>{event.finishAt}</span>
+              <span>{timeString}</span>
             </div>
           </p>
         </div>

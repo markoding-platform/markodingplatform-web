@@ -40,7 +40,8 @@ const View = () => {
                   imageUrl="https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg"
                   title={event.title}
                   date={event.date}
-                  time={event.time}
+                  startAt={event.startAt}
+                  finishAt={event.finishAt}
                   link={`/event/${event.id}`}
                 />
               </div>
