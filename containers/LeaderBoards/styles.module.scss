@@ -1,0 +1,25 @@
+@use 'styles/colors';
+
+.styTabTitle {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.7rem;
+  line-height: 1.7rem;
+  color: colors.$white;
+}
+
+.styTabContainer {
+  background-color: colors.$blue;
+}
+
+.styActiveTab {
+  border-bottom: 5px solid #fae23a;
+}
+
+.styNav {
+  height: 88px;
+  width: 100%;
+  display: flex;
+  padding: 32px 0;
+  justify-content: center;
+}

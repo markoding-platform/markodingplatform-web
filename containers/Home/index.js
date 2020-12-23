@@ -4,6 +4,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import Alert from 'react-bootstrap/Alert';
 
 import useErrorHandler from 'hooks/useErrorHandler';
+import DynamicLeaderBoardContainer from 'containers/LeaderBoards';
 import ErrorFallback from 'components/ErrorFallback';
 import HomeTopCarousel from './HomeTopCarousel';
 import EventWidget from './EventWidget';
@@ -32,6 +33,7 @@ const HomeContainer = ({ banners, dataDummy, courses }) => {
         <GalleryIdeaWidget ideas={dataDummy} />
         <CourseWidget courses={courses} />
         <BlogWidget blogs={dataDummy} />
+        <DynamicLeaderBoardContainer />
       </ErrorBoundary>
     </>
   );

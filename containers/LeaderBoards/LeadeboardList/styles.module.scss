@@ -1,0 +1,32 @@
+@use 'styles/colors';
+
+.podiumItem {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin: 5px 8px;
+  align-items: center;
+}
+
+.styTopPodiumWrapper {
+  width: 394px;
+  background-color: colors.$primary;
+  display: flex;
+  padding: 24px;
+}
+
+.styPoints {
+  background-color: colors.$blue;
+  padding: 4px;
+  border-radius: 10px;
+  width: 100px;
+  font-size: 18px;
+  font-weight: 600;
+  color: colors.$white;
+}
+
+.styStar {
+  margin-right: 8px;
+  margin-top: 2px;
+}
