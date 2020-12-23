@@ -1,23 +1,10 @@
-import firebase from 'firebase';
-import 'firebase/messaging';
 import localforage from 'localforage';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
+import firebase from './FirebaseInitial';
 
-const FirebaseInitial = () => {
-  const config = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    databaseURL: process.env.FIREBASE_DATABASE_URL,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_APP_ID,
-    measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-  };
-
-  if (typeof window !== 'undefined' && !firebase.apps.length) {
-    firebase.initializeApp(config);
+const FirebaseCloudMessaging = () => {
+  if (typeof window !== 'undefined' && firebase.messaging.isSupported()) {
     const messaging = firebase.messaging();
 
     const listenMessaging = () => {
@@ -52,16 +39,26 @@ const FirebaseInitial = () => {
     };
 
     const getFcmToken = () => {
-      messaging
-        .getToken({
-          vapidKey: process.env.FIREBASE_VAPID_KEY,
-        })
-        .then((currentToken) => {
-          localforage.setItem('FCM_TOKEN', currentToken);
-          if (currentToken) {
-            listenMessaging();
-          }
-        });
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          messaging
+            .getToken({
+              vapidKey: process.env.FIREBASE_VAPID_KEY,
+            })
+            .then((currentToken) => {
+              localforage.setItem('FCM_TOKEN', currentToken);
+              if (currentToken) {
+                listenMessaging();
+              }
+            });
+        } else {
+          toast.warning(
+            <p className="m-0 pl-3">
+              Pengaturan browser Anda tidak menizinkan notifikasi.
+            </p>
+          );
+        }
+      });
     };
 
     localforage
@@ -79,4 +76,4 @@ const FirebaseInitial = () => {
   }
 };
 
-export default FirebaseInitial;
+export default FirebaseCloudMessaging;
