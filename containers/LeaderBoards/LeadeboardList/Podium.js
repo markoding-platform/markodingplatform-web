@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import { BsFillStarFill } from 'react-icons/bs';
+import Badge from 'react-bootstrap/Badge';
 
 import {
   podiumItem,
   styTopPodiumWrapper,
   styPoints,
   styStar,
+  styPodiumWrapper,
 } from './styles.module.scss';
+import TableComponent from './Table';
 
 const PodiumContainer = () => {
   const podiums = [
@@ -15,25 +18,49 @@ const PodiumContainer = () => {
       avatarUrl: '',
       name: 'Ariqah',
       points: 300,
-      rating: '1',
+      position: '1',
     },
     {
       id: '1',
       avatarUrl: '',
       name: 'Faren',
       points: 300,
-      rating: '2',
+      position: '2',
     },
     {
-      id: '1',
+      id: '2',
       avatarUrl: '',
       name: 'Faren',
       points: 300,
-      rating: '3',
+      position: '3',
+    },
+  ];
+
+  const rest = [
+    {
+      id: '3',
+      avatarUrl: '',
+      name: 'Ariqah',
+      points: 400,
+      position: '4',
+    },
+    {
+      id: '4',
+      avatarUrl: '',
+      name: 'Faren',
+      points: 300,
+      position: '5',
+    },
+    {
+      id: '5',
+      avatarUrl: '',
+      name: 'Faren',
+      points: 300,
+      position: '6',
     },
   ];
   return (
-    <div>
+    <div className={styPodiumWrapper}>
       <div className={styTopPodiumWrapper}>
         {podiums.map((item) => (
           <div key={item.id} className={podiumItem}>
@@ -45,16 +72,24 @@ const PodiumContainer = () => {
               className="rounded-circle"
             />
             <span className="py-2">{item.name}</span>
-            <span className={styPoints}>
-              <BsFillStarFill size="18" className={styStar} />
+            <Badge variant="primary" className={styPoints}>
+              <BsFillStarFill color="#FFC107" size="18" className={styStar} />
               <span>{item.points}</span>
-            </span>
-            <div className="py-3">
-              <h1>{item.rating}</h1>
+            </Badge>
+            <div className="py-3 w-100">
+              <h1>{item.position}</h1>
             </div>
           </div>
         ))}
       </div>
+      {rest.map((item) => (
+        <TableComponent
+          key={item.id}
+          name={item.name}
+          points={item.points}
+          position={item.position}
+        />
+      ))}
     </div>
   );
 };
