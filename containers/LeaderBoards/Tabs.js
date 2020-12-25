@@ -48,12 +48,16 @@ const TabsLeaderboard = () => {
           </Col>
         </Row>
         <Tab.Content className="pt-5">
-          <Tab.Pane eventKey="team" className="w-100">
-            <DynamicTeamRank desc={teamRankDesc} />
-          </Tab.Pane>
-          <Tab.Pane eventKey="individual" className="w-100">
-            <DynamicTeamRank desc={individualRankDesc} />
-          </Tab.Pane>
+          {activeKey === 'team' && (
+            <Tab.Pane eventKey="team" className="w-100">
+              <DynamicTeamRank desc={teamRankDesc} />
+            </Tab.Pane>
+          )}
+          {activeKey === 'individual' && (
+            <Tab.Pane eventKey="individual" className="w-100">
+              <DynamicTeamRank desc={individualRankDesc} />
+            </Tab.Pane>
+          )}
         </Tab.Content>
       </Tab.Container>
     </div>

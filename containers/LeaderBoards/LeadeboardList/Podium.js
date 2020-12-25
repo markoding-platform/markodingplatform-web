@@ -18,14 +18,14 @@ const PodiumContainer = () => {
       avatarUrl: '',
       name: 'Ariqah',
       points: 300,
-      position: '1',
+      position: '2',
     },
     {
       id: '1',
       avatarUrl: '',
       name: 'Faren',
       points: 300,
-      position: '2',
+      position: '1',
     },
     {
       id: '2',
@@ -82,14 +82,16 @@ const PodiumContainer = () => {
           </div>
         ))}
       </div>
-      {rest.map((item) => (
-        <TableComponent
-          key={item.id}
-          name={item.name}
-          points={item.points}
-          position={item.position}
-        />
-      ))}
+      <div className="pt-4 bg-white">
+        {rest.map((item) => (
+          <TableComponent
+            key={item.id}
+            name={item.name}
+            points={item.points}
+            position={item.position}
+          />
+        ))}
+      </div>
     </div>
   );
 };

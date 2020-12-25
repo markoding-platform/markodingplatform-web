@@ -1,4 +1,5 @@
 @use 'styles/colors';
+@use 'styles/breakpoint';
 
 .podiumItem {
   display: flex;
@@ -10,14 +11,18 @@
 }
 
 .styPodiumWrapper {
-  width: 394px;
+  width: 100%;
+  @media (min-width: breakpoint.$lg) {
+    width: 394px;
+  }
 }
 .styTopPodiumWrapper {
   width: 100%;
   background-color: colors.$primary;
   display: flex;
   padding: 16px 24px 0px 24px;
-  height: 322px;
+  height: 285px;
+  justify-content: center;
   :nth-of-type(2) {
     align-self: baseline;
   }
@@ -35,7 +40,7 @@
 
 .styStar {
   margin-right: 8px;
-  margin-top: 2px;
+  margin-top: -3px;
 }
 
 .styPosition {
@@ -46,7 +51,7 @@
 }
 
 .styPointsOutline {
-  padding: 4px;
+  padding: 6px;
   margin-top: 4px;
   border-radius: 10px;
   width: 100px;
