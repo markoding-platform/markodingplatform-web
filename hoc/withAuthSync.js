@@ -1,11 +1,10 @@
 import getCookie from 'utils/getCookie';
-import { SSO } from 'utils/auth';
 import { User } from 'utils/user';
 
 const auth = async (ctx) => {
   const token = await getCookie('markodingToken', ctx.req);
   if (!token) {
-    await SSO(ctx);
+    return null;
   }
 
   return User(ctx ? ctx.req : null);

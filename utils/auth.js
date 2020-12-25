@@ -46,6 +46,8 @@ export const SSO = (context) => {
     });
     context.res.end();
   } else {
+    const path = window.location.pathname;
+    setCookie([{ label: 'backPath', value: path, age: 1500 }]);
     MarkodingFetch(`/auth/start`, {
       method: 'POST',
     }).then((response) => {
