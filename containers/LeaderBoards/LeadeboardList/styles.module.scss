@@ -1,0 +1,71 @@
+@use 'styles/colors';
+@use 'styles/breakpoint';
+
+.podiumItem {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin: 5px 8px;
+  align-items: center;
+}
+
+.styPodiumWrapper {
+  width: 100%;
+  @media (min-width: breakpoint.$lg) {
+    width: 394px;
+  }
+}
+.styTopPodiumWrapper {
+  width: 100%;
+  background-color: colors.$primary;
+  display: flex;
+  padding: 16px 24px 0px 24px;
+  height: 285px;
+  justify-content: center;
+  :nth-of-type(2) {
+    align-self: baseline;
+  }
+}
+
+.styPoints {
+  padding: 4px;
+  border-radius: 10px;
+  width: 100px;
+  height: auto;
+  font-size: 18px;
+  font-weight: 600;
+  color: colors.$white;
+}
+
+.styStar {
+  margin-right: 8px;
+  margin-top: -3px;
+}
+
+.styPosition {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  padding: 6px 16px 0 8px;
+}
+
+.styPointsOutline {
+  padding: 6px;
+  margin-top: 4px;
+  border-radius: 10px;
+  width: 100px;
+  height: auto;
+  font-size: 18px;
+  font-weight: 600;
+  color: colors.$blue;
+  height: 32px;
+  border: 1px solid colors.$blue;
+}
+
+.styName {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  padding: 6px 0 0 8px;
+}
