@@ -1,10 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import ChatContainer from 'containers/ChatContainer';
 import styles from 'styles/chat.module.scss';
+import withAuthSync from '../../hoc/withAuthSync';
 
-const Chat = () => {
+const Chat = ({ user }) => {
   return (
     <Layout activeMenu="/chat">
       <div className={styles.chatContent}>
@@ -17,7 +19,7 @@ const Chat = () => {
               <div className="mb-4 border-bottom">
                 <h1 className="h3">Chat</h1>
               </div>
-              <ChatContainer />
+              {user && <ChatContainer user={user} />}
             </div>
           </div>
         </div>
@@ -26,4 +28,8 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+Chat.propTypes = {
+  user: PropTypes.instanceOf(Object).isRequired,
+};
+
+export default withAuthSync(Chat);

@@ -1,85 +1,82 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import BubbleChat from 'components/BubbleChat';
-import { BiImageAlt, BiSmile } from 'react-icons/bi';
-import Form from 'react-bootstrap/Form';
+import useChat from 'hooks/useChat';
+import PropTypes from 'prop-types';
+import InputChat from 'containers/ChatContainer/inputChat';
+import firebase from 'libraries/FirebaseInitial';
+import MarkodingFetch from 'libraries/MarkodingFetch';
+import { mutate } from 'swr';
 import styles from './styles.module.scss';
+import chatMap from '../../map/chatMap';
 
-const dummyData = [
-  {
-    id: 1,
-    avatarUrl:
-      'https://image.freepik.com/free-vector/man-face-close-up_98292-4059.jpg',
-    name: 'Yusuf',
-    time: '10/03/2020, 11:01',
-    payload: {
-      text: 'Hi, Samantha!',
-      image: '',
-    },
-  },
-  {
-    id: 1,
-    avatarUrl:
-      'https://image.freepik.com/free-vector/man-face-close-up_98292-4059.jpg',
-    name: 'Ariqah',
-    time: '10/03/2020, 11:01',
-    payload: {
-      text: 'Oh hi, Ariqah',
-      image: '',
-    },
-  },
-  {
-    id: 3,
-    avatarUrl:
-      'https://image.freepik.com/free-vector/man-face-close-up_98292-4059.jpg',
-    name: 'Yusuf',
-    time: '10/03/2020, 11:01',
-    payload: {
-      text: 'Nanti sore kita meet ya mbahas design kemaren',
-      image: '',
-    },
-  },
-  {
-    id: 4,
-    avatarUrl:
-      'https://image.freepik.com/free-vector/man-face-close-up_98292-4059.jpg',
-    name: 'Norman',
-    time: '10/03/2020, 11:01',
-    payload: {
-      text: 'Ikutan dong ya',
-      image: '',
-    },
-  },
-];
+const ChatContainer = ({ user }) => {
+  const divRef = useRef();
+  let result = [];
+  const limit = 10;
+  const { data } = useChat({
+    url: `/chats?limit=${limit}&offset=0`,
+  });
+  if (data && data.result) {
+    result = [...result, ...data.result.map(chatMap)];
+  }
 
-const ChatContainer = () => {
+  const getChat = async (chatId) => {
+    const res = await MarkodingFetch(`/chats/${chatId}`);
+    if (res && res.result) {
+      result = [...result, res.result];
+      await mutate(`/chats?limit=${limit}&offset=0`, {
+        ...data,
+        result: [res.result],
+      });
+      if (divRef && divRef.current) {
+        divRef.current.scrollIntoView();
+      }
+    }
+  };
+
+  useEffect(() => {
+    const starCountRef = firebase.database().ref('chat');
+    starCountRef.on('value', (snapshot) => {
+      const snap = snapshot.val();
+      if (snap && snap.id) {
+        getChat(snap.id);
+      }
+    });
+    if (divRef && divRef.current) {
+      divRef.current.scrollIntoView();
+    }
+  }, []);
+
   return (
     <>
-      <div className={styles.chatWrap}>
-        {dummyData.map((c) => (
-          <div key={c.id} className="mb-4">
-            <BubbleChat
-              payload={c.payload}
-              avatar={c.avatarUrl}
-              name={c.name}
-              time={c.time}
-              position={c.id === 3 ? 'right' : 'left'}
-            />
+      {user && (
+        <>
+          <div className={styles.chatWrap}>
+            {result
+              .slice(0)
+              .reverse()
+              .map((c) => (
+                <div key={c.id} className="mb-4">
+                  <BubbleChat
+                    payload={c.payload}
+                    avatar={c.avatarUrl}
+                    name={c.name}
+                    time={c.time}
+                    position={+c.sender === +user.id ? 'right' : 'left'}
+                  />
+                </div>
+              ))}
           </div>
-        ))}
-      </div>
-      <div className={styles.inpGroup}>
-        <button type="button" className={styles.addImage}>
-          <BiImageAlt size={24} />
-        </button>
-        <Form.Control
-          type="text"
-          placeholder="Ketik Pesan"
-          className={styles.inputChat}
-        />
-        <BiSmile className={styles.searchIcon} />
-      </div>
+          <div ref={divRef} />
+          <InputChat />
+        </>
+      )}
     </>
   );
+};
+
+ChatContainer.propTypes = {
+  user: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default ChatContainer;

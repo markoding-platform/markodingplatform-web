@@ -2,10 +2,10 @@ import Router from 'next/router';
 import setCookie from 'utils/setCookie';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 
-export const Login = (context, token, user) => {
+export const Login = (context, token, user, backUrl = '/') => {
   if (typeof window === 'undefined') {
     context.res.writeHead(302, {
-      Location: `/`,
+      Location: backUrl,
     });
     context.res.end();
   } else {
@@ -17,7 +17,7 @@ export const Login = (context, token, user) => {
       { label: 'externalID', value: user.externalId, age: expCookie },
       { label: 'userID', value: user.id, age: expCookie },
     ]);
-    Router.replace(`/`);
+    Router.replace(backUrl);
   }
 };
 
