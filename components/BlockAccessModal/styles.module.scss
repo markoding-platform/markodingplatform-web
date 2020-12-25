@@ -1,0 +1,18 @@
+.header {
+	border-bottom: none;
+	display: block;
+	text-align: center;
+
+	button {
+		position: absolute;
+		right: 1rem;
+		top: 0.75rem;
+		&:focus, &:active {
+			outline: none;
+		}
+	}
+}
+
+.footer {
+	border-top: none;
+}

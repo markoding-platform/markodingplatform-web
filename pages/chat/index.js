@@ -4,6 +4,8 @@ import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import ChatContainer from 'containers/ChatContainer';
 import styles from 'styles/chat.module.scss';
+import BlockAccessModal from 'components/BlockAccessModal';
+import Router from 'next/router';
 import withAuthSync from '../../hoc/withAuthSync';
 
 const Chat = ({ user }) => {
@@ -20,6 +22,14 @@ const Chat = ({ user }) => {
                 <h1 className="h3">Chat</h1>
               </div>
               {user && <ChatContainer user={user} />}
+              {!user && (
+                <BlockAccessModal
+                  show
+                  onHide={() => {
+                    Router.push('/');
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>

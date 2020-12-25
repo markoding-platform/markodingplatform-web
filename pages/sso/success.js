@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Login } from 'utils/auth';
 import Loading from 'components/Loading';
+import getCookie from 'utils/getCookie';
 
 const SsoSuccess = ({ sso, sig }) => {
   const getToken = async () => {
@@ -20,8 +21,9 @@ const SsoSuccess = ({ sso, sig }) => {
     });
 
     if (response.ok && response.result) {
+      const backPath = getCookie('backPath') || '/';
       const { token, data } = response.result;
-      await Login({}, token, data.user);
+      await Login({}, token, data.user, backPath);
     } else {
       const message = response.message || 'Login gagal diproses';
       toast.error(message);

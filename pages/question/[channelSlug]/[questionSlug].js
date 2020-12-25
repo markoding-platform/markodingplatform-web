@@ -6,8 +6,11 @@ import useChannels from 'hooks/useChannel';
 import Loading from 'components/Loading';
 import QuestionCommentContainer from 'containers/QuestionCommentContainer';
 import styles from 'styles/chat.module.scss';
+import BlockAccessModal from 'components/BlockAccessModal';
+import Router from 'next/router';
+import withAuthSync from '../../../hoc/withAuthSync';
 
-const ChatThreadComment = ({ channelSlug, questionSlug }) => {
+const ChatThreadComment = ({ user, channelSlug, questionSlug }) => {
   const { data, error } = useChannels({ url: `/channels/${channelSlug}` });
   const result = data?.result || {};
   const isLoading = !data && !error;
@@ -35,11 +38,20 @@ const ChatThreadComment = ({ channelSlug, questionSlug }) => {
           </div>
         </div>
       </div>
+      {!user && (
+        <BlockAccessModal
+          show
+          onHide={() => {
+            Router.push('/');
+          }}
+        />
+      )}
     </Layout>
   );
 };
 
 ChatThreadComment.propTypes = {
+  user: PropTypes.instanceOf(Object).isRequired,
   channelSlug: PropTypes.string.isRequired,
   questionSlug: PropTypes.string.isRequired,
 };
@@ -52,4 +64,4 @@ ChatThreadComment.getInitialProps = async (ctx) => {
   };
 };
 
-export default ChatThreadComment;
+export default withAuthSync(ChatThreadComment);

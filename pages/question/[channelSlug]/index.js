@@ -8,8 +8,11 @@ import QuestionContainer from 'containers/QuestionContainer';
 import useChannels from 'hooks/useChannel';
 import Loading from 'components/Loading';
 import InputQuestion from 'containers/QuestionContainer/inputQuestion';
+import BlockAccessModal from 'components/BlockAccessModal';
+import Router from 'next/router';
+import withAuthSync from '../../../hoc/withAuthSync';
 
-const ChatThread = ({ channelSlug }) => {
+const ChatThread = ({ user, channelSlug }) => {
   const [showFormQuestion, setShowFormQuestion] = useState(false);
   const { data, error } = useChannels({ url: `/channels/${channelSlug}` });
   const result = data?.result || {};
@@ -50,11 +53,20 @@ const ChatThread = ({ channelSlug }) => {
         onClose={() => setShowFormQuestion(false)}
         channelSlug={channelSlug}
       />
+      {!user && (
+        <BlockAccessModal
+          show
+          onHide={() => {
+            Router.push('/');
+          }}
+        />
+      )}
     </Layout>
   );
 };
 
 ChatThread.propTypes = {
+  user: PropTypes.instanceOf(Object).isRequired,
   channelSlug: PropTypes.string.isRequired,
 };
 
@@ -65,4 +77,4 @@ ChatThread.getInitialProps = async (ctx) => {
   };
 };
 
-export default ChatThread;
+export default withAuthSync(ChatThread);
