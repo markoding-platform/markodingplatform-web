@@ -1,6 +1,6 @@
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import LeaderboardsContainer from 'containers/Leaderboards/View';
+import LeaderboardsContainer from 'containers/Leaderboards';
 
 const Leaderboards = () => {
   return (
