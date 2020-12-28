@@ -1,0 +1,41 @@
+@use 'styles/colors';
+@use 'styles/breakpoint';
+
+.styStar {
+  margin-right: 8px;
+  margin-top: -3px;
+}
+
+.styPosition {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  padding: 6px 16px 0 8px;
+}
+
+.styPointsOutline {
+  padding: 7px;
+  border-radius: 10px;
+  width: 92px;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 600;
+  color: colors.$blue;
+  height: 32px;
+  border: 1px solid colors.$blue;
+}
+
+.styName {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  padding: 6px 0 0 8px;
+}
+.styItem {
+  display: flex;
+  background: colors.$white;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
+  border-bottom: 1px solid #dfe4ea;
+  align-items: center;
+}
