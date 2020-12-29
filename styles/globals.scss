@@ -81,6 +81,7 @@ a {
   background-color: colors.$primary;
   width: 100%;
   @include media-breakpoint-up(lg) {
+    min-width: 290px;
     max-width: 290px;
     min-height: 100vh;
   }
