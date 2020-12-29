@@ -1,10 +1,17 @@
+import Image from 'next/image';
 import range from 'utils/range';
 import IdeaCard from 'components/IdeaCard';
 import CardLoader from 'components/Shimmer/Card';
 
+import emptyFolderSvg from 'svgs/empty-folder.svg';
 import FilterIdea from './Filter';
 import SortIdea from './Sort';
-import { ideasWrapper, ideaCardWrapper, cardLoader } from './style.module.scss';
+import {
+  ideasWrapper,
+  ideaCardWrapper,
+  cardLoader,
+  emptyIdeasWrapper,
+} from './style.module.scss';
 import useIdeaSolution from './hooks/useIdeaSolution';
 
 const defaultPic =
@@ -39,7 +46,9 @@ const IdeaAndSolutionContainer = () => {
       </div>
       <div className={ideasWrapper}>
         {isLoading && renderLoader()}
-        {!isLoading && result.length && !error ? (
+        {!isLoading &&
+          result.length > 0 &&
+          !error &&
           result.map((idea) => {
             const {
               id,
@@ -57,11 +66,25 @@ const IdeaAndSolutionContainer = () => {
                 />
               </div>
             );
-          })
-        ) : (
-          <div>Oops! Belum ada data</div>
-        )}
+          })}
       </div>
+      {!isLoading && result.length === 0 && (
+        <>
+          <div className={emptyIdeasWrapper}>
+            <Image
+              src={emptyFolderSvg}
+              height="209"
+              width="209"
+              alt="empty-folder"
+              layout="fixed"
+            />
+            <h3 className="text-center pt-4">Belum Ada Ide Solusi</h3>
+            <p className="text-center text-3rd">
+              Data yang kamu inputkan belum terdaftar di sistem kami
+            </p>
+          </div>
+        </>
+      )}
     </>
   );
 };

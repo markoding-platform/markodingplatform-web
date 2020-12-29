@@ -1,26 +1,27 @@
 @use 'styles/breakpoint';
 
 .bannerSlide {
-	position: relative;
-	min-width: 90%;
-	padding-right: 2%;
+  position: relative;
+  min-width: 90%;
+  padding-right: 2%;
+  cursor: pointer;
 
-	@media (max-width: breakpoint.$lg) {
-		min-width: 95%;
-		padding-right: 2%;
-	}
+  @media (max-width: breakpoint.$lg) {
+    min-width: 95%;
+    padding-right: 2%;
+  }
 }
 
 .bannerSlideInner {
-	position: relative;
-	overflow: hidden;
-	border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
 }
 
 .image {
-	position: relative;
-	height: 276px;
-	@media (max-width: breakpoint.$lg) {
-		height: 145px;
-	}
+  position: relative;
+  height: 276px;
+  @media (max-width: breakpoint.$lg) {
+    height: 145px;
+  }
 }

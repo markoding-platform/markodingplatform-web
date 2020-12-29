@@ -49,3 +49,11 @@
 .cardLoader {
   margin: 5px;
 }
+
+.emptyIdeasWrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 48px;
+}

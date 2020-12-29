@@ -1,35 +1,32 @@
 import React from 'react';
-import { shape, string, arrayOf } from 'prop-types';
 
 import EmblaCarousel from 'components/EmblaCarousel';
 import BannerItem from 'components/BannerItem';
+import useBanners from 'hooks/useBanners';
+import { bannerMap } from 'map/bannerMap';
 
-const HomeTopCarousel = ({ banners }) => {
+const HomeTopCarousel = () => {
+  const { data, error } = useBanners({ url: '/banners' });
+  const result = data?.result || [];
+  const isLoading = !data && !error;
+
+  const banners = !isLoading ? bannerMap(result) : [];
   return (
     <div className="inner-full-section pb-5">
-      <EmblaCarousel slideToScroll={1} withButton>
-        {banners.map((banner) => (
-          <BannerItem
-            key={banner.id}
-            imageUrl={banner.src}
-            title={banner.title}
-            link={banner.link}
-          />
-        ))}
-      </EmblaCarousel>
+      {!isLoading && banners.length > 0 && (
+        <EmblaCarousel slideToScroll={1} withButton>
+          {banners.map((banner, idx) => (
+            <BannerItem
+              key={banner.id}
+              imageUrl={banner.imageUrl}
+              title={`banner-${idx}`}
+              link={banner.link}
+            />
+          ))}
+        </EmblaCarousel>
+      )}
     </div>
   );
-};
-
-HomeTopCarousel.propTypes = {
-  banners: arrayOf(
-    shape({
-      id: string,
-      title: string,
-      src: string,
-      link: string,
-    })
-  ).isRequired,
 };
 
 export default HomeTopCarousel;
