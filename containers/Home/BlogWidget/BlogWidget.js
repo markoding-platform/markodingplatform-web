@@ -6,7 +6,9 @@ import useBlog from 'hooks/useBlog';
 import WidgetLoader from '../WidgetLoader';
 
 const BlogWidget = () => {
-  const { isLoading, error, data = {} } = useBlog({ url: '/blogs' });
+  const { isLoading, error, data = {} } = useBlog({
+    url: '/blogs?limit=3&offset=0',
+  });
   const blogs = data.result || [];
   return (
     <>
@@ -17,9 +19,9 @@ const BlogWidget = () => {
             {blogs.map((blog = {}) => (
               <BlogCard
                 key={blog.id}
-                imageUrl={blog.imgUrl}
+                imageUrl={blog.imageUrl}
                 title={blog.title}
-                date={blog.date}
+                date={blog.createdAt}
                 description={blog.description}
                 link={`/blog/${blog.id}`}
               />

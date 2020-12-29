@@ -21,7 +21,7 @@ const BlogCard = (props) => {
             <Card.Title className={styles.title}>{title}</Card.Title>
             <Card.Text className={styles.text}>{description}</Card.Text>
             <Card.Text className={styles.date}>
-              {dayjs(date).format('MMMM DD, YYYY')}
+              {dayjs(date).format('MMM DD, YYYY')}
             </Card.Text>
           </Card.Body>
         </Card>
@@ -30,13 +30,8 @@ const BlogCard = (props) => {
   );
 };
 
-BlogCard.defaultProps = {
-  imageUrl:
-    'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg',
-};
-
 BlogCard.propTypes = {
-  imageUrl: PropTypes.string,
+  imageUrl: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,

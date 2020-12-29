@@ -7,7 +7,7 @@ import EventCard from 'components/EventCard';
 import WidgetLoader from '../WidgetLoader';
 
 const EventWidget = () => {
-  const { data, error } = useEvents({ url: '/events' });
+  const { data, error } = useEvents({ url: '/events?limit=3&offset=0' });
   const result = data?.result || [];
   const isLoading = !data && !error;
 
@@ -20,9 +20,10 @@ const EventWidget = () => {
             {result.map((event = {}) => (
               <EventCard
                 key={event.id}
-                imageUrl="https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg"
+                imageUrl={event.imageUrl}
                 title={event.title}
-                date={event.date}
+                startDate={event.startDate}
+                finishDate={event.finishDate}
                 startAt={event.startAt}
                 finishAt={event.finishAt}
                 link={`/event/${event.id}`}

@@ -16,7 +16,6 @@ const EventDetail = () => {
   const { slug } = router.query;
 
   const { data, error } = useEvents({ url: `/events/${slug}` });
-  // TODO: handle not found slug
   const event = data?.result || {};
 
   const handleFormatTime = useCallback((time) => {
@@ -37,43 +36,59 @@ const EventDetail = () => {
       `${handleFormatTime(startAt)} - ${handleFormatTime(finishAt)}`) ||
     '';
 
+  const eventLink = (link) => {
+    window.location.replace(link);
+  };
+
   return (
     <>
       <div className="mb-4">
         <h1 className="h3">Event Terdekat</h1>
       </div>
-      <div>
-        <Image
-          src={
-            event.src ||
-            'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg'
-          }
-          alt={event.title}
-          layout="responsive"
-          width={957}
-          height={457}
-          className="rounded"
-        />
-        <h1 className="h3 mt-4">{event.title}</h1>
-        <div className="d-flex align-items-center">
-          <p className={styles.dateTime}>
-            <BsCalendarFill />
-            <span>{dayjs(event.date).format('dddd, DD MMM YYYY')}</span>
-          </p>
-          <p className={styles.dateTime}>
-            <BsClockFill />
-            <div className="d-flex">
-              <span>{timeString}</span>
+      {!error ? (
+        <>
+          <div>
+            <Image
+              src={event.imageUrl}
+              alt={event.title}
+              layout="responsive"
+              width={957}
+              height={457}
+              className="rounded"
+            />
+            <h1 className="h3 mt-4">{event.title}</h1>
+            <div className="d-lg-flex align-items-center">
+              <p className={styles.dateTime}>
+                <BsCalendarFill />
+                <span>
+                  {`${dayjs(event.startDate).format(
+                    'dddd, DD MMM YYYY'
+                  )} - ${dayjs(event.finishDate).format('dddd, DD MMM YYYY')}`}
+                </span>
+              </p>
+              <p className={styles.dateTime}>
+                <BsClockFill />
+                <div className="d-flex">
+                  <span>{timeString}</span>
+                </div>
+              </p>
             </div>
-          </p>
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: event.description }} />
-      </div>
-      <div className={styles.eventFooter}>
-        <Button type="block" variant="warning" block>
-          Link Event
-        </Button>
-      </div>
+            <div dangerouslySetInnerHTML={{ __html: event.description }} />
+          </div>
+          <div className={styles.eventFooter}>
+            <Button
+              type="block"
+              variant="warning"
+              block
+              onClick={() => eventLink(event.link)}
+            >
+              Link Event
+            </Button>
+          </div>
+        </>
+      ) : (
+        <p className="text-danger">Data Not Found</p>
+      )}
     </>
   );
 };

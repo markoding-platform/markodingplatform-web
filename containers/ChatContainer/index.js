@@ -22,7 +22,7 @@ const ChatContainer = ({ user }) => {
 
   const getChat = async (chatId) => {
     const res = await MarkodingFetch(`/chats/${chatId}`);
-    if (res && res.result) {
+    if (res && res.ok && res.result) {
       result = [...result, res.result];
       await mutate(`/chats?limit=${limit}&offset=0`, {
         ...data,
