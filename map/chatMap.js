@@ -10,8 +10,8 @@ export default function chatMap(data) {
     name: user?.name || '-',
     time: dayjs(updatedAt).format('DD MMM YYYY, HH:mm:ss'),
     payload: {
-      text: type.trim() === 'text' ? content : null,
-      image: type.trim() === 'image' ? content : null,
+      text: type && type.trim() === 'text' ? content : null,
+      image: type && type.trim() === 'image' ? content : null,
     },
     sender: user?.id,
   };

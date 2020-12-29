@@ -5,8 +5,12 @@ import BlogLoader from './Loader';
 import { blogWrapper } from './styles.module.scss';
 
 const BlogContainer = () => {
-  const { isLoading, error, data } = useBlog({ url: '/blogs' });
-  const blogs = data.result || [];
+  const { error, data } = useBlog({
+    url: '/blogs?limit=9&offset=0',
+  });
+  const result = data?.result || [];
+  const isLoading = !result && !error;
+
   return (
     <div className="inner-section">
       <div className="d-flex align-items-center mb-4">
@@ -14,18 +18,15 @@ const BlogContainer = () => {
       </div>
       <div className={blogWrapper}>
         {isLoading && <BlogLoader />}
-        {!isLoading && blogs.length && !error ? (
-          blogs.map((blog) => (
+        {!isLoading && result.length && !error ? (
+          result.map((blog) => (
             <div key={blog.id} className="w-100">
               <BlogCard
                 key={blog.id}
-                imageUrl={
-                  blog.imageUrl ||
-                  'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg'
-                }
+                imageUrl={blog.imageUrl}
                 title={blog.title}
                 description={blog.description}
-                date={blog.date}
+                date={blog.createdAt}
                 link={`/blog/${blog.id}`}
               />
             </div>

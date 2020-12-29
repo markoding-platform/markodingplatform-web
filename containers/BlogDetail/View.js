@@ -12,8 +12,7 @@ const BlogDetailContainer = () => {
 
   const { isLoading, data = {} } = useBlog({ url: `/blogs/${slug}` });
 
-  const blog = data.result || {};
-  console.log('masuk detail', data);
+  const blog = data?.result || {};
   if (isLoading) {
     return <BlogDetailLoader />;
   }
@@ -25,10 +24,7 @@ const BlogDetailContainer = () => {
       </div>
       <div>
         <Image
-          src={
-            blog.imgUrl ||
-            'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg'
-          }
+          src={blog.imageUrl}
           alt={blog.title}
           layout="responsive"
           width={957}
