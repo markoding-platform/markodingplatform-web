@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
-const DynamicLeaderBoardContainer = dynamic(() =>
-  import(/* webpackChunkName: "leaderboard-container-component" */ './View')
+const DynamicLeaderboardsContainer = dynamic(() =>
+  import(/* webpackChunkName: "leaderboards-container" */ './Leaderboards')
 );
 
-export default DynamicLeaderBoardContainer;
+export default DynamicLeaderboardsContainer;

@@ -5,10 +5,11 @@
   font-weight: 600;
   font-size: 1.7rem;
   line-height: 1.7rem;
+  color: colors.$white;
 }
 
 .styTabContainer {
-  width: 100%;
+  background-color: colors.$blue;
 }
 
 .styActiveTab {
@@ -19,6 +20,6 @@
   height: 88px;
   width: 100%;
   display: flex;
-  padding: 16px 0;
+  padding: 32px 0;
   justify-content: center;
 }

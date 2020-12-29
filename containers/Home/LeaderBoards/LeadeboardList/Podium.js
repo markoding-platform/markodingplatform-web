@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { BsFillStarFill } from 'react-icons/bs';
 import Badge from 'react-bootstrap/Badge';
 
+import TableComponent from 'components/TableLeaderboards/Table';
+
 import {
   podiumItem,
   styTopPodiumWrapper,
@@ -9,7 +11,6 @@ import {
   styStar,
   styPodiumWrapper,
 } from './styles.module.scss';
-import TableComponent from './Table';
 
 const PodiumContainer = () => {
   const podiums = [

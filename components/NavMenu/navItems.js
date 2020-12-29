@@ -38,7 +38,7 @@ const navItems = [
   {
     id: 6,
     text: 'Leaderboard',
-    link: '/leader-board',
+    link: '/leaderboards',
     withBadge: false,
   },
   {

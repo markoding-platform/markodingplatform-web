@@ -4,15 +4,16 @@ import { ErrorBoundary } from 'react-error-boundary';
 import Alert from 'react-bootstrap/Alert';
 
 import useErrorHandler from 'hooks/useErrorHandler';
-import LeaderBoardContainer from 'containers/LeaderBoards';
+import LeaderBoardContainer from 'containers/Home/LeaderBoards';
 import ErrorFallback from 'components/ErrorFallback';
 import HomeTopCarousel from './HomeTopCarousel';
 import EventWidget from './EventWidget';
 import CourseWidget from './CourseWidget/CourseWidget';
 import GalleryIdeaWidget from './GalleryIdeaWidget';
 import BlogWidget from './BlogWidget';
+import PartnersWidget from './PartnersWidget';
 
-const HomeContainer = ({ banners, dataDummy, courses }) => {
+const HomeContainer = ({ banners }) => {
   const [alertShow, setAlertShow] = useState(true);
   const { logError } = useErrorHandler();
   return (
@@ -29,11 +30,12 @@ const HomeContainer = ({ banners, dataDummy, courses }) => {
       </div>
       <ErrorBoundary FallbackComponent={ErrorFallback} onError={logError}>
         <HomeTopCarousel banners={banners} />
-        <EventWidget events={dataDummy} />
-        <GalleryIdeaWidget ideas={dataDummy} />
-        <CourseWidget courses={courses} />
-        <BlogWidget blogs={dataDummy} />
+        <EventWidget />
+        <GalleryIdeaWidget />
+        <CourseWidget />
+        <BlogWidget />
         <LeaderBoardContainer />
+        <PartnersWidget />
       </ErrorBoundary>
     </>
   );
@@ -63,45 +65,10 @@ HomeContainer.defaultProps = {
       link: '/todo',
     },
   ],
-  dataDummy: [
-    {
-      id: 'one',
-      title: 'Event One',
-      src:
-        'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg',
-      link: '/todo',
-      date: '25 April 2021',
-      time: '2PM - 5PM',
-      description: 'Terra, Social enterprise, manufatrues and sells...',
-    },
-    {
-      id: 'two',
-      title: 'Event Two',
-      src:
-        'https://image.freepik.com/free-psd/girl-doing-stretching-exercises_23-2148253770.jpg',
-      link: '/todo',
-      date: '3 Mei 2021',
-      time: '1PM - 5PM',
-      description: 'Terra, Social enterprise, manufatrues and sells...',
-    },
-    {
-      id: 'three',
-      title: 'Event Three',
-      src:
-        'https://image.freepik.com/free-photo/smiling-teacher-with-drink-classroom_23-2148201042.jpg',
-      link: '/todo',
-      date: '25 Jun 2021',
-      time: '1PM - 4PM',
-      description: 'Terra, Social enterprise, manufatrues and sells...',
-    },
-  ],
-  courses: [],
 };
 
 HomeContainer.propTypes = {
   banners: PropTypes.instanceOf(Array),
-  dataDummy: PropTypes.instanceOf(Array),
-  courses: PropTypes.instanceOf(Array),
 };
 
 export default HomeContainer;

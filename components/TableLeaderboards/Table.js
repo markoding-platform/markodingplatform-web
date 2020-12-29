@@ -7,11 +7,12 @@ import {
   styStar,
   styPosition,
   styName,
+  styItem,
 } from './styles.module.scss';
 
 const TableComponent = ({ position, points, name }) => {
   return (
-    <div className="d-flex bg-white justify-content-between px-4 py-2">
+    <div className={styItem}>
       <div className="d-flex">
         <span className={styPosition}>{position}</span>
         <div>
