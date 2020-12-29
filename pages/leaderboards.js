@@ -1,6 +1,6 @@
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import LeaderBoardContainer from 'containers/Leaderboards/Leaderboards';
+import DynamicLeaderboardsContainer from 'containers/LeaderBoards';
 
 const Leaderboards = () => {
   return (
@@ -10,7 +10,7 @@ const Leaderboards = () => {
           <PointBadgeWrapper />
         </div>
         <div className="inner-section pb-5">
-          <LeaderBoardContainer />
+          <DynamicLeaderboardsContainer />
         </div>
       </div>
     </Layout>
