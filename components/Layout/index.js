@@ -7,7 +7,7 @@ import Footer from 'components/Footer';
 import BottomNavigation from 'components/BottomNavigation';
 import Header from 'components/Header';
 
-const Layout = ({ children, activeMenu }) => {
+const Layout = ({ children, activeMenu, withFooter }) => {
   return (
     <>
       <Head>
@@ -47,9 +47,11 @@ const Layout = ({ children, activeMenu }) => {
           </div>
           <div className="flex-grow-1 desktop-right-section">
             {children}
-            <div className="d-none d-lg-block">
-              <Footer />
-            </div>
+            {withFooter && (
+              <div className="d-none d-lg-block">
+                <Footer />
+              </div>
+            )}
           </div>
         </div>
 
@@ -63,11 +65,13 @@ const Layout = ({ children, activeMenu }) => {
 
 Layout.defaultProps = {
   activeMenu: '',
+  withFooter: true,
 };
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   activeMenu: PropTypes.string,
+  withFooter: PropTypes.bool,
 };
 
 export default Layout;
