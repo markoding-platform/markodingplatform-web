@@ -10,7 +10,7 @@ import withAuthSync from '../../hoc/withAuthSync';
 
 const Chat = ({ user }) => {
   return (
-    <Layout activeMenu="/chat">
+    <Layout activeMenu="/chat" withFooter={false}>
       <div className={styles.chatContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
