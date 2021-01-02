@@ -54,7 +54,7 @@ const FirebaseCloudMessaging = () => {
         } else {
           toast.warning(
             <p className="m-0 pl-3">
-              Pengaturan browser Anda tidak menizinkan notifikasi.
+              Pengaturan browser Anda tidak mengizinkan notifikasi.
             </p>
           );
         }

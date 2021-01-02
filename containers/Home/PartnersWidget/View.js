@@ -35,7 +35,7 @@ const PartnersContainer = () => {
             className={lumino}
           />
         </div>
-        <MarkodingLogo />
+        <MarkodingLogo width="180px" height="38px" className={lumino} />
       </div>
     </div>
   );

@@ -62,11 +62,13 @@ const defaultPic =
 const IdeaDetails = ({ likeCount, commentCount }) => {
   const { query } = useRouter();
   const ideaId = query.id;
-  const { data = {} } = useIdeaSolution({ url: `/ideas/${ideaId}` });
+  const { data } = useIdeaSolution({ url: `/ideas/${ideaId}` });
+  const idea = data?.result || {};
+
   return (
     <div>
       <div className="pb-2">
-        <h4>{data.solutionName}</h4>
+        <h4>{idea.solutionName}</h4>
       </div>
       <div className="d-flex py-2">
         <Image
@@ -83,8 +85,8 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       </div>
       <div className="py-2">
         <Image
-          src={data.imageUrl || defaultPic}
-          alt={data.title}
+          src={idea.imageUrl || defaultPic}
+          alt={idea.title}
           width={500}
           height={320}
           className={ideaImage}
@@ -107,27 +109,27 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       <div className={teamInfo}>
         <div className={infoItem}>
           <p className="text-secondary m-0">Status Tim</p>
-          <p className="info__text m-0">{data.teamStatus}</p>
+          <p className="info__text m-0">{idea.teamStatus}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Nama Sekolah</p>
-          <p className="info__text m-0">{data.schoolName}</p>
+          <p className="info__text m-0">{idea.schoolName}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Tipe Solusi Digital</p>
-          <p className="info__text m-0">{data.solutionType}</p>
+          <p className="info__text m-0">{idea.solutionType}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Bidang Masalah</p>
-          <p className="info__text m-0">{data.problemArea}</p>
+          <p className="info__text m-0">{idea.problemArea}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Masalah yang ingin diselesaikan</p>
-          <p className="info__text m-0">{data.problemSelection}</p>
+          <p className="info__text m-0">{idea.problemSelection}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Targe Customer</p>
-          <p className="info__text m-0">{data.targetCustomer}</p>
+          <p className="info__text m-0">{idea.targetCustomer}</p>
         </div>
       </div>
       <hr />
@@ -136,39 +138,39 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       <div>
         <div className={ideaSection} id="problemReason">
           <h4>Alasan Masalah</h4>
-          <p className="text-secondary m-0">{data.problemReasoning}</p>
+          <p className="text-secondary m-0">{idea.problemReasoning}</p>
         </div>
         <div className={ideaSection} id="solutionSummary">
           <h4>Solusi Singkat</h4>
-          <p className="text-secondary m-0">{data.solutionVision}</p>
+          <p className="text-secondary m-0">{idea.solutionVision}</p>
         </div>
         <div className={ideaSection} id="solutionVision">
           <h4>Ide Solusi</h4>
-          <p className="text-secondary m-0">{data.solutionMission}</p>
+          <p className="text-secondary m-0">{idea.solutionMission}</p>
         </div>
-        {data.solutionPitchUrl && (
+        {idea.solutionPitchUrl && (
           <div className={ideaSection}>
             <h4>Link Video</h4>
             <div className={videoWrapper}>
-              <YoutubeIframe solutionPitchUrl={data.solutionPitchUrl} />
+              <YoutubeIframe solutionPitchUrl={idea.solutionPitchUrl} />
             </div>
           </div>
         )}
         <div className={ideaSection}>
           <h4>Target Customer</h4>
-          <p className="text-secondary m-0">{data.targetCustomer}</p>
+          <p className="text-secondary m-0">{idea.targetCustomer}</p>
         </div>
         <div className={ideaSection}>
           <h4>Kelebihan Ide Solusi</h4>
-          <p className="text-secondary m-0">{data.solutionBenefit}</p>
+          <p className="text-secondary m-0">{idea.solutionBenefit}</p>
         </div>
         <div className={ideaSection}>
           <h4>Kendala</h4>
-          <p className="text-secondary m-0">{data.solutionObstacle}</p>
+          <p className="text-secondary m-0">{idea.solutionObstacle}</p>
         </div>
         <div className={ideaSection}>
           <h4>Kolaborasi</h4>
-          <p className="text-secondary m-0">{data.potentialCollaboration}</p>
+          <p className="text-secondary m-0">{idea.potentialCollaboration}</p>
         </div>
       </div>
       <div>
