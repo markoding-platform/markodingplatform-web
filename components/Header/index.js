@@ -24,7 +24,7 @@ const Header = () => {
     <header className={rootHeader}>
       <div className="d-none d-lg-block">
         <div className={desktopLogo}>
-          <MarkodingLogo isSmall />
+          <MarkodingLogo width="180px" height="38px" />
         </div>
         <NavMenu />
       </div>

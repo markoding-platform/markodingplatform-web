@@ -46,7 +46,7 @@ const BlockAccessModal = ({ show, onHide }) => {
             className="m-0 mr-2"
             onClick={authenticate}
           >
-            Daftat
+            Daftar
           </Button>
           <Button
             type="button"

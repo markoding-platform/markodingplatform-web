@@ -1,6 +1,5 @@
 import React from 'react';
 import useSWR from 'swr';
-import { arrayOf, string, shape } from 'prop-types';
 
 import SkilvulFetch from 'libraries/SkilvulFetch';
 import SectionCardWrapper from 'components/SectionCardWrapper';
@@ -38,18 +37,6 @@ const CourseWidget = () => {
       </div>
     </>
   );
-};
-
-CourseWidget.propTypes = {
-  courses: arrayOf(
-    shape({
-      id: string,
-      title: string,
-      imageUrl: string,
-      link: string,
-      description: string,
-    })
-  ).isRequired,
 };
 
 export default CourseWidget;

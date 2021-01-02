@@ -10,15 +10,7 @@ import styles from './styles.module.scss';
 dayjs.locale('id');
 
 const EventCard = (props) => {
-  const {
-    imageUrl,
-    title,
-    startDate,
-    finishDate,
-    startAt,
-    finishAt,
-    link,
-  } = props;
+  const { imageUrl, title, startDate, startAt, finishAt, link } = props;
 
   const handleFormatTime = useCallback((time) => {
     if (!time) return '';
@@ -42,9 +34,7 @@ const EventCard = (props) => {
             <Card.Title className={styles.title}>{title}</Card.Title>
             <Card.Text className={styles.text}>
               <BsCalendarFill className={styles.icon} />
-              {`${dayjs(startDate).format('MMM DD, YYYY')} - ${dayjs(
-                finishDate
-              ).format('MMM DD, YYYY')}`}
+              {`${dayjs(startDate).format('dddd, MMM DD YYYY')}`}
             </Card.Text>
             <Card.Text className={styles.text}>
               <BsClockFill className={styles.icon} />
