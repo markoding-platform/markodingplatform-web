@@ -21,7 +21,7 @@ const BASE_URL = process.env.MARKODING_API_URL;
 const SecondFormIdeaSolution = () => {
   const { push } = useRouter();
   const { inputs } = useGlobalFormContext();
-  const { register, handleSubmit } = useFormContext();
+  const { register, handleSubmit, errors } = useFormContext();
 
   const handlePostIdeas = async (payload) => {
     try {
@@ -72,6 +72,8 @@ const SecondFormIdeaSolution = () => {
             defaultVal={inputs.solutionVision}
             name="solutionVision"
             ref={register({ required: true })}
+            error={!!errors.solutionVision}
+            errorTxt="Harap mengisi solusi singkat"
           />
         </Panel>
         <Panel title="Ide Solusi">
@@ -82,6 +84,8 @@ const SecondFormIdeaSolution = () => {
             className={textArea}
             name="solutionMission"
             ref={register({ required: true })}
+            error={!!errors.solutionMission}
+            errorTxt="Harap mengisi ide solusi"
           />
         </Panel>
         <Panel title="Target Outcomes">
@@ -90,6 +94,8 @@ const SecondFormIdeaSolution = () => {
             defaultVal={inputs.targetOutcomes}
             name="targetOutcomes"
             ref={register({ required: true })}
+            error={!!errors.targetOutcomes}
+            errorTxt="Harap mengisi target outcomes"
           />
         </Panel>
         <Panel title="Kelebihan Ide Solusi">
@@ -100,6 +106,8 @@ const SecondFormIdeaSolution = () => {
             ref={register({ required: true })}
             as="textarea"
             className={textArea}
+            error={!!errors.solutionBenefit}
+            errorTxt="Harap mengisi kelebihan ide solusi"
           />
         </Panel>
         <Panel title="Kendala">
@@ -108,6 +116,8 @@ const SecondFormIdeaSolution = () => {
             defaultVal={inputs.solutionObstacle}
             name="solutionObstacle"
             ref={register({ required: true })}
+            error={!!errors.solutionObstacle}
+            errorTxt="Harap mengisi kendala"
           />
         </Panel>
         <Panel title="Link Video">
@@ -115,7 +125,7 @@ const SecondFormIdeaSolution = () => {
             placeholder="Sertakan link video pitch tentang ide solusimu"
             defaultVal={inputs.solutionPitchUrl}
             name="solutionPitchUrl"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
           />
         </Panel>
         <Panel title="Gambar/Foto Pendukung Ide Solusi">
@@ -147,7 +157,7 @@ const SecondFormIdeaSolution = () => {
             placeholder="Siapa saja yang ingin kamu ajak kolaborasi dan jelaskan alasannya untuk mewujudkan ide solusimu?"
             defaultVal={inputs.potentialCollaboration}
             name="potentialCollaboration"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
             as="textarea"
             className={textArea}
           />
