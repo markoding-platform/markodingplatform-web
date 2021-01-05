@@ -1,6 +1,6 @@
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import RegisterIdeaSolutionContainer from 'components/RegisterIdeaSolutionContainer';
+import RegisterIdeaSolutionContainer from 'containers/RegisterIdeaSolutionContainer';
 
 export default function RegisterIdea() {
   return (

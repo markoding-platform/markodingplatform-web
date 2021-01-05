@@ -3,7 +3,7 @@ import { number } from 'prop-types';
 import { useForm, FormProvider } from 'react-hook-form';
 
 import Panel from 'components/Panel';
-import CreateTeam from 'components/RegisterIdeaSolutionContainer/CreateTeam';
+import CreateTeam from 'containers/RegisterIdeaSolutionContainer/CreateTeam';
 
 import FormIdeaSolution from './FormIdeaSolution';
 import SecondFormIdeaSolution from './FormIdeaSolution/SecondForm';

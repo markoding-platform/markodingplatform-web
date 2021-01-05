@@ -49,7 +49,14 @@ const SecondFormIdeaSolution = () => {
     newIdeaSolution.solutionSupportingPhotos = []; //  upload photos not supported from BE yet
     newIdeaSolution.isDraft = false;
     newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
-    newIdeaSolution.schoolId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
+    handlePostIdeas(newIdeaSolution);
+  };
+
+  const onSubmitAsDraft = (payload) => {
+    const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
+    newIdeaSolution.solutionSupportingPhotos = []; //  upload photos not supported from BE yet
+    newIdeaSolution.isDraft = true;
+    newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
     handlePostIdeas(newIdeaSolution);
   };
 
@@ -148,6 +155,13 @@ const SecondFormIdeaSolution = () => {
         <div className="d-flex justify-content-end">
           <Button variant="outline-primary mr-2" onClick={handleBack}>
             Kembali
+          </Button>
+          <Button
+            variant="secondary"
+            className="mr-2"
+            onClick={handleSubmit(onSubmitAsDraft)}
+          >
+            Simpan Sebagai Draft
           </Button>
           <Button variant="primary" onClick={handleSubmit(onSubmit)}>
             Kirim Ide Solusi
