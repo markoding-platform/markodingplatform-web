@@ -1,20 +1,14 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useFormContext } from 'react-hook-form';
 
 import { Button } from 'react-bootstrap';
 
-import Icon from 'components/Icons';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
-import photoPlaceholder from 'svgs/photo-placeholder.svg';
-import expands from 'svgs/expands.svg';
 import { useGlobalFormContext } from 'components/context/FormContext';
-import {
-  dropArea,
-  textArea,
-  infoUploader,
-  infoText,
-} from './styles.module.scss';
+import UploadComponent from '../Upload';
+import { textArea } from './styles.module.scss';
 
 const BASE_URL = process.env.MARKODING_API_URL;
 
@@ -22,6 +16,7 @@ const SecondFormIdeaSolution = () => {
   const { push } = useRouter();
   const { inputs } = useGlobalFormContext();
   const { register, handleSubmit, errors } = useFormContext();
+  const [solutionSupportingPhotos, setSolutionSupportingPhotos] = useState('');
 
   const handlePostIdeas = async (payload) => {
     try {
@@ -44,9 +39,13 @@ const SecondFormIdeaSolution = () => {
       console.error(e);
     }
   };
+
+  const handleUploadImage = (payload) => {
+    setSolutionSupportingPhotos(payload);
+  };
   const onSubmit = (payload) => {
     const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
-    newIdeaSolution.solutionSupportingPhotos = []; //  upload photos not supported from BE yet
+    newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos]; //  upload photos not supported from BE yet
     newIdeaSolution.isDraft = false;
     newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
     handlePostIdeas(newIdeaSolution);
@@ -129,28 +128,7 @@ const SecondFormIdeaSolution = () => {
           />
         </Panel>
         <Panel title="Gambar/Foto Pendukung Ide Solusi">
-          <div className={dropArea}>
-            {/* <input
-              type="file"
-              id="fileElem"
-              multiple
-              accept="image/*"
-              onChange="handleFiles(this.files)"
-            /> */}
-            <div className={infoUploader}>
-              <p>Upload file dari penyimpanan</p>
-              <div className="d-flex">
-                <div className="d-flex">
-                  <Icon src={photoPlaceholder} size={20} />
-                  <p className={infoText}>High-Res Image PNG, JPG or GIF </p>
-                </div>
-                <div className="d-flex">
-                  <Icon src={expands} size={20} />
-                  <p className={infoText}>Size 1080x1920 or 600x800 </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <UploadComponent onUploadImg={handleUploadImage} />
         </Panel>
         <Panel title="Kolaborasi Customer">
           <TextField

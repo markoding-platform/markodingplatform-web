@@ -1,0 +1,48 @@
+.dropArea {
+  display: flex;
+  justify-content: center;
+  border: 1px dashed #9ea0a5;
+  box-sizing: border-box;
+  border-radius: 8px;
+  height: 288px;
+  background: no-repeat url('../../../svgs/file-uploader.svg');
+  background-position: 50% 25%;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.infoUploader {
+  position: absolute;
+  bottom: 0;
+  transform: translate(-6px, -75px);
+  text-align: center;
+  font-size: 1rem;
+}
+
+.imageViewer {
+  width: 100%;
+  height: 288px;
+  position: relative;
+  &:hover {
+    .btnRemoveImage {
+      display: block;
+    }
+  }
+}
+
+.infoText {
+  width: 13ch;
+  text-align: left;
+  font-size: 0.625rem;
+  margin: 0px 4px 0 4px;
+}
+
+.btnRemoveImage {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

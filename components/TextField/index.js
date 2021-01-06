@@ -10,7 +10,6 @@ import { inputField } from './styles.module.scss';
 // eslint-disable-next-line react/display-name
 const TextField = React.forwardRef(
   ({ name, placeholder, defaultVal, as, className, error, errorTxt }, ref) => {
-    console.log({ defaultVal });
     const [textValue, setTextValue] = useState(defaultVal);
 
     const handleOnChange = (e) => {
