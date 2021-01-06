@@ -7,6 +7,7 @@ import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
 import Avatar from 'public/assets/avatar-min.png';
+import BoxLoader from 'components/Shimmer/Box';
 import YoutubeIframe from 'components/YoutubeIframe';
 import useIdeaSolution from '../hooks/useIdeaSolution';
 import { ideaImage } from '../style.module.scss';
@@ -56,14 +57,12 @@ const additionalTeams = [
   },
 ];
 
-const defaultPic =
-  'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
-
 const IdeaDetails = ({ likeCount, commentCount }) => {
   const { query } = useRouter();
   const ideaId = query.id;
   const { data } = useIdeaSolution({ url: `/ideas/${ideaId}` });
   const idea = data?.result || {};
+  const imageIdea = idea.solutionSupportingPhotos?.[0] || '';
 
   return (
     <div>
@@ -84,14 +83,20 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
         </div>
       </div>
       <div className="py-2">
-        <Image
-          src={idea.imageUrl || defaultPic}
-          alt={idea.title}
-          width={500}
-          height={320}
-          className={ideaImage}
-          layout="responsive"
-        />
+        <div className="position-relative">
+          {imageIdea ? (
+            <Image
+              src={imageIdea}
+              alt={idea.title}
+              width={500}
+              height={320}
+              className={ideaImage}
+              layout="responsive"
+            />
+          ) : (
+            <BoxLoader height="320" />
+          )}
+        </div>
       </div>
       <div className="d-flex align-items-center justify-content-between">
         <div className="mr-4">
