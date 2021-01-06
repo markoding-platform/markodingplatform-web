@@ -1,8 +1,21 @@
+import { useCallback } from 'react';
+import { shape } from 'prop-types';
+
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import RegisterIdeaSolutionContainer from 'containers/RegisterIdeaSolutionContainer';
+import { SSO } from 'utils/auth';
 
-export default function RegisterIdea() {
+import withAuthSync from 'hoc/withAuthSync';
+
+const RegisterIdea = ({ user }) => {
+  const authenticate = useCallback(async () => {
+    await SSO();
+  }, []);
+
+  if (!user.id) {
+    authenticate();
+  }
   return (
     <Layout activeMenu="/idea">
       <div className="main-content">
@@ -10,9 +23,20 @@ export default function RegisterIdea() {
           <PointBadgeWrapper />
         </div>
         <div className="inner-section pb-5">
-          <RegisterIdeaSolutionContainer />
+          <RegisterIdeaSolutionContainer user={user} />
         </div>
       </div>
     </Layout>
   );
-}
+};
+
+RegisterIdea.propTypes = {
+  user: shape({
+    email: null,
+    exId: null,
+    id: '',
+    name: '',
+  }).isRequired,
+};
+
+export default withAuthSync(RegisterIdea);

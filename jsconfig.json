@@ -5,6 +5,7 @@
       "components/*": ["components/*"],
       "containers/*": ["containers/*"],
       "hooks/*": ["hooks/*"],
+      "hoc/*": ["hoc/*"],
       "libraries/*": ["libraries/*"],
       "public/*": ["public/assets/*"],
       "styles/*": ["styles/*"],

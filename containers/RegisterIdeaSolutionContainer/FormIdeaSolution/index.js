@@ -24,6 +24,7 @@ import {
 
 const FormIdeaSolution = () => {
   const { push } = useRouter();
+  // TODO: handle schools from outside jakarta too
   const qs = `schoolGradeId=ckfgf80wx4nqg0766kchm3ukx&provinceId=ckdrhj6cpd6ne07687g59ulc2`;
   const { data: schoolsList } = useSWR(`/api/schools?${qs}`, SkilvulFetch);
   const schools = schoolsList?.schools || [];
@@ -46,7 +47,7 @@ const FormIdeaSolution = () => {
   ];
 
   const handleOnClick = () => {
-    push('/register-idea/2').then(window.scrollTo(0, 0));
+    push('/register-idea/2');
   };
   const onSubmit = (data) => {
     data.solutionType = solutionType;
