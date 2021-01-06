@@ -19,6 +19,8 @@ module.exports = withPWA(
         'skilvul-dev-01.s3.ap-southeast-1.amazonaws.com',
         'inovasi.markoding.com',
         'markodingplatform.s3-ap-southeast-1.amazonaws.com',
+        'markodingplatform.s3.ap-southeast-1.amazonaws.com',
+        'markodingplatform.s3.amazonaws.com',
         'www.markoding.com',
       ],
       dest: 'public',

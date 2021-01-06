@@ -1,8 +1,20 @@
+import { useCallback } from 'react';
+import { shape } from 'prop-types';
+
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import RegisterIdeaSolutionContainer from 'components/RegisterIdeaSolutionContainer';
+import RegisterIdeaSolutionContainer from 'containers/RegisterIdeaSolutionContainer';
+import { SSO } from 'utils/auth';
+import withAuthSync from 'hoc/withAuthSync';
 
-export default function RegisterIdeaSecondPage() {
+const RegisterIdeaSecondPage = ({ user }) => {
+  const authenticate = useCallback(async () => {
+    await SSO();
+  }, []);
+
+  if (!user.id) {
+    authenticate();
+  }
   return (
     <Layout activeMenu="/idea">
       <div className="main-content">
@@ -15,4 +27,15 @@ export default function RegisterIdeaSecondPage() {
       </div>
     </Layout>
   );
-}
+};
+
+RegisterIdeaSecondPage.propTypes = {
+  user: shape({
+    email: null,
+    exId: null,
+    id: '',
+    name: '',
+  }).isRequired,
+};
+
+export default withAuthSync(RegisterIdeaSecondPage);

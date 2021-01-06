@@ -30,7 +30,7 @@ const GalleryIdeaWidget = () => {
                 <IdeaCard
                   key={id}
                   title={solutionName}
-                  imageUrl={solutionSupportingPhotos?.[1] || defaultPic}
+                  imageUrl={solutionSupportingPhotos?.[0] || defaultPic}
                   link={`/idea/${id}`}
                   description={solutionMission}
                   likeCount={14}
