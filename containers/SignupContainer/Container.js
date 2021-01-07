@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import Head from 'next/head';
 import Router, { useRouter } from 'next/router';
-
 import Container from 'react-bootstrap/Container';
 import PropTypes from 'prop-types';
 import RegisterAsComponent from './RegisterAs';

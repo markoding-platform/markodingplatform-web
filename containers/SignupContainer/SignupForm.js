@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import TextField from 'components/TextField';
+import { toast } from 'react-toastify';
 import DropdownComponent from 'components/Dropdown';
 import { useForm } from 'react-hook-form';
 import SkilvulFetch from 'libraries/SkilvulFetch';
@@ -171,9 +172,12 @@ const SignupForm = ({ registerAs }) => {
       body: JSON.stringify(value),
     });
     if (response.ok && response.result) {
+      toast.success('Pendaftaran berhasil.');
       const backPath = getCookie('backPath') || '/';
       const { token, data } = response.result;
       await Login({}, token, data, backPath);
+    } else {
+      toast.error('Maaf, terjadi kesalahan, silahkan coba kembali.');
     }
     setLoading(false);
   };

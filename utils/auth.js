@@ -22,7 +22,7 @@ export const Login = (context, token, data, backUrl = '/') => {
   }
 };
 
-export const Logout = (context) => {
+export const Logout = (context, back = true) => {
   if (typeof window === 'undefined') {
     context.res.writeHead(302, {
       Location: `/`,
@@ -32,11 +32,12 @@ export const Logout = (context) => {
     setCookie([
       { label: 'markodingToken', value: '', age: 0 },
       { label: 'userName', value: '', age: 0 },
-      { label: 'userEmail', value: '', age: 0 },
-      { label: 'externalID', value: '', age: 0 },
       { label: 'userID', value: '', age: 0 },
+      { label: 'userProfile', value: null, age: 0 },
     ]);
-    Router.replace(`/`);
+    if (back) {
+      Router.replace(`/`);
+    }
   }
 };
 
