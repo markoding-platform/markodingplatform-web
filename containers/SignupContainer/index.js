@@ -1,9 +1,11 @@
 import dynamic from 'next/dynamic';
+import Loading from 'components/Loading';
+import React from 'react';
 
 const DynamicSignupContainer = dynamic(
   () => import(/* webpackChunkName: "signup-container" */ './Container'),
   {
-    loading: () => <></>, // TODO: create loader carousel, reference https://github.com/danilowoz/create-content-loader
+    loading: () => <Loading />,
   }
 );
 

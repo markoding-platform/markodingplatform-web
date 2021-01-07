@@ -1,20 +1,27 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 import Container from 'react-bootstrap/Container';
+import PropTypes from 'prop-types';
 import RegisterAsComponent from './RegisterAs';
 import SignupForm from './SignupForm';
 import { ACCOUNT_TYPE } from './contants';
 import { styRegisterContainer } from './styles.module.scss';
 
-const SignupContainer = () => {
+const SignupContainer = ({ user }) => {
   const router = useRouter();
   const { slug } = router.query;
 
   const accountTypeIndex = useMemo(() => {
     return ACCOUNT_TYPE.findIndex((el) => el === slug);
   });
+
+  useEffect(() => {
+    if (user && user.profile) {
+      Router.push('/');
+    }
+  }, [user]);
 
   return (
     <>
@@ -59,6 +66,10 @@ const SignupContainer = () => {
       </Container>
     </>
   );
+};
+
+SignupContainer.propTypes = {
+  user: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default SignupContainer;
