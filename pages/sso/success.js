@@ -21,9 +21,12 @@ const SsoSuccess = ({ sso, sig }) => {
     });
 
     if (response.ok && response.result) {
-      const backPath = getCookie('backPath') || '/';
+      let backPath = getCookie('backPath') || '/';
       const { token, data } = response.result;
-      await Login({}, token, data.user, backPath);
+      if (!data.profile) {
+        backPath = '/signup';
+      }
+      await Login({}, token, data, backPath);
     } else {
       const message = response.message || 'Login gagal diproses';
       toast.error(message);

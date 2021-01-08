@@ -32,6 +32,7 @@ const TextField = React.forwardRef(
           ref={ref}
           aria-describedby="inputGroup-sizing"
           onChange={handleOnChange}
+          autocomplete="off"
         />
         {error && <Form.Text className="text-muted pt-1">{errorTxt}</Form.Text>}
       </InputGroup>

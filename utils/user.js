@@ -1,10 +1,10 @@
 import getCookie from 'utils/getCookie';
 
 export const User = (ctxReq) => {
+  const profile = getCookie('userProfile', ctxReq) || null;
   return {
-    name: getCookie('userName', ctxReq),
-    email: getCookie('userEmail', ctxReq),
     id: getCookie('userID', ctxReq),
-    exId: getCookie('externalID', ctxReq),
+    name: getCookie('userName', ctxReq),
+    profile: profile !== null ? JSON.parse(profile) : null,
   };
 };
