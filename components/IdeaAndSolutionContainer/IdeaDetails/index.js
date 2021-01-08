@@ -133,7 +133,7 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
           <p className="info__text m-0">{idea.problemSelection}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Targe Customer</p>
+          <p className="text-secondary m-0">Target Customer</p>
           <p className="info__text m-0">{idea.targetCustomer}</p>
         </div>
       </div>

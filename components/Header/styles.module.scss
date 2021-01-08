@@ -5,11 +5,11 @@
   filter: grayscale(100%);
 }
 .rootHeader {
-	@media (min-width: breakpoint.$lg) {
-		position: fixed;
-		max-width: 290px;
-		width: 290px;
-	}
+  @media (min-width: breakpoint.$lg) {
+    position: fixed;
+    max-width: 290px;
+    width: 290px;
+  }
 }
 .innerHeader {
   display: flex;
@@ -39,7 +39,6 @@
   display: flex;
   justify-content: space-between;
   padding: 15px 1.25rem;
-  margin-bottom: 50px;
 }
 
 .grayish {
