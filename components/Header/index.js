@@ -25,7 +25,7 @@ const Header = () => {
     <header className={rootHeader}>
       <div className="d-none d-lg-block">
         <div className={desktopLogo}>
-          <DicLogo width="180px" height="auto" isWrappedLogo />
+          <DicLogo width="180px" height="auto" />
         </div>
         <NavMenu />
       </div>
