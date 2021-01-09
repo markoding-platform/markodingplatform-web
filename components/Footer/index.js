@@ -133,7 +133,7 @@ const Footer = () => (
     <div className="d-flex justify-content-between flex-wrap px-4 mb-5">
       <p className="text-secondary">
         <span className="pr-2">Learning Platform by</span>
-        <Link href="/">
+        <Link href="https://www.skilvul.com/">
           <a>
             <img src={skilvulLogo} className={stySkilvul} alt="skilvul logo" />
           </a>
