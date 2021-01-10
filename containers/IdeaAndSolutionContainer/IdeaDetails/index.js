@@ -1,11 +1,14 @@
 import { number } from 'prop-types';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { mutate } from 'swr';
+import { toast } from 'react-toastify';
 
 import Button from 'react-bootstrap/Button';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
+import MarkodingFetch from 'libraries/MarkodingFetch';
 import Avatar from 'public/assets/avatar-min.png';
 import BoxLoader from 'components/Shimmer/Box';
 import YoutubeIframe from 'components/YoutubeIframe';
@@ -63,6 +66,27 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
   const { data } = useIdeaSolution({ url: `/ideas/${ideaId}` });
   const idea = data?.result || {};
   const imageIdea = idea.solutionSupportingPhotos?.[0] || '';
+
+  const handleVoteIdea = async () => {
+    const voteResult = await MarkodingFetch(`/ideas/${ideaId}/like`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        isLike: true,
+      }),
+    });
+    if (voteResult.ok) {
+      await mutate(`/ideas`);
+      return toast.success(<p className="m-0 pl-3">Berhasil vote ide</p>, {
+        autoClose: 3000,
+      });
+    }
+    return toast.error(<p className="m-0 pl-3">Ooops! Gagal vote ide</p>, {
+      autoClose: 3000,
+    });
+  };
 
   return (
     <div>
@@ -179,7 +203,9 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
         </div>
       </div>
       <div>
-        <Button className={voteBtn}>Vote Ide Solusi</Button>
+        <Button className={voteBtn} onClick={handleVoteIdea}>
+          Vote Ide Solusi
+        </Button>
       </div>
     </div>
   );

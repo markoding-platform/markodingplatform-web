@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { shape, string } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { BsPlus } from 'react-icons/bs';
 
+import { useGlobalFormContext } from 'components/context/FormContext';
 import ProfileCard from 'components/ProfileCard';
 import ModalComponent from 'components/Modal';
 import SearchMember from './SearchMember';
@@ -13,23 +15,51 @@ import {
   teamWrapper,
 } from './styles.module.scss';
 
-const CreateTeam = () => {
+const CreateTeam = ({ user }) => {
+  console.log({ user });
+  const userGrade = user.profile.schoolGradeName;
   const [isShowModal, setIsShowModal] = useState(false);
+  const {
+    inputs: { teamIds = [] },
+    inputs,
+    setInputs,
+  } = useGlobalFormContext();
+  const [members, setMembers] = useState([]);
 
   const handleOpenModal = () => {
     setIsShowModal((prevState) => !prevState);
   };
+
+  const handleSelectStudent = (student) => {
+    setInputs({ teamIds: [...teamIds, student?.id] });
+    const newMember = {
+      id: student.id,
+      name: student.name,
+      grade: student.profile.schoolGradeName,
+      status: 'Anggota',
+    };
+    setMembers([...members, ...[newMember]]);
+    handleOpenModal();
+  };
+  console.log({ inputs, members });
   return (
     <div>
       <div className={teamWrapper}>
         <div>
           <ProfileCard
             title="Ketua Tim"
-            primaryText="Amanda Simandjuntak"
-            secondaryText="Siswa SMK"
+            primaryText={user.name}
+            secondaryText={userGrade}
           />
         </div>
-
+        {members.map(({ name, grade, status, id }) => (
+          <ProfileCard
+            key={id}
+            title={status}
+            primaryText={name}
+            secondaryText={grade}
+          />
+        ))}
         <div>
           <div className="my-4">
             <Card className={`${addTeamMateWrapper} border-0 py-4`}>
@@ -51,10 +81,17 @@ const CreateTeam = () => {
         title="Tambah Anggota Tim"
         subTitle="Cari berdasarkan nama atau alamat email"
       >
-        <SearchMember />
+        <SearchMember onSelectStudent={handleSelectStudent} />
       </ModalComponent>
     </div>
   );
 };
 
+CreateTeam.propTypes = {
+  user: shape({
+    id: string,
+    name: string,
+    profile: shape({}),
+  }).isRequired,
+};
 export default CreateTeam;

@@ -1,10 +1,11 @@
 import { arrayOf, shape, string } from 'prop-types';
 import Image from 'next/image';
+
 import Button from 'react-bootstrap/Button';
 
 import Panel from 'components/Panel';
 import Badges from 'components/Badges';
-import SnippetIdea from 'components/IdeaAndSolutionContainer/SnippetIdea';
+import SnippetIdea from 'containers/IdeaAndSolutionContainer/SnippetIdea';
 import CourseCard from 'components/CourseCard';
 import Avatar from 'public/assets/avatar-min.png';
 import MyStats from './MyStats';

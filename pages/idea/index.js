@@ -1,6 +1,6 @@
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import IdeaAndSolutionContainer from 'components/IdeaAndSolutionContainer';
+import IdeaAndSolutionContainer from 'containers/IdeaAndSolutionContainer';
 
 export default function Idea() {
   return (

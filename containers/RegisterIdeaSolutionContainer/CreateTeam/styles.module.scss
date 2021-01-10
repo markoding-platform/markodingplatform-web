@@ -61,6 +61,10 @@
   display: block;
   padding: 16px;
   margin-bottom: 16px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f8f9fa;
+  }
 }
 
 .chief {
