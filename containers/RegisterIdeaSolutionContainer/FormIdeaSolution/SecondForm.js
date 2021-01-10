@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { Button } from 'react-bootstrap';
 
@@ -15,7 +15,7 @@ const BASE_URL = process.env.MARKODING_API_URL;
 const SecondFormIdeaSolution = () => {
   const { push } = useRouter();
   const { inputs } = useGlobalFormContext();
-  const { register, handleSubmit, errors } = useFormContext();
+  const { register, handleSubmit, errors } = useForm();
   const [solutionSupportingPhotos, setSolutionSupportingPhotos] = useState('');
 
   const handlePostIdeas = async (payload) => {
@@ -45,7 +45,7 @@ const SecondFormIdeaSolution = () => {
   };
   const onSubmit = (payload) => {
     const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
-    newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos]; //  upload photos not supported from BE yet
+    newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos];
     newIdeaSolution.isDraft = false;
     newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
     handlePostIdeas(newIdeaSolution);
@@ -53,7 +53,7 @@ const SecondFormIdeaSolution = () => {
 
   const onSubmitAsDraft = (payload) => {
     const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
-    newIdeaSolution.solutionSupportingPhotos = []; //  upload photos not supported from BE yet
+    newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos];
     newIdeaSolution.isDraft = true;
     newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
     handlePostIdeas(newIdeaSolution);
@@ -62,6 +62,12 @@ const SecondFormIdeaSolution = () => {
   const handleBack = () => {
     push('/register-idea');
   };
+
+  useEffect(() => {
+    if (Object.keys(inputs).length < 1) {
+      push('/register-idea');
+    }
+  });
   return (
     <>
       <form>

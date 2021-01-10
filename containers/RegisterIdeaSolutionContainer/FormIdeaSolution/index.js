@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { shape } from 'prop-types';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useGlobalFormContext } from 'components/context/FormContext';
 
-import SkilvulFetch from 'libraries/SkilvulFetch';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
@@ -20,16 +19,16 @@ import {
   inputSolutionType,
 } from './styles.module.scss';
 
-// import useIdeaSolution from '../hooks/useIdeaSolution';
-
-const FormIdeaSolution = () => {
+const FormIdeaSolution = ({ user }) => {
+  const profile = user?.profile || {};
   const { push } = useRouter();
-  // TODO: handle schools from outside jakarta too
-  const qs = `schoolGradeId=ckfgf80wx4nqg0766kchm3ukx&provinceId=ckdrhj6cpd6ne07687g59ulc2`;
-  const { data: schoolsList } = useSWR(`/api/schools?${qs}`, SkilvulFetch);
-  const schools = schoolsList?.schools || [];
 
-  const { register, handleSubmit, errors } = useFormContext();
+  const { register, handleSubmit, errors } = useForm({
+    defaultValues: {
+      schoolName: profile.schoolName,
+      schoolId: profile.schoolId,
+    },
+  });
 
   const {
     inputs: { ideaSolution = {} },
@@ -37,8 +36,6 @@ const FormIdeaSolution = () => {
   } = useGlobalFormContext();
 
   const [solutionType, setSolutionType] = useState(ideaSolution.solutionType);
-  const [schoolId, setSchoolId] = useState(ideaSolution.schoolId);
-  const [schoolName, setSchoolName] = useState(ideaSolution.schoolName);
 
   const SOLUTION_TYPES = [
     { id: 0, text: 'Aplikasi Mobile', value: 'mobile' },
@@ -51,29 +48,21 @@ const FormIdeaSolution = () => {
   };
   const onSubmit = (data) => {
     data.solutionType = solutionType;
-    data.schoolId = schoolId;
-    data.schoolName = schoolName;
+    data.schoolId = profile.schoolId;
+    data.schoolName = profile.schoolName;
     setInputs({ ideaSolution: { ...data } });
     handleOnClick();
   };
 
-  const handleSelectSchoolId = (payload) => {
-    setSchoolId(payload.id);
-    setSchoolName(payload.name);
-  };
+  useEffect(() => {
+    if (Object.keys(user).length < 1) {
+      push('/');
+    }
+  }, [push, user]);
 
   return (
     <>
       <form>
-        <Panel title="Nama Sekolah">
-          <DropdownComponent
-            placeholder="Nama sekolah kamu"
-            onSelected={handleSelectSchoolId}
-            dropdownItem={schools}
-            defaultVal={ideaSolution.schoolName}
-            withSearch
-          />
-        </Panel>
         <Panel title="Nama Guru Pembimbing">
           <DropdownComponent
             placeholder="Nama guru kamu"
@@ -182,4 +171,7 @@ const FormIdeaSolution = () => {
   );
 };
 
+FormIdeaSolution.propTypes = {
+  user: shape({}).isRequired,
+};
 export default FormIdeaSolution;
