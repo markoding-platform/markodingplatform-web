@@ -64,7 +64,12 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
   const { query } = useRouter();
   const ideaId = query.id;
   const { data } = useIdeaSolution({ url: `/ideas/${ideaId}` });
+  const { data: teamsResult } = useIdeaSolution({
+    url: `/ideas/${ideaId}/team`,
+  });
   const idea = data?.result || {};
+  const teams = teamsResult?.result || []; // TODO: data userprofile belum dipopulate, hanya balikin userid
+  console.log({ teams });
   const imageIdea = idea.solutionSupportingPhotos?.[0] || '';
 
   const handleVoteIdea = async () => {

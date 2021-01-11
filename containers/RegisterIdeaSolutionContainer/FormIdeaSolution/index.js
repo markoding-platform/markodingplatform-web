@@ -6,10 +6,13 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useForm } from 'react-hook-form';
 import { useGlobalFormContext } from 'components/context/FormContext';
+import { toast } from 'react-toastify';
 
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
+import useMyTeachers from 'hooks/useMyTeachers';
+
 import {
   radioBtnWrapper,
   radioBtn,
@@ -22,8 +25,11 @@ import {
 const FormIdeaSolution = ({ user }) => {
   const profile = user?.profile || {};
   const { push } = useRouter();
-
-  const { register, handleSubmit, errors } = useForm({
+  const { data: teachersResult } = useMyTeachers({
+    url: '/users/my/teachers',
+  });
+  const teachers = teachersResult;
+  const { register, handleSubmit, errors, setValue } = useForm({
     defaultValues: {
       schoolName: profile.schoolName,
       schoolId: profile.schoolId,
@@ -32,6 +38,7 @@ const FormIdeaSolution = ({ user }) => {
 
   const {
     inputs: { ideaSolution = {} },
+    inputs,
     setInputs,
   } = useGlobalFormContext();
 
@@ -44,14 +51,28 @@ const FormIdeaSolution = ({ user }) => {
   ];
 
   const handleOnClick = () => {
-    push('/register-idea/2');
+    if (inputs?.teamIds?.length) {
+      push('/register-idea/2');
+    } else {
+      return toast.error(
+        <p className="m-0 pl-3">Harap menambah anggota team</p>,
+        {
+          autoClose: 3000,
+        }
+      );
+    }
   };
+
   const onSubmit = (data) => {
     data.solutionType = solutionType;
     data.schoolId = profile.schoolId;
     data.schoolName = profile.schoolName;
-    setInputs({ ideaSolution: { ...data } });
+    setInputs({ ...inputs, ideaSolution: { ...data } });
     handleOnClick();
+  };
+
+  const handleSelectTeacher = (teacher) => {
+    setValue('teacherId', teacher.id);
   };
 
   useEffect(() => {
@@ -60,15 +81,20 @@ const FormIdeaSolution = ({ user }) => {
     }
   }, [push, user]);
 
+  useEffect(() => {
+    register('teacherId', { required: true }); // custom register Antd input
+  }, [register]);
+
   return (
     <>
       <form>
         <Panel title="Nama Guru Pembimbing">
           <DropdownComponent
             placeholder="Nama guru kamu"
-            onSelected={() => {}}
-            dropdownItem={[]}
+            onSelected={handleSelectTeacher}
+            dropdownItem={teachers}
             withSearch
+            name="teacherId"
           />
         </Panel>
         <Panel title="Nama Solusi Digital">

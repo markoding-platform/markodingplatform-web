@@ -4,13 +4,12 @@ import { useForm } from 'react-hook-form';
 
 import { Button } from 'react-bootstrap';
 
+import MarkodingFetch from 'libraries/MarkodingFetch';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import { useGlobalFormContext } from 'components/context/FormContext';
 import UploadComponent from '../Upload';
 import { textArea } from './styles.module.scss';
-
-const BASE_URL = process.env.MARKODING_API_URL;
 
 const SecondFormIdeaSolution = () => {
   const { push } = useRouter();
@@ -18,23 +17,40 @@ const SecondFormIdeaSolution = () => {
   const { register, handleSubmit, errors } = useForm();
   const [solutionSupportingPhotos, setSolutionSupportingPhotos] = useState('');
 
-  const handlePostIdeas = async (payload) => {
+  const handleCreateTeam = async (ideaId) => {
     try {
-      const res = await fetch(`${BASE_URL}/ideas`, {
-        method: 'POST',
+      const { ok } = await MarkodingFetch(`/ideas/${ideaId}/team`, {
         headers: {
-          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
+        method: 'POST',
+        body: JSON.stringify({
+          userIds: inputs.teamIds,
+        }),
+      });
+      // TODO handle error
+      if (ok) {
+        push('/idea');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handlePostIdeas = async (payload) => {
+    try {
+      const { ok, result } = await MarkodingFetch('/ideas', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
         body: JSON.stringify(payload),
       });
-      res.json().then((data) => {
-        if (data.error) {
-          console.error({ error: data.message });
-        } else {
-          push('/idea');
-        }
-      });
+      // TODO handle error
+      if (ok) {
+        console.log('handlePostIdeas', { result });
+        handleCreateTeam(result.id);
+      }
     } catch (e) {
       console.error(e);
     }

@@ -17,7 +17,7 @@ import {
 
 const CreateTeam = ({ user }) => {
   console.log({ user });
-  const userGrade = user.profile.schoolGradeName;
+  const userSchoolName = user.profile.schoolName;
   const [isShowModal, setIsShowModal] = useState(false);
   const {
     inputs: { teamIds = [] },
@@ -35,7 +35,7 @@ const CreateTeam = ({ user }) => {
     const newMember = {
       id: student.id,
       name: student.name,
-      grade: student.profile.schoolGradeName,
+      school: student.profile.schoolName,
       status: 'Anggota',
     };
     setMembers([...members, ...[newMember]]);
@@ -49,15 +49,15 @@ const CreateTeam = ({ user }) => {
           <ProfileCard
             title="Ketua Tim"
             primaryText={user.name}
-            secondaryText={userGrade}
+            secondaryText={userSchoolName}
           />
         </div>
-        {members.map(({ name, grade, status, id }) => (
+        {members.map(({ name, school, status, id }) => (
           <ProfileCard
             key={id}
             title={status}
             primaryText={name}
-            secondaryText={grade}
+            secondaryText={school}
           />
         ))}
         <div>

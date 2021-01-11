@@ -41,7 +41,7 @@ const SearchMember = ({ onSelectStudent }) => {
 
   const getStudent = async (keyword) => {
     const { ok, result } = await MarkodingFetch(
-      `/users/my/students?search=${keyword}`,
+      `/users/my/students/not-in-team?search=${keyword}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const SearchMember = ({ onSelectStudent }) => {
           <ListItem
             key={id}
             name={name}
-            subTitle={`Siswa ${profile.schoolGradeName}`}
+            subTitle={`Siswa ${profile.schoolName}`}
             onSelect={() => handleSelectStudent({ id, name, profile })}
           />
         ))}
