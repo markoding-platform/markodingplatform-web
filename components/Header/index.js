@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { BsList } from 'react-icons/bs';
 import Icon from 'components/Icons';
 import MarkodingLogo from 'components/MarkodingLogo';
+import DicLogo from 'components/DICLogo';
 import Drawer from 'components/Drawer';
 import skilvulLogo from 'svgs/skilvulLogo.svg';
 import NavMenu from 'components/NavMenu';
@@ -24,7 +25,7 @@ const Header = () => {
     <header className={rootHeader}>
       <div className="d-none d-lg-block">
         <div className={desktopLogo}>
-          <MarkodingLogo width="180px" height="38px" />
+          <DicLogo width="180px" height="auto" />
         </div>
         <NavMenu />
       </div>

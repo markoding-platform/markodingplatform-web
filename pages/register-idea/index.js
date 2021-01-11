@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { shape } from 'prop-types';
 
 import Layout from 'components/Layout';
@@ -9,13 +9,21 @@ import { SSO } from 'utils/auth';
 import withAuthSync from 'hoc/withAuthSync';
 
 const RegisterIdea = ({ user }) => {
+  const id = user?.id || '';
   const authenticate = useCallback(async () => {
     await SSO();
   }, []);
 
-  if (!user.id) {
-    authenticate();
+  useEffect(() => {
+    if (!id) {
+      authenticate();
+    }
+  }, [authenticate, id]);
+
+  if (!id) {
+    return null;
   }
+
   return (
     <Layout activeMenu="/idea">
       <div className="main-content">
