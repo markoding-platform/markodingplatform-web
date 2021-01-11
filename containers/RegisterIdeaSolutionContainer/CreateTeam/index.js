@@ -16,12 +16,10 @@ import {
 } from './styles.module.scss';
 
 const CreateTeam = ({ user }) => {
-  console.log({ user });
   const userSchoolName = user.profile.schoolName;
   const [isShowModal, setIsShowModal] = useState(false);
   const {
     inputs: { teamIds = [] },
-    inputs,
     setInputs,
   } = useGlobalFormContext();
   const [members, setMembers] = useState([]);
@@ -41,7 +39,7 @@ const CreateTeam = ({ user }) => {
     setMembers([...members, ...[newMember]]);
     handleOpenModal();
   };
-  console.log({ inputs, members });
+
   return (
     <div>
       <div className={teamWrapper}>

@@ -77,7 +77,7 @@ const UploadComponent = ({ onUploadImg }) => {
     <div aria-hidden onClick={handleClickUploader}>
       {imageSrc && (
         <div className={imageViewer}>
-          <Image src={imageSrc} layout="fill" />
+          <Image src={imageSrc} layout="fill" objectFit="cover" />
           <Button
             variant="secondary"
             className={btnRemoveImage}

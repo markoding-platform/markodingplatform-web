@@ -50,7 +50,7 @@ const SearchMember = ({ onSelectStudent }) => {
       }
     );
     if (ok) {
-      setStudents(result);
+      setStudents([...result, ...result]);
     }
   };
 
@@ -65,7 +65,7 @@ const SearchMember = ({ onSelectStudent }) => {
   }, [debouncedKeyword]);
   return (
     <div>
-      <div className="d-none w-100 d-lg-flex align-items-center mb-4">
+      <div className="d-none w-100 d-flex align-items-center mb-4">
         <div className={searchGroup}>
           <BiSearchAlt2 className={searchIcon} />
           <Form.Control

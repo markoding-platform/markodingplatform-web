@@ -6,6 +6,7 @@ import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import RegisterIdeaSolutionContainer from 'containers/RegisterIdeaSolutionContainer';
 import { SSO } from 'utils/auth';
 import withAuthSync from 'hoc/withAuthSync';
+import { homeContent } from 'styles/home.module.scss';
 
 const RegisterIdeaSecondPage = ({ user }) => {
   const id = user?.id || '';
@@ -25,7 +26,7 @@ const RegisterIdeaSecondPage = ({ user }) => {
 
   return (
     <Layout activeMenu="/idea">
-      <div className="main-content">
+      <div className={homeContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>

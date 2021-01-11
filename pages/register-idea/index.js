@@ -4,6 +4,7 @@ import { shape } from 'prop-types';
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import RegisterIdeaSolutionContainer from 'containers/RegisterIdeaSolutionContainer';
+import { homeContent } from 'styles/home.module.scss';
 import { SSO } from 'utils/auth';
 
 import withAuthSync from 'hoc/withAuthSync';
@@ -26,7 +27,7 @@ const RegisterIdea = ({ user }) => {
 
   return (
     <Layout activeMenu="/idea">
-      <div className="main-content">
+      <div className={homeContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>
