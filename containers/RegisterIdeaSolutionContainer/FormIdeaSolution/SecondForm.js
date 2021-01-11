@@ -1,61 +1,89 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { Button } from 'react-bootstrap';
 
-import Icon from 'components/Icons';
+import MarkodingFetch from 'libraries/MarkodingFetch';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
-import photoPlaceholder from 'svgs/photo-placeholder.svg';
-import expands from 'svgs/expands.svg';
 import { useGlobalFormContext } from 'components/context/FormContext';
-import {
-  dropArea,
-  textArea,
-  infoUploader,
-  infoText,
-} from './styles.module.scss';
-
-const BASE_URL = process.env.MARKODING_API_URL;
+import UploadComponent from '../Upload';
+import { textArea } from './styles.module.scss';
 
 const SecondFormIdeaSolution = () => {
   const { push } = useRouter();
   const { inputs } = useGlobalFormContext();
-  const { register, handleSubmit } = useFormContext();
+  const { register, handleSubmit, errors } = useForm();
+  const [solutionSupportingPhotos, setSolutionSupportingPhotos] = useState('');
 
-  const handlePostIdeas = async (payload) => {
+  const handleCreateTeam = async (ideaId) => {
     try {
-      const res = await fetch(`${BASE_URL}/ideas`, {
-        method: 'POST',
+      const { ok } = await MarkodingFetch(`/ideas/${ideaId}/team`, {
         headers: {
-          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
+        method: 'POST',
+        body: JSON.stringify({
+          userIds: inputs.teamIds,
+        }),
       });
-      res.json().then((data) => {
-        if (data.error) {
-          console.error({ error: data.message });
-        } else {
-          push('/idea');
-        }
-      });
+      // TODO handle error
+      if (ok) {
+        push('/idea');
+      }
     } catch (e) {
       console.error(e);
     }
   };
+
+  const handlePostIdeas = async (payload) => {
+    try {
+      const { ok, result } = await MarkodingFetch('/ideas', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      // TODO handle error
+      if (ok) {
+        console.log('handlePostIdeas', { result });
+        handleCreateTeam(result.id);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleUploadImage = (payload) => {
+    setSolutionSupportingPhotos(payload);
+  };
   const onSubmit = (payload) => {
     const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
-    newIdeaSolution.solutionSupportingPhotos = []; //  upload photos not supported from BE yet
+    newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos];
     newIdeaSolution.isDraft = false;
     newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
-    newIdeaSolution.schoolId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
+    handlePostIdeas(newIdeaSolution);
+  };
+
+  const onSubmitAsDraft = (payload) => {
+    const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
+    newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos];
+    newIdeaSolution.isDraft = true;
+    newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
     handlePostIdeas(newIdeaSolution);
   };
 
   const handleBack = () => {
     push('/register-idea');
   };
+
+  useEffect(() => {
+    if (Object.keys(inputs).length < 1) {
+      push('/register-idea');
+    }
+  });
   return (
     <>
       <form>
@@ -65,6 +93,8 @@ const SecondFormIdeaSolution = () => {
             defaultVal={inputs.solutionVision}
             name="solutionVision"
             ref={register({ required: true })}
+            error={!!errors.solutionVision}
+            errorTxt="Harap mengisi solusi singkat"
           />
         </Panel>
         <Panel title="Ide Solusi">
@@ -75,6 +105,8 @@ const SecondFormIdeaSolution = () => {
             className={textArea}
             name="solutionMission"
             ref={register({ required: true })}
+            error={!!errors.solutionMission}
+            errorTxt="Harap mengisi ide solusi"
           />
         </Panel>
         <Panel title="Target Outcomes">
@@ -83,6 +115,8 @@ const SecondFormIdeaSolution = () => {
             defaultVal={inputs.targetOutcomes}
             name="targetOutcomes"
             ref={register({ required: true })}
+            error={!!errors.targetOutcomes}
+            errorTxt="Harap mengisi target outcomes"
           />
         </Panel>
         <Panel title="Kelebihan Ide Solusi">
@@ -93,6 +127,8 @@ const SecondFormIdeaSolution = () => {
             ref={register({ required: true })}
             as="textarea"
             className={textArea}
+            error={!!errors.solutionBenefit}
+            errorTxt="Harap mengisi kelebihan ide solusi"
           />
         </Panel>
         <Panel title="Kendala">
@@ -101,6 +137,8 @@ const SecondFormIdeaSolution = () => {
             defaultVal={inputs.solutionObstacle}
             name="solutionObstacle"
             ref={register({ required: true })}
+            error={!!errors.solutionObstacle}
+            errorTxt="Harap mengisi kendala"
           />
         </Panel>
         <Panel title="Link Video">
@@ -108,39 +146,18 @@ const SecondFormIdeaSolution = () => {
             placeholder="Sertakan link video pitch tentang ide solusimu"
             defaultVal={inputs.solutionPitchUrl}
             name="solutionPitchUrl"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
           />
         </Panel>
         <Panel title="Gambar/Foto Pendukung Ide Solusi">
-          <div className={dropArea}>
-            {/* <input
-              type="file"
-              id="fileElem"
-              multiple
-              accept="image/*"
-              onChange="handleFiles(this.files)"
-            /> */}
-            <div className={infoUploader}>
-              <p>Upload file dari penyimpanan</p>
-              <div className="d-flex">
-                <div className="d-flex">
-                  <Icon src={photoPlaceholder} size={20} />
-                  <p className={infoText}>High-Res Image PNG, JPG or GIF </p>
-                </div>
-                <div className="d-flex">
-                  <Icon src={expands} size={20} />
-                  <p className={infoText}>Size 1080x1920 or 600x800 </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <UploadComponent onUploadImg={handleUploadImage} />
         </Panel>
         <Panel title="Kolaborasi Customer">
           <TextField
             placeholder="Siapa saja yang ingin kamu ajak kolaborasi dan jelaskan alasannya untuk mewujudkan ide solusimu?"
             defaultVal={inputs.potentialCollaboration}
             name="potentialCollaboration"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
             as="textarea"
             className={textArea}
           />
@@ -148,6 +165,13 @@ const SecondFormIdeaSolution = () => {
         <div className="d-flex justify-content-end">
           <Button variant="outline-primary mr-2" onClick={handleBack}>
             Kembali
+          </Button>
+          <Button
+            variant="secondary"
+            className="mr-2"
+            onClick={handleSubmit(onSubmitAsDraft)}
+          >
+            Simpan Sebagai Draft
           </Button>
           <Button variant="primary" onClick={handleSubmit(onSubmit)}>
             Kirim Ide Solusi

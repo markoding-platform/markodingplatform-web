@@ -3,10 +3,11 @@ import { number } from 'prop-types';
 import { useForm, FormProvider } from 'react-hook-form';
 
 import Panel from 'components/Panel';
-import CreateTeam from 'components/RegisterIdeaSolutionContainer/CreateTeam';
+import CreateTeam from 'containers/RegisterIdeaSolutionContainer/CreateTeam';
 
 import FormIdeaSolution from './FormIdeaSolution';
 import SecondFormIdeaSolution from './FormIdeaSolution/SecondForm';
+
 import {
   pagingText,
   progressBar,
@@ -14,7 +15,7 @@ import {
   progressBarWrapper,
 } from './styles.module.scss';
 
-const RegisterIdeaSolutionContainer = ({ page }) => {
+const RegisterIdeaSolutionContainer = ({ page, user }) => {
   const methods = useForm();
   return (
     <>
@@ -35,10 +36,14 @@ const RegisterIdeaSolutionContainer = ({ page }) => {
       <FormProvider {...methods}>
         {page === 1 && (
           <Panel title="Team">
-            <CreateTeam />
+            <CreateTeam user={user} />
           </Panel>
         )}
-        {page === 2 ? <SecondFormIdeaSolution /> : <FormIdeaSolution />}
+        {page === 2 ? (
+          <SecondFormIdeaSolution />
+        ) : (
+          <FormIdeaSolution user={user} />
+        )}
       </FormProvider>
     </>
   );

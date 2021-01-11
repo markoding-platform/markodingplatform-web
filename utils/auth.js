@@ -2,26 +2,27 @@ import Router from 'next/router';
 import setCookie from 'utils/setCookie';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 
-export const Login = (context, token, user, backUrl = '/') => {
+export const Login = (context, token, data, backUrl = '/') => {
   if (typeof window === 'undefined') {
     context.res.writeHead(302, {
       Location: backUrl,
     });
     context.res.end();
   } else {
+    const { user, profile } = data;
     const expCookie = 86000;
+    const userProfile = profile ? JSON.stringify(profile) : null;
     setCookie([
       { label: 'markodingToken', value: token, age: expCookie },
       { label: 'userName', value: user.name, age: expCookie },
-      { label: 'userEmail', value: user.email, age: expCookie },
-      { label: 'externalID', value: user.externalId, age: expCookie },
       { label: 'userID', value: user.id, age: expCookie },
+      { label: 'userProfile', value: userProfile, age: expCookie },
     ]);
     Router.replace(backUrl);
   }
 };
 
-export const Logout = (context) => {
+export const Logout = (context, back = true) => {
   if (typeof window === 'undefined') {
     context.res.writeHead(302, {
       Location: `/`,
@@ -31,11 +32,12 @@ export const Logout = (context) => {
     setCookie([
       { label: 'markodingToken', value: '', age: 0 },
       { label: 'userName', value: '', age: 0 },
-      { label: 'userEmail', value: '', age: 0 },
-      { label: 'externalID', value: '', age: 0 },
       { label: 'userID', value: '', age: 0 },
+      { label: 'userProfile', value: null, age: 0 },
     ]);
-    Router.replace(`/`);
+    if (back) {
+      Router.replace(`/`);
+    }
   }
 };
 

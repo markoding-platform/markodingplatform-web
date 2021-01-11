@@ -42,7 +42,7 @@ const NavMenu = () => {
                       {navItem.text}
                       {navItem.withBadge && (
                         <span className="ml-2 badge badge-danger text-right badge-pill">
-                          14
+                          0
                         </span>
                       )}
                     </div>

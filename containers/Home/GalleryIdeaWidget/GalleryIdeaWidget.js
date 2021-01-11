@@ -2,7 +2,7 @@ import React from 'react';
 
 import SectionCardWrapper from 'components/SectionCardWrapper';
 import IdeaCard from 'components/IdeaCard';
-import useIdeaSolution from 'components/IdeaAndSolutionContainer/hooks/useIdeaSolution';
+import useIdeaSolution from 'containers/IdeaAndSolutionContainer/hooks/useIdeaSolution';
 import WidgetLoader from '../WidgetLoader';
 
 const defaultPic =
@@ -30,7 +30,7 @@ const GalleryIdeaWidget = () => {
                 <IdeaCard
                   key={id}
                   title={solutionName}
-                  imageUrl={solutionSupportingPhotos?.[1] || defaultPic}
+                  imageUrl={solutionSupportingPhotos?.[0] || defaultPic}
                   link={`/idea/${id}`}
                   description={solutionMission}
                   likeCount={14}

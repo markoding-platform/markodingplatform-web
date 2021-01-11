@@ -77,8 +77,8 @@ const AuthButton = () => {
                 Registrasi Ide Solusi
               </Dropdown.Item>
             </Link>
-            <Link href="/account">
-              <Dropdown.Item href="/account">Lihat Profil</Dropdown.Item>
+            <Link href="/dashboard">
+              <Dropdown.Item href="/dashboard">Lihat Profil</Dropdown.Item>
             </Link>
             <Dropdown.Item onClick={doLogout}>Keluar</Dropdown.Item>
           </Dropdown.Menu>

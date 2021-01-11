@@ -1,8 +1,7 @@
+import { Logout } from 'utils/auth';
+
 const SsoVerifySuccess = () => {
-  /*
-  TODO: logut user here and show information for relogin
-  why relogin? for get new info user is true verifyed or not.
-  */
+  Logout({}, false);
 
   return (
     <div className="text-center">

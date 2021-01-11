@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { useState, forwardRef, useEffect } from 'react';
+import { useState, forwardRef, useEffect, useCallback } from 'react';
 import { arrayOf, number, string, shape, func, node, bool } from 'prop-types';
 import { BsChevronDown } from 'react-icons/bs';
 import Button from 'react-bootstrap/Button';
@@ -46,14 +46,15 @@ const DropdownComponent = ({
   onSelected,
   dropdownItem,
   withSearch,
-  onSearch,
+  defaultVal,
 }) => {
-  const [selectedDropdown, setSelectedDropdown] = useState('');
+  const [selectedDropdown, setSelectedDropdown] = useState(defaultVal);
+
   const [keyword, setKeyword] = useState('');
-  const debouncedKeyword = useDebounce(keyword, 200);
+  const [searchedItem, setSearchedItem] = useState([]);
 
   const handleOnClick = (payload) => {
-    setSelectedDropdown(payload.text);
+    setSelectedDropdown(payload.name);
     onSelected(payload);
   };
 
@@ -65,8 +66,22 @@ const DropdownComponent = ({
     setKeyword(value);
   };
 
-  useEffect(() => onSearch(debouncedKeyword), [debouncedKeyword, onSearch]);
+  const onSearch = useCallback(() => {
+    if (!keyword) return;
+    const result = dropdownItem.filter((item) => {
+      return item.name.toLowerCase().match(keyword.toLowerCase());
+    });
+    setSearchedItem(result);
+  }, [dropdownItem, keyword]);
 
+  const debouncedKeyword = useDebounce(keyword, 200);
+  useEffect(() => {
+    if (debouncedKeyword) {
+      onSearch(debouncedKeyword);
+    }
+  }, [debouncedKeyword, onSearch]);
+
+  const items = keyword.length ? searchedItem : dropdownItem;
   return (
     <Dropdown>
       <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
@@ -87,10 +102,10 @@ const DropdownComponent = ({
               />
             </div>
           )}
-          {dropdownItem.map((item, idx) => (
+          {items.map((item, idx) => (
             // eslint-disable-next-line react/no-array-index-key
             <Dropdown.Item key={idx} onClick={() => handleOnClick(item)}>
-              {item.text}
+              {item.name}
             </Dropdown.Item>
           ))}
         </>
@@ -102,20 +117,20 @@ const DropdownComponent = ({
 DropdownComponent.defaultProps = {
   placeholder: 'Pilih',
   dropdownItem: [],
+  defaultVal: '',
   withSearch: false,
-  onSearch: () => {},
 };
 
 DropdownComponent.propTypes = {
   dropdownItem: arrayOf(
     shape({
       key: number,
-      text: string,
+      name: string,
     })
   ),
+  defaultVal: string,
   placeholder: string,
   withSearch: bool,
-  onSearch: func,
   onSelected: func.isRequired,
 };
 

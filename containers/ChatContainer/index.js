@@ -62,7 +62,7 @@ const ChatContainer = ({ user }) => {
                     avatar={c.avatarUrl}
                     name={c.name}
                     time={c.time}
-                    position={+c.sender === +user.id ? 'right' : 'left'}
+                    position={c.sender === user.id ? 'right' : 'left'}
                   />
                 </div>
               ))}

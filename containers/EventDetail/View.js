@@ -61,9 +61,7 @@ const EventDetail = () => {
               <p className={styles.dateTime}>
                 <BsCalendarFill />
                 <span>
-                  {`${dayjs(event.startDate).format(
-                    'dddd, DD MMM YYYY'
-                  )} - ${dayjs(event.finishDate).format('dddd, DD MMM YYYY')}`}
+                  {`${dayjs(event.startDate).format('dddd, MMM DD YYYY')}`}
                 </span>
               </p>
               <p className={styles.dateTime}>

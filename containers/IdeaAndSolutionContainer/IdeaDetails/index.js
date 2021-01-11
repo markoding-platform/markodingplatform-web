@@ -1,12 +1,16 @@
 import { number } from 'prop-types';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { mutate } from 'swr';
+import { toast } from 'react-toastify';
 
 import Button from 'react-bootstrap/Button';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
+import MarkodingFetch from 'libraries/MarkodingFetch';
 import Avatar from 'public/assets/avatar-min.png';
+import BoxLoader from 'components/Shimmer/Box';
 import YoutubeIframe from 'components/YoutubeIframe';
 import useIdeaSolution from '../hooks/useIdeaSolution';
 import { ideaImage } from '../style.module.scss';
@@ -56,17 +60,43 @@ const additionalTeams = [
   },
 ];
 
-const defaultPic =
-  'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
-
 const IdeaDetails = ({ likeCount, commentCount }) => {
   const { query } = useRouter();
   const ideaId = query.id;
-  const { data = {} } = useIdeaSolution({ url: `/ideas/${ideaId}` });
+  const { data } = useIdeaSolution({ url: `/ideas/${ideaId}` });
+  const { data: teamsResult } = useIdeaSolution({
+    url: `/ideas/${ideaId}/team`,
+  });
+  const idea = data?.result || {};
+  const teams = teamsResult?.result || []; // TODO: data userprofile belum dipopulate, hanya balikin userid
+  console.log({ teams });
+  const imageIdea = idea.solutionSupportingPhotos?.[0] || '';
+
+  const handleVoteIdea = async () => {
+    const voteResult = await MarkodingFetch(`/ideas/${ideaId}/like`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        isLike: true,
+      }),
+    });
+    if (voteResult.ok) {
+      await mutate(`/ideas`);
+      return toast.success(<p className="m-0 pl-3">Berhasil vote ide</p>, {
+        autoClose: 3000,
+      });
+    }
+    return toast.error(<p className="m-0 pl-3">Ooops! Gagal vote ide</p>, {
+      autoClose: 3000,
+    });
+  };
+
   return (
     <div>
       <div className="pb-2">
-        <h4>{data.solutionName}</h4>
+        <h4>{idea.solutionName}</h4>
       </div>
       <div className="d-flex py-2">
         <Image
@@ -82,14 +112,20 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
         </div>
       </div>
       <div className="py-2">
-        <Image
-          src={data.imageUrl || defaultPic}
-          alt={data.title}
-          width={500}
-          height={320}
-          className={ideaImage}
-          layout="responsive"
-        />
+        <div className="position-relative">
+          {imageIdea ? (
+            <Image
+              src={imageIdea}
+              alt={idea.title}
+              width={500}
+              height={320}
+              className={ideaImage}
+              layout="responsive"
+            />
+          ) : (
+            <BoxLoader height="320" />
+          )}
+        </div>
       </div>
       <div className="d-flex align-items-center justify-content-between">
         <div className="mr-4">
@@ -107,27 +143,27 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       <div className={teamInfo}>
         <div className={infoItem}>
           <p className="text-secondary m-0">Status Tim</p>
-          <p className="info__text m-0">{data.teamStatus}</p>
+          <p className="info__text m-0">{idea.teamStatus}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Nama Sekolah</p>
-          <p className="info__text m-0">{data.schoolName}</p>
+          <p className="info__text m-0">{idea.schoolName}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Tipe Solusi Digital</p>
-          <p className="info__text m-0">{data.solutionType}</p>
+          <p className="info__text m-0">{idea.solutionType}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Bidang Masalah</p>
-          <p className="info__text m-0">{data.problemArea}</p>
+          <p className="info__text m-0">{idea.problemArea}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Masalah yang ingin diselesaikan</p>
-          <p className="info__text m-0">{data.problemSelection}</p>
+          <p className="info__text m-0">{idea.problemSelection}</p>
         </div>
         <div className={infoItem}>
           <p className="text-secondary m-0">Targe Customer</p>
-          <p className="info__text m-0">{data.targetCustomer}</p>
+          <p className="info__text m-0">{idea.targetCustomer}</p>
         </div>
       </div>
       <hr />
@@ -136,43 +172,45 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       <div>
         <div className={ideaSection} id="problemReason">
           <h4>Alasan Masalah</h4>
-          <p className="text-secondary m-0">{data.problemReasoning}</p>
+          <p className="text-secondary m-0">{idea.problemReasoning}</p>
         </div>
         <div className={ideaSection} id="solutionSummary">
           <h4>Solusi Singkat</h4>
-          <p className="text-secondary m-0">{data.solutionVision}</p>
+          <p className="text-secondary m-0">{idea.solutionVision}</p>
         </div>
         <div className={ideaSection} id="solutionVision">
           <h4>Ide Solusi</h4>
-          <p className="text-secondary m-0">{data.solutionMission}</p>
+          <p className="text-secondary m-0">{idea.solutionMission}</p>
         </div>
-        {data.solutionPitchUrl && (
+        {idea.solutionPitchUrl && (
           <div className={ideaSection}>
             <h4>Link Video</h4>
             <div className={videoWrapper}>
-              <YoutubeIframe solutionPitchUrl={data.solutionPitchUrl} />
+              <YoutubeIframe solutionPitchUrl={idea.solutionPitchUrl} />
             </div>
           </div>
         )}
         <div className={ideaSection}>
           <h4>Target Customer</h4>
-          <p className="text-secondary m-0">{data.targetCustomer}</p>
+          <p className="text-secondary m-0">{idea.targetCustomer}</p>
         </div>
         <div className={ideaSection}>
           <h4>Kelebihan Ide Solusi</h4>
-          <p className="text-secondary m-0">{data.solutionBenefit}</p>
+          <p className="text-secondary m-0">{idea.solutionBenefit}</p>
         </div>
         <div className={ideaSection}>
           <h4>Kendala</h4>
-          <p className="text-secondary m-0">{data.solutionObstacle}</p>
+          <p className="text-secondary m-0">{idea.solutionObstacle}</p>
         </div>
         <div className={ideaSection}>
           <h4>Kolaborasi</h4>
-          <p className="text-secondary m-0">{data.potentialCollaboration}</p>
+          <p className="text-secondary m-0">{idea.potentialCollaboration}</p>
         </div>
       </div>
       <div>
-        <Button className={voteBtn}>Vote Ide Solusi</Button>
+        <Button className={voteBtn} onClick={handleVoteIdea}>
+          Vote Ide Solusi
+        </Button>
       </div>
     </div>
   );
