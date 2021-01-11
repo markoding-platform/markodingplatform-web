@@ -2,7 +2,7 @@ import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import MyIdeaAndSolutionContainer from 'components/MyIdeaAndSolutionContainer';
 
-export default function MyIdeaAndSolution() {
+export default function Dashboard() {
   return (
     <Layout activeMenu="/idea">
       <div className="main-content">

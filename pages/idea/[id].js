@@ -1,5 +1,5 @@
 import Layout from 'components/Layout';
-import IdeaDetails from 'components/IdeaAndSolutionContainer/IdeaDetails';
+import IdeaDetails from 'containers/IdeaAndSolutionContainer/IdeaDetails';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 
 export default function IdeaDetail() {

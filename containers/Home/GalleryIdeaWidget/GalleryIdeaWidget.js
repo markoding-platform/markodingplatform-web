@@ -2,7 +2,7 @@ import React from 'react';
 
 import SectionCardWrapper from 'components/SectionCardWrapper';
 import IdeaCard from 'components/IdeaCard';
-import useIdeaSolution from 'components/IdeaAndSolutionContainer/hooks/useIdeaSolution';
+import useIdeaSolution from 'containers/IdeaAndSolutionContainer/hooks/useIdeaSolution';
 import WidgetLoader from '../WidgetLoader';
 
 const defaultPic =

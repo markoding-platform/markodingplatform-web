@@ -39,7 +39,11 @@ const RegisterIdeaSolutionContainer = ({ page, user }) => {
             <CreateTeam user={user} />
           </Panel>
         )}
-        {page === 2 ? <SecondFormIdeaSolution /> : <FormIdeaSolution />}
+        {page === 2 ? (
+          <SecondFormIdeaSolution />
+        ) : (
+          <FormIdeaSolution user={user} />
+        )}
       </FormProvider>
     </>
   );

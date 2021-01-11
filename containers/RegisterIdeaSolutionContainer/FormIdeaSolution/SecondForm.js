@@ -1,40 +1,56 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { Button } from 'react-bootstrap';
 
+import MarkodingFetch from 'libraries/MarkodingFetch';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import { useGlobalFormContext } from 'components/context/FormContext';
 import UploadComponent from '../Upload';
 import { textArea } from './styles.module.scss';
 
-const BASE_URL = process.env.MARKODING_API_URL;
-
 const SecondFormIdeaSolution = () => {
   const { push } = useRouter();
   const { inputs } = useGlobalFormContext();
-  const { register, handleSubmit, errors } = useFormContext();
+  const { register, handleSubmit, errors } = useForm();
   const [solutionSupportingPhotos, setSolutionSupportingPhotos] = useState('');
+
+  const handleCreateTeam = async (ideaId) => {
+    try {
+      const { ok } = await MarkodingFetch(`/ideas/${ideaId}/team`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          userIds: inputs.teamIds,
+        }),
+      });
+      // TODO handle error
+      if (ok) {
+        push('/idea');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handlePostIdeas = async (payload) => {
     try {
-      const res = await fetch(`${BASE_URL}/ideas`, {
-        method: 'POST',
+      const { ok, result } = await MarkodingFetch('/ideas', {
         headers: {
-          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
+        method: 'POST',
         body: JSON.stringify(payload),
       });
-      res.json().then((data) => {
-        if (data.error) {
-          console.error({ error: data.message });
-        } else {
-          push('/idea');
-        }
-      });
+      // TODO handle error
+      if (ok) {
+        console.log('handlePostIdeas', { result });
+        handleCreateTeam(result.id);
+      }
     } catch (e) {
       console.error(e);
     }
@@ -45,7 +61,7 @@ const SecondFormIdeaSolution = () => {
   };
   const onSubmit = (payload) => {
     const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
-    newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos]; //  upload photos not supported from BE yet
+    newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos];
     newIdeaSolution.isDraft = false;
     newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
     handlePostIdeas(newIdeaSolution);
@@ -53,7 +69,7 @@ const SecondFormIdeaSolution = () => {
 
   const onSubmitAsDraft = (payload) => {
     const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
-    newIdeaSolution.solutionSupportingPhotos = []; //  upload photos not supported from BE yet
+    newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos];
     newIdeaSolution.isDraft = true;
     newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
     handlePostIdeas(newIdeaSolution);
@@ -62,6 +78,12 @@ const SecondFormIdeaSolution = () => {
   const handleBack = () => {
     push('/register-idea');
   };
+
+  useEffect(() => {
+    if (Object.keys(inputs).length < 1) {
+      push('/register-idea');
+    }
+  });
   return (
     <>
       <form>

@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { shape } from 'prop-types';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useGlobalFormContext } from 'components/context/FormContext';
+import { toast } from 'react-toastify';
 
-import SkilvulFetch from 'libraries/SkilvulFetch';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
+import useMyTeachers from 'hooks/useMyTeachers';
+
 import {
   radioBtnWrapper,
   radioBtn,
@@ -20,25 +22,27 @@ import {
   inputSolutionType,
 } from './styles.module.scss';
 
-// import useIdeaSolution from '../hooks/useIdeaSolution';
-
-const FormIdeaSolution = () => {
+const FormIdeaSolution = ({ user }) => {
+  const profile = user?.profile || {};
   const { push } = useRouter();
-  // TODO: handle schools from outside jakarta too
-  const qs = `schoolGradeId=ckfgf80wx4nqg0766kchm3ukx&provinceId=ckdrhj6cpd6ne07687g59ulc2`;
-  const { data: schoolsList } = useSWR(`/api/schools?${qs}`, SkilvulFetch);
-  const schools = schoolsList?.schools || [];
-
-  const { register, handleSubmit, errors } = useFormContext();
+  const { data: teachersResult } = useMyTeachers({
+    url: '/users/my/teachers',
+  });
+  const teachers = teachersResult;
+  const { register, handleSubmit, errors, setValue } = useForm({
+    defaultValues: {
+      schoolName: profile.schoolName,
+      schoolId: profile.schoolId,
+    },
+  });
 
   const {
     inputs: { ideaSolution = {} },
+    inputs,
     setInputs,
   } = useGlobalFormContext();
 
   const [solutionType, setSolutionType] = useState(ideaSolution.solutionType);
-  const [schoolId, setSchoolId] = useState(ideaSolution.schoolId);
-  const [schoolName, setSchoolName] = useState(ideaSolution.schoolName);
 
   const SOLUTION_TYPES = [
     { id: 0, text: 'Aplikasi Mobile', value: 'mobile' },
@@ -47,39 +51,50 @@ const FormIdeaSolution = () => {
   ];
 
   const handleOnClick = () => {
-    push('/register-idea/2');
+    if (inputs?.teamIds?.length) {
+      push('/register-idea/2');
+    } else {
+      return toast.error(
+        <p className="m-0 pl-3">Harap menambah anggota team</p>,
+        {
+          autoClose: 3000,
+        }
+      );
+    }
   };
+
   const onSubmit = (data) => {
     data.solutionType = solutionType;
-    data.schoolId = schoolId;
-    data.schoolName = schoolName;
-    setInputs({ ideaSolution: { ...data } });
+    data.schoolId = profile.schoolId;
+    data.schoolName = profile.schoolName;
+    setInputs({ ...inputs, ideaSolution: { ...data } });
     handleOnClick();
   };
 
-  const handleSelectSchoolId = (payload) => {
-    setSchoolId(payload.id);
-    setSchoolName(payload.name);
+  const handleSelectTeacher = (teacher) => {
+    setValue('teacherId', teacher.id);
   };
+
+  useEffect(() => {
+    if (Object.keys(user).length < 1) {
+      push('/');
+    }
+  }, [push, user]);
+
+  useEffect(() => {
+    register('teacherId', { required: true }); // custom register Antd input
+  }, [register]);
 
   return (
     <>
       <form>
-        <Panel title="Nama Sekolah">
-          <DropdownComponent
-            placeholder="Nama sekolah kamu"
-            onSelected={handleSelectSchoolId}
-            dropdownItem={schools}
-            defaultVal={ideaSolution.schoolName}
-            withSearch
-          />
-        </Panel>
         <Panel title="Nama Guru Pembimbing">
           <DropdownComponent
             placeholder="Nama guru kamu"
-            onSelected={() => {}}
-            dropdownItem={[]}
+            onSelected={handleSelectTeacher}
+            dropdownItem={teachers}
             withSearch
+            name="teacherId"
           />
         </Panel>
         <Panel title="Nama Solusi Digital">
@@ -182,4 +197,7 @@ const FormIdeaSolution = () => {
   );
 };
 
+FormIdeaSolution.propTypes = {
+  user: shape({}).isRequired,
+};
 export default FormIdeaSolution;
