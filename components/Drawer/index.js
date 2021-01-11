@@ -1,7 +1,7 @@
 import React from 'react';
 import { func, node } from 'prop-types';
 import { BsX } from 'react-icons/bs';
-import DicLogo from 'components/DicLogo';
+import DicLogo from 'components/DICLogo';
 import { drawerWrapper, card, closeBtn } from './styles.module.scss';
 
 const Drawer = ({ onClose, children }) => {
