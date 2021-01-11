@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { BsList } from 'react-icons/bs';
 import Icon from 'components/Icons';
 import MarkodingLogo from 'components/MarkodingLogo';
-import DicLogo from 'components/DicLogo';
+import DicLogo from 'components/DICLogo';
 import Drawer from 'components/Drawer';
 import skilvulLogo from 'svgs/skilvulLogo.svg';
 import NavMenu from 'components/NavMenu';
