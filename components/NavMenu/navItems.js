@@ -63,19 +63,19 @@ const navItems = [
       {
         id: 0,
         text: 'Siswa',
-        link: '/directory/student',
+        link: '/directory/students',
         withBadge: false,
       },
       {
         id: 1,
         text: 'Guru',
-        link: '/directory/teacher',
+        link: '/directory/teachers',
         withBadge: false,
       },
       {
         id: 2,
         text: 'Kakak Mentor',
-        link: '/directory/mentor',
+        link: '/directory/mentors',
         withBadge: false,
       },
     ],
