@@ -21,6 +21,7 @@ import {
 } from './styles.module.scss';
 
 const MyIdeaAndSolutionContainer = ({ courses }) => {
+  const myIdeaId = '7e389630-7321-468c-956f-3dd478f3a3d6';
   return (
     <>
       <div>
@@ -56,7 +57,7 @@ const MyIdeaAndSolutionContainer = ({ courses }) => {
         </div>
       </Panel>
       <Panel title="Ide Solusi Saya">
-        <SnippetIdea />
+        <SnippetIdea ideaId={myIdeaId} />
       </Panel>
       <Panel title="Kelas Online">
         <div className="d-flex">

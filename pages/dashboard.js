@@ -1,6 +1,6 @@
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import MyIdeaAndSolutionContainer from 'components/MyIdeaAndSolutionContainer';
+import DashboardContainer from 'containers/Dashboard';
 
 export default function Dashboard() {
   return (
@@ -10,7 +10,7 @@ export default function Dashboard() {
           <PointBadgeWrapper />
         </div>
         <div className="inner-section pb-5">
-          <MyIdeaAndSolutionContainer />
+          <DashboardContainer />
         </div>
       </div>
     </Layout>

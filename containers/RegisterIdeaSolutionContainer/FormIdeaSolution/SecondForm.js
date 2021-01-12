@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
 import { Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import MarkodingFetch from 'libraries/MarkodingFetch';
 import Panel from 'components/Panel';
@@ -12,10 +13,25 @@ import UploadComponent from '../Upload';
 import { textArea } from './styles.module.scss';
 
 const SecondFormIdeaSolution = () => {
-  const { push } = useRouter();
-  const { inputs } = useGlobalFormContext();
+  const { push, pathname, query } = useRouter();
+  const { inputs, idea } = useGlobalFormContext();
   const { register, handleSubmit, errors } = useForm();
-  const [solutionSupportingPhotos, setSolutionSupportingPhotos] = useState('');
+  const isEditIdea = pathname.includes('/idea/edit');
+  const ideaPhoto = idea.solutionSupportingPhotos?.[0] || '';
+  const [solutionSupportingPhotos, setSolutionSupportingPhotos] = useState(
+    ideaPhoto
+  );
+
+  const renderToast = (msg, error = false) => {
+    if (error) {
+      return toast.error(<p className="m-0 pl-3">{msg}</p>, {
+        autoClose: 3000,
+      });
+    }
+    return toast.success(<p className="m-0 pl-3">{msg}</p>, {
+      autoClose: 3000,
+    });
+  };
 
   const handleCreateTeam = async (ideaId) => {
     try {
@@ -30,20 +46,46 @@ const SecondFormIdeaSolution = () => {
       });
       // TODO handle error
       if (ok) {
+        renderToast('Berhasil mendaftarkan ide mu');
         push('/idea');
+      } else {
+        renderToast('Gagal mendaftarkan ide mu');
       }
     } catch (e) {
       console.error(e);
+      renderToast('Gagal mendaftarkan ide mu');
     }
   };
 
   const handlePostIdeas = async (payload) => {
     try {
-      const { ok, result } = await MarkodingFetch('/ideas', {
+      const { ok } = await MarkodingFetch('/ideas', {
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      if (ok) {
+        renderToast('Berhasil menyimpan ide');
+        // handleCreateTeam(result.id);
+      } else {
+        renderToast('Gagal menyimpan ide mu', true);
+      }
+    } catch (e) {
+      console.error(e);
+      renderToast('Gagal menyimpan ide mu', true);
+    }
+  };
+
+  const handleEditIdea = async (payload) => {
+    const ideaId = query.slug;
+    try {
+      const { ok, result } = await MarkodingFetch(`/ideas/${ideaId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'PUT',
         body: JSON.stringify(payload),
       });
       // TODO handle error
@@ -63,7 +105,9 @@ const SecondFormIdeaSolution = () => {
     const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
     newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos];
     newIdeaSolution.isDraft = false;
-    newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
+    if (isEditIdea) {
+      return handleEditIdea(newIdeaSolution);
+    }
     handlePostIdeas(newIdeaSolution);
   };
 
@@ -71,7 +115,9 @@ const SecondFormIdeaSolution = () => {
     const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
     newIdeaSolution.solutionSupportingPhotos = [solutionSupportingPhotos];
     newIdeaSolution.isDraft = true;
-    newIdeaSolution.teacherId = '4b3daeba-3aeb-11eb-adc1-0242ac120002';
+    if (isEditIdea) {
+      return handleEditIdea(newIdeaSolution);
+    }
     handlePostIdeas(newIdeaSolution);
   };
 
@@ -80,17 +126,17 @@ const SecondFormIdeaSolution = () => {
   };
 
   useEffect(() => {
-    if (Object.keys(inputs).length < 1) {
+    if (!inputs.ideaSolution) {
       push('/register-idea');
     }
-  });
+  }, [inputs.ideaSolution, push]);
   return (
     <>
       <form>
         <Panel title="Solusi Singkat">
           <TextField
             placeholder="Jelaskan solusi dalam 1 kalimat"
-            defaultVal={inputs.solutionVision}
+            defaultVal={idea.solutionVision}
             name="solutionVision"
             ref={register({ required: true })}
             error={!!errors.solutionVision}
@@ -100,7 +146,7 @@ const SecondFormIdeaSolution = () => {
         <Panel title="Ide Solusi">
           <TextField
             placeholder="Ceritakan tentang ide solusimu dan bagaimana cara bekerjanya"
-            defaultVal={inputs.solutionMission}
+            defaultVal={idea.solutionMission}
             as="textarea"
             className={textArea}
             name="solutionMission"
@@ -112,7 +158,7 @@ const SecondFormIdeaSolution = () => {
         <Panel title="Target Outcomes">
           <TextField
             placeholder="Apa yang ingin kamu capai dengan ide solusimu?"
-            defaultVal={inputs.targetOutcomes}
+            defaultVal={idea.targetOutcomes}
             name="targetOutcomes"
             ref={register({ required: true })}
             error={!!errors.targetOutcomes}
@@ -122,7 +168,7 @@ const SecondFormIdeaSolution = () => {
         <Panel title="Kelebihan Ide Solusi">
           <TextField
             placeholder="Apa kelebihan ide solusimu dibangding solusi yang sudah ada?"
-            defaultVal={inputs.solutionBenefit}
+            defaultVal={idea.solutionBenefit}
             name="solutionBenefit"
             ref={register({ required: true })}
             as="textarea"
@@ -134,7 +180,7 @@ const SecondFormIdeaSolution = () => {
         <Panel title="Kendala">
           <TextField
             placeholder="Apa saja kendala yang akan kamu hadapi dalam menjalankan ide solusi ini dan jelaskan rencanamu untuk mengatasinya?"
-            defaultVal={inputs.solutionObstacle}
+            defaultVal={idea.solutionObstacle}
             name="solutionObstacle"
             ref={register({ required: true })}
             error={!!errors.solutionObstacle}
@@ -144,18 +190,21 @@ const SecondFormIdeaSolution = () => {
         <Panel title="Link Video">
           <TextField
             placeholder="Sertakan link video pitch tentang ide solusimu"
-            defaultVal={inputs.solutionPitchUrl}
+            defaultVal={idea.solutionPitchUrl}
             name="solutionPitchUrl"
             ref={register({ required: false })}
           />
         </Panel>
         <Panel title="Gambar/Foto Pendukung Ide Solusi">
-          <UploadComponent onUploadImg={handleUploadImage} />
+          <UploadComponent
+            onUploadImg={handleUploadImage}
+            defaultVal={solutionSupportingPhotos}
+          />
         </Panel>
         <Panel title="Kolaborasi Customer">
           <TextField
             placeholder="Siapa saja yang ingin kamu ajak kolaborasi dan jelaskan alasannya untuk mewujudkan ide solusimu?"
-            defaultVal={inputs.potentialCollaboration}
+            defaultVal={idea.potentialCollaboration}
             name="potentialCollaboration"
             ref={register({ required: false })}
             as="textarea"
@@ -174,7 +223,7 @@ const SecondFormIdeaSolution = () => {
             Simpan Sebagai Draft
           </Button>
           <Button variant="primary" onClick={handleSubmit(onSubmit)}>
-            Kirim Ide Solusi
+            {isEditIdea ? 'Simpan' : 'Kirim Ide Solusi'}
           </Button>
         </div>
       </form>

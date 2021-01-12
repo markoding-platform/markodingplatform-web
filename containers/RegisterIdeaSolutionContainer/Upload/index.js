@@ -20,9 +20,9 @@ import {
 const BASE_URL = process.env.MARKODING_API_URL;
 const types = ['image/png', 'image/jpeg'];
 
-const UploadComponent = ({ onUploadImg }) => {
+const UploadComponent = ({ onUploadImg, defaultVal }) => {
   const inputFileRef = useRef();
-  const [imageSrc, setImagesSrc] = useState();
+  const [imageSrc, setImagesSrc] = useState(defaultVal);
 
   const handleClickUploader = () => {
     inputFileRef.current?.click();

@@ -12,7 +12,7 @@ import MarkodingFetch from 'libraries/MarkodingFetch';
 import Avatar from 'public/assets/avatar-min.png';
 import BoxLoader from 'components/Shimmer/Box';
 import YoutubeIframe from 'components/YoutubeIframe';
-import useIdeaSolution from '../hooks/useIdeaSolution';
+import useIdeaSolution from 'hooks/useIdeaSolution';
 import { ideaImage } from '../style.module.scss';
 import {
   ideaSection,

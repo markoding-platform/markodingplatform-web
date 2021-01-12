@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { shape } from 'prop-types';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
@@ -24,7 +24,8 @@ import {
 
 const FormIdeaSolution = ({ user }) => {
   const profile = user?.profile || {};
-  const { push } = useRouter();
+  const { push, query, pathname } = useRouter();
+  const isEditIdea = pathname === '/idea/edit/[slug]';
   const { data: teachersResult } = useMyTeachers({
     url: '/users/my/teachers',
   });
@@ -36,31 +37,27 @@ const FormIdeaSolution = ({ user }) => {
     },
   });
 
-  const {
-    inputs: { ideaSolution = {} },
-    inputs,
-    setInputs,
-  } = useGlobalFormContext();
+  const { inputs, idea, setInputs } = useGlobalFormContext();
+  console.log({ idea });
 
-  const [solutionType, setSolutionType] = useState(ideaSolution.solutionType);
-
+  const [solutionType, setSolutionType] = useState(idea.solutionType?.trim());
+  console.log({ solutionType }, idea.solutionType);
   const SOLUTION_TYPES = [
     { id: 0, text: 'Aplikasi Mobile', value: 'mobile' },
     { id: 1, text: 'Aplikasi Web', value: 'web' },
     { id: 2, text: 'Aplikasi Game', value: 'game' },
   ];
 
-  const handleOnClick = () => {
+  const handleValidateTeams = () => {
     if (inputs?.teamIds?.length) {
-      push('/register-idea/2');
-    } else {
-      return toast.error(
-        <p className="m-0 pl-3">Harap menambah anggota team</p>,
-        {
-          autoClose: 3000,
-        }
-      );
+      return true;
     }
+    return toast.error(
+      <p className="m-0 pl-3">Harap menambah anggota team</p>,
+      {
+        autoClose: 3000,
+      }
+    );
   };
 
   const onSubmit = (data) => {
@@ -68,7 +65,11 @@ const FormIdeaSolution = ({ user }) => {
     data.schoolId = profile.schoolId;
     data.schoolName = profile.schoolName;
     setInputs({ ...inputs, ideaSolution: { ...data } });
-    handleOnClick();
+    if (handleValidateTeams() && !isEditIdea) {
+      push('/register-idea/2');
+    } else {
+      push(`/idea/edit/${query.slug}/2`);
+    }
   };
 
   const handleSelectTeacher = (teacher) => {
@@ -100,7 +101,7 @@ const FormIdeaSolution = ({ user }) => {
         <Panel title="Nama Solusi Digital">
           <TextField
             placeholder="Tulis nama solusi digital kamu"
-            defaultVal={ideaSolution.solutionName}
+            defaultVal={idea.solutionName}
             name="solutionName"
             ref={register({ required: true })}
             error={!!errors.solutionName}
@@ -146,7 +147,7 @@ const FormIdeaSolution = ({ user }) => {
         <Panel title="Bidang Masalah">
           <TextField
             placeholder="Tulis bidang masalah yang ingin kamu selesaikan"
-            defaultVal={ideaSolution.problemArea}
+            defaultVal={idea.problemArea}
             name="problemArea"
             ref={register({ required: true })}
             error={!!errors.problemArea}
@@ -156,7 +157,7 @@ const FormIdeaSolution = ({ user }) => {
         <Panel title="Pemilihan Masalah">
           <TextField
             placeholder="Apa masalah yang ingin kamu selesaikan"
-            defaultVal={ideaSolution.problemSelection}
+            defaultVal={idea.problemSelection}
             as="textarea"
             className={textArea}
             name="problemSelection"
@@ -168,7 +169,7 @@ const FormIdeaSolution = ({ user }) => {
         <Panel title="Alasan Masalah">
           <TextField
             placeholder="Mengapa kamu ingin menyelesaikan masalah ini"
-            defaultVal={ideaSolution.problemReasoning}
+            defaultVal={idea.problemReasoning}
             name="problemReasoning"
             ref={register({ required: true })}
             as="textarea"
@@ -180,7 +181,7 @@ const FormIdeaSolution = ({ user }) => {
         <Panel title="Target Customer">
           <TextField
             placeholder="Siapa yang ingin kamu bantu"
-            defaultVal={ideaSolution.targetCustomer}
+            defaultVal={idea.targetCustomer}
             name="targetCustomer"
             ref={register({ required: true })}
             error={!!errors.targetCustomer}
@@ -200,4 +201,4 @@ const FormIdeaSolution = ({ user }) => {
 FormIdeaSolution.propTypes = {
   user: shape({}).isRequired,
 };
-export default FormIdeaSolution;
+export default memo(FormIdeaSolution);
