@@ -40,6 +40,13 @@ const CreateTeam = ({ user }) => {
     handleOpenModal();
   };
 
+  const handleRemoveStudents = (id) => {
+    const filterMember = members.filter((m) => m.id !== id);
+    setMembers(filterMember);
+    const newTeamIds = filterMember.map((item) => item.id);
+    setInputs({ teamIds: newTeamIds });
+  };
+
   return (
     <div>
       <div className={teamWrapper}>
@@ -56,6 +63,8 @@ const CreateTeam = ({ user }) => {
             title={status}
             primaryText={name}
             secondaryText={school}
+            withRemoveBtn
+            onClickRemove={() => handleRemoveStudents(id)}
           />
         ))}
         <div>

@@ -5,6 +5,7 @@ import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import EditIdeaSolutionContainer from 'containers/RegisterIdeaSolutionContainer';
 
+import { homeContent } from 'styles/home.module.scss';
 import withAuthSync from 'hoc/withAuthSync';
 import { SSO } from 'utils/auth';
 
@@ -26,7 +27,7 @@ const EditIdea = ({ user }) => {
 
   return (
     <Layout activeMenu="/idea">
-      <div className="main-content">
+      <div className={homeContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>

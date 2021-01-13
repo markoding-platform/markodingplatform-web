@@ -20,6 +20,13 @@
   }
 }
 
+.removeBtn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+
 .content {
   @include flex__center;
   flex-direction: column;
