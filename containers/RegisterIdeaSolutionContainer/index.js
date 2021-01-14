@@ -17,7 +17,8 @@ import {
 
 const RegisterIdeaSolutionContainer = ({ page, user }) => {
   const { pathname } = useRouter();
-  const isEditIdea = pathname === '/idea/edit/[slug]';
+  const isEditIdea = pathname.includes('/idea/edit');
+  console.log({ isEditIdea, pathname });
   const title = `${isEditIdea ? 'Edit' : 'Registrasi'} Ide Solusi`;
   return (
     <>

@@ -1,8 +1,9 @@
-import { useState, useContext, createContext } from 'react';
+import { useState, useContext, useMemo, createContext } from 'react';
 import { node } from 'prop-types';
 import { useRouter } from 'next/router';
 
 import useIdeaSolution from 'hooks/useIdeaSolution';
+import { teamMap } from 'map/teamMap';
 
 const GlobalFormContext = createContext();
 
@@ -10,11 +11,20 @@ export const GlobalFormProvider = ({ children }) => {
   const { query, pathname } = useRouter();
   const isEditIdea = pathname.includes('/idea/edit');
   const { data, error } = useIdeaSolution({
-    url: `/ideas/${query.slug}`,
+    url: `/ideas/${query.slug}/users`,
     isSkip: !isEditIdea,
   });
+  const result = data?.result;
   const isLoading = !data && !error;
-  const idea = !isLoading ? data?.result : {};
+  const idea = (!isLoading && result[0]?.idea) || {};
+  const teams = teamMap(result || []);
+
+  const teacher = useMemo(() => {
+    if (teams.length) {
+      return teams.filter((member) => member.profileType === 'teacher');
+    }
+    return [];
+  }, [teams]);
 
   const [inputs, setInputs] = useState({});
 
@@ -23,7 +33,9 @@ export const GlobalFormProvider = ({ children }) => {
   }
 
   return (
-    <GlobalFormContext.Provider value={{ inputs, setInputs, idea }}>
+    <GlobalFormContext.Provider
+      value={{ inputs, setInputs, idea, teacher: teacher?.[0] || {} }}
+    >
       {children}
     </GlobalFormContext.Provider>
   );

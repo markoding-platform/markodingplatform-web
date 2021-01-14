@@ -17,7 +17,6 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
   const { push, query, back } = useRouter();
   const { inputs, idea } = useGlobalFormContext();
   const [ideaState] = useState(idea || inputs?.ideaSolution);
-  console.log(ideaState);
 
   const { register, handleSubmit, errors } = useForm();
   const ideaPhoto = ideaState.solutionSupportingPhotos?.[0] || '';
@@ -38,25 +37,27 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
 
   const handleCreateTeam = async (ideaId) => {
     try {
-      const { ok } = await MarkodingFetch(`/ideas/${ideaId}/team`, {
+      const { ok } = await MarkodingFetch(`/ideas/${ideaId}/users`, {
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'POST',
         body: JSON.stringify({
-          userIds: inputs.teamIds,
+          userIds: [ideaState.teacherId, ...inputs.teamIds],
         }),
       });
-      // TODO handle error
       if (ok) {
-        renderToast('Berhasil mendaftarkan ide mu');
+        const msg = isEditIdea
+          ? 'Berhasil menyimpan ide'
+          : 'Berhasil mendaftarkan ide mu';
+        renderToast(msg);
         push('/idea');
       } else {
         renderToast('Gagal mendaftarkan ide mu');
       }
     } catch (e) {
       console.error(e);
-      renderToast('Gagal mendaftarkan ide mu');
+      renderToast('Gagal mendaftarkan ide mu', true);
     }
   };
 
@@ -70,7 +71,6 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         body: JSON.stringify(payload),
       });
       if (ok) {
-        renderToast('Berhasil menyimpan ide');
         handleCreateTeam(result.id);
       } else {
         renderToast('Gagal menyimpan ide mu', true);
@@ -84,18 +84,17 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
   const handleEditIdea = async (payload) => {
     const ideaId = query.slug;
     try {
-      const { ok, result } = await MarkodingFetch(`/ideas/${ideaId}`, {
+      const { ok } = await MarkodingFetch(`/ideas/${ideaId}`, {
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'PUT',
         body: JSON.stringify(payload),
       });
-      // TODO handle error
       if (ok) {
-        console.log('handlePostIdeas', { result });
-        renderToast('Berhasil menyimpan ide');
-        // handleCreateTeam(result.id);
+        // edit team still not support from BE
+        renderToast('Berhasil menyimpan ide mu');
+        push('/idea');
       } else {
         renderToast('Gagal menyimpan ide mu', true);
       }

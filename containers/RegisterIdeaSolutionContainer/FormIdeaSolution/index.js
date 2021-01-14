@@ -29,15 +29,16 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     url: '/users/my/teachers',
   });
   const teachers = teachersResult;
+
+  const { inputs, idea, setInputs, teacher } = useGlobalFormContext();
+  const [ideaState] = useState(inputs?.ideaSolution || idea);
   const { register, handleSubmit, errors, setValue } = useForm({
     defaultValues: {
       schoolName: profile.schoolName,
       schoolId: profile.schoolId,
+      teacherId: teacher.userId,
     },
   });
-
-  const { inputs, idea, setInputs } = useGlobalFormContext();
-  const [ideaState] = useState(inputs?.ideaSolution || idea);
 
   const [solutionType, setSolutionType] = useState(
     ideaState.solutionType?.trim()
@@ -57,9 +58,6 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   };
 
   const onSubmit = (data) => {
-    data.solutionType = solutionType;
-    data.schoolId = profile.schoolId;
-    data.schoolName = profile.schoolName;
     setInputs({ ...inputs, ideaSolution: { ...data } });
     if (!handleValidateTeams()) {
       return toast.error(
@@ -76,8 +74,8 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     }
   };
 
-  const handleSelectTeacher = (teacher) => {
-    setValue('teacherId', teacher.id);
+  const handleSelectTeacher = (payload) => {
+    setValue('teacherId', payload.id);
   };
 
   useEffect(() => {
@@ -87,8 +85,8 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   }, [push, user]);
 
   useEffect(() => {
-    register('teacherId', { required: true }); // custom register Antd input
-  }, [register]);
+    register('teacherId', { required: true });
+  }, [register, teacher.id]);
 
   return (
     <>
@@ -99,6 +97,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
             onSelected={handleSelectTeacher}
             dropdownItem={teachers}
             withSearch
+            defaultVal={teacher.name}
             name="teacherId"
           />
         </Panel>

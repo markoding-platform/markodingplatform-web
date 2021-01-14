@@ -43,3 +43,13 @@
   height: 384px;
   position: relative;
 }
+
+.teamsWrapper {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  > * {
+    margin: 5px 8px;
+    width: 146px;
+  }
+}
