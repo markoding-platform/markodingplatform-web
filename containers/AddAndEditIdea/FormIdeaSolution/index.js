@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useForm } from 'react-hook-form';
-import { useGlobalFormContext } from 'components/context/FormContext';
+import { useIdeaFormContext } from 'components/context/IdeaContext';
 import { toast } from 'react-toastify';
 
 import Panel from 'components/Panel';
@@ -24,14 +24,16 @@ import {
 
 const FormIdeaSolution = ({ user, isEditIdea }) => {
   const profile = user?.profile || {};
+
   const { push, query } = useRouter();
   const { data: teachersResult } = useMyTeachers({
     url: '/users/my/teachers',
   });
   const teachers = teachersResult;
 
-  const { inputs, idea, setInputs, teacher } = useGlobalFormContext();
-  const [ideaState] = useState(inputs?.ideaSolution || idea);
+  const { inputs, idea, setInputs, teacher } = useIdeaFormContext();
+  const [ideaState] = useState(idea || inputs?.ideaSolution);
+
   const { register, handleSubmit, errors, setValue } = useForm({
     defaultValues: {
       schoolName: profile.schoolName,
@@ -45,9 +47,9 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   );
 
   const SOLUTION_TYPES = [
-    { id: 0, text: 'Aplikasi Mobile', value: 'mobile' },
-    { id: 1, text: 'Aplikasi Web', value: 'web' },
-    { id: 2, text: 'Aplikasi Game', value: 'game' },
+    { id: 0, text: 'Aplikasi Mobile', value: 'Mobile' },
+    { id: 1, text: 'Aplikasi Web', value: 'Web' },
+    { id: 2, text: 'Aplikasi Game', value: 'Game' },
   ];
 
   const handleValidateTeams = () => {
@@ -86,6 +88,8 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
 
   useEffect(() => {
     register('teacherId', { required: true });
+    register('schoolId', { required: true });
+    register('schoolName', { required: true });
   }, [register, teacher.id]);
 
   return (

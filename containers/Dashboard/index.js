@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 import Panel from 'components/Panel';
 import Badges from 'components/Badges';
-import SnippetIdea from 'containers/IdeaAndSolutionContainer/SnippetIdea';
+// import SnippetIdea from 'containers/IdeaAndSolutionContainer/SnippetIdea';
 import CourseCard from 'components/CourseCard';
 import Avatar from 'public/assets/avatar-min.png';
 import MyStats from './MyStats';
@@ -21,7 +21,6 @@ import {
 } from './styles.module.scss';
 
 const MyIdeaAndSolutionContainer = ({ courses }) => {
-  const myIdeaId = '7e389630-7321-468c-956f-3dd478f3a3d6';
   return (
     <>
       <div>
@@ -56,9 +55,9 @@ const MyIdeaAndSolutionContainer = ({ courses }) => {
           <Badges name="React JS" />
         </div>
       </Panel>
-      <Panel title="Ide Solusi Saya">
-        <SnippetIdea ideaId={myIdeaId} />
-      </Panel>
+      {/* <Panel title="Ide Solusi Saya">
+        <SnippetIdea />
+      </Panel> */}
       <Panel title="Kelas Online">
         <div className="d-flex">
           {courses.map((course) => (

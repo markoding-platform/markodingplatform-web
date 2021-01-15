@@ -8,7 +8,7 @@ import { IoMdChatbubbles } from 'react-icons/io';
 import useIdeaSolution from 'hooks/useIdeaSolution';
 import { ideaImage } from './style.module.scss';
 
-const DetailIdea = ({ likeCount, commentCount, ideaId }) => {
+const SnippetIdea = ({ likeCount, commentCount, ideaId }) => {
   const { push } = useRouter();
   const { data } = useIdeaSolution({ url: `/ideas/${ideaId}` });
   const idea = data?.result || {};
@@ -77,14 +77,14 @@ const DetailIdea = ({ likeCount, commentCount, ideaId }) => {
   );
 };
 
-DetailIdea.defaultProps = {
+SnippetIdea.defaultProps = {
   commentCount: 12,
   likeCount: 3,
 };
 
-DetailIdea.propTypes = {
+SnippetIdea.propTypes = {
   commentCount: number,
   likeCount: number,
 };
 
-export default DetailIdea;
+export default SnippetIdea;

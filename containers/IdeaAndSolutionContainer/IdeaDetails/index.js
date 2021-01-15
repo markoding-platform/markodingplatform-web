@@ -31,6 +31,7 @@ import {
 const IdeaDetails = ({ likeCount, commentCount }) => {
   const { query } = useRouter();
   const ideaId = query.id;
+
   const { data } = useIdeaSolution({ url: `/ideas/${ideaId}` });
   const { data: teamsResult } = useIdeaSolution({
     url: `/ideas/${ideaId}/users`,

@@ -3,7 +3,7 @@ import { shape, string } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { BsPlus } from 'react-icons/bs';
 
-import { useGlobalFormContext } from 'components/context/FormContext';
+import { useIdeaFormContext } from 'components/context/IdeaContext';
 import ProfileCard from 'components/ProfileCard';
 import ModalComponent from 'components/Modal';
 import SearchMember from './SearchMember';
@@ -20,9 +20,10 @@ const CreateTeam = ({ user }) => {
   const [isShowModal, setIsShowModal] = useState(false);
   const {
     inputs: { teamIds = [] },
+    teamMember,
     setInputs,
-  } = useGlobalFormContext();
-  const [members, setMembers] = useState([]);
+  } = useIdeaFormContext();
+  const [members, setMembers] = useState(teamMember);
 
   const handleOpenModal = () => {
     setIsShowModal((prevState) => !prevState);
@@ -31,19 +32,19 @@ const CreateTeam = ({ user }) => {
   const handleSelectStudent = (student) => {
     setInputs({ teamIds: [...teamIds, student?.id] });
     const newMember = {
-      id: student.id,
+      userId: student.id,
       name: student.name,
-      school: student.profile.schoolName,
-      status: 'Anggota',
+      isLeader: false,
+      schoolName: student.profile.schoolName,
     };
     setMembers([...members, ...[newMember]]);
     handleOpenModal();
   };
 
   const handleRemoveStudents = (id) => {
-    const filterMember = members.filter((m) => m.id !== id);
+    const filterMember = members.filter((m) => m.userId !== id);
     setMembers(filterMember);
-    const newTeamIds = filterMember.map((item) => item.id);
+    const newTeamIds = filterMember.map((item) => item.userId);
     setInputs({ teamIds: newTeamIds });
   };
 
@@ -57,16 +58,21 @@ const CreateTeam = ({ user }) => {
             secondaryText={userSchoolName}
           />
         </div>
-        {members.map(({ name, school, status, id }) => (
-          <ProfileCard
-            key={id}
-            title={status}
-            primaryText={name}
-            secondaryText={school}
-            withRemoveBtn
-            onClickRemove={() => handleRemoveStudents(id)}
-          />
-        ))}
+        {members.map(({ name, schoolName, isLeader, userId }) => {
+          if (!isLeader) {
+            return (
+              <ProfileCard
+                key={userId}
+                title="Anggota"
+                primaryText={name}
+                secondaryText={schoolName}
+                withRemoveBtn
+                onClickRemove={() => handleRemoveStudents(userId)}
+              />
+            );
+          }
+          return null;
+        })}
         <div>
           <div className="my-4">
             <Card className={`${addTeamMateWrapper} border-0 py-4`}>

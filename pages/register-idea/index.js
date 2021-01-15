@@ -3,7 +3,7 @@ import { shape } from 'prop-types';
 
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import RegisterIdeaSolutionContainer from 'containers/RegisterIdeaSolutionContainer';
+import RegisterIdeaSolutionContainer from 'containers/AddAndEditIdea';
 import { homeContent } from 'styles/home.module.scss';
 import { SSO } from 'utils/auth';
 

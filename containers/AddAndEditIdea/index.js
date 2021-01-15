@@ -3,7 +3,7 @@ import { number } from 'prop-types';
 import { useRouter } from 'next/router';
 
 import Panel from 'components/Panel';
-import CreateTeam from 'containers/RegisterIdeaSolutionContainer/CreateTeam';
+import CreateTeam from 'containers/AddAndEditIdea/CreateTeam';
 
 import FormIdeaSolution from './FormIdeaSolution';
 import SecondFormIdeaSolution from './FormIdeaSolution/SecondForm';

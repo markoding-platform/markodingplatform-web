@@ -5,7 +5,7 @@ import Head from 'next/head';
 import NextNprogress from 'nextjs-progressbar';
 import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { GlobalFormProvider } from 'components/context/FormContext';
+import { IdeaFormProvider } from 'components/context/IdeaContext';
 import SkilvulToken from 'libraries/SkilvulToken';
 import FirebaseCloudMessaging from 'libraries/FirebaseCloudMessaging';
 
@@ -66,9 +66,9 @@ export default class MyApp extends App {
           draggable
           progress="undefined"
         />
-        <GlobalFormProvider>
+        <IdeaFormProvider>
           <Component {...pageProps} />
-        </GlobalFormProvider>
+        </IdeaFormProvider>
       </>
     );
   }

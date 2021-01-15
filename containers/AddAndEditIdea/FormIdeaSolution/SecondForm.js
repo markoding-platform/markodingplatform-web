@@ -9,14 +9,20 @@ import { toast } from 'react-toastify';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
-import { useGlobalFormContext } from 'components/context/FormContext';
+import { useIdeaFormContext } from 'components/context/IdeaContext';
 import UploadComponent from '../Upload';
 import { textArea } from './styles.module.scss';
 
 const SecondFormIdeaSolution = ({ isEditIdea }) => {
   const { push, query, back } = useRouter();
-  const { inputs, idea } = useGlobalFormContext();
-  const [ideaState] = useState(idea || inputs?.ideaSolution);
+  const {
+    inputs,
+    inputs: { ideaSolution, teamIds },
+    idea,
+  } = useIdeaFormContext();
+  const teacherId = ideaSolution?.teacherId;
+
+  const [ideaState] = useState(idea || ideaSolution);
 
   const { register, handleSubmit, errors } = useForm();
   const ideaPhoto = ideaState.solutionSupportingPhotos?.[0] || '';
@@ -43,7 +49,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         },
         method: 'POST',
         body: JSON.stringify({
-          userIds: [ideaState.teacherId, ...inputs.teamIds],
+          userIds: [teacherId, ...teamIds],
         }),
       });
       if (ok) {
@@ -53,7 +59,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         renderToast(msg);
         push('/idea');
       } else {
-        renderToast('Gagal mendaftarkan ide mu');
+        renderToast('Gagal mendaftarkan ide mu', true);
       }
     } catch (e) {
       console.error(e);
@@ -129,10 +135,10 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
   const handleBack = useCallback(() => back(), [back]);
 
   useEffect(() => {
-    if (!inputs.ideaSolution) {
+    if (!Object.keys(ideaSolution).length) {
       handleBack();
     }
-  }, [handleBack, inputs.ideaSolution, push]);
+  }, [handleBack, ideaSolution, push]);
   return (
     <>
       <form>
