@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import Image from 'next/image';
-import Avatar from 'public/assets/avatar-min.png';
+import Avatar from 'svgs/avatar.svg';
 import {
   topTitle,
   content,

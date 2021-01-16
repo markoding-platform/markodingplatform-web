@@ -10,7 +10,7 @@ import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
 import MarkodingFetch from 'libraries/MarkodingFetch';
-import Avatar from 'public/assets/avatar-min.png';
+import Avatar from 'svgs/avatar.svg';
 import BoxLoader from 'components/Shimmer/Box';
 import ProfileCard from 'components/ProfileCard';
 import YoutubeIframe from 'components/YoutubeIframe';
