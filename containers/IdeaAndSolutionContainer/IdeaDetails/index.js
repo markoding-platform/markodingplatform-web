@@ -44,7 +44,7 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
 
   const teamMember = useMemo(() => {
     if (teams.length) {
-      return teams.filter((member) => member.profileType !== 'teacher');
+      return teams.filter((member) => member.profileType === 'student');
     }
     return [];
   }, [teams]);
