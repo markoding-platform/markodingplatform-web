@@ -73,7 +73,7 @@ const CreateTeam = ({ user }) => {
           }
           return null;
         })}
-        <div>
+        {members.length < 2 && (
           <div className="my-4">
             <Card className={`${addTeamMateWrapper} border-0 py-4`}>
               <div
@@ -86,7 +86,7 @@ const CreateTeam = ({ user }) => {
               <p className={teamMateText}>Tambah anggota baru</p>
             </Card>
           </div>
-        </div>
+        )}
       </div>
       <ModalComponent
         show={isShowModal}

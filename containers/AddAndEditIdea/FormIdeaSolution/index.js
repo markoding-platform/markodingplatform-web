@@ -117,39 +117,35 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
         </Panel>
         <Panel title="Pilihan Tipe Solusi Digital yang Ingin Kamu Buat">
           <div className={inputSolutionType}>
-            <div className="d-flex justify-content-start">
-              <>
-                {SOLUTION_TYPES.map(({ text, id, value }) => (
-                  <InputGroup
-                    key={id}
-                    className={`${
-                      value === solutionType && isRadioActive
-                    } ${radioBtnWrapper}`}
-                  >
-                    <input
-                      className={radioBtn}
-                      type="radio"
-                      name="solutionType"
-                      value={solutionType}
-                      ref={register({ required: true })}
-                      onChange={() => setSolutionType(value)}
-                      checked={value === solutionType}
-                    />
-                    <InputGroup.Append aria-label="Radio button">
-                      <InputGroup.Text className={radioInputText}>
-                        {text}
-                      </InputGroup.Text>
-                    </InputGroup.Append>
-                  </InputGroup>
-                ))}
-              </>
-            </div>
-            {errors.solutionType && (
-              <Form.Text className="text-muted pt-1">
-                Harap memilih tipe solusi digital
-              </Form.Text>
-            )}
+            {SOLUTION_TYPES.map(({ text, id, value }) => (
+              <InputGroup
+                key={id}
+                className={`${
+                  value === solutionType && isRadioActive
+                } ${radioBtnWrapper}`}
+              >
+                <input
+                  className={radioBtn}
+                  type="radio"
+                  name="solutionType"
+                  value={solutionType}
+                  ref={register({ required: true })}
+                  onChange={() => setSolutionType(value)}
+                  checked={value === solutionType}
+                />
+                <InputGroup.Append aria-label="Radio button">
+                  <InputGroup.Text className={radioInputText}>
+                    {text}
+                  </InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
+            ))}
           </div>
+          {errors.solutionType && (
+            <Form.Text className="text-muted pt-1">
+              Harap memilih tipe solusi digital
+            </Form.Text>
+          )}
         </Panel>
         <Panel title="Bidang Masalah">
           <TextField

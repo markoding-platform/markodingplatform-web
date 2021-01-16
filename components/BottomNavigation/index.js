@@ -7,7 +7,7 @@ import { IoMdChatbubbles } from 'react-icons/io';
 import { AiFillHome } from 'react-icons/ai';
 import { SSO } from 'utils/auth';
 import getCookie from 'utils/getCookie';
-import styles from './styles.module.scss';
+import { styNavItem, styIcon, styTextIcon } from './styles.module.scss';
 
 const BottomNavigation = ({ activeKey }) => {
   const [isLogged, setIsLogged] = useState(false);
@@ -26,50 +26,50 @@ const BottomNavigation = ({ activeKey }) => {
 
   return (
     <Nav className="justify-content-between nav-bottom" activeKey={activeKey}>
-      <Nav.Item>
+      <Nav.Item className={styNavItem}>
         <Link href="/">
-          <Nav.Link href="/">
-            <AiFillHome className={styles.icon} />
-            Beranda
+          <Nav.Link href="/" className="p-0">
+            <AiFillHome className={styIcon} />
+            <div className={styTextIcon}>Beranda</div>
           </Nav.Link>
         </Link>
       </Nav.Item>
-      <Nav.Item>
+      <Nav.Item className={styNavItem}>
         <Link href="/idea">
-          <Nav.Link href="/idea">
-            <FaLightbulb className={styles.icon} />
-            Idea
+          <Nav.Link href="/idea" className="p-0">
+            <FaLightbulb className={styIcon} />
+            <div className={styTextIcon}>Idea</div>
           </Nav.Link>
         </Link>
       </Nav.Item>
-      <Nav.Item>
+      <Nav.Item className={styNavItem}>
         <Link href="/chat">
-          <Nav.Link href="/chat">
-            <IoMdChatbubbles className={styles.icon} />
-            Chat
+          <Nav.Link href="/chat" className="p-0">
+            <IoMdChatbubbles className={styIcon} />
+            <div className={styTextIcon}>Chat</div>
           </Nav.Link>
         </Link>
       </Nav.Item>
-      <Nav.Item>
+      <Nav.Item className={styNavItem}>
         <Link href="/course">
-          <Nav.Link href="/course">
-            <FaBook className={styles.icon} />
-            Kelas
+          <Nav.Link href="/course" className="p-0">
+            <FaBook className={styIcon} />
+            <div className={styTextIcon}>Kelas</div>
           </Nav.Link>
         </Link>
       </Nav.Item>
-      <Nav.Item>
+      <Nav.Item className={styNavItem}>
         {isLogged ? (
           <Link href="/account">
-            <Nav.Link href="/account">
-              <FaUserCircle className={styles.icon} />
-              Akun
+            <Nav.Link href="/account" className="p-0">
+              <FaUserCircle className={styIcon} />
+              <div className={styTextIcon}>Akun</div>
             </Nav.Link>
           </Link>
         ) : (
-          <Nav.Link onClick={authenticate}>
-            <FaUserCircle className={styles.icon} />
-            Akun
+          <Nav.Link onClick={authenticate} className="p-0">
+            <FaUserCircle className={styIcon} />
+            <div className={styTextIcon}>Akun</div>
           </Nav.Link>
         )}
       </Nav.Item>
