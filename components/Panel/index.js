@@ -7,7 +7,7 @@ const Panel = ({ children, title }) => {
     <div className={panelWrapper}>
       <Card className={panelCard}>
         {title && <Card.Header className={`${textTitle}`}>{title}</Card.Header>}
-        <div className="p-4">{children}</div>
+        <div className="py-4 px-3">{children}</div>
       </Card>
     </div>
   );

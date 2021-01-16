@@ -3,6 +3,7 @@ import range from 'utils/range';
 import IdeaCard from 'components/IdeaCard';
 import CardLoader from 'components/Shimmer/Card';
 
+import useIdeaSolution from 'hooks/useIdeaSolution';
 import emptyFolderSvg from 'svgs/empty-folder.svg';
 import FilterIdea from './Filter';
 import SortIdea from './Sort';
@@ -12,7 +13,6 @@ import {
   cardLoader,
   emptyIdeasWrapper,
 } from './style.module.scss';
-import useIdeaSolution from './hooks/useIdeaSolution';
 
 const defaultPic =
   'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';

@@ -3,13 +3,13 @@ import { shape } from 'prop-types';
 
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import RegisterIdeaSolutionContainer from 'containers/AddAndEditIdea';
+import EditIdeaSolutionContainer from 'containers/AddAndEditIdea';
+
 import { homeContent } from 'styles/home.module.scss';
+import withAuthSync from 'hoc/withAuthSync';
 import { SSO } from 'utils/auth';
 
-import withAuthSync from 'hoc/withAuthSync';
-
-const RegisterIdea = ({ user }) => {
+const EditIdea = ({ user }) => {
   const id = user?.id || '';
   const authenticate = useCallback(async () => {
     await SSO();
@@ -32,14 +32,14 @@ const RegisterIdea = ({ user }) => {
           <PointBadgeWrapper />
         </div>
         <div className="inner-section pb-5">
-          <RegisterIdeaSolutionContainer user={user} />
+          <EditIdeaSolutionContainer user={user} />
         </div>
       </div>
     </Layout>
   );
 };
 
-RegisterIdea.propTypes = {
+EditIdea.propTypes = {
   user: shape({
     email: null,
     exId: null,
@@ -48,4 +48,4 @@ RegisterIdea.propTypes = {
   }).isRequired,
 };
 
-export default withAuthSync(RegisterIdea);
+export default withAuthSync(EditIdea);

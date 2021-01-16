@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { string, bool } from 'prop-types';
 
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -29,6 +29,7 @@ const TextField = React.forwardRef(
           name={name}
           placeholder={placeholder}
           value={textValue}
+          defaultValue={defaultVal}
           ref={ref}
           aria-describedby="inputGroup-sizing"
           onChange={handleOnChange}
@@ -60,4 +61,4 @@ TextField.propTypes = {
   placeholder: string,
 };
 
-export default TextField;
+export default memo(TextField);
