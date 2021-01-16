@@ -1,11 +1,8 @@
-import { useMemo } from 'react';
+import { shape } from 'prop-types';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import Button from 'react-bootstrap/Button';
-
-import getCookie from 'utils/getCookie';
-import canUseDOM from 'utils/canUseDOM';
 
 import useIdeaSolution from 'hooks/useIdeaSolution';
 import useCourse from 'hooks/useCourse';
@@ -28,23 +25,13 @@ import {
   btnRegister,
 } from './styles.module.scss';
 
-const MyIdeaAndSolutionContainer = () => {
+const DashboardContainer = ({ user }) => {
   const badges = [];
   const { push } = useRouter();
   const ideaUser = {
     id: 'dfba8c76-d1ab-4b4f-b6e3-8beb0fde1bf3',
     isDraft: false,
   };
-
-  const profile = useMemo(() => {
-    if (canUseDOM) {
-      const username = getCookie('userName') || '';
-      return {
-        username,
-      };
-    }
-    return {};
-  }, []);
 
   const { id } = ideaUser;
 
@@ -79,8 +66,8 @@ const MyIdeaAndSolutionContainer = () => {
                 src={Avatar}
               />
               <div className={`px-3 ${profileSection}`}>
-                <p className={contentTitle}>{profile.username}</p>
-                <p className="m-0">Co-founder Markoding</p>
+                <p className={contentTitle}>{user.name}</p>
+                <p className="m-0">Email</p>
                 <Button className={`bg-info ${btnEditProfile}`}>
                   Edit Profile
                 </Button>
@@ -148,4 +135,12 @@ const MyIdeaAndSolutionContainer = () => {
   );
 };
 
-export default MyIdeaAndSolutionContainer;
+DashboardContainer.propTypes = {
+  user: shape({
+    id: '',
+    name: '',
+    profile: {},
+  }).isRequired,
+};
+
+export default DashboardContainer;
