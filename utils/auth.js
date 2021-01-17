@@ -9,14 +9,15 @@ export const Login = (context, token, data, backUrl = '/') => {
     });
     context.res.end();
   } else {
-    const { user, profile, idea = {} } = data;
+    const { user, profile, idea } = data;
     const expCookie = 86000;
     const userProfile = profile ? JSON.stringify(profile) : null;
+    const userIdea = idea ? JSON.stringify(idea) : null;
     setCookie([
       { label: 'markodingToken', value: token, age: expCookie },
       { label: 'userName', value: user.name, age: expCookie },
       { label: 'userID', value: user.id, age: expCookie },
-      { label: 'userIdea', value: idea, age: expCookie },
+      { label: 'userIdea', value: userIdea, age: expCookie },
       { label: 'userProfile', value: userProfile, age: expCookie },
     ]);
     Router.replace(backUrl);
