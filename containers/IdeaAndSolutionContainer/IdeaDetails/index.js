@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { number } from 'prop-types';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { mutate } from 'swr';
@@ -28,7 +27,7 @@ import {
   teamsWrapper,
 } from './style.module.scss';
 
-const IdeaDetails = ({ likeCount, commentCount }) => {
+const IdeaDetails = () => {
   const { query } = useRouter();
   const ideaId = query.id;
 
@@ -39,6 +38,7 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
   // TODO handle loading state UI
   const idea = data?.result || {};
   const teams = teamMap(teamsResult?.result || []);
+  const { totalLikes, totalComments } = idea;
 
   const imageIdea = idea.solutionSupportingPhotos?.[0] || '';
 
@@ -114,11 +114,11 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       <div className="d-flex align-items-center justify-content-between">
         <div className="mr-4">
           <BsFillHeartFill />
-          <span className="pl-2 text-secondary">{likeCount}</span>
+          <span className="pl-2 text-secondary">{totalLikes}</span>
         </div>
         <div className="mr-4">
           <IoMdChatbubbles />
-          <span className="pl-2 text-secondary">{commentCount}</span>
+          <span className="pl-2 text-secondary">{totalComments}</span>
         </div>
       </div>
       <hr />
@@ -135,27 +135,27 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       <hr />
       <div className={teamInfo}>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Status Tim</p>
+          <p className="text-3rd m-0">Status Tim</p>
           <p className="info__text m-0">{idea.teamStatus}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Nama Sekolah</p>
+          <p className="text-3rd m-0">Nama Sekolah</p>
           <p className="info__text m-0">{idea.schoolName}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Tipe Solusi Digital</p>
+          <p className="text-3rd m-0">Tipe Solusi Digital</p>
           <p className="info__text m-0">{idea.solutionType}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Bidang Masalah</p>
+          <p className="text-3rd m-0">Bidang Masalah</p>
           <p className="info__text m-0">{idea.problemArea}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Masalah yang ingin diselesaikan</p>
+          <p className="text-3rd m-0">Masalah yang ingin diselesaikan</p>
           <p className="info__text m-0">{idea.problemSelection}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Target Customer</p>
+          <p className="text-3rd m-0">Target Customer</p>
           <p className="info__text m-0">{idea.targetCustomer}</p>
         </div>
       </div>
@@ -216,16 +216,6 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       </div>
     </div>
   );
-};
-
-IdeaDetails.defaultProps = {
-  commentCount: 12,
-  likeCount: 3,
-};
-
-IdeaDetails.propTypes = {
-  commentCount: number,
-  likeCount: number,
 };
 
 export default IdeaDetails;

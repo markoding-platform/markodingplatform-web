@@ -26,20 +26,18 @@ import {
 } from './styles.module.scss';
 
 const DashboardContainer = ({ user }) => {
+  const { idea: ideaUser } = user;
   const badges = [];
   const { push } = useRouter();
-  const ideaUser = {
-    id: 'dfba8c76-d1ab-4b4f-b6e3-8beb0fde1bf3',
-    isDraft: false,
-  };
 
   const { id } = ideaUser;
 
-  const { data } = useIdeaSolution({
+  const { data = {} } = useIdeaSolution({
     url: `/ideas/${id}`,
     isSkip: !id,
   });
-  const idea = data?.result || {};
+
+  const idea = data.ok ? data?.result : {};
 
   const imageIdea = idea.solutionSupportingPhotos?.[0] || '';
   const { solutionVision, solutionName } = idea;

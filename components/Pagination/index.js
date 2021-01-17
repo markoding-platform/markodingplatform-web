@@ -5,12 +5,14 @@ import Pagination from 'react-bootstrap/Pagination';
 import range from 'utils/range';
 
 const PaginationComponent = ({
+  defaultPage,
   totalRecords,
   totalPages,
   pageLimit,
   onPageChanged,
 }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(defaultPage);
+
   const pageNumbers = Math.ceil(totalRecords / pageLimit);
 
   const handlePageChange = (page) => {
@@ -63,6 +65,7 @@ const PaginationComponent = ({
 };
 
 PaginationComponent.propTypes = {
+  defaultPage: number.isRequired,
   pageLimit: number.isRequired,
   totalRecords: number.isRequired,
   totalPages: number.isRequired,

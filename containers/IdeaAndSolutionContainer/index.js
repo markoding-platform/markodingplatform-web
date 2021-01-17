@@ -1,10 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import range from 'utils/range';
 
 import IdeaCard from 'components/IdeaCard';
 import CardLoader from 'components/Shimmer/Card';
-import Pagination from 'containers/IdeaAndSolutionContainer/Pagination/index';
+import Pagination from 'components/Pagination';
+import ScrollToTop from 'components/ScrollToTop';
 import useIdeaSolution from 'hooks/useIdeaSolution';
 import emptyFolderSvg from 'svgs/empty-folder.svg';
 import FilterIdea from './Filter';
@@ -22,7 +24,11 @@ const defaultPic =
   'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
 
 const IdeaAndSolutionContainer = () => {
-  const [currentOffset, setCurrentOffset] = useState(0);
+  const router = useRouter();
+  const { query } = router;
+  const currentOffset = Number(query?.start) || 0;
+  const currentPage = Number(query?.page) || 1;
+
   const { data: response, error } = useIdeaSolution({
     url: `/ideas?offset=${currentOffset}&limit=${LIMIT_PER_PAGE}`,
   });
@@ -31,10 +37,13 @@ const IdeaAndSolutionContainer = () => {
 
   const isLoading = !response && !error;
 
-  const handlePageChanged = useCallback((currentPage) => {
-    const offset = LIMIT_PER_PAGE * currentPage - LIMIT_PER_PAGE;
-    setCurrentOffset(offset);
-  }, []);
+  const handlePageChanged = useCallback(
+    (page) => {
+      const offset = LIMIT_PER_PAGE * page - LIMIT_PER_PAGE;
+      router.replace(`/idea?page=${page}&start=${offset}`);
+    },
+    [router]
+  );
 
   const renderLoader = () => {
     const loaderArr = [];
@@ -50,6 +59,7 @@ const IdeaAndSolutionContainer = () => {
 
   return (
     <>
+      <ScrollToTop />
       <div className="d-flex justify-content-between">
         <h2>Galeri Ide Solusi</h2>
         <div className="d-flex">
@@ -87,6 +97,7 @@ const IdeaAndSolutionContainer = () => {
               totalPages={pages.totalPages}
               pageLimit={LIMIT_PER_PAGE}
               onPageChanged={handlePageChanged}
+              defaultPage={currentPage}
             />
           </div>
         </>
