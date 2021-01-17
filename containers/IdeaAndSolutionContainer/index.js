@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import range from 'utils/range';
 
 import IdeaCard from 'components/IdeaCard';
-import ScrollToTop from 'components/ScrollToTop';
+import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import CardLoader from 'components/Shimmer/Card';
 import Pagination from 'components/Pagination';
 import useIdeaSolution from 'hooks/useIdeaSolution';
