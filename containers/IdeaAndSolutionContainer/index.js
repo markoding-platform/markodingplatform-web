@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import range from 'utils/range';
 
 import IdeaCard from 'components/IdeaCard';
+import ScrollToTop from 'components/ScrollToTop';
 import CardLoader from 'components/Shimmer/Card';
 import Pagination from 'components/Pagination';
-import ScrollToTop from 'components/ScrollToTop';
 import useIdeaSolution from 'hooks/useIdeaSolution';
 import emptyFolderSvg from 'svgs/empty-folder.svg';
 import FilterIdea from './Filter';
