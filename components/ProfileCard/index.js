@@ -1,18 +1,35 @@
-import { string } from 'prop-types';
+import { func, string, bool } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { BsFillPersonFill } from 'react-icons/bs';
+import { AiFillCloseCircle } from 'react-icons/ai';
 import Image from 'next/image';
-import Avatar from 'public/assets/avatar-min.png';
+import Avatar from 'svgs/avatar.svg';
 import {
   topTitle,
   content,
   contentTitle,
   contentDesc,
+  removeBtn,
 } from './styles.module.scss';
 
-const ProfileCard = ({ title, primaryText, secondaryText }) => {
+const ProfileCard = ({
+  title,
+  primaryText,
+  secondaryText,
+  withRemoveBtn,
+  onClickRemove,
+}) => {
   return (
     <Card className="border-0">
+      {withRemoveBtn && (
+        <AiFillCloseCircle
+          aria-label="remove-btn"
+          size={20}
+          color="#D72E3D"
+          className={removeBtn}
+          onClick={onClickRemove}
+        />
+      )}
       <div className={topTitle}>
         <span>
           <BsFillPersonFill size={20} color="#0E0C0D" />
@@ -34,9 +51,16 @@ const ProfileCard = ({ title, primaryText, secondaryText }) => {
   );
 };
 
+ProfileCard.defaultProps = {
+  withRemoveBtn: false,
+  onClickRemove: () => {},
+};
+
 ProfileCard.propTypes = {
   primaryText: string.isRequired,
   secondaryText: string.isRequired,
   title: string.isRequired,
+  withRemoveBtn: bool,
+  onClickRemove: func,
 };
 export default ProfileCard;

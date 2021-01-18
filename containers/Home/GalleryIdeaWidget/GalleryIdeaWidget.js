@@ -2,15 +2,15 @@ import React from 'react';
 
 import SectionCardWrapper from 'components/SectionCardWrapper';
 import IdeaCard from 'components/IdeaCard';
-import useIdeaSolution from 'containers/IdeaAndSolutionContainer/hooks/useIdeaSolution';
+import useIdeaSolution from 'hooks/useIdeaSolution';
 import WidgetLoader from '../WidgetLoader';
 
 const defaultPic =
   'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
 
 const GalleryIdeaWidget = () => {
-  const { data, error } = useIdeaSolution({ url: '/ideas' });
-  const result = data?.result || [];
+  const { data, error } = useIdeaSolution({ url: '/ideas?offset=0&limit=9' });
+  const result = data?.result?.data || [];
   const isLoading = !data && !error;
 
   return (

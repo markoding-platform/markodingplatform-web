@@ -1,16 +1,16 @@
 import React from 'react';
 import { func, node } from 'prop-types';
 import { BsX } from 'react-icons/bs';
-import MarkodingLogo from 'components/MarkodingLogo';
-import { drawerWrapper, card } from './styles.module.scss';
+import DicLogo from 'components/DICLogo';
+import { drawerWrapper, card, closeBtn } from './styles.module.scss';
 
 const Drawer = ({ onClose, children }) => {
   return (
     <div className={drawerWrapper}>
       <div className={card}>
         <div className="d-flex justify-content-between p-2">
-          <MarkodingLogo />
-          <button type="button" onClick={onClose} className="btn">
+          <DicLogo height="auto" />
+          <button type="button" onClick={onClose} className={`btn ${closeBtn}`}>
             <BsX size="2rem" />
           </button>
         </div>

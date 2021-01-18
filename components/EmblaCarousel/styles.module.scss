@@ -1,43 +1,44 @@
 @use "styles/breakpoint";
 
 .embla {
-	position: relative;
-	margin-left: auto;
-	margin-right: auto;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .embla__viewport {
-	overflow: hidden;
-	width: 100%;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .embla__viewport.is-draggable {
-	cursor: move;
-	cursor: grab;
+  cursor: move;
+  cursor: grab;
 }
 
 .embla__viewport.is-dragging {
-	cursor: grabbing;
+  cursor: grabbing;
 }
 
 .embla__container {
-	display: flex;
-	user-select: none;
-	-webkit-touch-callout: none;
-	-khtml-user-select: none;
-	-webkit-tap-highlight-color: transparent;
-	margin-left: -2%;
+  display: flex;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  margin-left: -2%;
 }
 
 .embla__dots {
-	position: relative;
-	margin-top: 1rem;
-	display: flex;
-	list-style: none;
-	padding-left: 15px;
-	padding-right: 15px;
-	justify-content: center;
-	@media (max-width: breakpoint.$lg) {
-		justify-content: left;
-	}
+  position: relative;
+  margin-top: 1rem;
+  display: flex;
+  list-style: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  justify-content: center;
+  @media (max-width: breakpoint.$lg) {
+    justify-content: left;
+  }
 }

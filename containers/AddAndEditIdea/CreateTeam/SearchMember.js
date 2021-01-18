@@ -1,4 +1,4 @@
-import { bool, string } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { BiSearchAlt2 } from 'react-icons/bi';
@@ -65,7 +65,7 @@ const SearchMember = ({ onSelectStudent }) => {
   }, [debouncedKeyword]);
   return (
     <div>
-      <div className="d-none w-100 d-lg-flex align-items-center mb-4">
+      <div className="d-none w-100 d-flex align-items-center mb-4">
         <div className={searchGroup}>
           <BiSearchAlt2 className={searchIcon} />
           <Form.Control
@@ -101,6 +101,11 @@ ListItem.propTypes = {
   name: string,
   subTitle: string,
   isChief: bool,
+  onSelect: func.isRequired,
+};
+
+SearchMember.propTypes = {
+  onSelectStudent: func.isRequired,
 };
 
 export default SearchMember;

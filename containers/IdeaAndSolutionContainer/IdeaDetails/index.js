@@ -1,4 +1,4 @@
-import { number } from 'prop-types';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { mutate } from 'swr';
@@ -9,10 +9,14 @@ import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
 import MarkodingFetch from 'libraries/MarkodingFetch';
-import Avatar from 'public/assets/avatar-min.png';
+import Avatar from 'svgs/avatar.svg';
 import BoxLoader from 'components/Shimmer/Box';
+import ProfileCard from 'components/ProfileCard';
 import YoutubeIframe from 'components/YoutubeIframe';
-import useIdeaSolution from '../hooks/useIdeaSolution';
+import useIdeaSolution from 'hooks/useIdeaSolution';
+import { teamMap } from 'map/teamMap';
+import { profileTypeEnum } from '../constant';
+
 import { ideaImage } from '../style.module.scss';
 import {
   ideaSection,
@@ -20,57 +24,37 @@ import {
   infoItem,
   voteBtn,
   videoWrapper,
+  teamsWrapper,
 } from './style.module.scss';
 
-import Teams from '../Teams';
-
-const dummyTeams = [
-  {
-    id: 0,
-    title: 'Ketua Tim',
-    name: 'Ariqah Hasanah',
-    studentStatus: 'Siswa SMK',
-  },
-  {
-    id: 1,
-    title: 'Anggota 2',
-    name: 'Ariqah Hasanah',
-    studentStatus: 'Siswa SMK',
-  },
-  {
-    id: 2,
-    title: 'Anggota 3',
-    name: 'Ariqah Hasanah',
-    studentStatus: 'Siswa SMK',
-  },
-];
-
-const additionalTeams = [
-  {
-    id: 0,
-    title: 'Guru',
-    name: 'Kak Hasnah',
-    studentStatus: 'Guru SMK',
-  },
-  {
-    id: 1,
-    title: 'Mentor',
-    name: 'Ariqah Hasanah',
-    studentStatus: 'Gojek',
-  },
-];
-
-const IdeaDetails = ({ likeCount, commentCount }) => {
+const IdeaDetails = () => {
   const { query } = useRouter();
   const ideaId = query.id;
+
   const { data } = useIdeaSolution({ url: `/ideas/${ideaId}` });
   const { data: teamsResult } = useIdeaSolution({
-    url: `/ideas/${ideaId}/team`,
+    url: `/ideas/${ideaId}/users`,
   });
+  // TODO handle loading state UI
   const idea = data?.result || {};
-  const teams = teamsResult?.result || []; // TODO: data userprofile belum dipopulate, hanya balikin userid
-  console.log({ teams });
+  const teams = teamMap(teamsResult?.result || []);
+  const { totalLikes, totalComments } = idea;
+
   const imageIdea = idea.solutionSupportingPhotos?.[0] || '';
+
+  const teamMember = useMemo(() => {
+    if (teams.length) {
+      return teams.filter((member) => member.profileType === 'student');
+    }
+    return [];
+  }, [teams]);
+
+  const facilitators = useMemo(() => {
+    if (teams.length) {
+      return teams.filter((member) => member.profileType !== 'student');
+    }
+    return [];
+  }, [teams]);
 
   const handleVoteIdea = async () => {
     const voteResult = await MarkodingFetch(`/ideas/${ideaId}/like`, {
@@ -130,44 +114,62 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       <div className="d-flex align-items-center justify-content-between">
         <div className="mr-4">
           <BsFillHeartFill />
-          <span className="pl-2 text-secondary">{likeCount}</span>
+          <span className="pl-2 text-secondary">{totalLikes}</span>
         </div>
         <div className="mr-4">
           <IoMdChatbubbles />
-          <span className="pl-2 text-secondary">{commentCount}</span>
+          <span className="pl-2 text-secondary">{totalComments}</span>
         </div>
       </div>
       <hr />
-      <Teams items={dummyTeams} />
+      <div className={teamsWrapper}>
+        {teamMember.map((t) => (
+          <ProfileCard
+            key={t.id}
+            title={t.isLeader ? 'Ketua Tim' : 'Anggota'}
+            primaryText={t.name}
+            secondaryText={`Siswa ${t.schoolGradeName}`}
+          />
+        ))}
+      </div>
       <hr />
       <div className={teamInfo}>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Status Tim</p>
+          <p className="text-3rd m-0">Status Tim</p>
           <p className="info__text m-0">{idea.teamStatus}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Nama Sekolah</p>
+          <p className="text-3rd m-0">Nama Sekolah</p>
           <p className="info__text m-0">{idea.schoolName}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Tipe Solusi Digital</p>
+          <p className="text-3rd m-0">Tipe Solusi Digital</p>
           <p className="info__text m-0">{idea.solutionType}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Bidang Masalah</p>
+          <p className="text-3rd m-0">Bidang Masalah</p>
           <p className="info__text m-0">{idea.problemArea}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Masalah yang ingin diselesaikan</p>
+          <p className="text-3rd m-0">Masalah yang ingin diselesaikan</p>
           <p className="info__text m-0">{idea.problemSelection}</p>
         </div>
         <div className={infoItem}>
-          <p className="text-secondary m-0">Targe Customer</p>
+          <p className="text-3rd m-0">Target Customer</p>
           <p className="info__text m-0">{idea.targetCustomer}</p>
         </div>
       </div>
       <hr />
-      <Teams items={additionalTeams} />
+      <div className={teamsWrapper}>
+        {facilitators.map((t) => (
+          <ProfileCard
+            key={t.id}
+            title={profileTypeEnum[t.profileType]}
+            primaryText={t.name}
+            secondaryText={t.companyName}
+          />
+        ))}
+      </div>
       <hr />
       <div>
         <div className={ideaSection} id="problemReason">
@@ -214,16 +216,6 @@ const IdeaDetails = ({ likeCount, commentCount }) => {
       </div>
     </div>
   );
-};
-
-IdeaDetails.defaultProps = {
-  commentCount: 12,
-  likeCount: 3,
-};
-
-IdeaDetails.propTypes = {
-  commentCount: number,
-  likeCount: number,
 };
 
 export default IdeaDetails;

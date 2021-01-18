@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { shape } from 'prop-types';
+import { useEffect, useState, memo } from 'react';
+import { shape, bool } from 'prop-types';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useForm } from 'react-hook-form';
-import { useGlobalFormContext } from 'components/context/FormContext';
+import { useIdeaFormContext } from 'components/context/IdeaContext';
 import { toast } from 'react-toastify';
 
 import Panel from 'components/Panel';
@@ -22,38 +22,46 @@ import {
   inputSolutionType,
 } from './styles.module.scss';
 
-const FormIdeaSolution = ({ user }) => {
+const FormIdeaSolution = ({ user, isEditIdea }) => {
   const profile = user?.profile || {};
-  const { push } = useRouter();
+
+  const { push, query } = useRouter();
   const { data: teachersResult } = useMyTeachers({
     url: '/users/my/teachers',
   });
   const teachers = teachersResult;
+
+  const { inputs, idea, setInputs, teacher } = useIdeaFormContext();
+  const [ideaState] = useState(idea || inputs?.ideaSolution);
+
   const { register, handleSubmit, errors, setValue } = useForm({
     defaultValues: {
       schoolName: profile.schoolName,
       schoolId: profile.schoolId,
+      teacherId: teacher.userId,
     },
   });
 
-  const {
-    inputs: { ideaSolution = {} },
-    inputs,
-    setInputs,
-  } = useGlobalFormContext();
-
-  const [solutionType, setSolutionType] = useState(ideaSolution.solutionType);
+  const [solutionType, setSolutionType] = useState(
+    ideaState.solutionType?.trim()
+  );
 
   const SOLUTION_TYPES = [
-    { id: 0, text: 'Aplikasi Mobile', value: 'mobile' },
-    { id: 1, text: 'Aplikasi Web', value: 'web' },
-    { id: 2, text: 'Aplikasi Game', value: 'game' },
+    { id: 0, text: 'Aplikasi Mobile', value: 'Mobile' },
+    { id: 1, text: 'Aplikasi Web', value: 'Web' },
+    { id: 2, text: 'Aplikasi Game', value: 'Game' },
   ];
 
-  const handleOnClick = () => {
+  const handleValidateTeams = () => {
     if (inputs?.teamIds?.length) {
-      push('/register-idea/2');
-    } else {
+      return true;
+    }
+    return false;
+  };
+
+  const onSubmit = (data) => {
+    setInputs({ ...inputs, ideaSolution: { ...data } });
+    if (!handleValidateTeams()) {
       return toast.error(
         <p className="m-0 pl-3">Harap menambah anggota team</p>,
         {
@@ -61,18 +69,15 @@ const FormIdeaSolution = ({ user }) => {
         }
       );
     }
+    if (!isEditIdea) {
+      push('/register-idea/2');
+    } else {
+      push(`/idea/edit/${query.slug}/2`);
+    }
   };
 
-  const onSubmit = (data) => {
-    data.solutionType = solutionType;
-    data.schoolId = profile.schoolId;
-    data.schoolName = profile.schoolName;
-    setInputs({ ...inputs, ideaSolution: { ...data } });
-    handleOnClick();
-  };
-
-  const handleSelectTeacher = (teacher) => {
-    setValue('teacherId', teacher.id);
+  const handleSelectTeacher = (payload) => {
+    setValue('teacherId', payload.id);
   };
 
   useEffect(() => {
@@ -82,8 +87,10 @@ const FormIdeaSolution = ({ user }) => {
   }, [push, user]);
 
   useEffect(() => {
-    register('teacherId', { required: true }); // custom register Antd input
-  }, [register]);
+    register('teacherId', { required: true });
+    register('schoolId', { required: true });
+    register('schoolName', { required: true });
+  }, [register, teacher.id]);
 
   return (
     <>
@@ -94,13 +101,14 @@ const FormIdeaSolution = ({ user }) => {
             onSelected={handleSelectTeacher}
             dropdownItem={teachers}
             withSearch
+            defaultVal={teacher.name}
             name="teacherId"
           />
         </Panel>
         <Panel title="Nama Solusi Digital">
           <TextField
             placeholder="Tulis nama solusi digital kamu"
-            defaultVal={ideaSolution.solutionName}
+            defaultVal={ideaState.solutionName}
             name="solutionName"
             ref={register({ required: true })}
             error={!!errors.solutionName}
@@ -109,44 +117,40 @@ const FormIdeaSolution = ({ user }) => {
         </Panel>
         <Panel title="Pilihan Tipe Solusi Digital yang Ingin Kamu Buat">
           <div className={inputSolutionType}>
-            <div className="d-flex justify-content-start">
-              <>
-                {SOLUTION_TYPES.map(({ text, id, value }) => (
-                  <InputGroup
-                    key={id}
-                    className={`${
-                      value === solutionType && isRadioActive
-                    } ${radioBtnWrapper}`}
-                  >
-                    <input
-                      className={radioBtn}
-                      type="radio"
-                      name="solutionType"
-                      value={solutionType}
-                      ref={register({ required: true })}
-                      onChange={() => setSolutionType(value)}
-                      checked={value === solutionType}
-                    />
-                    <InputGroup.Append aria-label="Radio button">
-                      <InputGroup.Text className={radioInputText}>
-                        {text}
-                      </InputGroup.Text>
-                    </InputGroup.Append>
-                  </InputGroup>
-                ))}
-              </>
-            </div>
-            {errors.solutionType && (
-              <Form.Text className="text-muted pt-1">
-                Harap memilih tipe solusi digital
-              </Form.Text>
-            )}
+            {SOLUTION_TYPES.map(({ text, id, value }) => (
+              <InputGroup
+                key={id}
+                className={`${
+                  value === solutionType && isRadioActive
+                } ${radioBtnWrapper}`}
+              >
+                <input
+                  className={radioBtn}
+                  type="radio"
+                  name="solutionType"
+                  value={solutionType}
+                  ref={register({ required: true })}
+                  onChange={() => setSolutionType(value)}
+                  checked={value === solutionType}
+                />
+                <InputGroup.Append aria-label="Radio button">
+                  <InputGroup.Text className={radioInputText}>
+                    {text}
+                  </InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
+            ))}
           </div>
+          {errors.solutionType && (
+            <Form.Text className="text-muted pt-1">
+              Harap memilih tipe solusi digital
+            </Form.Text>
+          )}
         </Panel>
         <Panel title="Bidang Masalah">
           <TextField
             placeholder="Tulis bidang masalah yang ingin kamu selesaikan"
-            defaultVal={ideaSolution.problemArea}
+            defaultVal={ideaState.problemArea}
             name="problemArea"
             ref={register({ required: true })}
             error={!!errors.problemArea}
@@ -156,7 +160,7 @@ const FormIdeaSolution = ({ user }) => {
         <Panel title="Pemilihan Masalah">
           <TextField
             placeholder="Apa masalah yang ingin kamu selesaikan"
-            defaultVal={ideaSolution.problemSelection}
+            defaultVal={ideaState.problemSelection}
             as="textarea"
             className={textArea}
             name="problemSelection"
@@ -168,7 +172,7 @@ const FormIdeaSolution = ({ user }) => {
         <Panel title="Alasan Masalah">
           <TextField
             placeholder="Mengapa kamu ingin menyelesaikan masalah ini"
-            defaultVal={ideaSolution.problemReasoning}
+            defaultVal={ideaState.problemReasoning}
             name="problemReasoning"
             ref={register({ required: true })}
             as="textarea"
@@ -180,7 +184,7 @@ const FormIdeaSolution = ({ user }) => {
         <Panel title="Target Customer">
           <TextField
             placeholder="Siapa yang ingin kamu bantu"
-            defaultVal={ideaSolution.targetCustomer}
+            defaultVal={ideaState.targetCustomer}
             name="targetCustomer"
             ref={register({ required: true })}
             error={!!errors.targetCustomer}
@@ -198,6 +202,7 @@ const FormIdeaSolution = ({ user }) => {
 };
 
 FormIdeaSolution.propTypes = {
+  isEditIdea: bool.isRequired,
   user: shape({}).isRequired,
 };
-export default FormIdeaSolution;
+export default memo(FormIdeaSolution);

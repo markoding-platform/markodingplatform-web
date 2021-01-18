@@ -1,23 +1,32 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { shape } from 'prop-types';
 
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
-import RegisterIdeaSolutionContainer from 'containers/RegisterIdeaSolutionContainer';
+import RegisterIdeaSolutionContainer from 'containers/AddAndEditIdea';
 import { SSO } from 'utils/auth';
 import withAuthSync from 'hoc/withAuthSync';
+import { homeContent } from 'styles/home.module.scss';
 
 const RegisterIdeaSecondPage = ({ user }) => {
+  const id = user?.id || '';
   const authenticate = useCallback(async () => {
     await SSO();
   }, []);
 
-  if (!user.id) {
-    authenticate();
+  useEffect(() => {
+    if (!id) {
+      authenticate();
+    }
+  }, [authenticate, id]);
+
+  if (!id) {
+    return null;
   }
+
   return (
     <Layout activeMenu="/idea">
-      <div className="main-content">
+      <div className={homeContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>

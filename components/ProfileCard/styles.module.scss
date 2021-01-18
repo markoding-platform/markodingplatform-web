@@ -20,6 +20,13 @@
   }
 }
 
+.removeBtn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+
 .content {
   @include flex__center;
   flex-direction: column;
@@ -37,4 +44,5 @@
   font-weight: normal;
   font-size: 0.875rem;
   line-height: 20px;
+  text-align: center;
 }

@@ -1,9 +1,9 @@
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { number } from 'prop-types';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import Panel from 'components/Panel';
-import CreateTeam from 'containers/RegisterIdeaSolutionContainer/CreateTeam';
+import CreateTeam from 'containers/AddAndEditIdea/CreateTeam';
 
 import FormIdeaSolution from './FormIdeaSolution';
 import SecondFormIdeaSolution from './FormIdeaSolution/SecondForm';
@@ -16,11 +16,14 @@ import {
 } from './styles.module.scss';
 
 const RegisterIdeaSolutionContainer = ({ page, user }) => {
-  const methods = useForm();
+  const { pathname } = useRouter();
+  const isEditIdea = pathname.includes('/idea/edit');
+  console.log({ isEditIdea, pathname });
+  const title = `${isEditIdea ? 'Edit' : 'Registrasi'} Ide Solusi`;
   return (
     <>
       <div className={topHeader}>
-        <h2>Registrasi Ide Solusi</h2>
+        <h2>{title}</h2>
         <div className="w-100 d-flex justify-content-between py-1">
           <div className={progressBarWrapper}>
             <ProgressBar className={progressBar} now={50 * page} />
@@ -33,18 +36,16 @@ const RegisterIdeaSolutionContainer = ({ page, user }) => {
         </div>
       </div>
 
-      <FormProvider {...methods}>
-        {page === 1 && (
-          <Panel title="Team">
-            <CreateTeam user={user} />
-          </Panel>
-        )}
-        {page === 2 ? (
-          <SecondFormIdeaSolution />
-        ) : (
-          <FormIdeaSolution user={user} />
-        )}
-      </FormProvider>
+      {page === 1 && (
+        <Panel title="Team">
+          <CreateTeam user={user} />
+        </Panel>
+      )}
+      {page === 2 ? (
+        <SecondFormIdeaSolution isEditIdea={isEditIdea} />
+      ) : (
+        <FormIdeaSolution user={user} isEditIdea={isEditIdea} />
+      )}
     </>
   );
 };
