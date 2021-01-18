@@ -15,7 +15,7 @@ const AuthButton = () => {
   const userProfile = canUseDOM && getCookie('userProfile');
   const idea = userIdea ? JSON.parse(userIdea) : {};
   const profile = userProfile ? JSON.parse(userProfile) : {};
-  const { id } = idea;
+  const ideaId = idea.id || '';
 
   const checkAccount = () => {
     const logged = getCookie('markodingToken');
@@ -33,11 +33,11 @@ const AuthButton = () => {
   }, [profile.profileType]);
 
   const isAllowedRegisterIdea = useMemo(() => {
-    if (id && isStudent) {
+    if (ideaId && isStudent) {
       return false;
     }
     return true;
-  }, [id, isStudent]);
+  }, [ideaId, isStudent]);
 
   const authenticate = async () => {
     await SSO();
