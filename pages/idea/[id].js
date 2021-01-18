@@ -1,11 +1,12 @@
 import Layout from 'components/Layout';
 import IdeaDetails from 'containers/IdeaAndSolutionContainer/IdeaDetails';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
+import { homeContent } from 'styles/home.module.scss';
 
 export default function IdeaDetail() {
   return (
     <Layout activeMenu="/idea">
-      <div className="main-content">
+      <div className={homeContent}>
         <div className="pb-4">
           <PointBadgeWrapper />
         </div>

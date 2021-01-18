@@ -41,10 +41,9 @@ const EditIdea = ({ user }) => {
 
 EditIdea.propTypes = {
   user: shape({
-    email: null,
-    exId: null,
     id: '',
     name: '',
+    profile: {},
   }).isRequired,
 };
 

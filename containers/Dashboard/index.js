@@ -1,11 +1,14 @@
-import { arrayOf, shape, string } from 'prop-types';
+import { shape } from 'prop-types';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import Button from 'react-bootstrap/Button';
 
+import useIdeaSolution from 'hooks/useIdeaSolution';
+import useCourse from 'hooks/useCourse';
 import Panel from 'components/Panel';
 import Badges from 'components/Badges';
-// import SnippetIdea from 'containers/IdeaAndSolutionContainer/SnippetIdea';
+import SnippetIdea from 'containers/IdeaAndSolutionContainer/SnippetIdea';
 import CourseCard from 'components/CourseCard';
 import Avatar from 'public/assets/avatar-min.png';
 import MyStats from './MyStats';
@@ -18,9 +21,35 @@ import {
   btnEditProfile,
   wrapperStats,
   courseCardWrapper,
+  ideaSnippetWrapper,
+  btnRegister,
 } from './styles.module.scss';
 
-const MyIdeaAndSolutionContainer = ({ courses }) => {
+const DashboardContainer = ({ user }) => {
+  const { idea: ideaUser } = user;
+  const badges = [];
+  const { push } = useRouter();
+
+  const { id } = ideaUser;
+
+  const { data = {} } = useIdeaSolution({
+    url: `/ideas/${id}`,
+    isSkip: !id,
+  });
+
+  const idea = data.ok ? data?.result : {};
+
+  const imageIdea = idea.solutionSupportingPhotos?.[0] || '';
+  const { solutionVision, solutionName } = idea;
+
+  const { courses, isLoading: loadingCourses } = useCourse({
+    url: '/api/course?limit=6&offset=1',
+  });
+
+  const handleClickEditIdea = () => {
+    push(`/register-idea`);
+  };
+
   return (
     <>
       <div>
@@ -35,8 +64,8 @@ const MyIdeaAndSolutionContainer = ({ courses }) => {
                 src={Avatar}
               />
               <div className={`px-3 ${profileSection}`}>
-                <p className={contentTitle}>Amanda Simandjuntak</p>
-                <p className="m-0">Co-founder Markoding</p>
+                <p className={contentTitle}>{user.name}</p>
+                <p className="m-0">Email</p>
                 <Button className={`bg-info ${btnEditProfile}`}>
                   Edit Profile
                 </Button>
@@ -50,68 +79,66 @@ const MyIdeaAndSolutionContainer = ({ courses }) => {
         </div>
       </div>
       <Panel title="Badges">
-        <div className="d-flex">
-          <Badges name="Javascript" />
-          <Badges name="React JS" />
-        </div>
+        {badges.length ? (
+          <div className="d-flex">
+            <Badges name="Javascript" />
+          </div>
+        ) : (
+          <h4 className="text-center py-5 text-3rd">
+            Anda Belum Memiliki Badges
+          </h4>
+        )}
       </Panel>
-      {/* <Panel title="Ide Solusi Saya">
-        <SnippetIdea />
-      </Panel> */}
+      <Panel title="Ide Solusi Saya">
+        {Object.keys(idea).length ? (
+          <SnippetIdea
+            ideaId={ideaUser.id}
+            imageIdea={imageIdea}
+            solutionVision={solutionVision}
+            solutionName={solutionName}
+          />
+        ) : (
+          <div className={ideaSnippetWrapper}>
+            <h4 className="text-center py-5 text-3rd">
+              Anda Belum Memiliki Ide Solusi
+            </h4>
+            <Button className={btnRegister} onClick={handleClickEditIdea}>
+              Registrasi ide solusi
+            </Button>
+          </div>
+        )}
+      </Panel>
+
       <Panel title="Kelas Online">
-        <div className="d-flex">
-          {courses.map((course) => (
-            <div key={course.id} className={courseCardWrapper}>
-              <CourseCard
-                imageUrl={course.src}
-                title={course.title}
-                description={course.description}
-                link={course.link}
-              />
-            </div>
-          ))}
-        </div>
+        {!loadingCourses && courses.length > 0 ? (
+          <div className="d-flex">
+            {courses.map((course) => (
+              <div key={course.id} className={courseCardWrapper}>
+                <CourseCard
+                  imageUrl={course.src}
+                  title={course.title}
+                  description={course.description}
+                  link={course.link}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <h4 className="text-center py-5 text-3rd">
+            Anda Belum Memiliki Kelas Online
+          </h4>
+        )}
       </Panel>
     </>
   );
 };
 
-MyIdeaAndSolutionContainer.defaultProps = {
-  courses: [
-    {
-      id: 'one',
-      title: 'Javascript Dasar',
-      src:
-        'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg',
-      link: '/todo',
-      date: '25 April 2021',
-      time: '2PM - 5PM',
-      description: 'Terra, Social enterprise, manufatrues and sells...',
-    },
-    {
-      id: 'two',
-      title: 'Markoding MasterClass',
-      src:
-        'https://image.freepik.com/free-psd/girl-doing-stretching-exercises_23-2148253770.jpg',
-      link: '/todo',
-      date: '3 Mei 2021',
-      time: '1PM - 5PM',
-      description: 'Terra, Social enterprise, manufatrues and sells...',
-    },
-  ],
+DashboardContainer.propTypes = {
+  user: shape({
+    id: '',
+    name: '',
+    profile: {},
+  }).isRequired,
 };
 
-MyIdeaAndSolutionContainer.propTypes = {
-  courses: arrayOf(
-    shape({
-      id: string,
-      title: string,
-      src: string,
-      link: string,
-      date: string,
-      time: string,
-      description: string,
-    })
-  ),
-};
-export default MyIdeaAndSolutionContainer;
+export default DashboardContainer;

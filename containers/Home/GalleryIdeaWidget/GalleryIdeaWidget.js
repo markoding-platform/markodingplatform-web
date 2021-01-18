@@ -9,8 +9,8 @@ const defaultPic =
   'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
 
 const GalleryIdeaWidget = () => {
-  const { data, error } = useIdeaSolution({ url: '/ideas' });
-  const result = data?.result || [];
+  const { data, error } = useIdeaSolution({ url: '/ideas?offset=0&limit=9' });
+  const result = data?.result?.data || [];
   const isLoading = !data && !error;
 
   return (

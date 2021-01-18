@@ -1,4 +1,5 @@
 @use "styles/colors";
+@use 'styles/breakpoint';
 
 .radioBtn {
   border: none !important;
@@ -13,7 +14,13 @@
   margin-right: 1rem;
   padding: 0 4px;
 }
-
+.inputSolutionType {
+  display: flex;
+  justify-content: start;
+  @media (max-width: breakpoint.$sm) {
+    flex-direction: column;
+  }
+}
 .isRadioActive {
   border: 1px solid #e2e5ed;
 }
@@ -56,9 +63,4 @@
   text-align: left;
   font-size: 0.625rem;
   margin: 0px 4px 0 4px;
-}
-
-.inputSolutionType {
-  display: flex;
-  flex-direction: column;
 }

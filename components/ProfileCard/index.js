@@ -25,6 +25,7 @@ const ProfileCard = ({
         <AiFillCloseCircle
           aria-label="remove-btn"
           size={20}
+          color="#D72E3D"
           className={removeBtn}
           onClick={onClickRemove}
         />

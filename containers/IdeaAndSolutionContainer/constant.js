@@ -3,3 +3,5 @@ export const profileTypeEnum = {
   teacher: 'Guru',
   mentor: 'Mentor',
 };
+
+export const LIMIT_PER_PAGE = 9;

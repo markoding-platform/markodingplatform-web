@@ -2,21 +2,42 @@ import Link from 'next/link';
 import Dropdown from 'react-bootstrap/Dropdown';
 import styles from 'components/PointBadgeWrapper/styles.module.scss';
 import { Button } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import getCookie from 'utils/getCookie';
 import { Logout, SSO } from 'utils/auth';
 import Image from 'next/image';
+import canUseDOM from 'utils/canUseDOM';
 
 const AuthButton = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [userName, setUserName] = useState(null);
+  const userIdea = canUseDOM && getCookie('userIdea');
+  const userProfile = canUseDOM && getCookie('userProfile');
+  const idea = userIdea ? JSON.parse(userIdea) : {};
+  const profile = userProfile ? JSON.parse(userProfile) : {};
+  const { id } = idea;
 
   const checkAccount = () => {
     const logged = getCookie('markodingToken');
     const name = getCookie('userName');
+
     setIsLogged(logged || false);
     setUserName(name || null);
   };
+
+  const isStudent = useMemo(() => {
+    if (profile.profileType === 'student') {
+      return true;
+    }
+    return false;
+  }, [profile.profileType]);
+
+  const isAllowedRegisterIdea = useMemo(() => {
+    if (id && isStudent) {
+      return false;
+    }
+    return true;
+  }, [id, isStudent]);
 
   const authenticate = async () => {
     await SSO();
@@ -72,11 +93,13 @@ const AuthButton = () => {
                 </div>
               </div>
             </div>
-            <Link href="/register-idea">
-              <Dropdown.Item href="/register-idea" className="text-primary">
-                Registrasi Ide Solusi
-              </Dropdown.Item>
-            </Link>
+            {isAllowedRegisterIdea && (
+              <Link href="/register-idea">
+                <Dropdown.Item href="/register-idea" className="text-primary">
+                  Registrasi Ide Solusi
+                </Dropdown.Item>
+              </Link>
+            )}
             <Link href="/dashboard">
               <Dropdown.Item href="/dashboard">Lihat Profil</Dropdown.Item>
             </Link>
