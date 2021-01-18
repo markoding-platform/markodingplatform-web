@@ -1,7 +1,11 @@
 import Form from 'react-bootstrap/Form';
+import { ErrorBoundary } from 'react-error-boundary';
 import { DiHtml53DEffects } from 'react-icons/di';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { RiArrowRightSLine, RiMedalFill } from 'react-icons/ri';
+
+import useErrorHandler from 'hooks/useErrorHandler';
+import ErrorFallback from 'components/ErrorFallback';
 import AuthButton from 'components/AuthButton';
 import notifFill from 'svgs/notif-fill.svg';
 import Icon from 'components/Icons';
@@ -9,6 +13,7 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const PointBadgeWrapper = ({ desktopOnly }) => {
+  const { logError } = useErrorHandler();
   return (
     <div className={desktopOnly ? 'd-none d-lg-block' : 'd-block'}>
       <div className={styles.pointBadge}>
@@ -40,7 +45,12 @@ const PointBadgeWrapper = ({ desktopOnly }) => {
                 size={18}
                 className={styles.notifFillIcon}
               />
-              <AuthButton />
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onError={logError}
+              >
+                <AuthButton />
+              </ErrorBoundary>
             </div>
           </div>
         </div>
