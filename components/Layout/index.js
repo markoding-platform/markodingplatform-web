@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Container from 'react-bootstrap/Container';
 
@@ -8,6 +8,15 @@ import BottomNavigation from 'components/BottomNavigation';
 import Header from 'components/Header';
 
 const Layout = ({ children, activeMenu, withFooter }) => {
+  const [rightWidth, setRightWidth] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const { innerWidth } = window;
+      setRightWidth(innerWidth - 290);
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -45,7 +54,14 @@ const Layout = ({ children, activeMenu, withFooter }) => {
           <div className="desktop-left-section">
             <Header />
           </div>
-          <div className="flex-grow-1 desktop-right-section">
+          <div
+            className="flex-grow-1 desktop-right-section"
+            style={
+              rightWidth && {
+                maxWidth: `${rightWidth}px`,
+              }
+            }
+          >
             {children}
             {withFooter && (
               <div className="d-none d-lg-block">

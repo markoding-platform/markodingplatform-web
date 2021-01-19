@@ -15,7 +15,7 @@ const AuthButton = () => {
   const userProfile = canUseDOM && getCookie('userProfile');
   const idea = userIdea ? JSON.parse(userIdea) : {};
   const profile = userProfile ? JSON.parse(userProfile) : {};
-  const { id } = idea;
+  const { id } = idea || {};
 
   const checkAccount = () => {
     const logged = getCookie('markodingToken');

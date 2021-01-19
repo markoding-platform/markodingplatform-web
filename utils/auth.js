@@ -1,6 +1,8 @@
 import Router from 'next/router';
 import setCookie from 'utils/setCookie';
 import MarkodingFetch from 'libraries/MarkodingFetch';
+import getCookie from 'utils/getCookie';
+import SkilvulFetch from 'libraries/SkilvulFetch';
 
 export const Login = (context, token, data, backUrl = '/') => {
   if (typeof window === 'undefined') {
@@ -17,6 +19,7 @@ export const Login = (context, token, data, backUrl = '/') => {
       { label: 'markodingToken', value: token, age: expCookie },
       { label: 'userName', value: user.name, age: expCookie },
       { label: 'userID', value: user.id, age: expCookie },
+      { label: 'userXID', value: user.externalId, age: expCookie },
       { label: 'userIdea', value: userIdea, age: expCookie },
       { label: 'userProfile', value: userProfile, age: expCookie },
     ]);
@@ -24,22 +27,30 @@ export const Login = (context, token, data, backUrl = '/') => {
   }
 };
 
-export const Logout = (context, back = true) => {
+export const Logout = async (context, back = true) => {
   if (typeof window === 'undefined') {
     context.res.writeHead(302, {
       Location: `/`,
     });
     context.res.end();
   } else {
-    setCookie([
+    const userXID = await getCookie('userXID');
+    await SkilvulFetch(`/api/skilvul?path=/users/${userXID}/logout`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    });
+    await setCookie([
       { label: 'markodingToken', value: '', age: 0 },
       { label: 'userName', value: '', age: 0 },
       { label: 'userID', value: '', age: 0 },
+      { label: 'userXID', value: '', age: 0 },
       { label: 'userProfile', value: null, age: 0 },
       { label: 'userIdea', value: null, age: 0 },
     ]);
     if (back) {
-      Router.replace(`/`);
+      await Router.replace(`/`);
     }
   }
 };
