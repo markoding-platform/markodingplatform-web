@@ -89,7 +89,7 @@ EmblaCarousel.propTypes = {
   autoPlay: PropTypes.bool,
   delay: PropTypes.number,
   slideToScroll: PropTypes.number,
-  children: PropTypes.array.isRequired,
+  children: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default EmblaCarousel;

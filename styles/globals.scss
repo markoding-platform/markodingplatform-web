@@ -90,6 +90,7 @@ a {
 .desktop-right-section {
   position: relative;
   padding-bottom: 64px;
+	overflow-x: hidden;
   @include media-breakpoint-up(lg) {
     padding-bottom: 0;
   }

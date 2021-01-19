@@ -6,8 +6,8 @@ const CardLoader = (props) => (
     height="312"
     width="100%"
     speed={2}
-    primaryColor="#FFFFFF"
-    secondaryColor="#ecebeb"
+    backgroundColor="#ecebeb"
+    foregroundColor="#FFFFFF"
     {...props}
   >
     <rect x="0" y="233" rx="5" ry="5" width="50" height="10" />

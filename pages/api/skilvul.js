@@ -6,7 +6,7 @@ if (dotEnvResult.error) {
   throw dotEnvResult.error;
 }
 
-const schoolGradeApi = nextConnect()
+const skilvulApi = nextConnect()
   .get(async (req, res) => {
     try {
       const {
@@ -29,8 +29,30 @@ const schoolGradeApi = nextConnect()
       });
     }
   })
+  .post(async (req, res) => {
+    try {
+      const {
+        query: { path },
+        headers: { authorization },
+      } = req;
+      const response = await fetch(`${process.env.SKILVUL_API_URL}${path}`, {
+        method: 'POST',
+        headers: {
+          Authorization: authorization,
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(500).json({
+        error: true,
+        message: error,
+      });
+    }
+  })
   .patch(async () => {
     throw new Error('Throws me around! Error can be caught and handled.');
   });
 
-export default schoolGradeApi;
+export default skilvulApi;
