@@ -8,6 +8,7 @@ import useIdeaSolution from 'hooks/useIdeaSolution';
 import useCourse from 'hooks/useCourse';
 import Panel from 'components/Panel';
 import Badges from 'components/Badges';
+
 import SnippetIdea from 'containers/IdeaAndSolutionContainer/SnippetIdea';
 import CourseCard from 'components/CourseCard';
 import Avatar from 'public/assets/avatar-min.png';
@@ -23,6 +24,7 @@ import {
   courseCardWrapper,
   ideaSnippetWrapper,
   btnRegister,
+  styCourses,
 } from './styles.module.scss';
 
 const DashboardContainer = ({ user }) => {
@@ -40,7 +42,7 @@ const DashboardContainer = ({ user }) => {
   const idea = data.ok ? data?.result : {};
 
   const imageIdea = idea.solutionSupportingPhotos?.[0] || '';
-  const { solutionVision, solutionName } = idea;
+  const { solutionVision, solutionName, totalLikes, totalComments } = idea;
 
   const { courses, isLoading: loadingCourses } = useCourse({
     url: '/api/course?limit=6&offset=1',
@@ -96,6 +98,8 @@ const DashboardContainer = ({ user }) => {
             imageIdea={imageIdea}
             solutionVision={solutionVision}
             solutionName={solutionName}
+            likeCount={totalLikes}
+            totalComments={totalComments}
           />
         ) : (
           <div className={ideaSnippetWrapper}>
@@ -111,7 +115,7 @@ const DashboardContainer = ({ user }) => {
 
       <Panel title="Kelas Online">
         {!loadingCourses && courses.length > 0 ? (
-          <div className="d-flex">
+          <div className={styCourses}>
             {courses.map((course) => (
               <div key={course.id} className={courseCardWrapper}>
                 <CourseCard

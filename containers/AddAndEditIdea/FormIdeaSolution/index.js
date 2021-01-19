@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo, useRef } from 'react';
 import { shape, bool } from 'prop-types';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
@@ -26,6 +26,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   const profile = user?.profile || {};
 
   const { push, query } = useRouter();
+  const inputRef = useRef(null);
   const { data: teachersResult } = useMyTeachers({
     url: '/users/my/teachers',
   });
@@ -38,7 +39,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     defaultValues: {
       schoolName: profile.schoolName,
       schoolId: profile.schoolId,
-      teacherId: teacher.userId,
+      teacherId: teacher.userId || '',
     },
   });
 
@@ -90,18 +91,20 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     register('teacherId', { required: true });
     register('schoolId', { required: true });
     register('schoolName', { required: true });
-  }, [register, teacher.id]);
+  }, [register]);
 
   return (
     <>
       <form>
         <Panel title="Nama Guru Pembimbing">
+          {/* TODO: handle error teacher id */}
           <DropdownComponent
             placeholder="Nama guru kamu"
             onSelected={handleSelectTeacher}
             dropdownItem={teachers}
-            withSearch
+            ref={inputRef}
             defaultVal={teacher.name}
+            inputName="teacherId"
             name="teacherId"
           />
         </Panel>

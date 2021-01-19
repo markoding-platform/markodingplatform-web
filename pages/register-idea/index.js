@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { shape } from 'prop-types';
+import { useRouter } from 'next/router';
 
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
@@ -10,16 +11,23 @@ import { SSO } from 'utils/auth';
 import withAuthSync from 'hoc/withAuthSync';
 
 const RegisterIdea = ({ user }) => {
+  const router = useRouter();
   const id = user?.id || '';
+  const { profileType = '' } = user?.profile;
+
   const authenticate = useCallback(async () => {
     await SSO();
   }, []);
 
   useEffect(() => {
+    // TODO need to find better approach to protecting routes
     if (!id) {
       authenticate();
     }
-  }, [authenticate, id]);
+    if (profileType === 'teacher') {
+      router.push('/');
+    }
+  }, [authenticate, id, profileType, router]);
 
   if (!id) {
     return null;
@@ -41,8 +49,7 @@ const RegisterIdea = ({ user }) => {
 
 RegisterIdea.propTypes = {
   user: shape({
-    email: null,
-    exId: null,
+    profile: shape({}),
     id: '',
     name: '',
   }).isRequired,

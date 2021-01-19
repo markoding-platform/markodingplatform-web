@@ -9,8 +9,9 @@ const CourseCard = (props) => {
   return (
     <Card className={styles.card}>
       <div className={styles.image}>
-        <Image src={imageUrl} alt={title} layout="fill" />
+        {imageUrl && <Image src={imageUrl} alt={title} layout="fill" />}
       </div>
+
       <Card.Body>
         <Card.Title className={styles.title}>{title}</Card.Title>
         <Card.Text className={styles.text}>{description}</Card.Text>
