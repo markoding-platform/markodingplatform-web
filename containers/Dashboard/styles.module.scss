@@ -106,3 +106,12 @@
   text-align: center;
   margin-top: 16px;
 }
+
+.styCourses {
+  display: flex;
+  overflow-x: auto;
+  max-width: 900px;
+  > div {
+    margin: 5px;
+  }
+}

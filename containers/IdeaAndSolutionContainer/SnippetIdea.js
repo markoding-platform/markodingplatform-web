@@ -71,8 +71,8 @@ SnippetIdea.defaultProps = {
   ideaId: '',
   solutionVision: '',
   solutionName: '',
-  commentCount: 12,
-  likeCount: 3,
+  commentCount: 0,
+  likeCount: 0,
 };
 
 SnippetIdea.propTypes = {

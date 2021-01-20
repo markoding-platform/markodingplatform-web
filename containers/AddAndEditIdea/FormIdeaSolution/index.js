@@ -38,7 +38,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     defaultValues: {
       schoolName: profile.schoolName,
       schoolId: profile.schoolId,
-      teacherId: teacher.userId,
+      teacherId: teacher.userId || '',
     },
   });
 
@@ -90,18 +90,19 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     register('teacherId', { required: true });
     register('schoolId', { required: true });
     register('schoolName', { required: true });
-  }, [register, teacher.id]);
+  }, [register]);
 
   return (
     <>
       <form>
         <Panel title="Nama Guru Pembimbing">
+          {/* TODO: handle error teacher id */}
           <DropdownComponent
             placeholder="Nama guru kamu"
             onSelected={handleSelectTeacher}
             dropdownItem={teachers}
-            withSearch
             defaultVal={teacher.name}
+            inputName="teacherId"
             name="teacherId"
           />
         </Panel>
