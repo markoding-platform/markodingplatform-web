@@ -13,7 +13,7 @@ import withAuthSync from 'hoc/withAuthSync';
 const RegisterIdea = ({ user }) => {
   const router = useRouter();
   const id = user?.id || '';
-  const { profileType = '' } = user?.profile;
+  const { profileType = '' } = user?.profile || {};
 
   const authenticate = useCallback(async () => {
     await SSO();
