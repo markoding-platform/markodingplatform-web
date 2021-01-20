@@ -1,3 +1,5 @@
+@use 'styles/breakpoint';
+
 .blogGrid {
   box-shadow: 0px 25px 50px rgba(35, 37, 96, 0.07);
   margin-bottom: 30px;
@@ -5,6 +7,13 @@
 
 .blogWrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(308px, 1fr));
+  grid-template-columns: repeat(3, calc((100% / 3)));
   grid-gap: 16px;
+  @media (max-width: breakpoint.$sm) {
+    grid-template-columns: repeat(2, calc((100% / 2)));
+  }
+}
+
+.blogCardWrapper {
+  width: 100%;
 }

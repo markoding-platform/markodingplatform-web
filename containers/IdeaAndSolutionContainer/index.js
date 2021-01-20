@@ -78,6 +78,8 @@ const IdeaAndSolutionContainer = () => {
                 solutionName,
                 solutionSupportingPhotos,
                 solutionMission,
+                totalLikes,
+                totalComments,
               } = idea;
               return (
                 <div key={id} className={ideaCardWrapper}>
@@ -86,6 +88,8 @@ const IdeaAndSolutionContainer = () => {
                     imageUrl={solutionSupportingPhotos?.[0] || defaultPic}
                     link={`/idea/${id}`}
                     description={solutionMission}
+                    likeCount={totalLikes}
+                    commentCount={totalComments}
                   />
                 </div>
               );

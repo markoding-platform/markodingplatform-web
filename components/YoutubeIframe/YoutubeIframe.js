@@ -11,7 +11,7 @@ import {
   styPlayBtn,
 } from './styles.module.scss';
 
-const YoutubeIframe = ({ solutionPitchUrl }) => {
+const YoutubeIframe = ({ solutionPitchUrl, className }) => {
   const videoID = solutionPitchUrl && youtubeVideoIdParser(solutionPitchUrl);
   const embedURL =
     videoID &&
@@ -55,51 +55,54 @@ const YoutubeIframe = ({ solutionPitchUrl }) => {
 
   return (
     <>
-      {embedURL ? (
-        <div
-          className={`${styVideoContainer}`}
-          onClick={handleClickVideo}
-          aria-hidden="true"
-        >
-          <>
-            <iframe
-              title="youtube video"
-              src={isPlaying ? embedURL : ''}
-              frameBorder="0"
-              allowFullScreen
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            />
-            {!isPlaying && (
-              <div>
-                <picture>
-                  {thumbnailUrls.length > 0 && (
-                    <source srcSet={thumbnailUrls} type="image/webp" />
-                  )}
-                  <img
-                    src={defaultThumnails}
-                    className={styThumbnail}
-                    alt="thumbnail"
-                  />
-                  <a className={styPlayBtn}>
-                    <div className={styArrow} />
-                  </a>
-                </picture>
-              </div>
-            )}
-          </>
+      {videoID && !thumbnailUrls.length && <EmptyPlaceholder />}
+      {videoID && embedURL && (
+        <div className={className}>
+          <div
+            className={`${styVideoContainer}`}
+            onClick={handleClickVideo}
+            aria-hidden="true"
+          >
+            <>
+              <iframe
+                title="youtube video"
+                src={isPlaying ? embedURL : ''}
+                frameBorder="0"
+                allowFullScreen
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              />
+              {!isPlaying && (
+                <div>
+                  <picture>
+                    {thumbnailUrls.length > 0 && (
+                      <source srcSet={thumbnailUrls} type="image/webp" />
+                    )}
+                    <img
+                      src={defaultThumnails}
+                      className={styThumbnail}
+                      alt="thumbnail"
+                    />
+                    <a className={styPlayBtn}>
+                      <div className={styArrow} />
+                    </a>
+                  </picture>
+                </div>
+              )}
+            </>
+          </div>
         </div>
-      ) : (
-        <EmptyPlaceholder />
       )}
     </>
   );
 };
 
 YoutubeIframe.defaultProps = {
-  solutionPitchUrl: 'string',
+  className: '',
+  solutionPitchUrl: '',
 };
 
 YoutubeIframe.propTypes = {
+  className: string,
   solutionPitchUrl: string,
 };
 
