@@ -13,7 +13,8 @@ const Layout = ({ children, activeMenu, withFooter }) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const { innerWidth } = window;
-      setRightWidth(innerWidth - 290);
+      const rw = innerWidth - 290;
+      setRightWidth(rw > 1200 ? `${rw}px` : '100%');
     }
   }, []);
 
@@ -58,7 +59,7 @@ const Layout = ({ children, activeMenu, withFooter }) => {
             className="flex-grow-1 desktop-right-section"
             style={
               rightWidth && {
-                maxWidth: `${rightWidth}px`,
+                maxWidth: `${rightWidth}`,
               }
             }
           >
