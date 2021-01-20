@@ -19,6 +19,7 @@ import {
   contacts,
   footerInner,
   footerInfo,
+  styLinkItem,
 } from './style.module.scss';
 
 const footerData = [
@@ -27,11 +28,11 @@ const footerData = [
     children: [
       {
         text: 'Masuk',
-        link: '/',
+        link: 'https://beta.skilvul.com/partners/markoding/signin',
       },
       {
         text: 'Daftar',
-        link: '/',
+        link: 'https://beta.skilvul.com/partners/markoding/signin',
       },
     ],
   },
@@ -48,11 +49,11 @@ const footerData = [
       },
       {
         text: 'Kelas',
-        link: '/',
+        link: '/course',
       },
       {
         text: 'Blog',
-        link: '/',
+        link: '/blog',
       },
       {
         text: 'Forum Diskusi',
@@ -65,17 +66,17 @@ const footerData = [
     children: [
       {
         text: 'Instagram',
-        link: '/',
+        link: 'https://instagram.com/markoding',
         icon: icInstagram,
       },
       {
         text: 'Facebook',
-        link: '/',
+        link: 'https://www.facebook.com/markodingID/',
         icon: icFacebook,
       },
       {
         text: 'Youtube',
-        link: '/',
+        link: '',
         icon: icYoutube,
       },
     ],
@@ -114,7 +115,7 @@ const Footer = () => (
                   {item.children.map((c = {}, idx) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <Link key={idx} href={c.link}>
-                      <div>
+                      <div className={styLinkItem}>
                         {c.icon && (
                           <Icon src={c.icon} size={14} className="mr-2" />
                         )}
@@ -146,7 +147,7 @@ const Footer = () => (
         </p>
         <p className="text-secondary">
           <FiMail className="pr-1" size={20} />
-          <span>info@markoding.com</span>
+          <span>contact@markoding.com</span>
         </p>
       </div>
     </div>

@@ -15,7 +15,7 @@ const AuthButton = () => {
   const userProfile = canUseDOM && getCookie('userProfile');
   const idea = userIdea ? JSON.parse(userIdea) : {};
   const profile = userProfile ? JSON.parse(userProfile) : {};
-  const ideaId = idea.id || '';
+  const ideaId = idea?.id || '';
 
   const checkAccount = () => {
     const logged = getCookie('markodingToken');
@@ -33,10 +33,10 @@ const AuthButton = () => {
   }, [profile.profileType]);
 
   const isAllowedRegisterIdea = useMemo(() => {
-    if (ideaId && isStudent) {
-      return false;
+    if (isStudent && !ideaId) {
+      return true;
     }
-    return true;
+    return false;
   }, [ideaId, isStudent]);
 
   const authenticate = async () => {
@@ -101,7 +101,7 @@ const AuthButton = () => {
               </Link>
             )}
             <Link href="/dashboard">
-              <Dropdown.Item href="/dashboard">Lihat Profil</Dropdown.Item>
+              <Dropdown.Item href="/dashboard">Dashboard</Dropdown.Item>
             </Link>
             <Dropdown.Item onClick={doLogout}>Keluar</Dropdown.Item>
           </Dropdown.Menu>
