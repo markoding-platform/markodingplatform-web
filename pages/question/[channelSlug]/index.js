@@ -19,7 +19,7 @@ const ChatThread = ({ user, channelSlug }) => {
   const isLoading = !data && !error;
 
   return (
-    <Layout activeMenu="/question">
+    <Layout activeMenu="/question" withFooter={false}>
       <div className={styles.chatContent}>
         <div className="pb-4">
           <PointBadgeWrapper />

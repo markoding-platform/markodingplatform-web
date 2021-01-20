@@ -2,22 +2,32 @@ import { string } from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import ForumCard from 'components/ForumCard';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import useQuestion from 'hooks/useQuestion';
 import range from 'utils/range';
 import BoxLoader from 'components/Shimmer/Box';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 import { mutate } from 'swr';
-import questionMap from '../../map/questionMap';
+import { useRouter } from 'next/router';
+import { LIMIT_PER_PAGE } from 'containers/IdeaAndSolutionContainer/constant';
+import Pagination from 'components/Pagination';
 import styles from './styles.module.scss';
+import questionMap from '../../map/questionMap';
 
 const QuestionContainer = ({ channelSlug }) => {
+  const router = useRouter();
+  const { query } = router;
+  const currentOffset = Number(query?.start) || 0;
+  const currentPage = Number(query?.page) || 1;
+  const search = query?.q || '';
+  const [keyword, setKeyword] = useState(search);
   const { data, error } = useQuestion({
-    url: `/questions/channel/${channelSlug}?limit=6&offset=0`,
+    url: `/questions/channel/${channelSlug}?limit=${LIMIT_PER_PAGE}&offset=${currentOffset}&search=${search}`,
   });
-  const result = data?.result || [];
+  const result = data?.result || {};
+  const { data: questionsRes, pages = {} } = result;
   const isLoading = !data && !error;
-  const questions = result.map(questionMap);
+  const questions = questionsRes ? questionsRes.map(questionMap) : [];
 
   const renderLoader = () => {
     const loaderArr = [];
@@ -48,6 +58,20 @@ const QuestionContainer = ({ channelSlug }) => {
     }
   };
 
+  const handlePageChanged = useCallback(
+    (page) => {
+      const offset = LIMIT_PER_PAGE * page - LIMIT_PER_PAGE;
+      router.replace(
+        `/question/${channelSlug}?page=${page}&start=${offset}&q=${search}`
+      );
+    },
+    [router]
+  );
+
+  const onSearch = () => {
+    router.replace(`/question/${channelSlug}?q=${keyword}`);
+  };
+
   return (
     <>
       <div className={styles.searchGroup}>
@@ -56,13 +80,25 @@ const QuestionContainer = ({ channelSlug }) => {
           placeholder="Cari Pertanyaan"
           className={styles.search}
           disabled={isLoading}
+          value={keyword}
+          onChange={(event) => {
+            setKeyword(event.target.value);
+          }}
+          onKeyPress={(event) => {
+            if (event.key === 'Enter') {
+              onSearch();
+            }
+          }}
         />
-        <BiSearchAlt2 className={styles.searchIcon} />
+        <BiSearchAlt2
+          className={styles.searchIcon}
+          onClick={() => onSearch()}
+        />
       </div>
       <div className="mt-2">
         {isLoading && renderLoader()}
 
-        {!isLoading && result.length > 0 ? (
+        {!isLoading && questions.length > 0 ? (
           questions.map((q) => (
             <div key={q.id} className="mb-3">
               <ForumCard
@@ -80,6 +116,15 @@ const QuestionContainer = ({ channelSlug }) => {
         ) : (
           <p className="text-danger">Tidak ada pertanyaan</p>
         )}
+      </div>
+      <div className="d-flex justify-content-center mt-5">
+        <Pagination
+          totalRecords={pages.count}
+          totalPages={pages.totalPages}
+          pageLimit={LIMIT_PER_PAGE}
+          onPageChanged={handlePageChanged}
+          defaultPage={currentPage}
+        />
       </div>
     </>
   );
