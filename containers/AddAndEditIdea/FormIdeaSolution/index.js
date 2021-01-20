@@ -1,4 +1,4 @@
-import { useEffect, useState, memo, useRef } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { shape, bool } from 'prop-types';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
@@ -26,7 +26,6 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   const profile = user?.profile || {};
 
   const { push, query } = useRouter();
-  const inputRef = useRef(null);
   const { data: teachersResult } = useMyTeachers({
     url: '/users/my/teachers',
   });
@@ -102,7 +101,6 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
             placeholder="Nama guru kamu"
             onSelected={handleSelectTeacher}
             dropdownItem={teachers}
-            ref={inputRef}
             defaultVal={teacher.name}
             inputName="teacherId"
             name="teacherId"

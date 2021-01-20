@@ -34,7 +34,6 @@ const IdeaAndSolutionContainer = () => {
   });
   const result = response?.result || {};
   const { data: ideas, pages = {} } = result;
-  console.log({ ideas });
 
   const isLoading = !response && !error;
 
