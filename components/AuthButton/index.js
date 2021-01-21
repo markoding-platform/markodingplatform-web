@@ -80,29 +80,25 @@ const AuthButton = () => {
           </Dropdown.Toggle>
           <Dropdown.Menu alignRight className={styles.dropDownAccount}>
             <div className={styles.dropDownAccountInfo}>
-              <a href="/dashboard">
-                <Link href="/dashboard">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div className="mr-2">
-                      <Image
-                        src="/assets/avatar-min.png"
-                        width={56}
-                        height={56}
-                        layout="fixed"
-                        className="rounded-circle"
-                      />
-                    </div>
-                    <div>
-                      <h5 className="mb-1 text-nowrap">{userName}</h5>
-                      <span className="text-primary text-nowrap">
-                        {`${number(totalBadge)} MBadge | ${number(
-                          totalPoint
-                        )} MPoin`}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </a>
+              <div className="d-flex justify-content-between align-items-center">
+                <div className="mr-2">
+                  <Image
+                    src="/assets/avatar-min.png"
+                    width={56}
+                    height={56}
+                    layout="fixed"
+                    className="rounded-circle"
+                  />
+                </div>
+                <div>
+                  <h5 className="mb-1 text-nowrap">{userName}</h5>
+                  <span className="text-primary text-nowrap">
+                    {`${number(totalBadge)} MBadge | ${number(
+                      totalPoint
+                    )} MPoin`}
+                  </span>
+                </div>
+              </div>
             </div>
             {isAllowedRegisterIdea && (
               <Link href="/register-idea">

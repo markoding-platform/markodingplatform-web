@@ -1,5 +1,7 @@
+import Form from 'react-bootstrap/Form';
 import { ErrorBoundary } from 'react-error-boundary';
 import { DiHtml53DEffects } from 'react-icons/di';
+import { BiSearchAlt2 } from 'react-icons/bi';
 import { RiArrowRightSLine, RiMedalFill } from 'react-icons/ri';
 import Link from 'next/link';
 import useErrorHandler from 'hooks/useErrorHandler';
@@ -10,7 +12,6 @@ import Icon from 'components/Icons';
 import PropTypes from 'prop-types';
 import useMySkilvulAccount from 'hooks/useMySkilvulAccount';
 import number from 'utils/number';
-import SearchHeader from 'components/SearchHeader';
 import styles from './styles.module.scss';
 
 const PointBadgeWrapper = ({ desktopOnly }) => {
@@ -34,7 +35,14 @@ const PointBadgeWrapper = ({ desktopOnly }) => {
               <RiArrowRightSLine size={22} />
             </div>
             <div className="d-none d-lg-flex w-100 align-items-center ml-4">
-              <SearchHeader />
+              <div className={styles.searchGroup}>
+                <Form.Control
+                  type="text"
+                  placeholder="Search"
+                  className={styles.search}
+                />
+                <BiSearchAlt2 className={styles.searchIcon} />
+              </div>
             </div>
             <div className="d-none d-lg-flex align-items-center ml-4">
               <Link href="/announcement">
