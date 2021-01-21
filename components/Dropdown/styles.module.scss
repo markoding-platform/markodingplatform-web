@@ -46,3 +46,13 @@
   left: 20px;
   font-size: 22px;
 }
+
+.styDropdownMenu {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.styDropdownItem {
+  white-space: wrap !important;
+  word-break: break-word;
+}

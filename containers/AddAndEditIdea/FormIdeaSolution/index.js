@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo, useMemo } from 'react';
 import { shape, bool } from 'prop-types';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
@@ -12,6 +12,7 @@ import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
 import useMyTeachers from 'hooks/useMyTeachers';
+import { PROBLEM_LIST } from '../constants';
 
 import {
   radioBtnWrapper,
@@ -20,6 +21,7 @@ import {
   textArea,
   isRadioActive,
   inputSolutionType,
+  dropdownError,
 } from './styles.module.scss';
 
 const FormIdeaSolution = ({ user, isEditIdea }) => {
@@ -34,13 +36,17 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   const { inputs, idea, setInputs, teacher } = useIdeaFormContext();
   const [ideaState] = useState(idea || inputs?.ideaSolution);
 
-  const { register, handleSubmit, errors, setValue } = useForm({
+  const { register, handleSubmit, errors, setValue, watch } = useForm({
     defaultValues: {
       schoolName: profile.schoolName,
       schoolId: profile.schoolId,
       teacherId: teacher.userId || '',
+      problemArea: ideaState.problemArea,
     },
   });
+
+  const isErrorTeacherField = errors.teacherId && !watch('teacherId');
+  const isErrorProblemAreaField = errors.teacherId && !watch('problemArea');
 
   const [solutionType, setSolutionType] = useState(
     ideaState.solutionType?.trim()
@@ -52,6 +58,14 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     { id: 2, text: 'Aplikasi Game', value: 'Game' },
   ];
 
+  const problemList = useMemo(() => {
+    return PROBLEM_LIST.map((prob, idx) => ({
+      id: idx,
+      name: prob,
+      value: prob,
+    }));
+  }, []);
+
   const handleValidateTeams = () => {
     if (inputs?.teamIds?.length) {
       return true;
@@ -61,7 +75,8 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
 
   const onSubmit = (data) => {
     setInputs({ ...inputs, ideaSolution: { ...data } });
-    if (!handleValidateTeams()) {
+
+    if (!isEditIdea && !handleValidateTeams()) {
       return toast.error(
         <p className="m-0 pl-3">Harap menambah anggota team</p>,
         {
@@ -80,6 +95,10 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     setValue('teacherId', payload.id);
   };
 
+  const handleSelectProblemArea = (payload) => {
+    setValue('problemArea', payload.value);
+  };
+
   useEffect(() => {
     if (Object.keys(user).length < 1) {
       push('/');
@@ -90,21 +109,28 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     register('teacherId', { required: true });
     register('schoolId', { required: true });
     register('schoolName', { required: true });
+    register('problemArea', { required: true });
   }, [register]);
 
   return (
     <>
       <form>
         <Panel title="Nama Guru Pembimbing">
-          {/* TODO: handle error teacher id */}
-          <DropdownComponent
-            placeholder="Nama guru kamu"
-            onSelected={handleSelectTeacher}
-            dropdownItem={teachers}
-            defaultVal={teacher.name}
-            inputName="teacherId"
-            name="teacherId"
-          />
+          <div className={isErrorTeacherField && dropdownError}>
+            <DropdownComponent
+              placeholder="Nama guru kamu"
+              onSelected={handleSelectTeacher}
+              dropdownItem={teachers}
+              defaultVal={teacher.name}
+              inputName="teacherId"
+              name="teacherId"
+            />
+          </div>
+          {isErrorTeacherField && (
+            <Form.Text className="text-muted pt-1">
+              Harap mengisi nama guru
+            </Form.Text>
+          )}
         </Panel>
         <Panel title="Nama Solusi Digital">
           <TextField
@@ -149,14 +175,21 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
           )}
         </Panel>
         <Panel title="Bidang Masalah">
-          <TextField
-            placeholder="Tulis bidang masalah yang ingin kamu selesaikan"
-            defaultVal={ideaState.problemArea}
-            name="problemArea"
-            ref={register({ required: true })}
-            error={!!errors.problemArea}
-            errorTxt="Harap mengisi bidang masalah"
-          />
+          <div className={isErrorProblemAreaField && dropdownError}>
+            <DropdownComponent
+              placeholder="Tulis bidang masalah yang ingin kamu selesaikan"
+              onSelected={handleSelectProblemArea}
+              dropdownItem={problemList}
+              defaultVal={ideaState.problemArea}
+              inputName="problemArea"
+              name="problemArea"
+            />
+          </div>
+          {isErrorProblemAreaField && (
+            <Form.Text className="text-muted pt-1">
+              Harap mengisi nama guru
+            </Form.Text>
+          )}
         </Panel>
         <Panel title="Pemilihan Masalah">
           <TextField

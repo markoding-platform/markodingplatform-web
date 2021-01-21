@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { shape, string } from 'prop-types';
+import { bool, shape, string } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { BsPlus } from 'react-icons/bs';
 
@@ -15,7 +15,7 @@ import {
   teamWrapper,
 } from './styles.module.scss';
 
-const CreateTeam = ({ user }) => {
+const CreateTeam = ({ user, isEditIdea }) => {
   const userSchoolName = user.profile.schoolName;
   const [isShowModal, setIsShowModal] = useState(false);
   const {
@@ -66,7 +66,7 @@ const CreateTeam = ({ user }) => {
                 title="Anggota"
                 primaryText={name}
                 secondaryText={schoolName}
-                withRemoveBtn
+                withRemoveBtn={!isEditIdea}
                 onClickRemove={() => handleRemoveStudents(userId)}
               />
             );
@@ -101,6 +101,7 @@ const CreateTeam = ({ user }) => {
 };
 
 CreateTeam.propTypes = {
+  isEditIdea: bool.isRequired,
   user: shape({
     id: string,
     name: string,

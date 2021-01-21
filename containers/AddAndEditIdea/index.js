@@ -18,7 +18,6 @@ import {
 const RegisterIdeaSolutionContainer = ({ page, user }) => {
   const { pathname } = useRouter();
   const isEditIdea = pathname.includes('/idea/edit');
-  console.log({ isEditIdea, pathname });
   const title = `${isEditIdea ? 'Edit' : 'Registrasi'} Ide Solusi`;
   return (
     <>
@@ -38,7 +37,7 @@ const RegisterIdeaSolutionContainer = ({ page, user }) => {
 
       {page === 1 && (
         <Panel title="Team">
-          <CreateTeam user={user} />
+          <CreateTeam user={user} isEditIdea={isEditIdea} />
         </Panel>
       )}
       {page === 2 ? (

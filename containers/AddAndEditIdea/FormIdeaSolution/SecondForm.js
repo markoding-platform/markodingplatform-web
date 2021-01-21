@@ -3,15 +3,16 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { bool } from 'prop-types';
 
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import { toast } from 'react-toastify';
+import Form from 'react-bootstrap/Form';
 
 import MarkodingFetch from 'libraries/MarkodingFetch';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import { useIdeaFormContext } from 'components/context/IdeaContext';
 import UploadComponent from '../Upload';
-import { textArea } from './styles.module.scss';
+import { textArea, styButton } from './styles.module.scss';
 
 const SecondFormIdeaSolution = ({ isEditIdea }) => {
   const { push, query, back } = useRouter();
@@ -41,7 +42,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
     });
   };
 
-  const handleCreateTeam = async (ideaId) => {
+  const handleCreateTeam = async (ideaId, isDraft = false) => {
     try {
       const { ok } = await MarkodingFetch(`/ideas/${ideaId}/users`, {
         headers: {
@@ -53,9 +54,10 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         }),
       });
       if (ok) {
-        const msg = isEditIdea
-          ? 'Berhasil menyimpan ide'
-          : 'Berhasil mendaftarkan ide mu';
+        const msg =
+          isEditIdea || isDraft
+            ? 'Berhasil menyimpan ide'
+            : 'Berhasil mendaftarkan ide mu';
         renderToast(msg);
         push('/idea');
       } else {
@@ -77,7 +79,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         body: JSON.stringify(payload),
       });
       if (ok) {
-        handleCreateTeam(result.id);
+        handleCreateTeam(result.id, payload.isDraft);
       } else {
         renderToast('Gagal menyimpan ide mu', true);
       }
@@ -98,7 +100,6 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         body: JSON.stringify(payload),
       });
       if (ok) {
-        // edit team still not support from BE
         renderToast('Berhasil menyimpan ide mu');
         push('/idea');
       } else {
@@ -203,6 +204,9 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
             name="solutionPitchUrl"
             ref={register({ required: false })}
           />
+          <Form.Text className="text-muted pt-1">
+            URL video yang didukung saat ini adalah URL video dari Youtube.
+          </Form.Text>
         </Panel>
         <Panel title="Gambar/Foto Pendukung Ide Solusi">
           <UploadComponent
@@ -221,17 +225,25 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
           />
         </Panel>
         <div className="d-flex justify-content-end">
-          <Button variant="outline-primary mr-2" onClick={handleBack}>
+          <Button
+            variant="outline-primary"
+            className={`mr-2 ${styButton}`}
+            onClick={handleBack}
+          >
             Kembali
           </Button>
           <Button
             variant="secondary"
-            className="mr-2"
+            className={`mr-2 ${styButton}`}
             onClick={handleSubmit(onSubmitAsDraft)}
           >
             Simpan Sebagai Draft
           </Button>
-          <Button variant="primary" onClick={handleSubmit(onSubmit)}>
+          <Button
+            variant="primary"
+            className={`mr-2 ${styButton}`}
+            onClick={handleSubmit(onSubmit)}
+          >
             {isEditIdea ? 'Simpan' : 'Kirim Ide Solusi'}
           </Button>
         </div>

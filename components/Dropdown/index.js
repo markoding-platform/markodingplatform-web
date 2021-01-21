@@ -15,6 +15,8 @@ import {
   searchGroup,
   searchIcon,
   search,
+  styDropdownMenu,
+  styDropdownItem,
 } from './styles.module.scss';
 
 const CustomToggle = forwardRef(({ children, onClick }, ref) => {
@@ -89,7 +91,7 @@ const DropdownComponent = ({
           {selectedDropdown || placeholder}
         </span>
       </Dropdown.Toggle>
-      <Dropdown.Menu className="w-100 p-2">
+      <Dropdown.Menu className={`w-100 p-2 ${styDropdownMenu}`}>
         <>
           {withSearch && (
             <div className={searchGroup}>
@@ -103,8 +105,12 @@ const DropdownComponent = ({
             </div>
           )}
           {items.map((item, idx) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Dropdown.Item key={idx} onClick={() => handleOnClick(item)}>
+            <Dropdown.Item
+              // eslint-disable-next-line react/no-array-index-key
+              key={idx}
+              className={styDropdownItem}
+              onClick={() => handleOnClick(item)}
+            >
               {item.name}
             </Dropdown.Item>
           ))}

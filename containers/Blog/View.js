@@ -1,8 +1,8 @@
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import BlogCard from 'components/BlogCard';
 import useBlog from 'hooks/useBlog';
 import BlogLoader from './Loader';
+
+import { blogWrapper, blogCardWrapper } from './styles.module.scss';
 
 const BlogContainer = () => {
   const { error, data } = useBlog({
@@ -16,11 +16,11 @@ const BlogContainer = () => {
       <div className="d-flex align-items-center mb-4">
         <h1 className="h3">Cerita Markoding</h1>
       </div>
-      <Row>
+      <div className={blogWrapper}>
         {isLoading && <BlogLoader />}
         {!isLoading && result.length && !error ? (
           result.map((blog) => (
-            <Col key={blog.id} xs={6} lg={4}>
+            <div key={blog.id} className={blogCardWrapper}>
               <BlogCard
                 key={blog.id}
                 imageUrl={blog.imageUrl}
@@ -29,12 +29,12 @@ const BlogContainer = () => {
                 date={blog.createdAt}
                 link={`/blog/${blog.id}`}
               />
-            </Col>
+            </div>
           ))
         ) : (
           <></>
         )}
-      </Row>
+      </div>
     </div>
   );
 };

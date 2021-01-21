@@ -3,8 +3,11 @@
 
 .ideasWrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(308px, 1fr));
+  grid-template-columns: repeat(3, calc((100% / 3)));
   grid-gap: 16px;
+  @media (max-width: breakpoint.$sm) {
+    grid-template-columns: repeat(2, calc((100% / 2)));
+  }
 }
 .ideaCardWrapper {
   width: 100%;
