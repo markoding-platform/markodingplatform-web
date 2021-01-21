@@ -41,7 +41,7 @@ const SearchMember = ({ onSelectStudent }) => {
 
   const getStudent = async (keyword) => {
     const { ok, result } = await MarkodingFetch(
-      `/users/my/students/not-in-team?search=${keyword}`,
+      `/users/my/students/not-in-team?keyword=${keyword}`,
       {
         headers: {
           'Content-Type': 'application/json',
