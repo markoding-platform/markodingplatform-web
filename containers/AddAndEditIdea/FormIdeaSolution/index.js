@@ -66,10 +66,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     }));
   }, []);
 
-  console.log({ errors });
-
   const handleValidateTeams = () => {
-    console.log(!isEditIdea && inputs?.teamIds?.length);
     if (inputs?.teamIds?.length) {
       return true;
     }
