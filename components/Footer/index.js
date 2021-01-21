@@ -91,7 +91,7 @@ const Footer = () => (
             <a>
               <img
                 src={dicLogo}
-                width="406px"
+                width="450px"
                 height="24px"
                 alt="digital innovation challenge logo"
               />

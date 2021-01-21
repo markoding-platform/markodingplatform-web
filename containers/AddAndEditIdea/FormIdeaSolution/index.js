@@ -41,6 +41,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
       schoolName: profile.schoolName,
       schoolId: profile.schoolId,
       teacherId: teacher.userId || '',
+      problemArea: ideaState.problemArea,
     },
   });
 
@@ -68,6 +69,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   console.log({ errors });
 
   const handleValidateTeams = () => {
+    console.log(!isEditIdea && inputs?.teamIds?.length);
     if (inputs?.teamIds?.length) {
       return true;
     }
@@ -77,7 +79,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   const onSubmit = (data) => {
     setInputs({ ...inputs, ideaSolution: { ...data } });
 
-    if (!handleValidateTeams()) {
+    if (!isEditIdea && !handleValidateTeams()) {
       return toast.error(
         <p className="m-0 pl-3">Harap menambah anggota team</p>,
         {
@@ -99,8 +101,6 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   const handleSelectProblemArea = (payload) => {
     setValue('problemArea', payload.value);
   };
-
-  console.log('pdpdpd', watch('teacherId'));
 
   useEffect(() => {
     if (Object.keys(user).length < 1) {

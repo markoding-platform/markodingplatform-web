@@ -32,7 +32,7 @@ const DashboardContainer = ({ user }) => {
   const badges = [];
   const { push } = useRouter();
 
-  const { id } = ideaUser;
+  const { id } = ideaUser || {};
 
   const { data = {} } = useIdeaSolution({
     url: `/ideas/${id}`,

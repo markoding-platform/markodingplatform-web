@@ -142,7 +142,7 @@ const IdeaDetails = () => {
         <div className={teamInfo}>
           <div className={infoItem}>
             <p className="text-3rd m-0">Status Tim</p>
-            <p className="info__text m-0">{idea.teamStatus}</p>
+            <p className="info__text m-0">{idea.status}</p>
           </div>
           <div className={infoItem}>
             <p className="text-3rd m-0">Nama Sekolah</p>

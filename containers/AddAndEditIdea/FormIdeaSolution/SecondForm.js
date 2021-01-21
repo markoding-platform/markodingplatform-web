@@ -42,7 +42,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
     });
   };
 
-  const handleCreateTeam = async (ideaId) => {
+  const handleCreateTeam = async (ideaId, isDraft = false) => {
     try {
       const { ok } = await MarkodingFetch(`/ideas/${ideaId}/users`, {
         headers: {
@@ -54,9 +54,10 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         }),
       });
       if (ok) {
-        const msg = isEditIdea
-          ? 'Berhasil menyimpan ide'
-          : 'Berhasil mendaftarkan ide mu';
+        const msg =
+          isEditIdea || isDraft
+            ? 'Berhasil menyimpan ide'
+            : 'Berhasil mendaftarkan ide mu';
         renderToast(msg);
         push('/idea');
       } else {
@@ -78,7 +79,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         body: JSON.stringify(payload),
       });
       if (ok) {
-        handleCreateTeam(result.id);
+        handleCreateTeam(result.id, payload.isDraft);
       } else {
         renderToast('Gagal menyimpan ide mu', true);
       }
