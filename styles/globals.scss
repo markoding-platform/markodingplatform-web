@@ -129,3 +129,18 @@ a {
 .center {
   margin: 0 auto;
 }
+
+.pointer {
+	cursor: pointer !important;
+}
+
+.page-link {
+	color: colors.$black !important;
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+.page-item.active .page-link {
+	background-color: colors.$yellow !important;
+	border-color: colors.$yellow !important;
+}

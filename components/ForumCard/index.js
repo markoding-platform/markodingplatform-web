@@ -46,9 +46,9 @@ const ForumCard = (props) => {
       </Link>
       <div className="d-flex justify-content-start border-top pt-2 pb-2 pl-3 pr-3">
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-        <div className="mr-5" onClick={onLike}>
+        <div className="mr-5 pointer" onClick={onLike}>
           <BsFillHeartFill className={styles.iconLike} />
-          {`${number(likeCount)} Likes`}
+          <span>{`${number(likeCount)} Likes`}</span>
         </div>
         <div>
           <Card.Link href={link}>
