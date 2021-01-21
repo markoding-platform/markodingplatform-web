@@ -1,0 +1,36 @@
+@use 'styles/breakpoint';
+@use 'styles/colors';
+
+.textAction {
+  margin-left: 8px;
+  color: colors.$secondary;
+  @media (max-width: breakpoint.$sm) {
+    display: none;
+  }
+}
+
+.btnTopAction {
+  display: flex;
+  height: 40px;
+  width: 108px;
+  border-radius: 4px;
+  padding: 8px;
+  background: colors.$white;
+  justify-content: center;
+  align-items: center;
+  &:first-of-type {
+    margin-right: 8px;
+  }
+
+  @media (max-width: breakpoint.$sm) {
+    width: 54px;
+    height: 40px;
+  }
+}
+
+.listItem {
+  border: 0;
+  border-bottom: 1px solid #f2f3f4;
+  padding: 0;
+  text-align: left;
+}

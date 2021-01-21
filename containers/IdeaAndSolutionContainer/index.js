@@ -7,10 +7,11 @@ import IdeaCard from 'components/IdeaCard';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import CardLoader from 'components/Shimmer/Card';
 import Pagination from 'components/Pagination';
+import SortComponent from 'components/Sort';
+import FilterIdea from 'components/Filter';
 import useIdeaSolution from 'hooks/useIdeaSolution';
 import emptyFolderSvg from 'svgs/empty-folder.svg';
-import FilterIdea from './Filter';
-import SortIdea from './Sort';
+
 import {
   ideasWrapper,
   ideaCardWrapper,
@@ -28,12 +29,38 @@ const IdeaAndSolutionContainer = () => {
   const { query } = router;
   const currentOffset = Number(query?.start) || 0;
   const currentPage = Number(query?.page) || 1;
+  const SORT_IDEA = [
+    {
+      id: 0,
+      name: 'Sortir berdasarkan A-Z',
+      value: 'solutionName',
+    },
+    {
+      id: 1,
+      name: 'Sortir berdasarkan Z-A',
+      value: '-solutionName',
+    },
+  ];
+
+  const FILTER_IDEA = [
+    {
+      id: 0,
+      name: 'Berdasarkan bidang masalah',
+      value: 'problemArea',
+    },
+    {
+      id: 1,
+      name: 'Berdasarkan tipe solusi',
+      value: 'solutionType',
+    },
+  ];
 
   const { data: response, error } = useIdeaSolution({
     url: `/ideas?offset=${currentOffset}&limit=${LIMIT_PER_PAGE}`,
   });
   const result = response?.result || {};
-  const { data: ideas, pages = {} } = result;
+  const { data, pages = {} } = result || {};
+  const ideas = data || [];
 
   const isLoading = !response && !error;
 
@@ -44,6 +71,14 @@ const IdeaAndSolutionContainer = () => {
     },
     [router]
   );
+
+  const handleClicSort = useCallback((sort) => {
+    console.log(sort, sort);
+  }, []);
+
+  const handleClickFilter = useCallback((filter) => {
+    console.log(filter, filter);
+  }, []);
 
   const renderLoader = () => {
     const loaderArr = [];
@@ -63,8 +98,14 @@ const IdeaAndSolutionContainer = () => {
       <div className="d-flex justify-content-between">
         <h2>Galeri Ide Solusi</h2>
         <div className="d-flex">
-          <SortIdea />
-          <FilterIdea />
+          <SortComponent
+            sortItems={SORT_IDEA}
+            onClickSortItem={handleClicSort}
+          />
+          <FilterIdea
+            filterItems={FILTER_IDEA}
+            onClickFilterItem={handleClickFilter}
+          />
         </div>
       </div>
 
