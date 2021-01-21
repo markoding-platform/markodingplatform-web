@@ -7,6 +7,8 @@ import getCookie from 'utils/getCookie';
 import { Logout, SSO } from 'utils/auth';
 import Image from 'next/image';
 import canUseDOM from 'utils/canUseDOM';
+import useMySkilvulAccount from 'hooks/useMySkilvulAccount';
+import number from 'utils/number';
 
 const AuthButton = () => {
   const [isLogged, setIsLogged] = useState(false);
@@ -16,6 +18,9 @@ const AuthButton = () => {
   const idea = userIdea ? JSON.parse(userIdea) : {};
   const profile = userProfile ? JSON.parse(userProfile) : {};
   const ideaId = idea?.id || '';
+  const account = useMySkilvulAccount();
+  const totalBadge = account && account.totalBadge ? account.totalBadge : 0;
+  const totalPoint = account && account.totalPoint ? account.totalPoint : 0;
 
   const checkAccount = () => {
     const logged = getCookie('markodingToken');
@@ -88,7 +93,9 @@ const AuthButton = () => {
                 <div>
                   <h5 className="mb-1 text-nowrap">{userName}</h5>
                   <span className="text-primary text-nowrap">
-                    0 MBadge | 0 MPoin
+                    {`${number(totalBadge)} MBadge | ${number(
+                      totalPoint
+                    )} MPoin`}
                   </span>
                 </div>
               </div>

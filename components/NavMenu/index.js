@@ -4,9 +4,10 @@ import { BsChevronDown } from 'react-icons/bs';
 
 import Footer from 'components/Footer';
 import useNavItem from 'hooks/useNavItem';
+import PropTypes from 'prop-types';
 import { rotateDown, rotate, bgPrimary } from './styles.module.scss';
 
-const NavMenu = () => {
+const NavMenu = ({ onClickMenu }) => {
   const navItems = useNavItem();
   const [showNavTreeId, setShowNavTreeId] = useState(null);
   const handleShowNavTree = (val) => {
@@ -37,7 +38,7 @@ const NavMenu = () => {
                 </div>
               ) : (
                 <Link href={navItem.link}>
-                  <a href={navItem.link}>
+                  <a href={navItem.link} onClick={onClickMenu}>
                     <div className="d-flex align-items-start">
                       {navItem.text}
                       {navItem.withBadge && (
@@ -72,6 +73,14 @@ const NavMenu = () => {
       </div>
     </>
   );
+};
+
+NavMenu.defaultProps = {
+  onClickMenu: () => {},
+};
+
+NavMenu.propTypes = {
+  onClickMenu: PropTypes.func,
 };
 
 export default NavMenu;

@@ -22,7 +22,7 @@ const QuestionContainer = ({ channelSlug }) => {
   const search = query?.q || '';
   const [keyword, setKeyword] = useState(search);
   const { data, error } = useQuestion({
-    url: `/questions/channel/${channelSlug}?limit=${LIMIT_PER_PAGE}&offset=${currentOffset}&search=${search}`,
+    url: `/questions/channel/${channelSlug}?limit=${LIMIT_PER_PAGE}&offset=${currentOffset}&keyword=${search}`,
   });
   const result = data?.result || {};
   const { data: questionsRes, pages = {} } = result;

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-
+import Link from 'next/link';
 import { BsList } from 'react-icons/bs';
 import Icon from 'components/Icons';
 import MarkodingLogo from 'components/MarkodingLogo';
 import DicLogo from 'components/DICLogo';
 import Drawer from 'components/Drawer';
-import skilvulLogo from 'svgs/skilvulLogo.svg';
 import NavMenu from 'components/NavMenu';
 import notif from 'svgs/notif.svg';
 
@@ -14,7 +13,6 @@ import {
   headerWrapper,
   burgerBtn,
   desktopLogo,
-  grayish,
   rootHeader,
 } from './styles.module.scss';
 
@@ -41,8 +39,11 @@ const Header = () => {
             </button>
             <MarkodingLogo />
             <div className="d-flex">
-              <Icon src={skilvulLogo} size={30} className={grayish} />
-              <Icon src={notif} size={30} />
+              <Link href="/announcement">
+                <a href="/announcement">
+                  <Icon src={notif} size={30} />
+                </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -51,7 +52,7 @@ const Header = () => {
             isOpen={isOpeDrawer}
             onClose={() => setIsOpenDrawer(!isOpeDrawer)}
           >
-            <NavMenu />
+            <NavMenu onClickMenu={() => setIsOpenDrawer(false)} />
           </Drawer>
         )}
       </div>

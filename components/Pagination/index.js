@@ -1,5 +1,6 @@
 import { useState, memo } from 'react';
 import { number, func } from 'prop-types';
+import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
 
 import Pagination from 'react-bootstrap/Pagination';
 import range from 'utils/range';
@@ -50,15 +51,16 @@ const PaginationComponent = ({
   return (
     <div>
       <Pagination>
-        <Pagination.Prev
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-        />
+        <Pagination.Prev onClick={handlePrevPage} disabled={currentPage === 1}>
+          <IoMdArrowRoundBack />
+        </Pagination.Prev>
         {renderController()}
         <Pagination.Next
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
-        />
+        >
+          <IoMdArrowRoundForward />
+        </Pagination.Next>
       </Pagination>
     </div>
   );

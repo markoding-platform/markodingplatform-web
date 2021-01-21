@@ -5,7 +5,7 @@ import markodingLogo from 'public/assets/markoding-logo-min.png';
 
 const MarkodingLogo = ({ className, width, height }) => (
   <Link href="/" className={className}>
-    <a>
+    <a href="/">
       <img src={markodingLogo} style={{ width, height }} alt="markoding logo" />
     </a>
   </Link>

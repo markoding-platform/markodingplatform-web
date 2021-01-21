@@ -9,6 +9,8 @@
     position: fixed;
     max-width: 290px;
     width: 290px;
+		max-height: 100vh;
+		overflow-y: auto;
   }
 }
 .innerHeader {
