@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import range from 'utils/range';
@@ -29,6 +29,7 @@ const IdeaAndSolutionContainer = () => {
   const { query } = router;
   const currentOffset = Number(query?.start) || 0;
   const currentPage = Number(query?.page) || 1;
+  const [activeSort, setActiveSort] = useState('');
   const SORT_IDEA = [
     {
       id: 0,
@@ -56,7 +57,7 @@ const IdeaAndSolutionContainer = () => {
   ];
 
   const { data: response, error } = useIdeaSolution({
-    url: `/ideas?offset=${currentOffset}&limit=${LIMIT_PER_PAGE}`,
+    url: `/ideas?offset=${currentOffset}&limit=${LIMIT_PER_PAGE}&sort=${activeSort}`,
   });
   const result = response?.result || {};
   const { data, pages = {} } = result || {};
@@ -72,8 +73,8 @@ const IdeaAndSolutionContainer = () => {
     [router]
   );
 
-  const handleClicSort = useCallback((sort) => {
-    console.log(sort, sort);
+  const handleClicSort = useCallback((sort = {}) => {
+    setActiveSort(sort.value);
   }, []);
 
   const handleClickFilter = useCallback((filter) => {
@@ -92,6 +93,9 @@ const IdeaAndSolutionContainer = () => {
     return loaderArr;
   };
 
+  if (isLoading) {
+    return <div className={ideasWrapper}>{renderLoader()}</div>;
+  }
   return (
     <>
       <ScrollToTop />
@@ -109,7 +113,6 @@ const IdeaAndSolutionContainer = () => {
         </div>
       </div>
 
-      {isLoading && <div className={ideasWrapper}>{renderLoader()}</div>}
       {!isLoading && ideas.length > 0 && !error && (
         <>
           <div className={ideasWrapper}>

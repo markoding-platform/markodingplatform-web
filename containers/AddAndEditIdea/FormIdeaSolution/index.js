@@ -34,6 +34,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   const teachers = teachersResult;
 
   const { inputs, idea, setInputs, teacher } = useIdeaFormContext();
+  console.log(idea.problemArea, inputs?.ideaSolution?.problemArea);
   const [ideaState] = useState(idea || inputs?.ideaSolution);
 
   const { register, handleSubmit, errors, setValue, watch } = useForm({
