@@ -93,9 +93,6 @@ const IdeaAndSolutionContainer = () => {
     return loaderArr;
   };
 
-  if (isLoading) {
-    return <div className={ideasWrapper}>{renderLoader()}</div>;
-  }
   return (
     <>
       <ScrollToTop />
@@ -112,7 +109,7 @@ const IdeaAndSolutionContainer = () => {
           />
         </div>
       </div>
-
+      {isLoading && <div className={ideasWrapper}>{renderLoader()}</div>}
       {!isLoading && ideas.length > 0 && !error && (
         <>
           <div className={ideasWrapper}>
