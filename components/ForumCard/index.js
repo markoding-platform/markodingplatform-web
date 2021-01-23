@@ -12,6 +12,7 @@ import styles from './styles.module.scss';
 const ForumCard = (props) => {
   const {
     imageUrl,
+    userId,
     name,
     comment,
     likeCount,
@@ -23,9 +24,9 @@ const ForumCard = (props) => {
 
   return (
     <div className={styles.root}>
-      <Link href={link}>
-        <Media className="p-3">
-          <div className={styles.avatar}>
+      <Media className="p-3">
+        <div className={styles.avatar}>
+          <Link href={`/user/${userId}`}>
             <Image
               src={imageUrl}
               alt={name}
@@ -34,27 +35,31 @@ const ForumCard = (props) => {
               layout="responsive"
               className="rounded"
             />
-          </div>
-          <Media.Body>
-            <Card.Link href={link}>
+          </Link>
+        </div>
+        <Media.Body>
+          <Link href={`/user/${userId}`}>
+            <Card.Link href={`/user/${userId}`}>
               <h5>{name}</h5>
             </Card.Link>
-            <p className={styles.time}>{time}</p>
-            <p className={styles.text}>{comment}</p>
-          </Media.Body>
-        </Media>
-      </Link>
+          </Link>
+          <p className={styles.time}>{time}</p>
+          <p className={styles.text}>{comment}</p>
+        </Media.Body>
+      </Media>
       <div className="d-flex justify-content-start border-top pt-2 pb-2 pl-3 pr-3">
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-        <div className="mr-5 pointer" onClick={onLike}>
+        <div className={styles.textLike} onClick={onLike}>
           <BsFillHeartFill className={styles.iconLike} />
           <span>{`${number(likeCount)} Likes`}</span>
         </div>
         <div>
-          <Card.Link href={link}>
-            <IoMdChatbubbles className={styles.iconComment} />
-            {`${number(commentCount)} Comments`}
-          </Card.Link>
+          <Link href={link}>
+            <Card.Link href={link}>
+              <IoMdChatbubbles className={styles.iconComment} />
+              {`${number(commentCount)} Comments`}
+            </Card.Link>
+          </Link>
         </div>
       </div>
     </div>
@@ -70,6 +75,7 @@ ForumCard.defaultProps = {
 
 ForumCard.propTypes = {
   imageUrl: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   comment: PropTypes.string.isRequired,
   likeCount: PropTypes.number,
