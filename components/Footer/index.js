@@ -76,7 +76,7 @@ const footerData = [
       },
       {
         text: 'Youtube',
-        link: '',
+        link: 'https://www.youtube.com/channel/UCxPh-UrSnGhLLRFv8gz-7tA',
         icon: icYoutube,
       },
     ],
@@ -115,12 +115,14 @@ const Footer = () => (
                   {item.children.map((c = {}, idx) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <Link key={idx} href={c.link}>
-                      <div className={styLinkItem}>
-                        {c.icon && (
-                          <Icon src={c.icon} size={14} className="mr-2" />
-                        )}
-                        {c.text}
-                      </div>
+                      <a href={c.link} className="text-decoration-none">
+                        <div className={styLinkItem}>
+                          {c.icon && (
+                            <Icon src={c.icon} size={14} className="mr-2" />
+                          )}
+                          {c.text}
+                        </div>
+                      </a>
                     </Link>
                   ))}
                 </>
