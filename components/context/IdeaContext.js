@@ -15,7 +15,7 @@ export const IdeaFormProvider = ({ children }) => {
     url: `/ideas/${query.slug}/users`,
     isSkip: !isEditIdea,
   });
-  const result = data?.result;
+  const result = data?.result || [];
 
   const isLoading = !data && !error;
   const idea = (!isLoading && result[0]?.idea) || {};
@@ -34,19 +34,6 @@ export const IdeaFormProvider = ({ children }) => {
     }
     return [];
   }, [teams]);
-
-  // const existingTeamMember = useMemo(() => {
-  //   if (teams.length) {
-  //     const existingTeam = teams.reduce((existingIds, member) => {
-  //       if (member.isLeader && member.profileType === 'student') {
-  //         existingIds.push(member.userId);
-  //       }
-  //       return existingIds;
-  //     }, []);
-  //     return existingTeam;
-  //   }
-  //   return [];
-  // }, [teams]);
 
   const [inputs, setInputs] = useState({
     ideaSolution: {},
