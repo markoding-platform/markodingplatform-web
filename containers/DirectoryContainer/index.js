@@ -12,7 +12,14 @@ import warningBell from '../../svgs/warning-bell.svg';
 import userMap from '../../map/userMap';
 
 const DirectoryContainer = ({ directorySlug }) => {
-  const { data, error } = useDirectory({ path: `/users/${directorySlug}` });
+  let userTypeSlug = 'students';
+  if (directorySlug === 'teacher' || directorySlug === 'teachers') {
+    userTypeSlug = 'teachers';
+  } else if (directorySlug === 'mentor' || directorySlug === 'mentors') {
+    userTypeSlug = 'mentors';
+  }
+
+  const { data, error } = useDirectory({ path: `/users/${userTypeSlug}` });
   const result = data?.result ? data.result.map(userMap) : [];
   const isLoading = !data && !error;
 
@@ -40,7 +47,7 @@ const DirectoryContainer = ({ directorySlug }) => {
                   imageUrl={dir.imageUrl}
                   name={dir.name}
                   description={dir.bio}
-                  link={`/directory/${directorySlug}/${dir.id}`}
+                  link={`/user/${dir.id}`}
                 />
               </div>
             </Col>

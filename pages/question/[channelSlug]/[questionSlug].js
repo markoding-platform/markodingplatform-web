@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
@@ -7,10 +7,10 @@ import Loading from 'components/Loading';
 import QuestionCommentContainer from 'containers/QuestionCommentContainer';
 import styles from 'styles/chat.module.scss';
 import BlockAccessModal from 'components/BlockAccessModal';
-import Router from 'next/router';
 import withAuthSync from '../../../hoc/withAuthSync';
 
 const ChatThreadComment = ({ user, channelSlug, questionSlug }) => {
+  const [blockAccessModal, setBlockAccessModal] = useState(false);
   const { data, error } = useChannels({ url: `/channels/${channelSlug}` });
   const result = data?.result || {};
   const isLoading = !data && !error;
@@ -30,7 +30,16 @@ const ChatThreadComment = ({ user, channelSlug, questionSlug }) => {
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <h1 className="h3">{`#${result.name}`}</h1>
                 </div>
-                <QuestionCommentContainer questionSlug={questionSlug} />
+                <QuestionCommentContainer
+                  questionSlug={questionSlug}
+                  channelSlug={channelSlug}
+                  user={user}
+                  callBack={(condition) => {
+                    if (condition === 'blocked') {
+                      setBlockAccessModal(true);
+                    }
+                  }}
+                />
               </>
             ) : (
               <p className="text-danger">Chanel tidak ditemukan</p>
@@ -40,9 +49,9 @@ const ChatThreadComment = ({ user, channelSlug, questionSlug }) => {
       </div>
       {!user && (
         <BlockAccessModal
-          show
+          show={blockAccessModal}
           onHide={() => {
-            Router.push('/');
+            setBlockAccessModal(false);
           }}
         />
       )}

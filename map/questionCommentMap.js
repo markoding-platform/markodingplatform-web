@@ -10,6 +10,7 @@ export default function questionMap(data) {
     payload: {
       text: content,
     },
+    userId: user?.id || null,
     name: user?.name || '-',
     time: dayjs(updatedAt).format('dddd, DD MMM YYYY'),
   };

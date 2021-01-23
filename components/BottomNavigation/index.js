@@ -43,10 +43,10 @@ const BottomNavigation = ({ activeKey }) => {
         </Link>
       </Nav.Item>
       <Nav.Item className={styNavItem}>
-        <Link href="/chat">
-          <Nav.Link href="/chat" className="p-0">
+        <Link href="/question">
+          <Nav.Link href="/question" className="p-0">
             <IoMdChatbubbles className={styIcon} />
-            <div className={styTextIcon}>Chat</div>
+            <div className={styTextIcon}>Q&A</div>
           </Nav.Link>
         </Link>
       </Nav.Item>
@@ -60,8 +60,8 @@ const BottomNavigation = ({ activeKey }) => {
       </Nav.Item>
       <Nav.Item className={styNavItem}>
         {isLogged ? (
-          <Link href="/account">
-            <Nav.Link href="/account" className="p-0">
+          <Link href="/dashboard">
+            <Nav.Link href="/dashboard" className="p-0">
               <FaUserCircle className={styIcon} />
               <div className={styTextIcon}>Akun</div>
             </Nav.Link>
@@ -69,7 +69,7 @@ const BottomNavigation = ({ activeKey }) => {
         ) : (
           <Nav.Link onClick={authenticate} className="p-0">
             <FaUserCircle className={styIcon} />
-            <div className={styTextIcon}>Akun</div>
+            <div className={styTextIcon}>Masuk</div>
           </Nav.Link>
         )}
       </Nav.Item>

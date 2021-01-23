@@ -20,6 +20,7 @@ const QuestionComments = ({ questionSlug }) => {
         comments.map((c) => (
           <div key={c.id} className="ml-lg-5 mb-4">
             <ForumCommentCard
+              userId={c.userId}
               avatarUrl={c.avatarUrl}
               name={c.name}
               time={c.time}

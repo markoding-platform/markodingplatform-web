@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { RiArrowLeftSLine } from 'react-icons/ri';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
@@ -13,8 +13,8 @@ import userType from 'utils/userType';
 
 const User = ({ user }) => {
   const router = useRouter();
-  const { directorySlug, userSlug } = router.query;
-  const title = userType(directorySlug);
+  const { userSlug } = router.query;
+  const [directory, setDirectory] = useState('');
 
   return (
     <Layout>
@@ -23,18 +23,22 @@ const User = ({ user }) => {
           <PointBadgeWrapper desktopOnly />
         </div>
         <div className="inner-section">
-          <Link href={`/directory/${directorySlug}`}>
+          <Link href={`/directory/${directory}`}>
             <div className="d-flex align-items-center mb-3">
               <RiArrowLeftSLine className={styles.backIcon} />
-              <a
-                href={`/directory/${directorySlug}`}
-                className={styles.backTitle}
-              >
-                {title}
+              <a href={`/directory/${directory}`} className={styles.backTitle}>
+                {userType(directory)}
               </a>
             </div>
           </Link>
-          {user && <DirectoryDetailContainer userSlug={userSlug} />}
+          {user && (
+            <DirectoryDetailContainer
+              userSlug={userSlug}
+              callBack={(profileType) => {
+                setDirectory(profileType);
+              }}
+            />
+          )}
           {!user && (
             <BlockAccessModal
               show

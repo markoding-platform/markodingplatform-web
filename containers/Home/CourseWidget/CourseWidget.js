@@ -15,7 +15,8 @@ const CourseWidget = () => {
       {isLoading && <WidgetLoader />}
       <div className="pb-5">
         <SectionCardWrapper title="Kelas Online" link="/course">
-          {courses &&
+          {!isLoading &&
+            courses.length > 0 &&
             courses.map((course) => (
               <CourseCard
                 key={course.id}

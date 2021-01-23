@@ -1,4 +1,4 @@
-import { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import ForumCard from 'components/ForumCard';
@@ -14,7 +14,7 @@ import Pagination from 'components/Pagination';
 import styles from './styles.module.scss';
 import questionMap from '../../map/questionMap';
 
-const QuestionContainer = ({ channelSlug }) => {
+const QuestionContainer = ({ channelSlug, user, callBack }) => {
   const router = useRouter();
   const { query } = router;
   const currentOffset = Number(query?.start) || 0;
@@ -42,19 +42,25 @@ const QuestionContainer = ({ channelSlug }) => {
   };
 
   const onLikeQuestion = async (questionSlug) => {
-    const likeResult = await MarkodingFetch('/questions/likes', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        isLike: true,
-        question: questionSlug,
-      }),
-    });
+    if (user) {
+      const likeResult = await MarkodingFetch('/questions/likes', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          isLike: true,
+          question: questionSlug,
+        }),
+      });
 
-    if (likeResult.ok) {
-      await mutate(`/questions/channel/${channelSlug}?limit=6&offset=0`);
+      if (likeResult.ok) {
+        await mutate(
+          `/questions/channel/${channelSlug}?limit=${LIMIT_PER_PAGE}&offset=${currentOffset}&keyword=${search}`
+        );
+      }
+    } else {
+      callBack('blocked');
     }
   };
 
@@ -102,6 +108,7 @@ const QuestionContainer = ({ channelSlug }) => {
           questions.map((q) => (
             <div key={q.id} className="mb-3">
               <ForumCard
+                userId={q.userId}
                 imageUrl={q.imageUrl}
                 comment={q.comment}
                 name={q.name}
@@ -130,8 +137,14 @@ const QuestionContainer = ({ channelSlug }) => {
   );
 };
 
+QuestionContainer.defaultProps = {
+  callBack: () => {},
+};
+
 QuestionContainer.propTypes = {
-  channelSlug: string.isRequired,
+  channelSlug: PropTypes.string.isRequired,
+  user: PropTypes.instanceOf(Object).isRequired,
+  callBack: PropTypes.func,
 };
 
 export default QuestionContainer;
