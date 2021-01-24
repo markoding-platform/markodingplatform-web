@@ -244,7 +244,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
             className={`mr-2 ${styButton}`}
             onClick={handleSubmit(onSubmit)}
           >
-            {isEditIdea ? 'Simpan' : 'Kirim Ide Solusi'}
+            Kirim Ide Solusi
           </Button>
         </div>
       </form>

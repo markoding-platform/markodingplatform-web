@@ -10,6 +10,7 @@ import EventWidget from './EventWidget';
 import CourseWidget from './CourseWidget/CourseWidget';
 import GalleryIdeaWidget from './GalleryIdeaWidget';
 import BlogWidget from './BlogWidget';
+import ForumWidget from './ForumWidget';
 import PartnersWidget from './PartnersWidget';
 import TopAlertHome from './TopAlert';
 
@@ -24,6 +25,7 @@ const HomeContainer = () => {
         <GalleryIdeaWidget />
         <CourseWidget />
         <BlogWidget />
+        <ForumWidget />
         <LeaderBoardContainer />
         <PartnersWidget />
       </ErrorBoundary>

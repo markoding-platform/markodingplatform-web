@@ -9,11 +9,11 @@ import useChannels from 'hooks/useChannel';
 import Loading from 'components/Loading';
 import InputQuestion from 'containers/QuestionContainer/inputQuestion';
 import BlockAccessModal from 'components/BlockAccessModal';
-import Router from 'next/router';
 import withAuthSync from '../../../hoc/withAuthSync';
 
 const ChatThread = ({ user, channelSlug }) => {
   const [showFormQuestion, setShowFormQuestion] = useState(false);
+  const [blockAccessModal, setBlockAccessModal] = useState(false);
   const { data, error } = useChannels({ url: `/channels/${channelSlug}` });
   const result = data?.result || {};
   const isLoading = !data && !error;
@@ -35,12 +35,26 @@ const ChatThread = ({ user, channelSlug }) => {
                   <Button
                     type="button"
                     variant="warning"
-                    onClick={() => setShowFormQuestion(true)}
+                    onClick={() => {
+                      if (user) {
+                        setShowFormQuestion(true);
+                      } else {
+                        setBlockAccessModal(true);
+                      }
+                    }}
                   >
                     Tanya Pertanyaan Baru
                   </Button>
                 </div>
-                <QuestionContainer channelSlug={channelSlug} />
+                <QuestionContainer
+                  channelSlug={channelSlug}
+                  user={user}
+                  callBack={(condition) => {
+                    if (condition === 'blocked') {
+                      setBlockAccessModal(true);
+                    }
+                  }}
+                />
               </>
             ) : (
               <p className="text-danger">Chanel tidak ditemukan</p>
@@ -55,9 +69,9 @@ const ChatThread = ({ user, channelSlug }) => {
       />
       {!user && (
         <BlockAccessModal
-          show
+          show={blockAccessModal}
           onHide={() => {
-            Router.push('/');
+            setBlockAccessModal(false);
           }}
         />
       )}

@@ -10,10 +10,14 @@ import userType from 'utils/userType';
 import { Badge } from 'react-bootstrap';
 import userDetailMap from '../../map/userDetailMap';
 
-const DirectoryDetailContainer = ({ userSlug }) => {
+const DirectoryDetailContainer = ({ userSlug, callBack }) => {
   const { data, error } = useDirectory({ path: `/users/detail/${userSlug}` });
   const result = data && data.result ? userDetailMap(data.result) : null;
   const isLoading = !data && !error;
+
+  if (result) {
+    callBack(result.type);
+  }
 
   return (
     <>
@@ -56,6 +60,7 @@ const DirectoryDetailContainer = ({ userSlug }) => {
 
 DirectoryDetailContainer.propTypes = {
   userSlug: PropTypes.string.isRequired,
+  callBack: PropTypes.func.isRequired,
 };
 
 export default DirectoryDetailContainer;

@@ -1,16 +1,15 @@
-import { BiImageAlt, BiSmile } from 'react-icons/bi';
 import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
 import MarkodingFetch from 'libraries/MarkodingFetch';
-import { string } from 'prop-types';
+import { string, bool } from 'prop-types';
 import { trigger } from 'swr';
 import styles from './styles.module.scss';
 
-const InputComment = ({ questionSlug }) => {
+const InputComment = ({ questionSlug, disabled }) => {
   const [comment, setComment] = useState('');
 
   const submitComment = async (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && !disabled) {
       const result = await MarkodingFetch('/questions/comments', {
         headers: {
           'Content-Type': 'application/json',
@@ -31,9 +30,9 @@ const InputComment = ({ questionSlug }) => {
 
   return (
     <div className={styles.inpGroup}>
-      <button type="button" className={styles.addImage}>
-        <BiImageAlt size={24} />
-      </button>
+      {/* <button type="button" className={styles.addImage}> */}
+      {/*  <BiImageAlt size={24} /> */}
+      {/* </button> */}
       <Form.Control
         type="text"
         placeholder="Ketik Pesan"
@@ -41,14 +40,20 @@ const InputComment = ({ questionSlug }) => {
         value={comment}
         onChange={(event) => setComment(event.target.value)}
         onKeyPress={submitComment}
+        disabled={disabled}
       />
-      <BiSmile className={styles.searchIcon} />
+      {/* <BiSmile className={styles.searchIcon} /> */}
     </div>
   );
 };
 
+InputComment.defaultProps = {
+  disabled: false,
+};
+
 InputComment.propTypes = {
   questionSlug: string.isRequired,
+  disabled: bool,
 };
 
 export default InputComment;

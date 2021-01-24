@@ -27,3 +27,9 @@
   color: colors.$accent;
   margin-right: 12px;
 }
+
+.noHover {
+	&:hover {
+		text-decoration: none;
+	}
+}

@@ -33,6 +33,15 @@
 	}
 }
 
+.textLike {
+	margin-right: 3rem;
+	cursor: pointer;
+	&:hover {
+		color: colors.$red;
+		opacity: 0.8;
+	}
+}
+
 .iconComment {
   color: colors.$accent;
   margin-right: 12px;
