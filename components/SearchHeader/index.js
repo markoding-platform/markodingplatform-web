@@ -47,9 +47,9 @@ const SearchHeader = () => {
         <div className={styles.searchResult}>
           <div className="mb-2">
             <h6>Idea</h6>
-            {result && result.ideas && result.ideas.length && (
+            {result && result.idea && result.idea.length && (
               <ul className="list-unstyled">
-                {result.ideas.map((ide) => (
+                {result.idea.map((ide) => (
                   <li key={ide.id}>
                     <Link href={`/idea/${ide.id}`}>
                       <a href={`/idea/${ide.id}`}>{ide.solutionName}</a>
