@@ -2,10 +2,14 @@ import useSWR from 'swr';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 
 const useBlog = ({ url }) => {
-  const { data, error } = useSWR(url, MarkodingFetch);
-  const isLoading = !data && !error;
+  const { data: response, error } = useSWR(url, MarkodingFetch);
+  const result = response?.result || {};
+  const { data, pages = {} } = result;
+  const blogs = data || [];
+  const isLoading = !response && !error;
   return {
-    data,
+    data: blogs,
+    pages,
     error,
     isLoading,
   };

@@ -5,12 +5,41 @@ import useEvents from 'hooks/useEvents';
 import range from 'utils/range';
 import CardLoader from 'components/Shimmer/Card';
 import EventCard from 'components/EventCard';
+import { useRouter } from 'next/router';
+import React, { useCallback, useState } from 'react';
+import { LIMIT_PER_PAGE } from 'containers/IdeaAndSolutionContainer/constant';
+import Pagination from 'components/Pagination';
+import SortComponent from 'components/Sort';
 import { eventGrid } from './styles.module.scss';
 
 const View = () => {
-  const { data, error } = useEvents({ url: '/events?limit=9&offset=0' });
-  const result = data?.result || [];
-  const isLoading = !result && !error;
+  const SORT_EVENT = [
+    {
+      id: 0,
+      name: 'Sortir berdasarkan A-Z',
+      value: 'title',
+    },
+    {
+      id: 1,
+      name: 'Sortir berdasarkan Z-A',
+      value: '-title',
+    },
+  ];
+
+  const router = useRouter();
+  const { query } = router;
+  const currentOffset = Number(query?.start) || 0;
+  const currentPage = Number(query?.page) || 1;
+  const [activeSort, setActiveSort] = useState('');
+
+  const { data: response, error } = useEvents({
+    url: `/events??limit=${LIMIT_PER_PAGE}&offset=${currentOffset}&sort=${activeSort}`,
+  });
+  const result = response?.result || {};
+  const { data, pages = {} } = result;
+  const events = data || [];
+
+  const isLoading = !response && !error;
 
   const renderLoader = () => {
     const loaderArr = [];
@@ -24,15 +53,33 @@ const View = () => {
     return loaderArr;
   };
 
+  const handlePageChanged = useCallback(
+    (page) => {
+      const offset = LIMIT_PER_PAGE * page - LIMIT_PER_PAGE;
+      router.replace(`/event/?page=${page}&start=${offset}`);
+    },
+    [router]
+  );
+
+  const handleClickSort = useCallback((sort = {}) => {
+    setActiveSort(sort.value);
+  }, []);
+
   return (
     <div className="inner-section">
-      <div className="d-flex align-items-center mb-4">
+      <div className="d-flex align-items-center  justify-content-between mb-4">
         <h1 className="h3">Event Terdekat</h1>
+        <div className="d-flex">
+          <SortComponent
+            sortItems={SORT_EVENT}
+            onClickSortItem={handleClickSort}
+          />
+        </div>
       </div>
       <Row>
         {isLoading && renderLoader()}
-        {!isLoading && result.length && !error ? (
-          result.map((event) => (
+        {!isLoading && events.length > 0 && !error ? (
+          events.map((event) => (
             <Col key={event.id} xs={6} lg={4}>
               <div className={eventGrid}>
                 <EventCard
@@ -52,6 +99,15 @@ const View = () => {
           <></>
         )}
       </Row>
+      <div className="d-flex justify-content-center mt-5">
+        <Pagination
+          totalRecords={pages.count}
+          totalPages={pages.totalPages}
+          pageLimit={LIMIT_PER_PAGE}
+          onPageChanged={handlePageChanged}
+          defaultPage={currentPage}
+        />
+      </div>
     </div>
   );
 };

@@ -7,18 +7,23 @@ import EventCard from 'components/EventCard';
 import WidgetLoader from '../WidgetLoader';
 
 const EventWidget = () => {
-  const { data, error } = useEvents({ url: '/events?limit=3&offset=0' });
-  const result = data?.result || [];
-  const isLoading = !data && !error;
+  const { data: response, error } = useEvents({
+    url: '/events?limit=3&offset=0',
+  });
+  const result = response?.result || {};
+  const { data } = result;
+  const events = data || [];
+
+  const isLoading = !response && !error;
 
   return (
     <>
       {isLoading && <WidgetLoader />}
-      {!isLoading && result.length ? (
+      {!isLoading && events.length ? (
         <div className="pb-5">
           <SectionCardWrapper title="Event Terdekat" link="/event">
-            {result.length > 0 &&
-              result.map((event = {}) => (
+            {events.length > 0 &&
+              events.map((event = {}) => (
                 <EventCard
                   key={event.id}
                   imageUrl={event.imageUrl}
