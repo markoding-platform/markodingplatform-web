@@ -31,24 +31,30 @@ const Layout = ({ children, activeMenu, withFooter }) => {
           name="description"
           content="A social learning community platform"
         />
-        <meta name="keywords" content="Markoding" />
-        <title>Markoding Platform</title>
+        <meta name="keywords" content={process.env.TITLE} />
+        <title>{process.env.TITLE}</title>
+        <link rel="manifest" href="/manifest.json" />
         <link
-          href="/favicon-16x16.png"
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
         />
         <link
-          href="/favicon-32x32.png"
           rel="icon"
           type="image/png"
           sizes="32x32"
+          href="/favicon-32x32.png"
         />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#317EFB" />
-        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
       </Head>
       <Container fluid>
         <div className="d-block d-lg-flex justify-content-between">
