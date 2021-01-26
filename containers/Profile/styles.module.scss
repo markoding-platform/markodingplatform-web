@@ -1,0 +1,29 @@
+@use "styles/colors";
+
+@mixin btn {
+  width: 212px;
+  height: 50px;
+}
+
+.styLabel {
+  margin-bottom: 8px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 24px;
+  &.required:after {
+    content: ' *';
+    color: red;
+  }
+}
+
+.saveBtn {
+  margin-left: 21px;
+  background-color: colors.$yellow;
+  color: colors.$black;
+  @include btn;
+}
+
+.cancelBtn {
+  @include btn;
+}

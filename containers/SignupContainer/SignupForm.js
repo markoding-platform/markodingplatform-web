@@ -20,7 +20,7 @@ import {
   styTerm,
   required,
 } from './styles.module.scss';
-import { LIST_FORM } from './contants';
+import { LIST_FORM } from './constants';
 import {
   locationSchoolMap,
   schoolGradeMap,
