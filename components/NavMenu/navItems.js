@@ -31,7 +31,7 @@ const navItems = [
   },
   {
     id: 5,
-    text: 'Cerita MARKODING',
+    text: 'Blog',
     link: '/blog',
     withBadge: false,
   },

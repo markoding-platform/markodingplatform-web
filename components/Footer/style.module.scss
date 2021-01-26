@@ -1,97 +1,58 @@
 @use 'styles/colors';
 @use 'styles/breakpoint';
+@use 'styles/fonts';
 
-.footerContainer {
-  width: 90%;
-  height: auto;
-  background: #ffffff;
-  @media (max-width: breakpoint.$md) {
-    width: 100%;
-    padding-top: 40px;
-  }
+.footer {
+  background-color: colors.$white;
+	padding-top: 40px;
 }
 
-.footerInner {
-  padding: 0 1.5rem;
-  margin-top: 3rem;
-  display: flex;
-  justify-content: space-between;
-  @media (max-width: breakpoint.$md) {
-    flex-direction: column;
-    margin-top: 0;
-  }
+.footerRoot {
+  padding: 15px;
 }
 
-.leftSide {
-  width: 400px;
-  @media (max-width: breakpoint.$md) {
-    width: 100%;
-    word-wrap: break-word;
-  }
+.dicLogo {
+  font-family: 'Bungee', cursive;
+  font-size: 18px;
+  margin-bottom: 20px;
 }
-.markodingMessage {
-  height: 120px;
-  margin-top: 24px;
 
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0.2px;
-  text-align: left;
+.longText {
   color: colors.$secondary;
+  font-size: 10px;
+  text-align: justify;
 }
 
-.innerFooter {
-  padding: 24px;
-  margin-top: 40px;
-  display: flex;
-  flex-wrap: wrap;
+.subtitle {
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
-.footerItem {
-  flex: 1 1 100%;
-  padding-top: 8px;
-}
-.footerChild {
-  display: flex;
-  flex-direction: column;
+.item {
+  margin-bottom: 5px;
   color: colors.$secondary;
+	cursor: pointer;
 }
 
-.contacts {
-  display: flex;
-  justify-content: space-between;
-  width: 400px;
-  flex-wrap: wrap;
-  @media (max-width: breakpoint.$md) {
-    width: 100%;
-    flex-direction: column;
-  }
+.contactRoot {
+  border-top: 1px solid #eaedf3;
+  padding: 25px 15px;
 }
 
-.footerInfo {
-  display: flex;
-  width: 50%;
-  @media (max-width: breakpoint.$md) {
-    width: 100%;
-    flex-direction: column;
-    > .footerItem {
-      margin-bottom: 8px;
-    }
-  }
+.contactText {
+  color: colors.$secondary;
+  font-size: 14px;
+	margin-bottom: 0;
 }
 
-.stySkilvul {
-  width: 113px;
-  height: 34px;
+.contactIcon {
+  color: colors.$secondary;
+  font-size: 18px;
+  margin-right: 4px;
 }
 
-.styLinkItem {
-  text-decoration: none;
-  padding: 8px 0;
-  cursor: pointer;
-  &:hover {
-    color: colors.$blue;
-  }
+.contactSkilvulIcon {
+  color: colors.$secondary;
+  height: 20px;
+  margin-left: 4px;
 }
