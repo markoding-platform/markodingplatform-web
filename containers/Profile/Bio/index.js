@@ -1,3 +1,4 @@
+import { useState, useCallback, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import Row from 'react-bootstrap/Row';
@@ -6,25 +7,80 @@ import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
 
+import SkilvulFetch from 'libraries/SkilvulFetch';
+
+import { locationSchoolMap } from 'map/dropdownMap';
 import { styLabel } from '../styles.module.scss';
 
 const genderOption = [
-  { id: 0, text: 'Laki-laki', value: 'laki-laki' },
-  { id: 1, text: 'Perempuan', value: 'perempuan' },
+  { id: 0, name: 'Laki-laki', value: 'laki-laki' },
+  { id: 1, name: 'Perempuan', value: 'perempuan' },
 ];
 const BioComponent = () => {
-  const { register } = useFormContext();
+  const { register, control, getValues, setValue } = useFormContext();
 
-  const handleSelectGender = () => {
-    // setValue('problemArea', payload.value);
+  const [provinces, setProvinces] = useState([]);
+  const [cities, setCities] = useState([]);
+  const account = control?.defaultValuesRef?.current || {};
+  const provinceId = getValues('provinceId');
+  const [defaultCityName, setDefaultCityName] = useState(account.cityName);
+
+  const getProvinces = useCallback(async () => {
+    const provResult = await SkilvulFetch('/api/skilvul?path=/provinces');
+    if (provResult && provResult.provinces) {
+      setProvinces(provResult.provinces.map(locationSchoolMap));
+    }
+  }, []);
+
+  const getCities = useCallback(async () => {
+    const cityResult = await SkilvulFetch(
+      `/api/skilvul?path=/cities?provinceId=${provinceId}`
+    );
+    if (cityResult && cityResult.cities) {
+      setCities(cityResult.cities.map(locationSchoolMap));
+    }
+  }, [provinceId]);
+
+  const handleSelectGender = () => {};
+  const handleSelectProvince = (payload) => {
+    setValue('provinceId', payload.key);
+    setValue('provinceName', payload.name);
+    setValue('cityId', '');
+    setValue('cityName', '');
+    setDefaultCityName('');
+    getCities();
   };
-  const handleSelectProvince = () => {
-    // setValue('problemArea', payload.value);
+
+  const handleSelectCity = (payload) => {
+    setValue('cityId', payload.key);
+    setValue('cityName', payload.name);
   };
   const handleSelectWorkingPos = () => {
     // setValue('problemArea', payload.value);
   };
 
+  useEffect(() => {
+    getProvinces();
+    if (provinceId) {
+      getCities();
+    }
+  }, [getCities, getProvinces, provinceId]);
+
+  useEffect(() => {
+    register('provinceId', { required: true, defaultVal: account.provinceId });
+    register('provinceName', {
+      required: true,
+      defaultVal: account.provinceName,
+    });
+    register('cityId', { required: true, defaultVal: account.cityId });
+    register('cityName', { required: true, defaultVal: account.cityName });
+  }, [
+    account.cityId,
+    account.cityName,
+    account.provinceId,
+    account.provinceName,
+    register,
+  ]);
   return (
     <Panel title="Informasi Akun">
       <Row>
@@ -32,8 +88,8 @@ const BioComponent = () => {
           <label className={`${styLabel} required`}>Tanggal Lahir</label>
           <TextField
             placeholder=""
-            defaultVal=""
-            name="dob"
+            defaultVal={account.dateOfBirth}
+            name="dateOfBirth"
             ref={register({ required: true })}
             error={false}
             errorTxt="Harap mengisi tanggal lahir"
@@ -44,7 +100,7 @@ const BioComponent = () => {
           <DropdownComponent
             onSelected={handleSelectGender}
             dropdownItem={genderOption}
-            defaultVal=""
+            defaultVal={account.gender}
             inputName="gender"
             name="gender"
           />
@@ -56,9 +112,9 @@ const BioComponent = () => {
             Nomor Telepon/Whatsapp
           </label>
           <TextField
-            placeholder="Masukan nomor telepon/whatsapp"
-            defaultVal=""
-            name="phone"
+            placeholder="082xxxxx"
+            defaultVal={account.telephone}
+            name="telephone"
             ref={register({ required: true })}
             error={false}
             errorTxt="Harap mengisi nomor telepon atau whatsapp"
@@ -70,21 +126,22 @@ const BioComponent = () => {
           <label className={`${styLabel} required`}>Provinsi</label>
           <DropdownComponent
             onSelected={handleSelectProvince}
-            dropdownItem={[]}
-            defaultVal=""
-            inputName="province"
-            name="province"
+            dropdownItem={provinces}
+            defaultVal={account.provinceName}
+            inputName="provinceId"
+            name="provinceId"
           />
         </Col>
         <Col lg="6" sm="12" className="pb-4">
           <label className={`${styLabel} required`}>Kota/Kabupaten</label>
-          <DropdownComponent
-            onSelected={handleSelectProvince}
-            dropdownItem={[]}
-            defaultVal=""
-            inputName="city"
-            name="city"
-          />
+          <div key={provinceId}>
+            <DropdownComponent
+              onSelected={handleSelectCity}
+              dropdownItem={cities}
+              defaultVal={defaultCityName}
+              name="cityId"
+            />
+          </div>
         </Col>
       </Row>
       <Row>
@@ -95,7 +152,7 @@ const BioComponent = () => {
           <DropdownComponent
             onSelected={handleSelectWorkingPos}
             dropdownItem={[]}
-            defaultVal=""
+            defaultVal={account.workingPosition}
             inputName="workingPosition"
             name="workingPosition"
           />

@@ -12,12 +12,15 @@ import DynamicPasswordModalContainer from '../PasswordModal';
 import { styLabel } from '../styles.module.scss';
 
 const AccountInfo = () => {
-  const { register } = useFormContext();
+  const { register, control } = useFormContext();
+
   const [isShowModal, setIsShowModal] = useState(false);
 
   const handleOpenModal = () => {
     setIsShowModal((prevState) => !prevState);
   };
+
+  const account = control?.defaultValuesRef?.current || {};
   return (
     <>
       <Panel title="Informasi Akun">
@@ -25,8 +28,7 @@ const AccountInfo = () => {
           <Col lg="6" sm="12" className="pb-4">
             <label className={`${styLabel} required`}>Nama Depan</label>
             <TextField
-              placeholder="Tulis nama solusi digital kamu"
-              defaultVal=""
+              defaultVal={account.name}
               name="fName"
               ref={register({ required: true })}
               error={false}
@@ -36,10 +38,9 @@ const AccountInfo = () => {
           <Col lg="6" sm="12" className="pb-4">
             <label className={`${styLabel} required`}>Nama Belakang</label>
             <TextField
-              placeholder=""
-              defaultVal=""
+              defaultVal={account.lastName}
               name="lName"
-              ref={register({ required: true })}
+              ref={register({ required: false })}
               error={false}
               errorTxt="Harap mengisi nama belakang"
             />
@@ -49,10 +50,9 @@ const AccountInfo = () => {
           <Col lg="6" sm="12" className="pb-4">
             <label className={`${styLabel} required`}>Email</label>
             <TextField
-              placeholder=""
-              defaultVal=""
+              defaultVal={account.email}
               name="email"
-              ref={register({ required: true })}
+              ref={register({ required: false })}
               error={false}
               errorTxt="Harap mengisi email"
             />
@@ -72,7 +72,7 @@ const AccountInfo = () => {
             <TextField
               as="textarea"
               placeholder=""
-              defaultVal=""
+              defaultVal={account.bio}
               name="bio"
               ref={register({ required: false })}
             />
@@ -90,5 +90,17 @@ const AccountInfo = () => {
     </>
   );
 };
+
+// AccountInfo.defaultProps = {
+//   lName: '',
+//   bio: '',
+// };
+
+// AccountInfo.propTypes = {
+//   fName: string.isRequired,
+//   lName: string,
+//   email: string.isRequired,
+//   bio: string,
+// };
 
 export default AccountInfo;

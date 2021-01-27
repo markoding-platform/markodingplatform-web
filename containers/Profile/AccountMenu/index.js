@@ -9,7 +9,7 @@ import {
   contentTitle,
 } from './styles.module.scss';
 
-const AccountMenu = () => {
+const AccountMenu = ({ fName, email, profilePictureUrl, schoolName }) => {
   return (
     <div className={profileCard}>
       <div className="text-center">
@@ -18,7 +18,7 @@ const AccountMenu = () => {
           height={132}
           layout="fixed"
           className="rounded-circle"
-          src={Avatar}
+          src={profilePictureUrl || Avatar}
         />
         <div className="text-center text-3rd">
           <RiPencilFill size="20" />
@@ -26,9 +26,9 @@ const AccountMenu = () => {
         </div>
       </div>
       <div className={`pt-3 ${profileSection}`}>
-        <p className={contentTitle}>Amanda</p>
-        <p className="m-0">Email</p>
-        <p className="m-0">Siswa SMK</p>
+        <p className={contentTitle}>{fName}</p>
+        <p className="m-0">{email}</p>
+        <p className="m-0">{schoolName}</p>
       </div>
     </div>
   );
