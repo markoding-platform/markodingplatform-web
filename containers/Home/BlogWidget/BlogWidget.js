@@ -6,10 +6,10 @@ import useBlog from 'hooks/useBlog';
 import WidgetLoader from '../WidgetLoader';
 
 const BlogWidget = () => {
-  const { isLoading, error, data = {} } = useBlog({
+  const { isLoading, error, data } = useBlog({
     url: '/blogs?limit=3&offset=0',
   });
-  const blogs = data.result || [];
+  const blogs = data || [];
   return (
     <>
       {isLoading && <WidgetLoader />}

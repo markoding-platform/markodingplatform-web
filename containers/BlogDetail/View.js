@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import useBlog from 'hooks/useBlog';
+import useSWR from 'swr';
+import MarkodingFetch from 'libraries/MarkodingFetch';
 import BlogDetailLoader from './Loader';
 
 dayjs.locale('id');
@@ -10,9 +11,10 @@ const BlogDetailContainer = () => {
   const router = useRouter();
   const { slug } = router.query;
 
-  const { isLoading, data = {} } = useBlog({ url: `/blogs/${slug}` });
-
+  const { data, error } = useSWR(`/blogs/${slug}`, MarkodingFetch);
+  const isLoading = !data && !error;
   const blog = data?.result || {};
+
   if (isLoading) {
     return <BlogDetailLoader />;
   }

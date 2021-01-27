@@ -66,11 +66,16 @@ const PaginationComponent = ({
   );
 };
 
+PaginationComponent.defaultProps = {
+  totalPages: 0,
+  totalRecords: 0,
+};
+
 PaginationComponent.propTypes = {
   defaultPage: number.isRequired,
   pageLimit: number.isRequired,
-  totalRecords: number.isRequired,
-  totalPages: number.isRequired,
+  totalRecords: number,
+  totalPages: number,
   onPageChanged: func.isRequired,
 };
 
