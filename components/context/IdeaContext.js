@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import useIdeaSolution from 'hooks/useIdeaSolution';
 import { teamMap } from 'map/teamMap';
+import { ideaMap } from 'map/ideaMap';
 
 const IdeaFormContext = createContext();
 
@@ -18,7 +19,7 @@ export const IdeaFormProvider = ({ children }) => {
   const result = data?.result || [];
 
   const isLoading = !data && !error;
-  const idea = (!isLoading && result[0]?.idea) || {};
+  const idea = (!isLoading && ideaMap(result[0]?.idea)) || {};
   const teams = teamMap(result || []);
 
   const teacher = useMemo(() => {

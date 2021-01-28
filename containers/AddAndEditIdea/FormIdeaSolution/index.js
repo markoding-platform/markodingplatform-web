@@ -12,6 +12,7 @@ import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
 import useMyTeachers from 'hooks/useMyTeachers';
+import useProblemArea from 'hooks/useProblemArea';
 import { PROBLEM_LIST } from '../constants';
 
 import {
@@ -31,6 +32,10 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   const { data: teachersResult } = useMyTeachers({
     url: '/users/my/teachers',
   });
+  const { data: problemAreas } = useProblemArea({
+    url: '/ideas/problem-area',
+  });
+  console.log(problemAreas);
   const teachers = teachersResult;
 
   const { inputs, idea, setInputs, teacher } = useIdeaFormContext();
@@ -46,7 +51,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     },
   });
 
-  const isErrorTeacherField = errors.teacherId && !watch('teacherId');
+  // const isErrorTeacherField = errors.teacherId && !watch('teacherId');
   const isErrorProblemAreaField = errors.teacherId && !watch('problemArea');
 
   const [solutionType, setSolutionType] = useState(
@@ -107,7 +112,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   }, [push, user]);
 
   useEffect(() => {
-    register('teacherId', { required: true });
+    register('teacherId', { required: false });
     register('schoolId', { required: true });
     register('schoolName', { required: true });
     register('problemArea', { required: true });
@@ -117,21 +122,14 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     <>
       <form>
         <Panel title="Nama Guru Pembimbing">
-          <div className={isErrorTeacherField && dropdownError}>
-            <DropdownComponent
-              placeholder="Nama guru kamu"
-              onSelected={handleSelectTeacher}
-              dropdownItem={teachers}
-              defaultVal={teacher.name}
-              inputName="teacherId"
-              name="teacherId"
-            />
-          </div>
-          {isErrorTeacherField && (
-            <Form.Text className="text-muted pt-1">
-              Harap mengisi nama guru
-            </Form.Text>
-          )}
+          <DropdownComponent
+            placeholder="Nama guru kamu"
+            onSelected={handleSelectTeacher}
+            dropdownItem={teachers}
+            defaultVal={teacher.name}
+            inputName="teacherId"
+            name="teacherId"
+          />
         </Panel>
         <Panel title="Nama Solusi Digital">
           <TextField

@@ -3,10 +3,8 @@ import React from 'react';
 import SectionCardWrapper from 'components/SectionCardWrapper';
 import IdeaCard from 'components/IdeaCard';
 import useIdeaSolution from 'hooks/useIdeaSolution';
-import WidgetLoader from '../WidgetLoader';
 
-const defaultPic =
-  'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
+import WidgetLoader from '../WidgetLoader';
 
 const GalleryIdeaWidget = () => {
   const { data, error } = useIdeaSolution({ url: '/ideas?offset=0&limit=9' });
@@ -30,7 +28,7 @@ const GalleryIdeaWidget = () => {
                 <IdeaCard
                   key={id}
                   title={solutionName}
-                  imageUrl={solutionSupportingPhotos?.[0] || defaultPic}
+                  imageUrl={solutionSupportingPhotos?.[0]}
                   link={`/idea/${id}`}
                   description={solutionMission}
                   likeCount={14}

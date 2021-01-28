@@ -20,6 +20,7 @@ module.exports = withPWA(
         'inovasi.markoding.com',
         'markodingplatform.s3.amazonaws.com',
         'markodingplatform.s3-ap-southeast-1.amazonaws.com',
+        'markodingplatform.s3.ap-southeast-1.amazonaws.com',
         'www.markoding.com',
         'localhost',
       ],

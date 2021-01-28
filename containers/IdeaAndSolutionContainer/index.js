@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import range from 'utils/range';
@@ -21,15 +21,17 @@ import {
 
 import { LIMIT_PER_PAGE } from './constant';
 
-const defaultPic =
-  'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
-
 const IdeaAndSolutionContainer = () => {
   const router = useRouter();
   const { query } = router;
   const currentOffset = Number(query?.start) || 0;
   const currentPage = Number(query?.page) || 1;
   const [activeSort, setActiveSort] = useState('');
+  const [activeFilter, setActiveFilter] = useState({
+    id: null,
+    value: null,
+    name: '',
+  });
   const SORT_IDEA = [
     {
       id: 0,
@@ -51,13 +53,32 @@ const IdeaAndSolutionContainer = () => {
     },
     {
       id: 1,
-      name: 'Berdasarkan tipe solusi',
-      value: 'solutionType',
+      name: 'Berdasarkan tipe solusi digital Web',
+      value: 'web',
+    },
+    {
+      id: 2,
+      name: 'Berdasarkan tipe solusi digital Mobile',
+      value: 'mobile',
+    },
+    {
+      id: 3,
+      name: 'Berdasarkan tipe solusi digital Mobile',
+      value: 'game',
     },
   ];
+  const queryFilter = useMemo(() => {
+    if (activeFilter.name.includes('tipe solusi')) {
+      return `$solutionType=${activeFilter.value}`;
+    }
+    if (activeFilter.value === 'problemArea') {
+      return `$problemAreaId=${activeFilter.id}`;
+    }
+    return '';
+  }, [activeFilter]);
 
   const { data: response, error } = useIdeaSolution({
-    url: `/ideas?offset=${currentOffset}&limit=${LIMIT_PER_PAGE}&sort=${activeSort}`,
+    url: `/ideas?offset=${currentOffset}&limit=${LIMIT_PER_PAGE}&sort=${activeSort}${queryFilter}`,
   });
   const result = response?.result || {};
   const { data, pages = {} } = result || {};
@@ -78,7 +99,7 @@ const IdeaAndSolutionContainer = () => {
   }, []);
 
   const handleClickFilter = useCallback((filter) => {
-    console.log(filter, filter);
+    setActiveFilter(filter);
   }, []);
 
   const renderLoader = () => {
@@ -126,7 +147,7 @@ const IdeaAndSolutionContainer = () => {
                 <div key={id} className={ideaCardWrapper}>
                   <IdeaCard
                     title={solutionName}
-                    imageUrl={solutionSupportingPhotos?.[0] || defaultPic}
+                    imageUrl={solutionSupportingPhotos?.[0]}
                     link={`/idea/${id}`}
                     description={solutionMission}
                     likeCount={totalLikes}

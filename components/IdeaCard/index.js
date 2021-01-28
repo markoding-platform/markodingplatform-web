@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
+import noImage from 'public/assets/no-image.png';
 import styles from './styles.module.scss';
 
 const IdeaCard = (props) => {
@@ -14,7 +15,7 @@ const IdeaCard = (props) => {
       <a href={link} className={styles.link}>
         <Card className={styles.card}>
           <div className={styles.image}>
-            <Image src={imageUrl} alt={title} layout="fill" />
+            <Image src={imageUrl || noImage} alt={title} layout="fill" />
           </div>
           <Card.Body>
             <Card.Title className={styles.title}>{title}</Card.Title>
