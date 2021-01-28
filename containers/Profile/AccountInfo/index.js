@@ -9,10 +9,10 @@ import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import ModalComponent from 'components/Modal';
 import DynamicPasswordModalContainer from '../PasswordModal';
-import { styLabel } from '../styles.module.scss';
+import { styLabel, required } from '../styles.module.scss';
 
 const AccountInfo = () => {
-  const { register, control } = useFormContext();
+  const { register, control, errors } = useFormContext();
 
   const [isShowModal, setIsShowModal] = useState(false);
 
@@ -21,44 +21,44 @@ const AccountInfo = () => {
   };
 
   const account = control?.defaultValuesRef?.current || {};
+  console.log({ account });
   return (
     <>
       <Panel title="Informasi Akun">
         <Row>
           <Col lg="6" sm="12" className="pb-4">
-            <label className={`${styLabel} required`}>Nama Depan</label>
+            <label className={`${styLabel} ${required}`}>Nama Depan</label>
             <TextField
-              defaultVal={account.name}
-              name="fName"
+              defaultVal={account.firstName}
+              name="firstName"
               ref={register({ required: true })}
-              error={false}
+              error={!!errors.firstName}
               errorTxt="Harap mengisi nama depan"
             />
           </Col>
           <Col lg="6" sm="12" className="pb-4">
-            <label className={`${styLabel} required`}>Nama Belakang</label>
+            <label className={`${styLabel} ${required}`}>Nama Belakang</label>
             <TextField
               defaultVal={account.lastName}
-              name="lName"
+              name="lastName"
               ref={register({ required: false })}
-              error={false}
+              error={!!errors.lastName}
               errorTxt="Harap mengisi nama belakang"
             />
           </Col>
         </Row>
         <Row>
           <Col lg="6" sm="12" className="pb-4">
-            <label className={`${styLabel} required`}>Email</label>
+            <label className={`${styLabel} ${required}`}>Email</label>
             <TextField
               defaultVal={account.email}
               name="email"
               ref={register({ required: false })}
               error={false}
-              errorTxt="Harap mengisi email"
             />
           </Col>
           <Col lg="6" sm="12" className="pb-4">
-            <label className={`${styLabel} required`}>Password</label>
+            <label className={`${styLabel} ${required}`}>Password</label>
             <div>
               <Button variant="outline-secondary" onClick={handleOpenModal}>
                 Ubah Password

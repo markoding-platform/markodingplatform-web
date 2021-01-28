@@ -9,7 +9,7 @@ import Panel from 'components/Panel';
 import DropdownComponent from 'components/Dropdown';
 
 import { locationSchoolMap, schoolGradeMap } from 'map/dropdownMap';
-import { styLabel } from '../styles.module.scss';
+import { styLabel, required } from '../styles.module.scss';
 
 const CompanyInfo = () => {
   const { register, control, getValues } = useFormContext();
@@ -68,7 +68,7 @@ const CompanyInfo = () => {
     <Panel title="Informasi Akun">
       <Row>
         <Col lg="6" sm="12" className="pb-4">
-          <label className={`${styLabel} required`}>Jenjang</label>
+          <label className={`${styLabel} ${required}`}>Jenjang</label>
           <DropdownComponent
             onSelected={handleSelectSchoolGradeName}
             dropdownItem={schoolGrades}
@@ -78,7 +78,7 @@ const CompanyInfo = () => {
           />
         </Col>
         <Col lg="6" sm="12" className="pb-4">
-          <label className={`${styLabel} required`}>
+          <label className={`${styLabel} ${required}`}>
             Nama Instansi Pendidikan
           </label>
           <DropdownComponent

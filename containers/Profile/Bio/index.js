@@ -3,25 +3,36 @@ import { useFormContext } from 'react-hook-form';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
+import DatePickerComponent from 'components/DatePicker';
 
 import SkilvulFetch from 'libraries/SkilvulFetch';
 
-import { locationSchoolMap } from 'map/dropdownMap';
-import { styLabel } from '../styles.module.scss';
+import { locationSchoolMap, professionsMap } from 'map/dropdownMap';
+import { styLabel, required, dropdownError } from '../styles.module.scss';
 
 const genderOption = [
   { id: 0, name: 'Laki-laki', value: 'laki-laki' },
   { id: 1, name: 'Perempuan', value: 'perempuan' },
 ];
 const BioComponent = () => {
-  const { register, control, getValues, setValue } = useFormContext();
+  const {
+    register,
+    control,
+    getValues,
+    setValue,
+    watch,
+    errors,
+  } = useFormContext();
 
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
+  const [professions, setProfessions] = useState([]);
   const account = control?.defaultValuesRef?.current || {};
+
   const provinceId = getValues('provinceId');
   const [defaultCityName, setDefaultCityName] = useState(account.cityName);
 
@@ -41,7 +52,22 @@ const BioComponent = () => {
     }
   }, [provinceId]);
 
-  const handleSelectGender = () => {};
+  const getProfessions = useCallback(async () => {
+    const professionResult = await SkilvulFetch(
+      `/api/skilvul?path=/professions`
+    );
+    if (professionResult && professionResult.professions) {
+      setProfessions(professionResult.professions.map(professionsMap));
+    }
+  }, []);
+
+  const handleSelectGender = (gender) => {
+    setValue('gender', gender);
+  };
+
+  const handleOnSelectDate = (date) => {
+    setValue('dateOfBirth', date);
+  };
   const handleSelectProvince = (payload) => {
     setValue('provinceId', payload.key);
     setValue('provinceName', payload.name);
@@ -55,67 +81,74 @@ const BioComponent = () => {
     setValue('cityId', payload.key);
     setValue('cityName', payload.name);
   };
-  const handleSelectWorkingPos = () => {
-    // setValue('problemArea', payload.value);
+  const handleSelectExpertise = (payload) => {
+    setValue('expertise', payload.name);
   };
 
   useEffect(() => {
     getProvinces();
+    getProfessions();
     if (provinceId) {
       getCities();
     }
-  }, [getCities, getProvinces, provinceId]);
+  }, [getCities, getProfessions, getProvinces, provinceId]);
 
   useEffect(() => {
+    const { cityId, cityName, expertise, provinceName, gender } = account || {};
     register('provinceId', { required: true, defaultVal: account.provinceId });
     register('provinceName', {
       required: true,
-      defaultVal: account.provinceName,
+      defaultVal: provinceName,
     });
-    register('cityId', { required: true, defaultVal: account.cityId });
-    register('cityName', { required: true, defaultVal: account.cityName });
-  }, [
-    account.cityId,
-    account.cityName,
-    account.provinceId,
-    account.provinceName,
-    register,
-  ]);
+    register('cityId', { required: true, defaultVal: cityId });
+    register('cityName', { required: true, defaultVal: cityName });
+    register('expertise', { required: false, defaultVal: expertise });
+    register('gender', { required: true, defaultVal: gender });
+  }, [account, register]);
+
+  const isErrorGenderField = errors.gender && !watch('teacherId');
+  const isErrorProvinceField = errors.provinceId && !watch('provinceId');
+  const isErrorCityField = errors.cityId && !watch('cityId');
+  console.log(account.dateOfBirth, account.birthDate);
   return (
     <Panel title="Informasi Akun">
       <Row>
         <Col lg="6" sm="12" className="pb-4">
-          <label className={`${styLabel} required`}>Tanggal Lahir</label>
-          <TextField
-            placeholder=""
-            defaultVal={account.dateOfBirth}
+          <label className={`${styLabel}`}>Tanggal Lahir</label>
+          <DatePickerComponent
+            defaultVal={account.dateOfBirth || account.birthDate}
             name="dateOfBirth"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
             error={false}
-            errorTxt="Harap mengisi tanggal lahir"
+            onSelectDate={handleOnSelectDate}
           />
         </Col>
         <Col lg="6" sm="12" className="pb-4">
-          <label className={`${styLabel} required`}>Jenis Kelamin</label>
-          <DropdownComponent
-            onSelected={handleSelectGender}
-            dropdownItem={genderOption}
-            defaultVal={account.gender}
-            inputName="gender"
-            name="gender"
-          />
+          <label className={`${styLabel} ${required}`}>Jenis Kelamin</label>
+          <div className={isErrorGenderField && dropdownError}>
+            <DropdownComponent
+              onSelected={handleSelectGender}
+              dropdownItem={genderOption}
+              defaultVal={account.gender}
+              inputName="gender"
+              name="gender"
+            />
+          </div>
+          {isErrorGenderField && (
+            <Form.Text className="text-muted pt-1">
+              Harap mengisi jenis kelamin
+            </Form.Text>
+          )}
         </Col>
       </Row>
       <Row>
         <Col lg="12" className="pb-4">
-          <label className={`${styLabel} required`}>
-            Nomor Telepon/Whatsapp
-          </label>
+          <label className={`${styLabel}`}>Nomor Telepon/Whatsapp</label>
           <TextField
             placeholder="082xxxxx"
             defaultVal={account.telephone}
             name="telephone"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
             error={false}
             errorTxt="Harap mengisi nomor telepon atau whatsapp"
           />
@@ -123,38 +156,50 @@ const BioComponent = () => {
       </Row>
       <Row>
         <Col lg="6" sm="12" className="pb-4">
-          <label className={`${styLabel} required`}>Provinsi</label>
-          <DropdownComponent
-            onSelected={handleSelectProvince}
-            dropdownItem={provinces}
-            defaultVal={account.provinceName}
-            inputName="provinceId"
-            name="provinceId"
-          />
+          <label className={`${styLabel} ${required}`}>Provinsi</label>
+          <div className={isErrorProvinceField && dropdownError}>
+            <DropdownComponent
+              onSelected={handleSelectProvince}
+              dropdownItem={provinces}
+              defaultVal={account.provinceName}
+              inputName="provinceId"
+              name="provinceId"
+            />
+          </div>
+          {isErrorProvinceField && (
+            <Form.Text className="text-muted pt-1">
+              Harap mengisi provinsi
+            </Form.Text>
+          )}
         </Col>
         <Col lg="6" sm="12" className="pb-4">
-          <label className={`${styLabel} required`}>Kota/Kabupaten</label>
+          <label className={`${styLabel} ${required}`}>Kota/Kabupaten</label>
           <div key={provinceId}>
-            <DropdownComponent
-              onSelected={handleSelectCity}
-              dropdownItem={cities}
-              defaultVal={defaultCityName}
-              name="cityId"
-            />
+            <div className={isErrorCityField && dropdownError}>
+              <DropdownComponent
+                onSelected={handleSelectCity}
+                dropdownItem={cities}
+                defaultVal={defaultCityName}
+                name="cityId"
+              />
+            </div>
+            {isErrorCityField && (
+              <Form.Text className="text-muted pt-1">
+                Harap mengisi nama kota
+              </Form.Text>
+            )}
           </div>
         </Col>
       </Row>
       <Row>
         <Col lg="6" sm="12" className="pb-4">
-          <label className={`${styLabel} required`}>
-            Pekerjaan/Profesi saat ini
-          </label>
+          <label className={`${styLabel}`}>Pekerjaan/Profesi saat ini</label>
           <DropdownComponent
-            onSelected={handleSelectWorkingPos}
-            dropdownItem={[]}
-            defaultVal={account.workingPosition}
-            inputName="workingPosition"
-            name="workingPosition"
+            onSelected={handleSelectExpertise}
+            dropdownItem={professions}
+            defaultVal={account.expertise}
+            inputName="expertise"
+            name="expertise"
           />
         </Col>
       </Row>

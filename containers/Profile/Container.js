@@ -10,12 +10,21 @@ import BioComponent from './Bio';
 import CompanyInfo from './CompanyInfo';
 import { saveBtn, cancelBtn } from './styles.module.scss';
 
-const ProfileContainer = ({ user }) => {
-  const { name, email = '', profile = {} } = user;
-  const methods = useForm({ defaultValues: { name, email, ...profile } });
-  console.log({ profile });
+const ProfileContainer = ({ user, email, firstName, lastName, birthDate }) => {
+  const { name, profile = {} } = user;
+  const methods = useForm({
+    defaultValues: {
+      firstName,
+      lastName,
+      email,
+      birthDate,
+      ...profile,
+    },
+  });
+
   const onSubmit = (data) => console.log({ data });
   console.log(methods.errors);
+
   return (
     <FormProvider {...methods}>
       <Row>

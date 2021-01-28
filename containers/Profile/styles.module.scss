@@ -27,3 +27,8 @@
 .cancelBtn {
   @include btn;
 }
+
+.dropdownError {
+  border: 1px solid #d72e3d;
+  border-radius: 6px;
+}
