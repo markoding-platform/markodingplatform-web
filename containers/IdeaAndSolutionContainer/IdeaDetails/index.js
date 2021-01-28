@@ -16,6 +16,7 @@ import ProfileCard from 'components/ProfileCard';
 import YoutubeIframe from 'components/YoutubeIframe';
 import useIdeaSolution from 'hooks/useIdeaSolution';
 import { teamMap } from 'map/teamMap';
+import { ideaMap } from 'map/ideaMap';
 import { profileTypeEnum } from '../constant';
 
 import { ideaImage } from '../style.module.scss';
@@ -37,7 +38,7 @@ const IdeaDetails = () => {
     url: `/ideas/${ideaId}/users`,
   });
   // TODO handle loading state UI
-  const idea = data?.result || {};
+  const idea = ideaMap(data?.result) || {};
   const teams = teamMap(teamsResult?.result || []);
   const [showBlockAccess, setShowBlockAccess] = useState(false);
   const { totalLikes, totalComments } = idea;

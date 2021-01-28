@@ -4,7 +4,12 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Button from 'react-bootstrap/Button';
 import Popover from 'react-bootstrap/Popover';
 import { BiSortDown } from 'react-icons/bi';
-import { btnTopAction, textAction, listItem } from './styles.module.scss';
+import {
+  btnTopAction,
+  textAction,
+  listItem,
+  styPopOverContainer,
+} from './styles.module.scss';
 
 const SortComponent = ({ placement, sortItems, onClickSortItem }) => {
   const [showPopover, setShowPopover] = useState(false);
@@ -18,7 +23,7 @@ const SortComponent = ({ placement, sortItems, onClickSortItem }) => {
     onClickSortItem(sort);
   };
   const popover = (
-    <Popover id="popover-basic">
+    <Popover className={styPopOverContainer}>
       <Popover.Content className="p-0">
         <ul className="list-group">
           {sortItems.map((sort) => (

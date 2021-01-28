@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import range from 'utils/range';
@@ -11,6 +11,7 @@ import SortComponent from 'components/Sort';
 import FilterIdea from 'components/Filter';
 import useIdeaSolution from 'hooks/useIdeaSolution';
 import emptyFolderSvg from 'svgs/empty-folder.svg';
+import useProblemArea from 'hooks/useProblemArea';
 
 import {
   ideasWrapper,
@@ -21,15 +22,23 @@ import {
 
 import { LIMIT_PER_PAGE } from './constant';
 
-const defaultPic =
-  'https://image.freepik.com/free-vector/back-school-sales_23-2148621951.jpg';
-
 const IdeaAndSolutionContainer = () => {
   const router = useRouter();
   const { query } = router;
   const currentOffset = Number(query?.start) || 0;
   const currentPage = Number(query?.page) || 1;
   const [activeSort, setActiveSort] = useState('');
+
+  const { data: problemAreas } = useProblemArea({
+    url: '/ideas/problem-area',
+  });
+
+  const [activeFilter, setActiveFilter] = useState({
+    id: null,
+    value: null,
+    name: '',
+  });
+
   const SORT_IDEA = [
     {
       id: 0,
@@ -45,19 +54,33 @@ const IdeaAndSolutionContainer = () => {
 
   const FILTER_IDEA = [
     {
-      id: 0,
-      name: 'Berdasarkan bidang masalah',
-      value: 'problemArea',
+      id: 1,
+      name: 'Berdasarkan tipe solusi digital Web',
+      value: 'web',
     },
     {
-      id: 1,
-      name: 'Berdasarkan tipe solusi',
-      value: 'solutionType',
+      id: 2,
+      name: 'Berdasarkan tipe solusi digital Mobile',
+      value: 'mobile',
     },
+    {
+      id: 3,
+      name: 'Berdasarkan tipe solusi digital Game',
+      value: 'game',
+    },
+    ...problemAreas,
   ];
+  const queryFilter = useMemo(() => {
+    if (!activeFilter.id) return '';
+    if (activeFilter.name.includes('tipe solusi')) {
+      return `&solutionType=${activeFilter.value}`;
+    }
+
+    return `&problemAreaId=${activeFilter.id}`;
+  }, [activeFilter]);
 
   const { data: response, error } = useIdeaSolution({
-    url: `/ideas?offset=${currentOffset}&limit=${LIMIT_PER_PAGE}&sort=${activeSort}`,
+    url: `/ideas?offset=${currentOffset}&limit=${LIMIT_PER_PAGE}&sort=${activeSort}${queryFilter}`,
   });
   const result = response?.result || {};
   const { data, pages = {} } = result || {};
@@ -78,7 +101,7 @@ const IdeaAndSolutionContainer = () => {
   }, []);
 
   const handleClickFilter = useCallback((filter) => {
-    console.log(filter, filter);
+    setActiveFilter(filter);
   }, []);
 
   const renderLoader = () => {
@@ -126,7 +149,7 @@ const IdeaAndSolutionContainer = () => {
                 <div key={id} className={ideaCardWrapper}>
                   <IdeaCard
                     title={solutionName}
-                    imageUrl={solutionSupportingPhotos?.[0] || defaultPic}
+                    imageUrl={solutionSupportingPhotos?.[0]}
                     link={`/idea/${id}`}
                     description={solutionMission}
                     likeCount={totalLikes}

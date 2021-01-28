@@ -1,4 +1,4 @@
-import { useEffect, useState, memo, useMemo } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { shape, bool } from 'prop-types';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
@@ -12,7 +12,7 @@ import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
 import useMyTeachers from 'hooks/useMyTeachers';
-import { PROBLEM_LIST } from '../constants';
+import useProblemArea from 'hooks/useProblemArea';
 
 import {
   radioBtnWrapper,
@@ -31,6 +31,10 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   const { data: teachersResult } = useMyTeachers({
     url: '/users/my/teachers',
   });
+  const { data: problemAreas } = useProblemArea({
+    url: '/ideas/problem-area',
+  });
+
   const teachers = teachersResult;
 
   const { inputs, idea, setInputs, teacher } = useIdeaFormContext();
@@ -46,7 +50,6 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     },
   });
 
-  const isErrorTeacherField = errors.teacherId && !watch('teacherId');
   const isErrorProblemAreaField = errors.teacherId && !watch('problemArea');
 
   const [solutionType, setSolutionType] = useState(
@@ -58,14 +61,6 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     { id: 1, text: 'Aplikasi Web', value: 'Web' },
     { id: 2, text: 'Aplikasi Game', value: 'Game' },
   ];
-
-  const problemList = useMemo(() => {
-    return PROBLEM_LIST.map((prob, idx) => ({
-      id: idx,
-      name: prob,
-      value: prob,
-    }));
-  }, []);
 
   const handleValidateTeams = () => {
     if (inputs?.teamIds?.length) {
@@ -107,7 +102,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   }, [push, user]);
 
   useEffect(() => {
-    register('teacherId', { required: true });
+    register('teacherId', { required: false });
     register('schoolId', { required: true });
     register('schoolName', { required: true });
     register('problemArea', { required: true });
@@ -117,21 +112,14 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     <>
       <form>
         <Panel title="Nama Guru Pembimbing">
-          <div className={isErrorTeacherField && dropdownError}>
-            <DropdownComponent
-              placeholder="Nama guru kamu"
-              onSelected={handleSelectTeacher}
-              dropdownItem={teachers}
-              defaultVal={teacher.name}
-              inputName="teacherId"
-              name="teacherId"
-            />
-          </div>
-          {isErrorTeacherField && (
-            <Form.Text className="text-muted pt-1">
-              Harap mengisi nama guru
-            </Form.Text>
-          )}
+          <DropdownComponent
+            placeholder="Nama guru kamu"
+            onSelected={handleSelectTeacher}
+            dropdownItem={teachers}
+            defaultVal={teacher.name}
+            inputName="teacherId"
+            name="teacherId"
+          />
         </Panel>
         <Panel title="Nama Solusi Digital">
           <TextField
@@ -180,7 +168,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
             <DropdownComponent
               placeholder="Tulis bidang masalah yang ingin kamu selesaikan"
               onSelected={handleSelectProblemArea}
-              dropdownItem={problemList}
+              dropdownItem={problemAreas}
               defaultVal={ideaState.problemArea}
               inputName="problemArea"
               name="problemArea"

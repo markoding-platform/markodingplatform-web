@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { arrayOf, func, shape, string } from 'prop-types';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Button from 'react-bootstrap/Button';
 import Popover from 'react-bootstrap/Popover';
 import { BsListUl } from 'react-icons/bs';
-import { btnTopAction, textAction, listItem } from './styles.module.scss';
+import {
+  btnTopAction,
+  textAction,
+  listItem,
+  styPopOverContainer,
+} from './styles.module.scss';
 
 const FilterComponent = ({ placement, filterItems, onClickFilterItem }) => {
   const [showPopover, setShowPopover] = useState(false);
@@ -18,7 +23,7 @@ const FilterComponent = ({ placement, filterItems, onClickFilterItem }) => {
     onClickFilterItem(sort);
   };
   const popover = (
-    <Popover id="popover-basic">
+    <Popover className={styPopOverContainer}>
       <Popover.Content className="p-0">
         <ul className="list-group">
           {filterItems.map((filter) => (
@@ -73,4 +78,4 @@ FilterComponent.propTypes = {
   ).isRequired,
   onClickFilterItem: func.isRequired,
 };
-export default FilterComponent;
+export default memo(FilterComponent);

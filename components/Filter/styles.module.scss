@@ -34,3 +34,8 @@
   padding: 0;
   text-align: left;
 }
+
+.styPopOverContainer {
+  max-height: 310px;
+  overflow-y: auto;
+}
