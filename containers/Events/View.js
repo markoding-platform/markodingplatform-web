@@ -7,7 +7,6 @@ import CardLoader from 'components/Shimmer/Card';
 import EventCard from 'components/EventCard';
 import { useRouter } from 'next/router';
 import React, { useCallback, useState } from 'react';
-import { LIMIT_PER_PAGE } from 'containers/IdeaAndSolutionContainer/constant';
 import Pagination from 'components/Pagination';
 import SortComponent from 'components/Sort';
 import { eventGrid } from './styles.module.scss';
@@ -28,12 +27,13 @@ const View = () => {
 
   const router = useRouter();
   const { query } = router;
+  const limit = 9;
   const currentOffset = Number(query?.start) || 0;
   const currentPage = Number(query?.page) || 1;
   const [activeSort, setActiveSort] = useState('');
 
   const { data: response, error } = useEvents({
-    url: `/events??limit=${LIMIT_PER_PAGE}&offset=${currentOffset}&sort=${activeSort}`,
+    url: `/events?limit=${limit}&offset=${currentOffset}&sort=${activeSort}`,
   });
   const result = response?.result || {};
   const { data, pages = {} } = result;
@@ -55,7 +55,7 @@ const View = () => {
 
   const handlePageChanged = useCallback(
     (page) => {
-      const offset = LIMIT_PER_PAGE * page - LIMIT_PER_PAGE;
+      const offset = limit * page - limit;
       router.replace(`/event/?page=${page}&start=${offset}`);
     },
     [router]
@@ -103,7 +103,7 @@ const View = () => {
         <Pagination
           totalRecords={pages.count}
           totalPages={pages.totalPages}
-          pageLimit={LIMIT_PER_PAGE}
+          pageLimit={limit}
           onPageChanged={handlePageChanged}
           defaultPage={currentPage}
         />

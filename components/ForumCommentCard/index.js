@@ -11,14 +11,16 @@ const ForumCommentCard = (props) => {
     <Media>
       <div className={styles.avatar}>
         <Link href={`/user/${userId}`}>
-          <Image
-            src={avatarUrl}
-            alt={name}
-            width={52}
-            height={52}
-            layout="responsive"
-            className="rounded-circle"
-          />
+          <a href={`/user/${userId}`}>
+            <Image
+              src={avatarUrl}
+              alt={name}
+              width={52}
+              height={52}
+              layout="responsive"
+              className="rounded-circle"
+            />
+          </a>
         </Link>
       </div>
       <Media.Body>

@@ -4,7 +4,7 @@ import React from 'react';
 
 const Loading = ({ text, withText, size, variant }) => {
   return (
-    <div className="d-flex align-items-center">
+    <div className="d-flex align-items-center justify-content-center">
       <Spinner
         as="span"
         animation="grow"

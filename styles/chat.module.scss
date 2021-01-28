@@ -5,6 +5,7 @@
   position: relative;
   background-color: colors.$bg;
   display: flow-root;
+	height: 100%;
 	@media (max-width: breakpoint.$lg) {
 		min-height: 550px;
 	}

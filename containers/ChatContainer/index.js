@@ -1,38 +1,71 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import BubbleChat from 'components/BubbleChat';
-import useChat from 'hooks/useChat';
 import PropTypes from 'prop-types';
 import InputChat from 'containers/ChatContainer/inputChat';
 import firebase from 'libraries/FirebaseInitial';
 import MarkodingFetch from 'libraries/MarkodingFetch';
-import { mutate } from 'swr';
+import Loading from 'components/Loading';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import styles from './styles.module.scss';
 import chatMap from '../../map/chatMap';
 
 const ChatContainer = ({ user }) => {
-  const divRef = useRef();
-  let result = [];
-  const limit = 10;
-  const { data } = useChat({
-    url: `/chats?limit=${limit}&offset=0`,
+  const limit = 6;
+  const [pagination, setPagination] = useState({
+    page: 1,
+    offset: 0,
   });
-  if (data && data.result) {
-    result = [...result, ...data.result.map(chatMap)];
-  }
+  const [chats, setChats] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [extraOffset, setExtraOffset] = useState(0);
+
+  const getChats = async () => {
+    const { offset } = pagination;
+    const offsetPlusPlus = offset + extraOffset;
+    const response = await MarkodingFetch(
+      `/chats?limit=${limit}&offset=${offsetPlusPlus}`
+    );
+    if (response.ok) {
+      const result = response?.result || {};
+      const { data, pages = {} } = result;
+      const newChats = data.map(chatMap);
+      setChats((prevChats) => [...prevChats, ...newChats]);
+      if (pages.currentPage === pages.totalPages) {
+        setHasMore(false);
+      }
+    }
+  };
+
+  const nextGetting = async () => {
+    await setPagination((prevPagination) => {
+      const { page } = prevPagination;
+      return {
+        page: page + 1,
+        offset: limit * (page + 1) - limit,
+      };
+    });
+  };
 
   const getChat = async (chatId) => {
     const res = await MarkodingFetch(`/chats/${chatId}`);
     if (res && res.ok && res.result) {
-      result = [...result, res.result];
-      await mutate(`/chats?limit=${limit}&offset=0`, {
-        ...data,
-        result: [res.result],
+      const newChat = chatMap(res.result);
+      setChats((prevChats) => {
+        const filteredChats = prevChats.filter((cx) => {
+          return +cx.id === +res.result.id;
+        });
+        if (filteredChats.length < 1) {
+          setExtraOffset((prevExtraOffset) => prevExtraOffset + 1);
+          return [newChat, ...prevChats];
+        }
+        return [...prevChats];
       });
-      if (divRef && divRef.current) {
-        divRef.current.scrollIntoView();
-      }
     }
   };
+
+  useEffect(() => {
+    getChats();
+  }, [pagination]);
 
   useEffect(() => {
     const starCountRef = firebase.database().ref('chat');
@@ -42,20 +75,24 @@ const ChatContainer = ({ user }) => {
         getChat(snap.id);
       }
     });
-    if (divRef && divRef.current) {
-      divRef.current.scrollIntoView();
-    }
   }, []);
 
   return (
     <>
-      {user && (
+      {user && chats.length > 0 && (
         <>
-          <div className={styles.chatWrap}>
-            {result
-              .slice(0)
-              .reverse()
-              .map((c) => (
+          <div id="chatWrap" className={styles.chatWrap}>
+            <InfiniteScroll
+              dataLength={chats.length}
+              next={nextGetting}
+              inverse
+              hasMore={hasMore}
+              loader={<Loading withText={false} />}
+              scrollableTarget="chatWrap"
+              endMessage={<p className="text-danger">No more data</p>}
+              className={styles.infiniteScroll}
+            >
+              {chats.map((c) => (
                 <div key={c.id} className="mb-4">
                   <BubbleChat
                     payload={c.payload}
@@ -66,8 +103,8 @@ const ChatContainer = ({ user }) => {
                   />
                 </div>
               ))}
+            </InfiniteScroll>
           </div>
-          <div ref={divRef} />
           <InputChat />
         </>
       )}

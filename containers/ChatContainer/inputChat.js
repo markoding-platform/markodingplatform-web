@@ -1,4 +1,3 @@
-import { BiImageAlt, BiSmile } from 'react-icons/bi';
 import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
 import MarkodingFetch from 'libraries/MarkodingFetch';
@@ -28,9 +27,6 @@ const InputChat = () => {
 
   return (
     <div className={styles.inpGroup}>
-      <button type="button" className={styles.addImage}>
-        <BiImageAlt size={24} />
-      </button>
       <Form.Control
         type="text"
         placeholder="Ketik Pesan"
@@ -39,7 +35,6 @@ const InputChat = () => {
         onChange={(event) => setTextChat(event.target.value)}
         onKeyPress={submitChat}
       />
-      <BiSmile className={styles.searchIcon} />
     </div>
   );
 };
