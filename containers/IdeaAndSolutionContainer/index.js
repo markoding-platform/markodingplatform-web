@@ -11,6 +11,7 @@ import SortComponent from 'components/Sort';
 import FilterIdea from 'components/Filter';
 import useIdeaSolution from 'hooks/useIdeaSolution';
 import emptyFolderSvg from 'svgs/empty-folder.svg';
+import useProblemArea from 'hooks/useProblemArea';
 
 import {
   ideasWrapper,
@@ -27,11 +28,18 @@ const IdeaAndSolutionContainer = () => {
   const currentOffset = Number(query?.start) || 0;
   const currentPage = Number(query?.page) || 1;
   const [activeSort, setActiveSort] = useState('');
+
+  const { data: problemAreas } = useProblemArea({
+    url: '/ideas/problem-area',
+  });
+
+  console.log({ problemAreas });
   const [activeFilter, setActiveFilter] = useState({
     id: null,
     value: null,
     name: '',
   });
+
   const SORT_IDEA = [
     {
       id: 0,
@@ -47,11 +55,6 @@ const IdeaAndSolutionContainer = () => {
 
   const FILTER_IDEA = [
     {
-      id: 0,
-      name: 'Berdasarkan bidang masalah',
-      value: 'problemArea',
-    },
-    {
       id: 1,
       name: 'Berdasarkan tipe solusi digital Web',
       value: 'web',
@@ -63,18 +66,18 @@ const IdeaAndSolutionContainer = () => {
     },
     {
       id: 3,
-      name: 'Berdasarkan tipe solusi digital Mobile',
+      name: 'Berdasarkan tipe solusi digital Game',
       value: 'game',
     },
+    ...problemAreas,
   ];
   const queryFilter = useMemo(() => {
+    if (!activeFilter.id) return '';
     if (activeFilter.name.includes('tipe solusi')) {
-      return `$solutionType=${activeFilter.value}`;
+      return `&solutionType=${activeFilter.value}`;
     }
-    if (activeFilter.value === 'problemArea') {
-      return `$problemAreaId=${activeFilter.id}`;
-    }
-    return '';
+
+    return `&problemAreaId=${activeFilter.id}`;
   }, [activeFilter]);
 
   const { data: response, error } = useIdeaSolution({

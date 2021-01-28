@@ -1,4 +1,4 @@
-import { useEffect, useState, memo, useMemo } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { shape, bool } from 'prop-types';
 import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
@@ -13,7 +13,6 @@ import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
 import useMyTeachers from 'hooks/useMyTeachers';
 import useProblemArea from 'hooks/useProblemArea';
-import { PROBLEM_LIST } from '../constants';
 
 import {
   radioBtnWrapper,
@@ -35,7 +34,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   const { data: problemAreas } = useProblemArea({
     url: '/ideas/problem-area',
   });
-  console.log(problemAreas);
+
   const teachers = teachersResult;
 
   const { inputs, idea, setInputs, teacher } = useIdeaFormContext();
@@ -63,14 +62,6 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     { id: 1, text: 'Aplikasi Web', value: 'Web' },
     { id: 2, text: 'Aplikasi Game', value: 'Game' },
   ];
-
-  const problemList = useMemo(() => {
-    return PROBLEM_LIST.map((prob, idx) => ({
-      id: idx,
-      name: prob,
-      value: prob,
-    }));
-  }, []);
 
   const handleValidateTeams = () => {
     if (inputs?.teamIds?.length) {
@@ -178,7 +169,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
             <DropdownComponent
               placeholder="Tulis bidang masalah yang ingin kamu selesaikan"
               onSelected={handleSelectProblemArea}
-              dropdownItem={problemList}
+              dropdownItem={problemAreas}
               defaultVal={ideaState.problemArea}
               inputName="problemArea"
               name="problemArea"

@@ -6,7 +6,7 @@ const useProblemArea = ({ url }) => {
   const { data, error } = useSWR(url, MarkodingFetch);
   const isLoading = !data && !error;
   const problemAreas = !isLoading ? data.result : [];
-  const normalizeProblemArea = problemAreaMap(problemAreas);
+  const normalizeProblemArea = problemAreaMap(problemAreas) || [];
 
   return {
     data: normalizeProblemArea,
