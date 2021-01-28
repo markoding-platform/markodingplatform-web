@@ -33,7 +33,6 @@ const IdeaAndSolutionContainer = () => {
     url: '/ideas/problem-area',
   });
 
-  console.log({ problemAreas });
   const [activeFilter, setActiveFilter] = useState({
     id: null,
     value: null,

@@ -50,7 +50,6 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     },
   });
 
-  // const isErrorTeacherField = errors.teacherId && !watch('teacherId');
   const isErrorProblemAreaField = errors.teacherId && !watch('problemArea');
 
   const [solutionType, setSolutionType] = useState(

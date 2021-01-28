@@ -1,5 +1,5 @@
 export const problemAreaMap = (data) => {
-  if (!data) return {};
+  if (!data) return [];
   return data.map((problem) => {
     return {
       id: problem.id,
