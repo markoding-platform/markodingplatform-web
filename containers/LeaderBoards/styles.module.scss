@@ -16,9 +16,15 @@
 }
 
 .styNav {
-  height: 88px;
+  height: 100%;
   width: 100%;
   display: flex;
   padding: 16px 0;
   justify-content: center;
+}
+
+.styNavItem {
+  width: 50%;
+  padding-bottom: 14px;
+  text-align: center;
 }

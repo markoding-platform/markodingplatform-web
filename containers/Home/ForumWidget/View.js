@@ -17,7 +17,7 @@ const ForumContainer = () => {
   return (
     <div className="inner-section">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h3>Froum</h3>
+        <h3>Forum</h3>
         <p className="mb-0">3 Pertanyaan Terakhir</p>
       </div>
       {!isLoading &&

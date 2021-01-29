@@ -4,7 +4,7 @@
 
 .footer {
   background-color: colors.$white;
-	padding-top: 40px;
+  padding-top: 40px;
 }
 
 .footerRoot {
@@ -31,18 +31,19 @@
 .item {
   margin-bottom: 5px;
   color: colors.$secondary;
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .contactRoot {
   border-top: 1px solid #eaedf3;
   padding: 25px 15px;
+  margin-bottom: 50px;
 }
 
 .contactText {
   color: colors.$secondary;
   font-size: 14px;
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .contactIcon {

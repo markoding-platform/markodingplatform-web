@@ -19,7 +19,10 @@ const BlogCard = (props) => {
           </div>
           <Card.Body>
             <Card.Title className={styles.title}>{title}</Card.Title>
-            <Card.Text className={styles.text}>{description}</Card.Text>
+            <Card.Text
+              className={styles.text}
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
             <Card.Text className={styles.date}>
               {dayjs(date).format('MMM DD, YYYY')}
             </Card.Text>

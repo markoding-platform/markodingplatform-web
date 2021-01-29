@@ -115,3 +115,9 @@
     margin: 5px;
   }
 }
+
+.badgeContainer {
+  display: flex;
+  max-width: 900px;
+  overflow-x: auto;
+}

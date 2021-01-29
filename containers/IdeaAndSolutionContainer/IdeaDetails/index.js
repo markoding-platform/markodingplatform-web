@@ -9,12 +9,12 @@ import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
 import MarkodingFetch from 'libraries/MarkodingFetch';
-import Avatar from 'svgs/avatar.svg';
 import BoxLoader from 'components/Shimmer/Box';
 import BlockAccessModal from 'components/BlockAccessModal';
 import ProfileCard from 'components/ProfileCard';
 import YoutubeIframe from 'components/YoutubeIframe';
 import useIdeaSolution from 'hooks/useIdeaSolution';
+import noImage from 'public/assets/no-image.png';
 import { teamMap } from 'map/teamMap';
 import { ideaMap } from 'map/ideaMap';
 import { profileTypeEnum } from '../constant';
@@ -89,24 +89,11 @@ const IdeaDetails = () => {
         <div className="pb-2">
           <h4>{idea.solutionName}</h4>
         </div>
-        <div className="d-flex py-2">
-          <Image
-            src={Avatar}
-            alt="avatar-image"
-            width={52}
-            height={52}
-            className={ideaImage}
-          />
-          <div className="pl-2">
-            <h6 className="m-0 pb-2">Ariqah Hasanah</h6>
-            <p className="text-3rd m-0">11/11/2020</p>
-          </div>
-        </div>
         <div className="py-2">
           <div className="position-relative">
-            {imageIdea ? (
+            {Object.keys(idea).length ? (
               <Image
-                src={imageIdea}
+                src={imageIdea || noImage}
                 alt={idea.title}
                 width={500}
                 height={320}

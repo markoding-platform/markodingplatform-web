@@ -3,6 +3,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import range from 'utils/range';
 
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+
 import IdeaCard from 'components/IdeaCard';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import CardLoader from 'components/Shimmer/Card';
@@ -14,7 +17,6 @@ import emptyFolderSvg from 'svgs/empty-folder.svg';
 import useProblemArea from 'hooks/useProblemArea';
 
 import {
-  ideasWrapper,
   ideaCardWrapper,
   cardLoader,
   emptyIdeasWrapper,
@@ -108,9 +110,9 @@ const IdeaAndSolutionContainer = () => {
     const loaderArr = [];
     range(1, 9).forEach((item) => {
       loaderArr.push(
-        <div key={item} className={ideaCardWrapper}>
+        <Col key={item} xs={6} lg={4}>
           <CardLoader className={cardLoader} />
-        </div>
+        </Col>
       );
     });
     return loaderArr;
@@ -132,10 +134,10 @@ const IdeaAndSolutionContainer = () => {
           />
         </div>
       </div>
-      {isLoading && <div className={ideasWrapper}>{renderLoader()}</div>}
-      {!isLoading && ideas.length > 0 && !error && (
-        <>
-          <div className={ideasWrapper}>
+      <Row className="mt-4">
+        {isLoading && renderLoader()}
+        {!isLoading && ideas.length > 0 && !error && (
+          <>
             {ideas.map((idea) => {
               const {
                 id,
@@ -146,29 +148,33 @@ const IdeaAndSolutionContainer = () => {
                 totalComments,
               } = idea;
               return (
-                <div key={id} className={ideaCardWrapper}>
-                  <IdeaCard
-                    title={solutionName}
-                    imageUrl={solutionSupportingPhotos?.[0]}
-                    link={`/idea/${id}`}
-                    description={solutionMission}
-                    likeCount={totalLikes}
-                    commentCount={totalComments}
-                  />
-                </div>
+                <Col key={id} xs={6} lg={4}>
+                  <div className={ideaCardWrapper}>
+                    <IdeaCard
+                      title={solutionName}
+                      imageUrl={solutionSupportingPhotos?.[0]}
+                      link={`/idea/${id}`}
+                      description={solutionMission}
+                      likeCount={totalLikes}
+                      commentCount={totalComments}
+                    />
+                  </div>
+                </Col>
               );
             })}
-          </div>
-          <div className="d-flex justify-content-center mt-5">
-            <Pagination
-              totalRecords={pages.count}
-              totalPages={pages.totalPages}
-              pageLimit={LIMIT_PER_PAGE}
-              onPageChanged={handlePageChanged}
-              defaultPage={currentPage}
-            />
-          </div>
-        </>
+          </>
+        )}
+      </Row>
+      {!isLoading && ideas.length > 0 && !error && (
+        <div className="d-flex justify-content-center mt-5">
+          <Pagination
+            totalRecords={pages.count}
+            totalPages={pages.totalPages}
+            pageLimit={LIMIT_PER_PAGE}
+            onPageChanged={handlePageChanged}
+            defaultPage={currentPage}
+          />
+        </div>
       )}
       {!isLoading && ideas.length === 0 && (
         <>

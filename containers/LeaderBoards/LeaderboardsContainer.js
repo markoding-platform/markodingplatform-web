@@ -11,6 +11,7 @@ import {
   styTabContainer,
   styActiveTab,
   styNav,
+  styNavItem,
 } from './styles.module.scss';
 
 const LeaderboardsContainer = () => {
@@ -49,21 +50,23 @@ const LeaderboardsContainer = () => {
         <Row>
           <Col>
             <Nav className={styNav}>
-              <Nav.Item
-                className={`${
-                  activeKey === 'team' && styActiveTab
-                } w-50 pb-3 text-center`}
-              >
-                <Nav.Link eventKey="team" className={styTabTitle}>
+              <Nav.Item className={styNavItem}>
+                <Nav.Link
+                  eventKey="team"
+                  className={styTabTitle`${
+                    activeKey === 'team' && styActiveTab
+                  }`}
+                >
                   Ranking Team
                 </Nav.Link>
               </Nav.Item>
-              <Nav.Item
-                className={`${
-                  activeKey === 'individual' && styActiveTab
-                } pb-3 w-50 text-center`}
-              >
-                <Nav.Link eventKey="individual" className={styTabTitle}>
+              <Nav.Item className={styNavItem}>
+                <Nav.Link
+                  eventKey="individual"
+                  className={styTabTitle`${
+                    activeKey === 'individual' && styActiveTab
+                  }`}
+                >
                   Ranking Perorangan
                 </Nav.Link>
               </Nav.Item>
