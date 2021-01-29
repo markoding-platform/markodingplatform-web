@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
 
+import noImage from 'public/assets/no-image.png';
 import { ideaImage } from './style.module.scss';
 
 const SnippetIdea = ({
@@ -27,16 +28,14 @@ const SnippetIdea = ({
   return (
     <div>
       <div className="py-2 position-relative">
-        {imageIdea && (
-          <Image
-            src={imageIdea}
-            alt={solutionName}
-            width={500}
-            height={220}
-            layout="responsive"
-            className={ideaImage}
-          />
-        )}
+        <Image
+          src={imageIdea || noImage}
+          alt={solutionName}
+          width={500}
+          height={220}
+          layout="responsive"
+          className={ideaImage}
+        />
       </div>
       <div className="pb-4">
         <h4>{solutionName}</h4>

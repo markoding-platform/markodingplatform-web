@@ -35,7 +35,7 @@ const BlogDetailContainer = () => {
         />
         <h1 className="h3 mt-4">{blog.title}</h1>
         <div className="text-muted">
-          {dayjs(blog.date).format('dddd, DD MMM YYYY')}
+          {dayjs(blog.createdAt).format('dddd, DD MMM YYYY')}
         </div>
         <div
           className="mt-4"

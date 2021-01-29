@@ -1,4 +1,4 @@
-import { shape } from 'prop-types';
+import { arrayOf, shape, string } from 'prop-types';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -19,7 +19,8 @@ import {
   profileCard,
   profileSection,
   contentTitle,
-  btnEditProfile,
+  // btnEditProfile,
+  badgeContainer,
   wrapperStats,
   courseCardWrapper,
   ideaSnippetWrapper,
@@ -27,9 +28,8 @@ import {
   styCourses,
 } from './styles.module.scss';
 
-const DashboardContainer = ({ user }) => {
+const DashboardContainer = ({ user, skilBadge, email }) => {
   const { idea: ideaUser } = user;
-  const badges = [];
   const { push } = useRouter();
 
   const { id } = ideaUser || {};
@@ -67,10 +67,10 @@ const DashboardContainer = ({ user }) => {
               />
               <div className={`px-3 ${profileSection}`}>
                 <p className={contentTitle}>{user.name}</p>
-                <p className="m-0">Email</p>
-                <Button className={`bg-info ${btnEditProfile}`}>
+                <p className="m-0">{email}</p>
+                {/* <Button className={`bg-info ${btnEditProfile}`}>
                   Edit Profile
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
@@ -81,9 +81,16 @@ const DashboardContainer = ({ user }) => {
         </div>
       </div>
       <Panel title="Badges">
-        {badges.length ? (
-          <div className="d-flex">
-            <Badges name="Javascript" />
+        {skilBadge.length ? (
+          <div className={badgeContainer}>
+            {skilBadge.map((badge = {}) => (
+              <Badges
+                key={badge.id}
+                name={badge.name}
+                imgUrl={Avatar}
+                link={badge.badgeUrl}
+              />
+            ))}
           </div>
         ) : (
           <h4 className="text-center py-5 text-3rd">
@@ -143,6 +150,17 @@ DashboardContainer.propTypes = {
     name: '',
     profile: {},
   }).isRequired,
+  skilBadge: arrayOf(
+    shape({
+      id: string,
+      name: string,
+      pictureUrl: string,
+      openBadgeId: string,
+      badgerUrl: string,
+      certificateUrl: string,
+    })
+  ).isRequired,
+  email: string.isRequired,
 };
 
 export default DashboardContainer;
