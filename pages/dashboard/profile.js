@@ -63,6 +63,7 @@ const Profile = ({ user }) => {
                 lastName={skilvulData.lastName || ''}
                 email={skilvulData.email || ''}
                 userXID={userXID}
+                gender={skilvulData.gender || ''}
                 birthDate={skilvulData.birthDate || ''}
               />
             ) : (

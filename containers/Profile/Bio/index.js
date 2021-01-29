@@ -15,9 +15,13 @@ import { locationSchoolMap, professionsMap } from 'map/dropdownMap';
 import { styLabel, required, dropdownError } from '../styles.module.scss';
 
 const genderOption = [
-  { id: 0, name: 'Laki-laki', value: 'laki-laki' },
-  { id: 1, name: 'Perempuan', value: 'perempuan' },
+  { id: 0, name: 'Laki-laki', value: 'MALE' },
+  { id: 1, name: 'Perempuan', value: 'FEMALE' },
 ];
+const genderEnum = {
+  MALE: 'Laki-laki',
+  FEMALE: 'Perempuan',
+};
 const BioComponent = () => {
   const {
     register,
@@ -62,11 +66,11 @@ const BioComponent = () => {
   }, []);
 
   const handleSelectGender = (gender) => {
-    setValue('gender', gender);
+    setValue('gender', gender.value);
   };
 
   const handleOnSelectDate = (date) => {
-    setValue('dateOfBirth', date);
+    setValue('birthDate', new Date(date).toISOString());
   };
   const handleSelectProvince = (payload) => {
     setValue('provinceId', payload.key);
@@ -94,7 +98,8 @@ const BioComponent = () => {
   }, [getCities, getProfessions, getProvinces, provinceId]);
 
   useEffect(() => {
-    const { cityId, cityName, expertise, provinceName, gender } = account || {};
+    const { cityId, cityName, expertise, provinceName, gender, birthDate } =
+      account || {};
     register('provinceId', { required: true, defaultVal: account.provinceId });
     register('provinceName', {
       required: true,
@@ -104,20 +109,21 @@ const BioComponent = () => {
     register('cityName', { required: true, defaultVal: cityName });
     register('expertise', { required: false, defaultVal: expertise });
     register('gender', { required: true, defaultVal: gender });
+    register('birthDate', { required: true, defaultVal: birthDate });
   }, [account, register]);
 
   const isErrorGenderField = errors.gender && !watch('teacherId');
   const isErrorProvinceField = errors.provinceId && !watch('provinceId');
   const isErrorCityField = errors.cityId && !watch('cityId');
-  console.log(account.dateOfBirth, account.birthDate);
+
   return (
-    <Panel title="Informasi Akun">
+    <Panel title="Data Diri">
       <Row>
         <Col lg="6" sm="12" className="pb-4">
           <label className={`${styLabel}`}>Tanggal Lahir</label>
           <DatePickerComponent
-            defaultVal={account.dateOfBirth || account.birthDate}
-            name="dateOfBirth"
+            defaultVal={account.birthDate}
+            name="birthDate"
             ref={register({ required: false })}
             error={false}
             onSelectDate={handleOnSelectDate}
@@ -129,7 +135,7 @@ const BioComponent = () => {
             <DropdownComponent
               onSelected={handleSelectGender}
               dropdownItem={genderOption}
-              defaultVal={account.gender}
+              defaultVal={genderEnum[account.gender]}
               inputName="gender"
               name="gender"
             />

@@ -8,19 +8,31 @@ import Panel from 'components/Panel';
 
 import DropdownComponent from 'components/Dropdown';
 
-import { locationSchoolMap, schoolGradeMap } from 'map/dropdownMap';
+import {
+  locationSchoolMap,
+  schoolGradeMap,
+  schoolTypeMap,
+} from 'map/dropdownMap';
 import { styLabel, required } from '../styles.module.scss';
 
 const CompanyInfo = () => {
-  const { register, control, getValues } = useFormContext();
+  const { register, control, getValues, setValue } = useFormContext();
   const [schoolGrades, setSchoolGrades] = useState([]);
   const account = control?.defaultValuesRef?.current;
   const [schools, setSchools] = useState([]);
+  const [schoolTypes, setSchoolTypes] = useState([]);
 
   const getSchoolGrades = useCallback(async () => {
     const sgResult = await SkilvulFetch('/api/skilvul?path=/schools/grades');
     if (sgResult && sgResult.schoolGrades) {
       setSchoolGrades(sgResult.schoolGrades.map(schoolGradeMap));
+    }
+  }, []);
+
+  const getSchoolTypes = useCallback(async () => {
+    const stResult = await SkilvulFetch('/api/skilvul?path=/schools/types');
+    if (stResult && stResult.schoolTypes) {
+      setSchoolTypes(stResult.schoolTypes.map(schoolTypeMap));
     }
   }, []);
 
@@ -36,12 +48,18 @@ const CompanyInfo = () => {
     }
   }, [getValues]);
 
-  const handleSelectSchoolGradeName = () => {
-    return false;
+  const handleSelectSchoolGradeName = (payload) => {
+    setValue('schoolGradeId', payload.key);
+    setValue('schoolGradeName', payload.name);
+  };
+  const handleSelectSchoolType = (payload) => {
+    setValue('schoolTypeId', payload.key);
+    setValue('schoolTypeName', payload.name);
   };
 
-  const handleSelectSchoolName = () => {
-    return false;
+  const handleSelectSchoolName = (payload) => {
+    setValue('schoolId', payload.key);
+    setValue('schoolName', payload.name);
   };
   useEffect(() => {
     register('schoolGradeName', {
@@ -60,13 +78,32 @@ const CompanyInfo = () => {
       required: false,
       defaultVal: account.schoolId,
     });
+    register('schoolTypeId', {
+      required: false,
+      defaultVal: account.schoolTypeId,
+    });
+    register('schoolTypeName', {
+      required: false,
+      defaultVal: account.schoolTypeName,
+    });
 
     getSchoolGrades();
+    getSchoolTypes();
     getSchools();
-  }, [account, getSchoolGrades, getSchools, register]);
+  }, [account, getSchoolGrades, getSchoolTypes, getSchools, register]);
   return (
-    <Panel title="Informasi Akun">
+    <Panel title="Data Instansi">
       <Row>
+        <Col lg="6" sm="12" className="pb-4">
+          <label className={`${styLabel} ${required}`}>Tipe</label>
+          <DropdownComponent
+            onSelected={handleSelectSchoolType}
+            dropdownItem={schoolTypes}
+            defaultVal={account.schoolTypeName}
+            inputName="schoolTypeName"
+            name="schoolTypeName"
+          />
+        </Col>
         <Col lg="6" sm="12" className="pb-4">
           <label className={`${styLabel} ${required}`}>Jenjang</label>
           <DropdownComponent

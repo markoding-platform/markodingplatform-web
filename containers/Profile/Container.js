@@ -1,29 +1,71 @@
 import { useForm, FormProvider } from 'react-hook-form';
-import { shape } from 'prop-types';
+import { useCallback } from 'react';
+import { shape, string } from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import { toast } from 'react-toastify';
 
+import SkilvulFetch from 'libraries/SkilvulFetch';
 import AccountInfo from './AccountInfo';
 import AccountMenu from './AccountMenu';
 import BioComponent from './Bio';
 import CompanyInfo from './CompanyInfo';
 import { saveBtn, cancelBtn } from './styles.module.scss';
 
-const ProfileContainer = ({ user, email, firstName, lastName, birthDate }) => {
+const ProfileContainer = ({
+  user,
+  email,
+  firstName,
+  lastName,
+  birthDate,
+  gender,
+  userXID,
+}) => {
   const { name, profile = {} } = user;
   const methods = useForm({
     defaultValues: {
+      ...profile,
       firstName,
       lastName,
       email,
+      gender,
       birthDate,
-      ...profile,
     },
   });
 
-  const onSubmit = (data) => console.log({ data });
-  console.log(methods.errors);
+  const renderToast = (msg, error = false) => {
+    if (error) {
+      return toast.error(<p className="m-0 pl-3">{msg}</p>, {
+        autoClose: 3000,
+      });
+    }
+    return toast.success(<p className="m-0 pl-3">{msg}</p>, {
+      autoClose: 3000,
+    });
+  };
+
+  const onSubmit = useCallback(
+    async (data) => {
+      const { bio, telephone, expertise, ...rest } = data;
+      const response = await SkilvulFetch(
+        `/api/skilvul?path=/users/${userXID}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'PUT',
+          body: JSON.stringify(rest),
+        }
+      );
+      if (response && response.user) {
+        renderToast('Berhasil memperbarui profil');
+      } else {
+        renderToast('Gagal memperbarui profil', true);
+      }
+    },
+    [userXID]
+  );
 
   return (
     <FormProvider {...methods}>
@@ -66,6 +108,12 @@ ProfileContainer.propTypes = {
     id: '',
     name: '',
   }).isRequired,
+  email: string.isRequired,
+  firstName: string.isRequired,
+  lastName: string.isRequired,
+  birthDate: string.isRequired,
+  gender: string.isRequired,
+  userXID: string.isRequired,
 };
 
 export default ProfileContainer;
