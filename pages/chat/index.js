@@ -14,15 +14,12 @@ const Chat = ({ user }) => {
     if (canUseDOM) {
       document.body.classList.add('no-scroll');
     }
-  }, []);
-  useEffect(
-    () => () => {
+    return () => {
       if (canUseDOM) {
         document.body.classList.remove('no-scroll');
       }
-    },
-    []
-  );
+    };
+  });
 
   return (
     <Layout activeMenu="/chat" withFooter={false} className="layoutBg">
