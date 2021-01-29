@@ -3,6 +3,7 @@ import React from 'react';
 import SectionCardWrapper from 'components/SectionCardWrapper';
 import BlogCard from 'components/BlogCard';
 import useBlog from 'hooks/useBlog';
+import trimText from 'utils/trimText';
 import WidgetLoader from '../WidgetLoader';
 
 const BlogWidget = () => {
@@ -22,7 +23,7 @@ const BlogWidget = () => {
                 imageUrl={blog.imageUrl}
                 title={blog.title}
                 date={blog.createdAt}
-                description={blog.description}
+                description={trimText(blog.description, 55)}
                 link={`/blog/${blog.id}`}
               />
             ))}
