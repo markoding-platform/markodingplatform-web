@@ -6,6 +6,7 @@ import React, { useCallback, useState } from 'react';
 import { LIMIT_PER_PAGE } from 'containers/IdeaAndSolutionContainer/constant';
 import Pagination from 'components/Pagination';
 import SortComponent from 'components/Sort';
+import trimText from 'utils/trimText';
 import { blogWrapper, blogCardWrapper } from './styles.module.scss';
 import BlogLoader from './Loader';
 
@@ -66,7 +67,7 @@ const BlogContainer = () => {
                 key={blog.id}
                 imageUrl={blog.imageUrl}
                 title={blog.title}
-                description={blog.description}
+                description={trimText(blog.description, 55)}
                 date={blog.createdAt}
                 link={`/blog/${blog.id}`}
               />
