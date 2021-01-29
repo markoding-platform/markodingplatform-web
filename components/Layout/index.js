@@ -7,7 +7,7 @@ import Footer from 'components/Footer';
 import BottomNavigation from 'components/BottomNavigation';
 import Header from 'components/Header';
 
-const Layout = ({ children, activeMenu, withFooter }) => {
+const Layout = ({ children, activeMenu, withFooter, className }) => {
   const [rightWidth, setRightWidth] = useState(null);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const Layout = ({ children, activeMenu, withFooter }) => {
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
       </Head>
-      <Container fluid>
+      <Container fluid className={className}>
         <div className="d-block d-lg-flex justify-content-between">
           <div className="desktop-left-section">
             <Header />
@@ -89,12 +89,14 @@ const Layout = ({ children, activeMenu, withFooter }) => {
 Layout.defaultProps = {
   activeMenu: '',
   withFooter: true,
+  className: null,
 };
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   activeMenu: PropTypes.string,
   withFooter: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default Layout;

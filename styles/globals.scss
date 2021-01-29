@@ -130,3 +130,11 @@ a {
 	background-color: colors.$yellow !important;
 	border-color: colors.$yellow !important;
 }
+
+.no-scroll {
+	overflow: hidden !important;
+}
+
+.layoutBg {
+	background-color: colors.$bg;
+}

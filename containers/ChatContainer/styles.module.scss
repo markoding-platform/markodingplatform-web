@@ -1,16 +1,17 @@
 @use "styles/colors";
+@use "styles/breakpoint";
 
 .chatWrap {
   padding-top: 15px;
-  position: relative;
-  height: 350px;
-  overflow-y: auto;
+	height: 300px;
+	overflow: auto;
+	display: flex;
+	flex-direction: column-reverse;
 }
 
 .inpGroup {
   display: flex;
   align-items: center;
-  position: relative;
   margin: 15px 0;
 }
 
@@ -42,4 +43,9 @@
   right: 10px;
   top: 8px;
   font-size: 22px;
+}
+
+.infiniteScroll {
+	display: flex;
+	flex-direction: column-reverse;
 }
