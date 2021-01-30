@@ -46,6 +46,16 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
     });
   };
 
+  const setUserIdeaCookie = (userIdea) => {
+    setCookie([
+      {
+        label: 'userIdea',
+        value: JSON.stringify(userIdea),
+        age: expCookie,
+      },
+    ]);
+  };
+
   const handleCreateTeam = async (ideaId, isDraft = false) => {
     const userIds = [teacherId, ...teamIds];
     const filterIds = userIds.filter(Boolean);
@@ -61,13 +71,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
       });
       if (ok) {
         const userIdea = { id: ideaId, isDraft };
-        setCookie([
-          {
-            label: 'userIdea',
-            value: JSON.stringify(userIdea),
-            age: expCookie,
-          },
-        ]);
+        setUserIdeaCookie(userIdea);
         const msg =
           isEditIdea || isDraft
             ? 'Berhasil menyimpan ide'
@@ -106,9 +110,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
   const handleEditIdea = async (payload) => {
     const ideaId = query.slug;
     const userIdea = { id: ideaId, isDraft: payload.isDraft };
-    setCookie([
-      { label: 'userIdea', value: JSON.stringify(userIdea), age: expCookie },
-    ]);
+    setUserIdeaCookie(userIdea);
 
     try {
       const { ok } = await MarkodingFetch(`/ideas/${ideaId}`, {
