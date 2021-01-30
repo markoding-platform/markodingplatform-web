@@ -43,6 +43,8 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
   };
 
   const handleCreateTeam = async (ideaId, isDraft = false) => {
+    const userIds = [teacherId, ...teamIds];
+    const filterIds = userIds.filter(Boolean);
     try {
       const { ok } = await MarkodingFetch(`/ideas/${ideaId}/users`, {
         headers: {
@@ -50,7 +52,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         },
         method: 'POST',
         body: JSON.stringify({
-          userIds: [teacherId.length > 0 && teacherId, ...teamIds],
+          userIds: filterIds,
         }),
       });
       if (ok) {
