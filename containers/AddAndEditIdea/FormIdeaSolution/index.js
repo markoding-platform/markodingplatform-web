@@ -57,9 +57,9 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   );
 
   const SOLUTION_TYPES = [
-    { id: 0, text: 'Aplikasi Mobile', value: 'Mobile' },
-    { id: 1, text: 'Aplikasi Web', value: 'Web' },
-    { id: 2, text: 'Aplikasi Game', value: 'Game' },
+    { id: 0, text: 'Aplikasi Mobile', value: 'mobile' },
+    { id: 1, text: 'Aplikasi Web', value: 'web' },
+    { id: 2, text: 'Aplikasi Game', value: 'game' },
   ];
 
   const handleValidateTeams = () => {
@@ -92,7 +92,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
   };
 
   const handleSelectProblemArea = (payload) => {
-    setValue('problemArea', payload.value);
+    setValue('problemAreaId', payload.value);
   };
 
   useEffect(() => {
@@ -105,7 +105,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
     register('teacherId', { required: false });
     register('schoolId', { required: true });
     register('schoolName', { required: true });
-    register('problemArea', { required: true });
+    register('problemAreaId', { required: true });
   }, [register]);
 
   return (
@@ -170,8 +170,8 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
               onSelected={handleSelectProblemArea}
               dropdownItem={problemAreas}
               defaultVal={ideaState.problemArea}
-              inputName="problemArea"
-              name="problemArea"
+              inputName="problemAreaId"
+              name="problemAreaId"
             />
           </div>
           {isErrorProblemAreaField && (
