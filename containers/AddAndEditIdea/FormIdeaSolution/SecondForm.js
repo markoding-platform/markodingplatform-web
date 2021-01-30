@@ -50,7 +50,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         },
         method: 'POST',
         body: JSON.stringify({
-          userIds: [teacherId && teacherId, ...teamIds],
+          userIds: [teacherId.length > 0 && teacherId, ...teamIds],
         }),
       });
       if (ok) {
