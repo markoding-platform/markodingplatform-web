@@ -51,13 +51,31 @@ const CreateTeam = ({ user, isEditIdea }) => {
   return (
     <div>
       <div className={teamWrapper}>
-        <div>
-          <ProfileCard
-            title="Ketua Tim"
-            primaryText={user.name}
-            secondaryText={userSchoolName}
-          />
-        </div>
+        {isEditIdea && members.length ? (
+          members.map(({ name, schoolName, isLeader, userId }) => {
+            if (isLeader) {
+              return (
+                <div>
+                  <ProfileCard
+                    key={userId}
+                    title="Ketua Tim"
+                    primaryText={name}
+                    secondaryText={schoolName}
+                  />
+                </div>
+              );
+            }
+            return null;
+          })
+        ) : (
+          <div>
+            <ProfileCard
+              title="Ketua Tim"
+              primaryText={user.name}
+              secondaryText={userSchoolName}
+            />
+          </div>
+        )}
         {members.map(({ name, schoolName, isLeader, userId }) => {
           if (!isLeader) {
             return (

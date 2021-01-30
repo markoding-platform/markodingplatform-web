@@ -7,12 +7,16 @@ import Button from 'react-bootstrap/Button';
 import { toast } from 'react-toastify';
 import Form from 'react-bootstrap/Form';
 
+import setCookie from 'utils/setCookie';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import { useIdeaFormContext } from 'components/context/IdeaContext';
+import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import UploadComponent from '../Upload';
 import { textArea, styButton } from './styles.module.scss';
+
+const expCookie = 86000;
 
 const SecondFormIdeaSolution = ({ isEditIdea }) => {
   const { push, query, back } = useRouter();
@@ -56,6 +60,14 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         }),
       });
       if (ok) {
+        const userIdea = { id: ideaId, isDraft };
+        setCookie([
+          {
+            label: 'userIdea',
+            value: JSON.stringify(userIdea),
+            age: expCookie,
+          },
+        ]);
         const msg =
           isEditIdea || isDraft
             ? 'Berhasil menyimpan ide'
@@ -93,6 +105,11 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
 
   const handleEditIdea = async (payload) => {
     const ideaId = query.slug;
+    const userIdea = { id: ideaId, isDraft: payload.isDraft };
+    setCookie([
+      { label: 'userIdea', value: JSON.stringify(userIdea), age: expCookie },
+    ]);
+
     try {
       const { ok } = await MarkodingFetch(`/ideas/${ideaId}`, {
         headers: {
@@ -113,7 +130,9 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
   };
 
   const handleUploadImage = (payload) => {
-    setSolutionSupportingPhotos(payload);
+    if (payload) {
+      setSolutionSupportingPhotos(payload);
+    }
   };
   const onSubmit = (payload) => {
     const newIdeaSolution = { ...payload, ...inputs.ideaSolution };
@@ -144,6 +163,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
   }, [handleBack, ideaSolution, push]);
   return (
     <>
+      <ScrollToTop />
       <form>
         <Panel title="Solusi Singkat">
           <TextField
@@ -211,10 +231,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
           </Form.Text>
         </Panel>
         <Panel title="Gambar/Foto Pendukung Ide Solusi">
-          <UploadComponent
-            onUploadImg={handleUploadImage}
-            defaultVal={solutionSupportingPhotos}
-          />
+          <UploadComponent onUploadImg={handleUploadImage} defaultVal="" />
         </Panel>
         <Panel title="Kolaborasi Customer">
           <TextField
