@@ -58,8 +58,8 @@ const Dashboard = ({ user }) => {
           <ErrorBoundary FallbackComponent={ErrorFallback} onError={logError}>
             <DashboardContainer
               user={user}
-              email={skilvulData.email}
-              skilBadge={skilvulData.skilBadge}
+              email={skilvulData.email || ''}
+              skilBadge={skilvulData.skilBadge || []}
             />
           </ErrorBoundary>
         </div>

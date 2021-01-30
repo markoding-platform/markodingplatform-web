@@ -30,6 +30,7 @@ import {
 
 const DashboardContainer = ({ user, skilBadge, email }) => {
   const { idea: ideaUser } = user;
+  const { profileType = '' } = user?.profile;
   const { push } = useRouter();
 
   const { id } = ideaUser || {};
@@ -75,8 +76,8 @@ const DashboardContainer = ({ user, skilBadge, email }) => {
             </div>
           </div>
           <div className={wrapperStats}>
-            <MyStats />
-            <MyStats />
+            <MyStats title="MBadge" />
+            <MyStats title="MPoint" />
           </div>
         </div>
       </div>
@@ -98,28 +99,29 @@ const DashboardContainer = ({ user, skilBadge, email }) => {
           </h4>
         )}
       </Panel>
-      <Panel title="Ide Solusi Saya">
-        {Object.keys(idea).length ? (
-          <SnippetIdea
-            ideaId={ideaUser.id}
-            imageIdea={imageIdea}
-            solutionVision={solutionVision}
-            solutionName={solutionName}
-            likeCount={totalLikes}
-            totalComments={totalComments}
-          />
-        ) : (
-          <div className={ideaSnippetWrapper}>
-            <h4 className="text-center py-5 text-3rd">
-              Anda Belum Memiliki Ide Solusi
-            </h4>
-            <Button className={btnRegister} onClick={handleClickEditIdea}>
-              Registrasi ide solusi
-            </Button>
-          </div>
-        )}
-      </Panel>
-
+      {profileType === 'student' && (
+        <Panel title="Ide Solusi Saya">
+          {Object.keys(idea).length ? (
+            <SnippetIdea
+              ideaId={ideaUser.id}
+              imageIdea={imageIdea}
+              solutionVision={solutionVision}
+              solutionName={solutionName}
+              likeCount={totalLikes}
+              totalComments={totalComments}
+            />
+          ) : (
+            <div className={ideaSnippetWrapper}>
+              <h4 className="text-center py-5 text-3rd">
+                Anda Belum Memiliki Ide Solusi
+              </h4>
+              <Button className={btnRegister} onClick={handleClickEditIdea}>
+                Registrasi ide solusi
+              </Button>
+            </div>
+          )}
+        </Panel>
+      )}
       <Panel title="Kelas Online">
         {!loadingCourses && courses.length > 0 ? (
           <div className={styCourses}>
