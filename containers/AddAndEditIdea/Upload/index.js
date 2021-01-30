@@ -5,7 +5,9 @@ import { func } from 'prop-types';
 
 import { BsTrash } from 'react-icons/bs';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
+import MarkodingFetch from 'libraries/MarkodingFetch';
 import Icon from 'components/Icons';
 import photoPlaceholder from 'svgs/photo-placeholder.svg';
 import expands from 'svgs/expands.svg';
@@ -17,18 +19,18 @@ import {
   btnRemoveImage,
 } from './styles.module.scss';
 
-const BASE_URL = process.env.MARKODING_API_URL;
 const types = ['image/png', 'image/jpeg'];
 
 const UploadComponent = ({ onUploadImg, defaultVal }) => {
   const inputFileRef = useRef();
   const [imageSrc, setImagesSrc] = useState(defaultVal);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClickUploader = () => {
     inputFileRef.current?.click();
   };
 
-  const renderToast = (errMsg) =>
+  const renderErrorToast = (errMsg) =>
     toast.error(<p className="m-0 pl-3">{errMsg}</p>, { autoClose: 3000 });
 
   const handlePostImage = useCallback(
@@ -37,34 +39,35 @@ const UploadComponent = ({ onUploadImg, defaultVal }) => {
 
       files.forEach((file, i) => {
         if (types.every((type) => file.type !== type)) {
-          return renderToast(`tidak support format file ${file.type}`);
+          return renderErrorToast(`tidak support format file ${file.type}`);
         }
 
         if (Math.round(file.size / 1024 / 1024) > 1) {
-          return renderToast(`Ukuran gambar terlalu besar. max 1 MiB`);
+          return renderErrorToast(`Ukuran gambar terlalu besar. max 1 MiB`);
         }
         formData.append(i, file);
       });
-      await fetch(`${BASE_URL}/uploads`, {
+      const res = await MarkodingFetch(`/uplodsads?path=ideas`, {
         method: 'POST',
         body: formData,
-      })
-        .then((res) => res.json())
-        .then((image) => {
-          setImagesSrc(image.url);
-          onUploadImg(image.url);
-        })
-        .catch((err) => {
-          err.json().then((e) => {
-            console.error(e);
-          });
-        });
+      });
+      if (res.ok && res.result && res.result.url) {
+        setImagesSrc(res.result.url);
+        onUploadImg(res.result.url);
+      }
+      if (!res.ok) {
+        console.error(res);
+        setIsLoading(false);
+        return renderErrorToast('Ooops! Gagal mengupload gambar');
+      }
+      setIsLoading(false);
     },
     [onUploadImg]
   );
 
   const handleOnChange = (e) => {
     const files = Array.from(e.target.files);
+    setIsLoading(true);
     handlePostImage(files);
   };
 
@@ -102,6 +105,11 @@ const UploadComponent = ({ onUploadImg, defaultVal }) => {
             style={{ display: 'none' }}
           />
           <div className={infoUploader}>
+            {isLoading && (
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            )}
             <p>Upload file dari penyimpanan</p>
             <div className="d-flex">
               <div className="d-flex">

@@ -46,11 +46,11 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
       schoolName: profile.schoolName,
       schoolId: profile.schoolId,
       teacherId: teacher.userId || '',
-      problemArea: ideaState.problemArea,
     },
   });
 
-  const isErrorProblemAreaField = errors.teacherId && !watch('problemArea');
+  const isErrorProblemAreaField =
+    errors.problemAreaId && !watch('problemAreaId');
 
   const [solutionType, setSolutionType] = useState(
     ideaState.solutionType?.trim()
@@ -176,7 +176,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
           </div>
           {isErrorProblemAreaField && (
             <Form.Text className="text-muted pt-1">
-              Harap mengisi nama guru
+              Harap mengisi problem area
             </Form.Text>
           )}
         </Panel>

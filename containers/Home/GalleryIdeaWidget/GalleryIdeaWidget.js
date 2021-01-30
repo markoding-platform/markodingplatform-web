@@ -23,6 +23,8 @@ const GalleryIdeaWidget = () => {
                 solutionName,
                 solutionSupportingPhotos,
                 solutionMission,
+                totalLikes,
+                totalComments,
               } = idea;
               return (
                 <IdeaCard
@@ -31,8 +33,8 @@ const GalleryIdeaWidget = () => {
                   imageUrl={solutionSupportingPhotos?.[0]}
                   link={`/idea/${id}`}
                   description={solutionMission}
-                  likeCount={14}
-                  commentCount={22}
+                  likeCount={totalLikes}
+                  commentCount={totalComments}
                 />
               );
             })}

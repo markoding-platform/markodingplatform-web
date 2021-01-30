@@ -30,7 +30,8 @@ import {
 
 const DashboardContainer = ({ user, skilBadge, email }) => {
   const { idea: ideaUser } = user;
-  const { profileType = '' } = user?.profile;
+
+  const { profileType = '', schoolName } = user?.profile;
   const { push } = useRouter();
 
   const { id } = ideaUser || {};
@@ -69,6 +70,7 @@ const DashboardContainer = ({ user, skilBadge, email }) => {
               <div className={`px-3 ${profileSection}`}>
                 <p className={contentTitle}>{user.name}</p>
                 <p className="m-0">{email}</p>
+                <p className="m-0 font-weight-bold">{schoolName}</p>
                 {/* <Button className={`bg-info ${btnEditProfile}`}>
                   Edit Profile
                 </Button> */}
@@ -128,7 +130,7 @@ const DashboardContainer = ({ user, skilBadge, email }) => {
             {courses.map((course) => (
               <div key={course.id} className={courseCardWrapper}>
                 <CourseCard
-                  imageUrl={course.src}
+                  imageUrl={course.imageUrl}
                   title={course.title}
                   description={course.description}
                   link={course.link}

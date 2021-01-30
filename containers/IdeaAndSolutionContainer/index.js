@@ -152,7 +152,7 @@ const IdeaAndSolutionContainer = () => {
                   <div className={ideaCardWrapper}>
                     <IdeaCard
                       title={solutionName}
-                      imageUrl={solutionSupportingPhotos?.[0]}
+                      imageUrl={solutionSupportingPhotos?.[0] || ''}
                       link={`/idea/${id}`}
                       description={solutionMission}
                       likeCount={totalLikes}
