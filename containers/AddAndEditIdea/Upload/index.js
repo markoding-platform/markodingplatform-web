@@ -47,7 +47,7 @@ const UploadComponent = ({ onUploadImg, defaultVal }) => {
         }
         formData.append(i, file);
       });
-      const res = await MarkodingFetch(`/uplodsads?path=ideas`, {
+      const res = await MarkodingFetch(`/uploads?path=ideas`, {
         method: 'POST',
         body: formData,
       });
