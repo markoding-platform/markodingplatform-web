@@ -55,7 +55,7 @@ const YoutubeIframe = ({ solutionPitchUrl, className }) => {
 
   return (
     <>
-      {videoID && !thumbnailUrls.length && <EmptyPlaceholder />}
+      {videoID && thumbnailUrls.length < 0 && <EmptyPlaceholder />}
       {videoID && embedURL && (
         <div className={className}>
           <div
