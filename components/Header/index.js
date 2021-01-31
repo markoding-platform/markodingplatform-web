@@ -43,12 +43,12 @@ const Header = () => {
             <div className="d-flex">
               <Link href="/announcement">
                 <a href="/announcement">
-                  <Icon src={notif} size={30} cl>
-                    {notifCount && +notifCount > 0 && (
+                  <Icon src={notif} size={30}>
+                    {notifCount && +notifCount > 0 ? (
                       <Badge variant="danger" className="badgeNotif">
                         &nbsp;
                       </Badge>
-                    )}
+                    ) : null}
                   </Icon>
                 </a>
               </Link>

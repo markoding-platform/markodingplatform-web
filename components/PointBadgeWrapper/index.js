@@ -47,11 +47,11 @@ const PointBadgeWrapper = ({ desktopOnly }) => {
                     size={18}
                     className={styles.notifFillIcon}
                   >
-                    {notifCount && +notifCount > 0 && (
+                    {notifCount && +notifCount > 0 ? (
                       <Badge variant="danger" className="badgeNotif">
                         &nbsp;
                       </Badge>
-                    )}
+                    ) : null}
                   </Icon>
                 </a>
               </Link>
