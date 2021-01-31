@@ -14,7 +14,7 @@ import BlockAccessModal from 'components/BlockAccessModal';
 import ProfileCard from 'components/ProfileCard';
 import YoutubeIframe from 'components/YoutubeIframe';
 import useIdeaSolution from 'hooks/useIdeaSolution';
-import noImage from 'public/assets/no-image.png';
+import noImage from 'public/assets/default-idea-img.png';
 import { teamMap } from 'map/teamMap';
 import { ideaMap } from 'map/ideaMap';
 import { profileTypeEnum } from '../constant';
@@ -145,11 +145,13 @@ const IdeaDetails = () => {
             <p className="info__text m-0">{idea.problemArea}</p>
           </div>
           <div className={infoItem}>
-            <p className="text-3rd m-0">Masalah yang ingin diselesaikan</p>
+            <p className="text-3rd m-0">Menentukan Misi</p>
             <p className="info__text m-0">{idea.problemSelection}</p>
           </div>
           <div className={infoItem}>
-            <p className="text-3rd m-0">Target Customer</p>
+            <p className="text-3rd m-0">
+              Siapa orang yang paling terbantu jika masalah ini selesai?
+            </p>
             <p className="info__text m-0">{idea.targetCustomer}</p>
           </div>
         </div>
@@ -167,15 +169,15 @@ const IdeaDetails = () => {
         <hr />
         <div>
           <div className={ideaSection} id="problemReason">
-            <h4>Alasan Masalah</h4>
+            <h4>Mengapa masalah ini penting?</h4>
             <p className="text-secondary m-0">{idea.problemReasoning}</p>
           </div>
           <div className={ideaSection} id="solutionSummary">
-            <h4>Solusi Singkat</h4>
+            <h4>Gambaran Ide Solusi</h4>
             <p className="text-secondary m-0">{idea.solutionVision}</p>
           </div>
           <div className={ideaSection} id="solutionVision">
-            <h4>Ide Solusi</h4>
+            <h4>Tentang Ide Solusi</h4>
             <p className="text-secondary m-0">{idea.solutionMission}</p>
           </div>
           {idea.solutionPitchUrl && (
@@ -188,19 +190,15 @@ const IdeaDetails = () => {
             </div>
           )}
           <div className={ideaSection}>
-            <h4>Target Customer</h4>
-            <p className="text-secondary m-0">{idea.targetCustomer}</p>
-          </div>
-          <div className={ideaSection}>
             <h4>Kelebihan Ide Solusi</h4>
             <p className="text-secondary m-0">{idea.solutionBenefit}</p>
           </div>
           <div className={ideaSection}>
-            <h4>Kendala</h4>
+            <h4>Tantangan</h4>
             <p className="text-secondary m-0">{idea.solutionObstacle}</p>
           </div>
           <div className={ideaSection}>
-            <h4>Kolaborasi</h4>
+            <h4>Potensi Kolaborasi</h4>
             <p className="text-secondary m-0">{idea.potentialCollaboration}</p>
           </div>
         </div>

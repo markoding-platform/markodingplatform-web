@@ -16,7 +16,7 @@ const BlogWidget = () => {
       {isLoading && <WidgetLoader />}
       {!isLoading && blogs.length && !error ? (
         <div className="pb-5">
-          <SectionCardWrapper title="Cerita Markoding" link="/blog">
+          <SectionCardWrapper title="Blog" link="/blog">
             {blogs.map((blog = {}) => (
               <BlogCard
                 key={blog.id}
