@@ -47,7 +47,6 @@ const Profile = ({ user }) => {
     return null;
   }
 
-  console.log({ skilvulData });
   return (
     <Layout activeMenu="/idea">
       <div className={homeContent}>
