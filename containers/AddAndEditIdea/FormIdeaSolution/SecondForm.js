@@ -185,7 +185,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
             name="solutionMission"
             ref={register({ required: true })}
             error={!!errors.solutionMission}
-            errorTxt="Harap mengisi ide solusi"
+            errorTxt="Wajib diisi"
           />
         </Panel>
         <Panel title="Dampak Positif, Manfaat atau Perubahan yang Ingin Dicapai">
@@ -197,7 +197,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
             className={textArea}
             ref={register({ required: true })}
             error={!!errors.targetOutcomes}
-            errorTxt="Harap mengisi target outcomes"
+            errorTxt="Wajib diisi"
           />
         </Panel>
         <Panel title="Kelebihan Ide Solusi">
@@ -209,7 +209,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
             as="textarea"
             className={textArea}
             error={!!errors.solutionBenefit}
-            errorTxt="Harap mengisi kelebihan ide solusi"
+            errorTxt="Wajib diisi"
           />
         </Panel>
         <Panel title="Tantangan">
@@ -221,7 +221,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
             className={textArea}
             ref={register({ required: true })}
             error={!!errors.solutionObstacle}
-            errorTxt="Harap mengisi kendala"
+            errorTxt="Wajib diisi"
           />
         </Panel>
         <Panel title="Link Video">

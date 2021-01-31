@@ -20,7 +20,7 @@ const RegisterAsComponent = () => {
       title: 'Siswa',
       subTitle: 'Untuk siswa, kelas partisipasi, anggota klub',
       icon: <Icon src={FansIcon} />,
-      link: '/signup/siswa',
+      link: '/signup/student',
     },
     {
       id: 1,
@@ -28,7 +28,7 @@ const RegisterAsComponent = () => {
       subTitle:
         'Untuk guru, tim pengajar, admin, pelatih,  klub advisors, teknologi intrusual',
       icon: <Icon src={Campus} />,
-      link: '/signup/guru',
+      link: '/signup/teacher',
     },
     {
       id: 2,

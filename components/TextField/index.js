@@ -9,7 +9,10 @@ import { inputField } from './styles.module.scss';
 
 // eslint-disable-next-line react/display-name
 const TextField = React.forwardRef(
-  ({ name, placeholder, defaultVal, as, className, error, errorTxt }, ref) => {
+  (
+    { name, placeholder, defaultVal, as, className, error, errorTxt, type },
+    ref
+  ) => {
     const [textValue, setTextValue] = useState(defaultVal);
 
     const handleOnChange = (e) => {
@@ -31,6 +34,7 @@ const TextField = React.forwardRef(
           value={textValue}
           defaultValue={defaultVal}
           ref={ref}
+          type={type}
           aria-describedby="inputGroup-sizing"
           onChange={handleOnChange}
           autocomplete="off"
@@ -49,6 +53,7 @@ TextField.defaultProps = {
   errorTxt: 'Wajib diisi',
   name: '',
   placeholder: '',
+  type: 'text',
 };
 
 TextField.propTypes = {
@@ -59,6 +64,7 @@ TextField.propTypes = {
   errorTxt: string,
   name: string,
   placeholder: string,
+  type: string,
 };
 
 export default memo(TextField);

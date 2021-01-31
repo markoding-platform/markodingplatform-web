@@ -19,7 +19,7 @@ import {
   profileCard,
   profileSection,
   contentTitle,
-  // btnEditProfile,
+  btnEditProfile,
   badgeContainer,
   wrapperStats,
   courseCardWrapper,
@@ -54,6 +54,10 @@ const DashboardContainer = ({ user, skilBadge, email }) => {
     push(`/register-idea`);
   };
 
+  const handleGoToProfile = () => {
+    push('/dashboard/profile');
+  };
+
   return (
     <>
       <div>
@@ -71,9 +75,12 @@ const DashboardContainer = ({ user, skilBadge, email }) => {
                 <p className={contentTitle}>{user.name}</p>
                 <p className="m-0">{email}</p>
                 <p className="m-0 font-weight-bold">{schoolName}</p>
-                {/* <Button className={`bg-info ${btnEditProfile}`}>
+                <Button
+                  className={`bg-info ${btnEditProfile}`}
+                  onClick={handleGoToProfile}
+                >
                   Edit Profile
-                </Button> */}
+                </Button>
               </div>
             </div>
           </div>
