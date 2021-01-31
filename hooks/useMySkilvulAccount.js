@@ -2,7 +2,21 @@ import useSWR from 'swr';
 import SkilvulFetch from 'libraries/SkilvulFetch';
 import canUseDOM from 'utils/canUseDOM';
 import getCookie from 'utils/getCookie';
+import MarkodingFetch from 'libraries/MarkodingFetch';
 import skilvulAccountMap from '../map/skilvulAccountMap';
+
+const updateSkilPoint = async (point) => {
+  const res = await MarkodingFetch('/users/skilvul-point', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'PUT',
+    body: JSON.stringify({
+      skilvulPoint: point,
+    }),
+  });
+  return res;
+};
 
 const useMySkilvulAccount = () => {
   const userXID = canUseDOM && getCookie('userXID');
@@ -12,7 +26,9 @@ const useMySkilvulAccount = () => {
   );
   const isLoading = !data && !error;
   if (!isLoading && data.user) {
-    return skilvulAccountMap(data.user);
+    const skilvulAccount = skilvulAccountMap(data.user);
+    updateSkilPoint(skilvulAccount.totalPoint);
+    return skilvulAccount;
   }
   return null;
 };

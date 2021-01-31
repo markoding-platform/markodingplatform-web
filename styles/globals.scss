@@ -138,3 +138,12 @@ a {
 .layoutBg {
 	background-color: colors.$bg;
 }
+
+.badgeNotif {
+	border-radius: 50%;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	top: -1px;
+	right: -1px;
+}

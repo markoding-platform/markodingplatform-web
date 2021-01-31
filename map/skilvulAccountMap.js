@@ -3,7 +3,7 @@ export default function skilvulAccountMap(data) {
   return {
     id,
     badges: skilBadge,
-    totalBadge: totalSkilBadge,
-    totalPoint: totalSkilPoin,
+    totalBadge: totalSkilBadge || 0,
+    totalPoint: totalSkilPoin || 0,
   };
 }

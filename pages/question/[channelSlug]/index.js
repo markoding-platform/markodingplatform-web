@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
@@ -9,6 +10,7 @@ import useChannels from 'hooks/useChannel';
 import Loading from 'components/Loading';
 import InputQuestion from 'containers/QuestionContainer/inputQuestion';
 import BlockAccessModal from 'components/BlockAccessModal';
+import { mutate } from 'swr';
 import withAuthSync from '../../../hoc/withAuthSync';
 
 const ChatThread = ({ user, channelSlug }) => {
@@ -64,7 +66,13 @@ const ChatThread = ({ user, channelSlug }) => {
       </div>
       <InputQuestion
         show={showFormQuestion}
-        onClose={() => setShowFormQuestion(false)}
+        onClose={(condition) => {
+          mutate(`/questions/channel/${channelSlug}?limit=6&offset=0&keyword=`);
+          if (condition === 'reload') {
+            Router.push(`/question/${channelSlug}?page=1&start=0`);
+          }
+          setShowFormQuestion(false);
+        }}
         channelSlug={channelSlug}
       />
       {!user && (
