@@ -21,3 +21,10 @@ export function locationSchoolMap(data) {
     name,
   };
 }
+
+export function professionsMap(data, idx) {
+  return {
+    key: idx,
+    name: data,
+  };
+}

@@ -128,7 +128,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
             name="solutionName"
             ref={register({ required: true })}
             error={!!errors.solutionName}
-            errorTxt="Harap mengisi solusi digital"
+            errorTxt="Wajib diisi"
           />
         </Panel>
         <Panel title="Pilihan Tipe Solusi Digital yang Ingin Kamu Buat">
@@ -158,9 +158,7 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
             ))}
           </div>
           {errors.solutionType && (
-            <Form.Text className="text-muted pt-1">
-              Harap memilih tipe solusi digital
-            </Form.Text>
+            <Form.Text className="text-muted pt-1">Wajib diisi</Form.Text>
           )}
         </Panel>
         <Panel title="Bidang Masalah">
@@ -175,43 +173,43 @@ const FormIdeaSolution = ({ user, isEditIdea }) => {
             />
           </div>
           {isErrorProblemAreaField && (
-            <Form.Text className="text-muted pt-1">
-              Harap mengisi problem area
-            </Form.Text>
+            <Form.Text className="text-muted pt-1">Wajib diisi</Form.Text>
           )}
         </Panel>
-        <Panel title="Pemilihan Masalah">
+        <Panel title="Menentukan Misi">
           <TextField
-            placeholder="Apa masalah yang ingin kamu selesaikan"
+            placeholder="Apa masalah yang teman-teman tergerak untuk selesaikan? Ceritakan konteks dan seperti apa situasinya."
             defaultVal={ideaState.problemSelection}
             as="textarea"
             className={textArea}
             name="problemSelection"
             ref={register({ required: true })}
             error={!!errors.problemSelection}
-            errorTxt="Harap mengisi pemilihan masalah"
+            errorTxt="Wajib diisi"
           />
         </Panel>
-        <Panel title="Alasan Masalah">
+        <Panel title="Mengapa masalah ini penting?">
           <TextField
-            placeholder="Mengapa kamu ingin menyelesaikan masalah ini"
+            placeholder="Berikan beberapa alasan mengapa masalah ini perlu kita selesaikan beserta contoh dampak-dampak dari permasalahan ini"
             defaultVal={ideaState.problemReasoning}
             name="problemReasoning"
             ref={register({ required: true })}
             as="textarea"
             className={textArea}
             error={!!errors.problemReasoning}
-            errorTxt="Harap mengisi alasan masalah"
+            errorTxt="Wajib diisi"
           />
         </Panel>
-        <Panel title="Target Customer">
+        <Panel title="Siapa orang yang paling terbantu jika masalah ini selesai?">
           <TextField
-            placeholder="Siapa yang ingin kamu bantu"
+            placeholder="Ceritakan siapa fokus profil komunitas/individu yang paling terdampak dari masalah ini. Seperti apa orangnya? Seperti apa kesehariannya? Tantangan apa saja yang mereka alami dan rasakan? Seperti apa orang ini jika kita bertemu langsung dengan mereka?"
             defaultVal={ideaState.targetCustomer}
             name="targetCustomer"
+            as="textarea"
+            className={textArea}
             ref={register({ required: true })}
             error={!!errors.targetCustomer}
-            errorTxt="Harap mengisi target customer"
+            errorTxt="Wajib diisi"
           />
         </Panel>
         <div className="d-flex justify-content-end">

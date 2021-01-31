@@ -1,7 +1,14 @@
-export const ACCOUNT_TYPE = ['siswa', 'mentor', 'guru', 'supporter'];
-
+export const WORKBOOK_IDEA_URL =
+  'https://docs.google.com/presentation/d/1UyT8hdSid2V32WBp3KZK14SvWuB3IqVE8u9pR0lVQH0/edit?usp=sharing ';
+export const ACCOUNT_TYPE = ['student', 'mentor', 'teacher', 'supporter'];
+export const ACCOUNT_TYPE_ENUM = {
+  student: 'Siswa',
+  mentor: 'Mentor',
+  teacher: 'Guru',
+  supporter: 'Suporter',
+};
 export const LIST_FORM = {
-  siswa: [
+  student: [
     {
       key: 'schoolGradeName',
       as: 'dropdown',
@@ -45,7 +52,7 @@ export const LIST_FORM = {
       columns: '12',
     },
   ],
-  guru: [
+  teacher: [
     {
       key: 'schoolGradeName',
       as: 'dropdown',

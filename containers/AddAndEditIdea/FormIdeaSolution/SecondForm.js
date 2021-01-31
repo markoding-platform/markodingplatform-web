@@ -12,8 +12,8 @@ import MarkodingFetch from 'libraries/MarkodingFetch';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import { useIdeaFormContext } from 'components/context/IdeaContext';
-import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import UploadComponent from '../Upload';
+import { WORKBOOK_IDEA_URL } from '../../constants';
 import { textArea, styButton } from './styles.module.scss';
 
 const expCookie = 86000;
@@ -165,38 +165,39 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
   }, [handleBack, ideaSolution, push]);
   return (
     <>
-      <ScrollToTop />
       <form>
-        <Panel title="Solusi Singkat">
+        <Panel title="Gambaran Ide Solusi">
           <TextField
-            placeholder="Jelaskan solusi dalam 1 kalimat"
+            placeholder="Bagaimana teman-teman menceritakan ide dari solusi yang ingin teman-teman angkat di dalam satu kalimat?"
             defaultVal={ideaState.solutionVision}
             name="solutionVision"
             ref={register({ required: true })}
             error={!!errors.solutionVision}
-            errorTxt="Harap mengisi solusi singkat"
+            errorTxt="Wajib diisi"
           />
         </Panel>
-        <Panel title="Ide Solusi">
+        <Panel title="Tentang Ide Solusi">
           <TextField
-            placeholder="Ceritakan tentang ide solusimu dan bagaimana cara bekerjanya"
+            placeholder="Ceritakan seperti apa ide solusi yang ingin teman-teman rancang. Coba jelaskan : (1) Apa saja fitur yang menarik dari ide ini? (2) Bagaimana fitur tersebut menjawab permasalahan yang ingin teman-teman selesaikan? (3) Apa saja potensi atau manfaat-manfaat lainnya dari fitur tersebut?"
             defaultVal={ideaState.solutionMission}
             as="textarea"
             className={textArea}
             name="solutionMission"
             ref={register({ required: true })}
             error={!!errors.solutionMission}
-            errorTxt="Harap mengisi ide solusi"
+            errorTxt="Wajib diisi"
           />
         </Panel>
-        <Panel title="Target Outcomes">
+        <Panel title="Dampak Positif, Manfaat atau Perubahan yang Ingin Dicapai">
           <TextField
-            placeholder="Apa yang ingin kamu capai dengan ide solusimu?"
+            placeholder="Apa saja dampak positif, manfaat atau perubahan yang ingin teman-teman lihat dari ide solusi tersebut? Ceritakan perubahan baik yang terjadi di komunitas masyarakat yang ingin kita bantu"
             defaultVal={ideaState.targetOutcomes}
             name="targetOutcomes"
+            as="textarea"
+            className={textArea}
             ref={register({ required: true })}
             error={!!errors.targetOutcomes}
-            errorTxt="Harap mengisi target outcomes"
+            errorTxt="Wajib diisi"
           />
         </Panel>
         <Panel title="Kelebihan Ide Solusi">
@@ -208,17 +209,19 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
             as="textarea"
             className={textArea}
             error={!!errors.solutionBenefit}
-            errorTxt="Harap mengisi kelebihan ide solusi"
+            errorTxt="Wajib diisi"
           />
         </Panel>
-        <Panel title="Kendala">
+        <Panel title="Tantangan">
           <TextField
-            placeholder="Apa saja kendala yang akan kamu hadapi dalam menjalankan ide solusi ini dan jelaskan rencanamu untuk mengatasinya?"
+            placeholder="Apa saja tantangan yang akan teman-teman hadapi dalam menjalankan ide solusi ini? Risiko apa yang terjadi jika tantangan tersebut tidak diselesaikan? Bagaimana rencana teman-teman untuk mengatasinya?"
             defaultVal={ideaState.solutionObstacle}
             name="solutionObstacle"
+            as="textarea"
+            className={textArea}
             ref={register({ required: true })}
             error={!!errors.solutionObstacle}
-            errorTxt="Harap mengisi kendala"
+            errorTxt="Wajib diisi"
           />
         </Panel>
         <Panel title="Link Video">
@@ -228,16 +231,31 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
             name="solutionPitchUrl"
             ref={register({ required: false })}
           />
-          <Form.Text className="text-muted pt-1">
+          <Form.Text className="pt-1">
             URL video yang didukung saat ini adalah URL video dari Youtube.
           </Form.Text>
         </Panel>
-        <Panel title="Gambar/Foto Pendukung Ide Solusi">
-          <UploadComponent onUploadImg={handleUploadImage} defaultVal="" />
+        <Panel title="Foto Ide Solusi">
+          <p className="text-muted mb-2">
+            Masukan foto ide solusi berdasarkan template yang ada di Workbook
+            Mencari Ide - Menggambar Solusi, yang bisa di unduh di &nbsp;
+            <a
+              rel="noreferrer"
+              href={WORKBOOK_IDEA_URL}
+              target="_blank"
+              className="text-decoration-none font-weight-bold"
+            >
+              link ini.
+            </a>
+          </p>
+          <UploadComponent
+            onUploadImg={handleUploadImage}
+            defaultVal={ideaState.solutionSupportingPhotos?.[0]}
+          />
         </Panel>
-        <Panel title="Kolaborasi Customer">
+        <Panel title="Potensi Kolaborasi">
           <TextField
-            placeholder="Siapa saja yang ingin kamu ajak kolaborasi dan jelaskan alasannya untuk mewujudkan ide solusimu?"
+            placeholder="Karena perubahan tidak bisa dilakukan sendirian, siapa pihak-pihak yang teman-teman harap untuk bisa diajak kolaborasi? Seperti apa bentuk kolaborasinya? Apa manfaat yang bisa kita tawarkan untuk mereka?"
             defaultVal={ideaState.potentialCollaboration}
             name="potentialCollaboration"
             ref={register({ required: false })}

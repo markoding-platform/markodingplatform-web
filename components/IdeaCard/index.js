@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
-import noImage from 'public/assets/no-image.png';
+import noImage from 'public/assets/default-idea-img.png';
 import styles from './styles.module.scss';
 
 const IdeaCard = (props) => {

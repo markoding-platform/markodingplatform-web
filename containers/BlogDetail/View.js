@@ -22,7 +22,7 @@ const BlogDetailContainer = () => {
   return (
     <div className="inner-section">
       <div className="d-flex align-items-center mb-4">
-        <h1 className="h3">Cerita Markoding</h1>
+        <h1 className="h3">Blog</h1>
       </div>
       <div>
         <Image

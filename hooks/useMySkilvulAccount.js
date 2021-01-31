@@ -25,9 +25,9 @@ const useMySkilvulAccount = () => {
     SkilvulFetch
   );
   const isLoading = !data && !error;
-  if (!isLoading && data.user) {
+  if (!isLoading && data?.user) {
     const skilvulAccount = skilvulAccountMap(data.user);
-    updateSkilPoint(skilvulAccount.totalPoint);
+    updateSkilPoint(skilvulAccount.totalPoint); // kalo sudah ada api badges penggunaan ini harus diubah
     return skilvulAccount;
   }
   return null;

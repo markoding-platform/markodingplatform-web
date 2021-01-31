@@ -1,0 +1,40 @@
+@use "styles/colors";
+@use 'styles/breakpoint';
+
+@mixin flex__column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  background: colors.$white;
+  border-radius: 6px;
+  padding: 24px;
+  @media (max-width: breakpoint.$md) {
+    @include flex__column;
+  }
+}
+
+.profileSection {
+  text-align: left;
+  @media (max-width: breakpoint.$md) {
+    @include flex__column;
+    padding: 24px 0 0 0;
+    margin-bottom: 24px;
+  }
+}
+
+.contentTitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.btnEditProfile {
+  color: colors.$accent;
+  border: none;
+  margin-top: 24px;
+}

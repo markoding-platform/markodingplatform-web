@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import PropTypes from 'prop-types';
 import RegisterAsComponent from './RegisterAs';
 import SignupForm from './SignupForm';
-import { ACCOUNT_TYPE } from './contants';
+import { ACCOUNT_TYPE } from '../constants';
 import { styRegisterContainer } from './styles.module.scss';
 
 const SignupContainer = ({ user }) => {
@@ -14,7 +14,7 @@ const SignupContainer = ({ user }) => {
 
   const accountTypeIndex = useMemo(() => {
     return ACCOUNT_TYPE.findIndex((el) => el === slug);
-  });
+  }, [slug]);
 
   useEffect(() => {
     if (user && user.profile) {
