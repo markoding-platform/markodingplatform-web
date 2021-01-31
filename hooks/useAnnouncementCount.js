@@ -3,7 +3,10 @@ import MarkodingFetch from 'libraries/MarkodingFetch';
 
 const useAnnouncementCount = () => {
   const { data: response } = useSWR('/announcements/count', MarkodingFetch);
-  return response?.result || 0;
+  if (response && response.ok) {
+    return response.result;
+  }
+  return 0;
 };
 
 export default useAnnouncementCount;

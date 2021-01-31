@@ -14,10 +14,6 @@
 
 .image {
   position: relative;
-  height: 165px;
-  @media (max-width: breakpoint.$lg) {
-    height: 125px;
-  }
 }
 
 .title {
