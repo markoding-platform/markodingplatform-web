@@ -28,7 +28,13 @@ const EventCard = (props) => {
       <a href={link} className={styles.link}>
         <Card className={styles.card}>
           <div className={styles.image}>
-            <Image src={imageUrl} alt={title} layout="fill" />
+            <Image
+              src={imageUrl}
+              alt={title}
+              layout="intrinsic"
+              width={350}
+              height={233}
+            />
           </div>
           <Card.Body>
             <Card.Title className={styles.title}>{title}</Card.Title>

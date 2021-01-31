@@ -11,7 +11,13 @@ const BannerItem = (props) => {
       <div className={styles.bannerSlideInner}>
         <Link href={link}>
           <div className={styles.image}>
-            <Image src={imageUrl} alt={title} layout="fill" />
+            <Image
+              src={imageUrl}
+              alt={title}
+              layout="intrinsic"
+              width={979}
+              height={283}
+            />
           </div>
         </Link>
       </div>

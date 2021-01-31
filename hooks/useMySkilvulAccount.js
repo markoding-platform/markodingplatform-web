@@ -18,7 +18,7 @@ const updateSkilPoint = async (point) => {
   return res;
 };
 
-const useMySkilvulAccount = () => {
+const useMySkilvulAccount = async () => {
   const userXID = canUseDOM && getCookie('userXID');
   const { data, error } = useSWR(
     `/api/skilvul?path=/users/${userXID}`,
@@ -26,8 +26,11 @@ const useMySkilvulAccount = () => {
   );
   const isLoading = !data && !error;
   if (!isLoading && data?.user) {
-    const skilvulAccount = skilvulAccountMap(data.user);
-    updateSkilPoint(skilvulAccount.totalPoint); // kalo sudah ada api badges penggunaan ini harus diubah
+    const skilvulAccount = await skilvulAccountMap(data.user);
+    const res = await updateSkilPoint(skilvulAccount.totalPoint);
+    if (res && res.result) {
+      skilvulAccount.totalPoint += res.result.markodingPoint;
+    }
     return skilvulAccount;
   }
   return null;
