@@ -20,7 +20,7 @@ import {
   styTerm,
   required,
 } from './styles.module.scss';
-import { LIST_FORM } from './constants';
+import { LIST_FORM, ACCOUNT_TYPE_ENUM } from '../constants';
 import {
   locationSchoolMap,
   schoolGradeMap,
@@ -73,7 +73,7 @@ const SignupForm = ({ registerAs }) => {
 
   const getForm = useMemo(() => {
     if (isStudentSupporter) {
-      return LIST_FORM.siswa;
+      return LIST_FORM.student;
     }
     if (!isStudentSupporter) {
       return LIST_FORM[registerAs];
@@ -185,8 +185,8 @@ const SignupForm = ({ registerAs }) => {
   useEffect(() => {
     getSchoolGrades();
     if (
-      registerAs === 'siswa' ||
-      registerAs === 'guru' ||
+      registerAs === 'student' ||
+      registerAs === 'teacher' ||
       (registerAs === 'supporter' && isStudentSupporter)
     ) {
       register('schoolGradeId', { required: true });
@@ -203,14 +203,14 @@ const SignupForm = ({ registerAs }) => {
       getProvinces();
     }
 
-    if (registerAs === 'guru' || registerAs === 'mentor') {
+    if (registerAs === 'teacher' || registerAs === 'mentor') {
       register('expertise', { required: true });
       register('workingPosition', { required: true });
       register('lastEducationGradeId', { required: true });
       register('lastEducationGradeName', { required: true });
     }
 
-    if (registerAs === 'guru') {
+    if (registerAs === 'teacher') {
       register('startTeachingYear', { required: true });
     }
 
@@ -248,21 +248,9 @@ const SignupForm = ({ registerAs }) => {
       ]);
     }
 
-    let profileType;
-    switch (registerAs) {
-      case 'siswa':
-        profileType = 'student';
-        break;
-      case 'guru':
-        profileType = 'teacher';
-        break;
-      default:
-        profileType = registerAs;
-        break;
-    }
     register('profileType');
-    setValue('profileType', profileType);
-  }, [registerAs, isStudentSupporter]);
+    setValue('profileType', registerAs);
+  }, [registerAs, isStudentSupporter, register, setValue, unregister]);
 
   return (
     <Form onSubmit={handleSubmit(doRegister)}>
@@ -271,7 +259,7 @@ const SignupForm = ({ registerAs }) => {
         <Card.Header className={styCardHeader}>
           <h2 className="text-capitalize">
             Daftar Sebagai &nbsp;
-            {registerAs}
+            {ACCOUNT_TYPE_ENUM[registerAs]}
           </h2>
         </Card.Header>
         <div className="border-bottom mb-3">

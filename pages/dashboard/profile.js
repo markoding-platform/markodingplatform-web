@@ -62,9 +62,12 @@ const Profile = ({ user }) => {
                 firstName={skilvulData.firstName || ''}
                 lastName={skilvulData.lastName || ''}
                 email={skilvulData.email || ''}
-                userXID={userXID}
+                userXID={skilvulData.id}
                 gender={skilvulData.gender || ''}
                 birthDate={skilvulData.birthDate || ''}
+                profession={skilvulData.profession || ''}
+                province={skilvulData.province || {}}
+                city={skilvulData.city || {}}
               />
             ) : (
               <></>

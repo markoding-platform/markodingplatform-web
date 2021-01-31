@@ -11,7 +11,7 @@ const useMySkilvulAccount = () => {
     SkilvulFetch
   );
   const isLoading = !data && !error;
-  if (!isLoading && data.user) {
+  if (!isLoading && data?.user) {
     return skilvulAccountMap(data.user);
   }
   return null;
