@@ -46,8 +46,8 @@ const AccountMenu = ({ fName, email, imageUrl, schoolName }) => {
       </div>
       <div className={`pt-3 ${profileSection}`}>
         <p className={contentTitle}>{fName}</p>
-        <p className="m-0 text-wrap">{email}</p>
-        <p className="m-0 text-wrap">{schoolName}</p>
+        <p className="m-0 text-break">{email}</p>
+        <p className="m-0 text-break">{schoolName}</p>
       </div>
     </div>
   );

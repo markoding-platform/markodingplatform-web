@@ -13,7 +13,7 @@ import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
 import ModalComponent from 'components/Modal';
-import DatePickerComponent from 'components/DatePicker';
+// import DatePickerComponent from 'components/DatePicker';
 import SkilvulFetch from 'libraries/SkilvulFetch';
 import { locationSchoolMap, professionsMap } from 'map/dropdownMap';
 import DynamicPasswordModalContainer from '../PasswordModal';
@@ -87,9 +87,9 @@ const AccountInfo = ({
     setValue('gender', currGender.value);
   };
 
-  const handleOnSelectDate = (date) => {
-    setValue('birthDate', new Date(date).toISOString());
-  };
+  // const handleOnSelectDate = (date) => {
+  //   setValue('birthDate', new Date(date).toISOString());
+  // };
 
   const getProvinces = useCallback(async () => {
     const provResult = await SkilvulFetch('/api/skilvul?path=/provinces');
@@ -238,7 +238,7 @@ const AccountInfo = ({
               </Button>
             </div>
           </Col> */}
-          <Col lg="6" sm="12" className="pb-4">
+          {/* <Col lg="6" sm="12" className="pb-4">
             <label className={`${styLabel} ${required}`}>Tanggal Lahir</label>
             <DatePickerComponent
               defaultVal={account.birthDate}
@@ -247,7 +247,7 @@ const AccountInfo = ({
               error={!!errors.birthDate}
               onSelectDate={handleOnSelectDate}
             />
-          </Col>
+          </Col> */}
           <Col lg="6" sm="12" className="pb-4">
             <label className={`${styLabel} ${required}`}>Jenis Kelamin</label>
             <div className={isErrorGenderField && dropdownError}>
