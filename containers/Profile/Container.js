@@ -27,7 +27,7 @@ const ProfileContainer = ({
         <AccountMenu
           fName={name || ''}
           email={email || ''}
-          profilePictureUrl={profile.profilePictureUrl || ''}
+          imageUrl={profile.imageUrl || ''}
           schoolName={profile.schoolName || ''}
         />
       </Col>

@@ -1,7 +1,7 @@
-import Image from 'next/image';
+import { toast } from 'react-toastify';
 
-import { RiPencilFill } from 'react-icons/ri';
-import Avatar from 'svgs/avatar.svg';
+import MarkodingFetch from 'libraries/MarkodingFetch';
+import UploadComponent from 'containers/Profile/UploadAvatar';
 
 import {
   profileCard,
@@ -9,21 +9,40 @@ import {
   contentTitle,
 } from './styles.module.scss';
 
-const AccountMenu = ({ fName, email, profilePictureUrl, schoolName }) => {
+const AccountMenu = ({ fName, email, imageUrl, schoolName }) => {
+  const renderToast = ({ msg, error = false, time = 3000 }) => {
+    if (error) {
+      return toast.error(<p className="m-0 pl-3">{msg}</p>, {
+        autoClose: time,
+      });
+    }
+    return toast.success(<p className="m-0 pl-3">{msg}</p>, {
+      autoClose: time,
+    });
+  };
+
+  const handleUpdateProfileImage = async (url) => {
+    const response = await MarkodingFetch('/users/image', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
+      body: JSON.stringify({ imageUrl: url }),
+    });
+    if (response.ok) {
+      renderToast({ msg: 'Berhasil mengubah foto profil' });
+    } else {
+      renderToast({ msg: 'Gagal mengubah foto profil', error: true });
+    }
+  };
+
   return (
     <div className={profileCard}>
       <div className="text-center">
-        <Image
-          width={132}
-          height={132}
-          layout="fixed"
-          className="rounded-circle"
-          src={profilePictureUrl || Avatar}
+        <UploadComponent
+          onUploadImg={handleUpdateProfileImage}
+          defaultVal={imageUrl}
         />
-        <div className="text-center text-3rd">
-          <RiPencilFill size="20" />
-          <span className="ml-2">Edit</span>
-        </div>
       </div>
       <div className={`pt-3 ${profileSection}`}>
         <p className={contentTitle}>{fName}</p>

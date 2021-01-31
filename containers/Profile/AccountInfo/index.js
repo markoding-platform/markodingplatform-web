@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
@@ -8,7 +9,6 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import { shape, string } from 'prop-types';
 
-// import getCookie from 'utils/getCookie';
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
 import DropdownComponent from 'components/Dropdown';
@@ -44,6 +44,7 @@ const AccountInfo = ({
   email,
   city,
 }) => {
+  const router = useRouter();
   const {
     register,
     control,
@@ -73,7 +74,7 @@ const AccountInfo = ({
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [professions, setProfessions] = useState([]);
-  const account = control?.defaultValuesRef?.current || {};
+  const account = control?.defaultValuesRef?.current;
 
   const provinceId = getValues('provinceId');
   const [defaultCityName, setDefaultCityName] = useState(account.cityName);
@@ -133,16 +134,16 @@ const AccountInfo = ({
     setValue('profession', payload.name);
   };
 
-  // const renderToast = (msg, error = false) => {
-  //   if (error) {
-  //     return toast.error(<p className="m-0 pl-3">{msg}</p>, {
-  //       autoClose: 3000,
-  //     });
-  //   }
-  //   return toast.success(<p className="m-0 pl-3">{msg}</p>, {
-  //     autoClose: 3000,
-  //   });
-  // };
+  const renderToast = (msg, error = false) => {
+    if (error) {
+      return toast.error(<p className="m-0 pl-3">{msg}</p>, {
+        autoClose: 3000,
+      });
+    }
+    return toast.success(<p className="m-0 pl-3">{msg}</p>, {
+      autoClose: 3000,
+    });
+  };
 
   const onSubmit = useCallback(
     async (data) => {
@@ -156,25 +157,12 @@ const AccountInfo = ({
           body: JSON.stringify(data),
         }
       );
-      console.log({ response });
-      return response;
-      // const url = `https://test.api.skilvul.com/v1/users/ckkj4ia737avr0781x0d0mldp`;
-      // const skilvulToken = await getCookie('skilvulToken', null);
-      // return fetch(url, {
-      //   headers: {
-      //     Authorization: `Bearer ${skilvulToken}`,
-      //     'Content-Type': 'application/json',
-      //   },
-      //   method: 'PUT',
-      //   body: JSON.stringify(data),
-      // }).then(async (r) => {
-      //   const response = await r.json();
-      //   if (response.user) {
-      //     renderToast('Berhasil memperbarui profil');
-      //   } else {
-      //     renderToast('Gagal memperbarui profil', true);
-      //   }
-      // });
+
+      if (response.ok && response?.user) {
+        renderToast('Berhasil memperbarui profil');
+      } else {
+        renderToast('Gagal memperbarui profil', true);
+      }
     },
     [userXID]
   );
@@ -325,7 +313,11 @@ const AccountInfo = ({
         </Row>
 
         <div className="d-flex justify-content-end">
-          <Button variant="outline-secondary" className={cancelBtn}>
+          <Button
+            variant="outline-secondary"
+            className={cancelBtn}
+            onClick={() => router.back()}
+          >
             Batal
           </Button>
           <Button className={saveBtn} onClick={handleSubmit(onSubmit)}>

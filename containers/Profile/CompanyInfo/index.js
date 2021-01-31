@@ -1,6 +1,8 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { shape, string } from 'prop-types';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 import SkilvulFetch from 'libraries/SkilvulFetch';
 import Row from 'react-bootstrap/Row';
@@ -10,7 +12,9 @@ import Panel from 'components/Panel';
 
 import DropdownComponent from 'components/Dropdown';
 import TextField from 'components/TextField';
+import Loading from 'components/Loading';
 
+import MarkodingFetch from 'libraries/MarkodingFetch';
 import {
   locationSchoolMap,
   schoolGradeMap,
@@ -26,6 +30,7 @@ import {
 } from '../styles.module.scss';
 
 const CompanyInfo = ({ profileType, profile }) => {
+  const router = useRouter();
   const {
     register,
     control,
@@ -36,14 +41,15 @@ const CompanyInfo = ({ profileType, profile }) => {
   } = useForm({
     defaultValues: { ...profile },
   });
+
   const [schoolGrades, setSchoolGrades] = useState([]);
   const account = control?.defaultValuesRef?.current;
   const [schools, setSchools] = useState([]);
   const [schoolTypes, setSchoolTypes] = useState([]);
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
-  // const [defaultCityName, setDefaultCityName] = useState(account.cityName);
-  console.log({ errors });
+  const [loading, setLoading] = useState(false);
+
   const getProvinces = useCallback(async () => {
     const provResult = await SkilvulFetch('/api/skilvul?path=/provinces');
     if (provResult && provResult.provinces) {
@@ -51,19 +57,14 @@ const CompanyInfo = ({ profileType, profile }) => {
     }
   }, []);
 
-  const getCities = useCallback(
-    async (currentProvinceId) => {
-      // const currentProvinceId = await getValues('provinceId');
-      const cityResult = await SkilvulFetch(
-        `/api/skilvul?path=/cities?provinceId=${currentProvinceId}`
-      );
-      if (cityResult && cityResult.cities) {
-        console.log({ cityResult });
-        setCities(cityResult.cities.map(locationSchoolMap));
-      }
-    },
-    [getValues]
-  );
+  const getCities = useCallback(async (currentProvinceId) => {
+    const cityResult = await SkilvulFetch(
+      `/api/skilvul?path=/cities?provinceId=${currentProvinceId}`
+    );
+    if (cityResult && cityResult.cities) {
+      setCities(cityResult.cities.map(locationSchoolMap));
+    }
+  }, []);
 
   const getSchoolGrades = useCallback(async () => {
     const sgResult = await SkilvulFetch('/api/skilvul?path=/schools/grades');
@@ -81,7 +82,6 @@ const CompanyInfo = ({ profileType, profile }) => {
 
   const getSchools = useCallback(
     async ({ schoolGradeId, currProvinceId, cityId, schoolTypeId }) => {
-      console.log({ schoolGradeId, currProvinceId, cityId, schoolTypeId });
       const schoolRes = await SkilvulFetch(
         `/api/schools?schoolGradeId=${schoolGradeId}&provinceId=${currProvinceId}&cityId=${cityId}&schoolTypeId=${schoolTypeId}`
       );
@@ -144,7 +144,6 @@ const CompanyInfo = ({ profileType, profile }) => {
     setValue('lastEducationGradeName', payload.name);
   };
   const handleSelectDropdown = (payload, key) => {
-    console.log(payload, key);
     switch (key) {
       case 'schoolGradeName':
         handleSelectSchoolGradeName(payload);
@@ -169,10 +168,47 @@ const CompanyInfo = ({ profileType, profile }) => {
     }
   };
 
-  const onSubmit = useCallback(async (data) => {
-    console.log({ data });
-    return data;
+  const renderToast = ({ msg, error = false, time = 3000 }) => {
+    if (error) {
+      return toast.error(<p className="m-0 pl-3">{msg}</p>, {
+        autoClose: time,
+      });
+    }
+    return toast.success(<p className="m-0 pl-3">{msg}</p>, {
+      autoClose: time,
+    });
+  };
+
+  const updateProfile = useCallback(async (value) => {
+    setLoading(true);
+    const response = await MarkodingFetch('/profile', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify(value),
+    });
+    if (response.ok && response.result) {
+      renderToast({
+        msg:
+          'Berhasil memperbarui profil. Silahkan log in kembali untuk mendapatkan pembaruan',
+        time: 5000,
+      });
+    } else {
+      renderToast({
+        msg: 'Maaf, terjadi kesalahan, silahkan coba kembali.',
+        error: true,
+      });
+    }
+    setLoading(false);
   }, []);
+
+  const onSubmit = useCallback(
+    async (data) => {
+      updateProfile(data);
+    },
+    [updateProfile]
+  );
 
   useEffect(() => {
     const {
@@ -219,6 +255,10 @@ const CompanyInfo = ({ profileType, profile }) => {
       required: false,
       defaultVal: schoolTypeName,
     });
+    register('profileType', {
+      required: false,
+      defaultVal: profileType,
+    });
   }, [
     account,
     getCities,
@@ -226,6 +266,7 @@ const CompanyInfo = ({ profileType, profile }) => {
     getSchoolGrades,
     getSchoolTypes,
     getSchools,
+    profileType,
     register,
   ]);
 
@@ -268,6 +309,7 @@ const CompanyInfo = ({ profileType, profile }) => {
                   name={item.key}
                   ref={register({ required: item.required })}
                   className={styTextfield}
+                  defaultVal={account[item.key]}
                 />
               )}
               {item.as === 'dropdown' && (
@@ -288,11 +330,22 @@ const CompanyInfo = ({ profileType, profile }) => {
         })}
       </Row>
       <div className="d-flex justify-content-end">
-        <Button variant="outline-secondary" className={cancelBtn}>
+        <Button
+          variant="outline-secondary"
+          className={cancelBtn}
+          onClick={() => router.back()}
+        >
           Batal
         </Button>
-        <Button className={saveBtn} onClick={handleSubmit(onSubmit)}>
-          Simpan
+        <Button
+          className={saveBtn}
+          onClick={handleSubmit(onSubmit)}
+          disabled={loading}
+        >
+          <div className="d-flex align-items-center justify-content-center">
+            {loading && <Loading withText={false} />}
+            <span>Simpan</span>
+          </div>
         </Button>
       </div>
     </Panel>

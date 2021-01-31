@@ -64,7 +64,7 @@ const skilvulApi = nextConnect()
           Authorization: authorization,
           'Content-Type': 'application/json',
         },
-        body,
+        body: JSON.stringify(body),
       });
       const data = await response.json();
       res.status(200).json(data);
