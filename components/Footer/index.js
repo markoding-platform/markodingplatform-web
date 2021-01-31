@@ -96,22 +96,22 @@ const Footer = () => {
     <div className={styles.footer}>
       <div className={styles.footerRoot}>
         <Row>
-          <Col xs={5}>
+          <Col xs={6} md={5}>
             <div className="pr-3">
               <h1 className={styles.dicLogo}>DIGITAL INNOVATION CHALLENGE</h1>
               <p className={styles.longText}>{description}</p>
             </div>
           </Col>
-          <Col xs={7}>
+          <Col xs={6} md={7}>
             <Row>
               {footerData.map((fd) => (
-                <Col key={fd.head}>
+                <Col xs={12} md={4} key={fd.head}>
                   <h3 className={styles.subtitle}>{fd.head}</h3>
                   <ul className="list-unstyled">
                     {fd.children.map((fdc) => (
                       <li key={fdc.text} className={styles.item}>
                         <Link href={fdc.link}>
-                          <a href={fdc.link}>
+                          <a href={fdc.link} target="_blank" rel="noreferrer">
                             {fdc.icon && (
                               <Icon src={fdc.icon} size={14} className="mr-2" />
                             )}
@@ -129,10 +129,10 @@ const Footer = () => {
       </div>
       <div className={styles.contactRoot}>
         <Row>
-          <Col xs={6}>
+          <Col md={6}>
             <div className="d-flex align-items-center">
               <p className={styles.contactText}>Learning platform by </p>
-              <a href="https://skilvul.com">
+              <a href="https://skilvul.com" target="_blank" rel="noreferrer">
                 <img
                   src={skilvulLogo}
                   className={styles.contactSkilvulIcon}
@@ -141,8 +141,8 @@ const Footer = () => {
               </a>
             </div>
           </Col>
-          <Col xs={6}>
-            <div className="d-flex justify-content-end align-items-center">
+          <Col md={6}>
+            <div className="d-md-flex justify-content-end align-items-center">
               <a href="mailto:contact@markoding.com">
                 <FiMail className={styles.contactIcon} />
                 <span className={styles.contactText}>

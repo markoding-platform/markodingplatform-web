@@ -8,6 +8,7 @@ import styles from './styles.module.scss';
 
 const SearchHeader = () => {
   const [keyword, setKeyword] = useState('');
+  const [showResult, setShowResult] = useState(false);
   const [result, setResult] = useState(null);
   const debouncedKeyword = useDebounce(keyword, 300);
 
@@ -40,16 +41,18 @@ const SearchHeader = () => {
           placeholder="Search"
           className={styles.search}
           onChange={handleSearch}
+          onFocus={() => setShowResult(true)}
+          onBlur={() => setShowResult(false)}
         />
         <BiSearchAlt2 className={styles.searchIcon} />
       </div>
-      {keyword !== '' && (
+      {keyword !== '' && showResult && (
         <div className={styles.searchResult}>
           <div className="mb-2">
             <h6>Idea</h6>
-            {result && result.idea && result.idea.length && (
+            {result && result.ideas && result.ideas.length > 0 && (
               <ul className="list-unstyled">
-                {result.idea.map((ide) => (
+                {result.ideas.map((ide) => (
                   <li key={ide.id}>
                     <Link href={`/idea/${ide.id}`}>
                       <a href={`/idea/${ide.id}`}>{ide.solutionName}</a>
@@ -67,6 +70,20 @@ const SearchHeader = () => {
                   <li key={eve.id}>
                     <Link href={`/event/${eve.id}`}>
                       <a href={`/event/${eve.id}`}>{eve.title}</a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div className={styles.divider}>
+            <h6>Blog</h6>
+            {result && result.blogs && result.blogs.length > 0 && (
+              <ul className="list-unstyled">
+                {result.blogs.map((blo) => (
+                  <li key={blo.id}>
+                    <Link href={`/blog/${blo.id}`}>
+                      <a href={`/blog/${blo.id}`}>{blo.title}</a>
                     </Link>
                   </li>
                 ))}

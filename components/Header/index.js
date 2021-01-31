@@ -2,22 +2,24 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { BsList } from 'react-icons/bs';
 import Icon from 'components/Icons';
-import MarkodingLogo from 'components/MarkodingLogo';
 import DicLogo from 'components/DICLogo';
 import Drawer from 'components/Drawer';
 import NavMenu from 'components/NavMenu';
 import notif from 'svgs/notif.svg';
-
+import useAnnouncementCount from 'hooks/useAnnouncementCount';
+import Badge from 'react-bootstrap/Badge';
 import {
   innerHeader,
   headerWrapper,
   burgerBtn,
   desktopLogo,
   rootHeader,
+  dicLogo,
 } from './styles.module.scss';
 
 const Header = () => {
   const [isOpeDrawer, setIsOpenDrawer] = useState(false);
+  const notifCount = useAnnouncementCount();
 
   return (
     <header className={rootHeader}>
@@ -37,11 +39,17 @@ const Header = () => {
             >
               <BsList size="1.5rem" color="white" />
             </button>
-            <MarkodingLogo />
+            <h1 className={dicLogo}>DIGITAL INNOVATION CHALLENGE</h1>
             <div className="d-flex">
               <Link href="/announcement">
                 <a href="/announcement">
-                  <Icon src={notif} size={30} />
+                  <Icon src={notif} size={30} cl>
+                    {notifCount && +notifCount > 0 && (
+                      <Badge variant="danger" className="badgeNotif">
+                        &nbsp;
+                      </Badge>
+                    )}
+                  </Icon>
                 </a>
               </Link>
             </div>

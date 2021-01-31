@@ -9,12 +9,12 @@ import BoxLoader from 'components/Shimmer/Box';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 import { mutate } from 'swr';
 import { useRouter } from 'next/router';
-import { LIMIT_PER_PAGE } from 'containers/IdeaAndSolutionContainer/constant';
 import Pagination from 'components/Pagination';
 import styles from './styles.module.scss';
 import questionMap from '../../map/questionMap';
 
 const QuestionContainer = ({ channelSlug, user, callBack }) => {
+  const limit = 6;
   const router = useRouter();
   const { query } = router;
   const currentOffset = Number(query?.start) || 0;
@@ -22,7 +22,7 @@ const QuestionContainer = ({ channelSlug, user, callBack }) => {
   const search = query?.q || '';
   const [keyword, setKeyword] = useState(search);
   const { data, error } = useQuestion({
-    url: `/questions/channel/${channelSlug}?limit=${LIMIT_PER_PAGE}&offset=${currentOffset}&keyword=${search}`,
+    url: `/questions/channel/${channelSlug}?limit=${limit}&offset=${currentOffset}&keyword=${search}`,
   });
   const result = data?.result || {};
   const { data: questionsRes, pages = {} } = result;
@@ -56,7 +56,7 @@ const QuestionContainer = ({ channelSlug, user, callBack }) => {
 
       if (likeResult.ok) {
         await mutate(
-          `/questions/channel/${channelSlug}?limit=${LIMIT_PER_PAGE}&offset=${currentOffset}&keyword=${search}`
+          `/questions/channel/${channelSlug}?limit=${limit}&offset=${currentOffset}&keyword=${search}`
         );
       }
     } else {
@@ -66,7 +66,7 @@ const QuestionContainer = ({ channelSlug, user, callBack }) => {
 
   const handlePageChanged = useCallback(
     (page) => {
-      const offset = LIMIT_PER_PAGE * page - LIMIT_PER_PAGE;
+      const offset = limit * page - limit;
       router.replace(
         `/question/${channelSlug}?page=${page}&start=${offset}&q=${search}`
       );
@@ -128,7 +128,7 @@ const QuestionContainer = ({ channelSlug, user, callBack }) => {
         <Pagination
           totalRecords={pages.count}
           totalPages={pages.totalPages}
-          pageLimit={LIMIT_PER_PAGE}
+          pageLimit={limit}
           onPageChanged={handlePageChanged}
           defaultPage={currentPage}
         />

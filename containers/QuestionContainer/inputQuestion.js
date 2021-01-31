@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { bool, func, string } from 'prop-types';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 import Loading from 'components/Loading';
-import { trigger } from 'swr';
 import styles from './styles.module.scss';
 
 const InputQuestion = ({ show, onClose, channelSlug }) => {
@@ -26,9 +25,8 @@ const InputQuestion = ({ show, onClose, channelSlug }) => {
     });
 
     if (result.ok) {
-      await trigger(`/questions/channel/${channelSlug}?limit=6&offset=0`);
       setTextQuestion('');
-      onClose();
+      onClose('reload');
     }
 
     setIsLoading(false);

@@ -6,6 +6,7 @@ import firebase from 'libraries/FirebaseInitial';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 import Loading from 'components/Loading';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import canUseDOM from 'utils/canUseDOM';
 import styles from './styles.module.scss';
 import chatMap from '../../map/chatMap';
 
@@ -18,6 +19,7 @@ const ChatContainer = ({ user }) => {
   const [chats, setChats] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [extraOffset, setExtraOffset] = useState(0);
+  const [chatContainerHeight, setChatContainerHeight] = useState(null);
 
   const getChats = async () => {
     const { offset } = pagination;
@@ -63,11 +65,20 @@ const ChatContainer = ({ user }) => {
     }
   };
 
+  const getHeightScreen = () => {
+    if (canUseDOM) {
+      const { innerHeight } = window;
+      const ch = innerHeight - 350;
+      setChatContainerHeight(`${ch}px`);
+    }
+  };
+
   useEffect(() => {
     getChats();
   }, [pagination]);
 
   useEffect(() => {
+    getHeightScreen();
     const starCountRef = firebase.database().ref('chat');
     starCountRef.on('value', (snapshot) => {
       const snap = snapshot.val();
@@ -77,11 +88,23 @@ const ChatContainer = ({ user }) => {
     });
   }, []);
 
+  const htmlNoMoreChat = (
+    <p className="text-danger text-center mb-4">Tidak ada pesan lagi.</p>
+  );
+
   return (
     <>
-      {user && chats.length > 0 && (
+      {user && (
         <>
-          <div id="chatWrap" className={styles.chatWrap}>
+          <div
+            id="chatWrap"
+            className={styles.chatWrap}
+            style={
+              chatContainerHeight && {
+                maxHeight: `${chatContainerHeight}`,
+              }
+            }
+          >
             <InfiniteScroll
               dataLength={chats.length}
               next={nextGetting}
@@ -89,7 +112,7 @@ const ChatContainer = ({ user }) => {
               hasMore={hasMore}
               loader={<Loading withText={false} />}
               scrollableTarget="chatWrap"
-              endMessage={<p className="text-danger">No more data</p>}
+              endMessage={htmlNoMoreChat}
               className={styles.infiniteScroll}
             >
               {chats.map((c) => (

@@ -6,12 +6,13 @@ import Container from 'react-bootstrap/Container';
 import Footer from 'components/Footer';
 import BottomNavigation from 'components/BottomNavigation';
 import Header from 'components/Header';
+import canUseDOM from 'utils/canUseDOM';
 
 const Layout = ({ children, activeMenu, withFooter, className }) => {
   const [rightWidth, setRightWidth] = useState(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (canUseDOM) {
       const { innerWidth } = window;
       const rw = innerWidth - 290;
       setRightWidth(rw > 1200 ? `${rw}px` : '100%');

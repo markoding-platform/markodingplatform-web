@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import useMySkilvulAccount from 'hooks/useMySkilvulAccount';
 import number from 'utils/number';
 import SearchHeader from 'components/SearchHeader';
+import Badge from 'react-bootstrap/Badge';
+import useAnnouncementCount from 'hooks/useAnnouncementCount';
 import styles from './styles.module.scss';
 
 const PointBadgeWrapper = ({ desktopOnly }) => {
@@ -18,6 +20,7 @@ const PointBadgeWrapper = ({ desktopOnly }) => {
   const account = useMySkilvulAccount();
   const totalBadge = account && account.totalBadge ? account.totalBadge : 0;
   const totalPoint = account && account.totalPoint ? account.totalPoint : 0;
+  const notifCount = useAnnouncementCount();
   return (
     <div className={desktopOnly ? 'd-none d-lg-block' : 'd-block'}>
       <div className={styles.pointBadge}>
@@ -43,7 +46,13 @@ const PointBadgeWrapper = ({ desktopOnly }) => {
                     src={notifFill}
                     size={18}
                     className={styles.notifFillIcon}
-                  />
+                  >
+                    {notifCount && +notifCount > 0 && (
+                      <Badge variant="danger" className="badgeNotif">
+                        &nbsp;
+                      </Badge>
+                    )}
+                  </Icon>
                 </a>
               </Link>
               <ErrorBoundary

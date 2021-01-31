@@ -1,20 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BsChevronDown } from 'react-icons/bs';
 
 import Footer from 'components/Footer';
 import useNavItem from 'hooks/useNavItem';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
+import { Logout } from 'utils/auth';
+import getCookie from 'utils/getCookie';
+import useAnnouncementCount from 'hooks/useAnnouncementCount';
 import { rotateDown, rotate, bgPrimary } from './styles.module.scss';
 
 const NavMenu = ({ onClickMenu }) => {
   const navItems = useNavItem();
   const [showNavTreeId, setShowNavTreeId] = useState(null);
+  const [isLogged, setIsLogged] = useState(null);
   const handleShowNavTree = (val) => {
     setShowNavTreeId((prevState) =>
       prevState !== null && prevState === val ? null : val
     );
   };
+  const notifCount = useAnnouncementCount();
+
+  const checkAccount = () => {
+    const logged = getCookie('markodingToken');
+    setIsLogged(logged || false);
+  };
+
+  const doLogout = async () => {
+    onClickMenu();
+    checkAccount();
+    await Logout({});
+  };
+
+  useEffect(() => {
+    checkAccount();
+  }, []);
 
   return (
     <>
@@ -43,7 +64,7 @@ const NavMenu = ({ onClickMenu }) => {
                       {navItem.text}
                       {navItem.withBadge && (
                         <span className="ml-2 badge badge-danger text-right badge-pill">
-                          0
+                          {navItem.id === 0 ? notifCount : 0}
                         </span>
                       )}
                     </div>
@@ -67,6 +88,19 @@ const NavMenu = ({ onClickMenu }) => {
               )}
             </li>
           ))}
+        {isLogged && (
+          <li className={`list-group-item ${bgPrimary} d-lg-none`}>
+            <Button
+              type="button"
+              size="sm"
+              block
+              variant="danger"
+              onClick={doLogout}
+            >
+              Keluar
+            </Button>
+          </li>
+        )}
       </ul>
       <div className="d-lg-none">
         <Footer />
