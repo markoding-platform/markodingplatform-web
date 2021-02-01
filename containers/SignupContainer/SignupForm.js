@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import { string } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -20,7 +21,7 @@ import {
   styTerm,
   required,
 } from './styles.module.scss';
-import { LIST_FORM, ACCOUNT_TYPE_ENUM } from '../constants';
+import { LIST_FORM, ACCOUNT_TYPE_ENUM, tAndCLink } from '../constants';
 import {
   locationSchoolMap,
   schoolGradeMap,
@@ -70,6 +71,7 @@ const SignupForm = ({ registerAs }) => {
   const [cities, setCities] = useState([]);
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [schoolSearch, setSchoolSearch] = useState('');
 
   const getForm = useMemo(() => {
     if (isStudentSupporter) {
@@ -117,15 +119,22 @@ const SignupForm = ({ registerAs }) => {
     }
   };
 
-  const getSchools = async () => {
+  const getSchools = async (search) => {
     const schoolGradeId = await getValues('schoolGradeId');
     const provinceId = await getValues('provinceId');
     const cityId = await getValues('cityId');
     const schoolRes = await SkilvulFetch(
-      `/api/schools?schoolGradeId=${schoolGradeId}&provinceId=${provinceId}&cityId=${cityId}`
+      `/api/schools?schoolGradeId=${schoolGradeId}&provinceId=${provinceId}&cityId=${cityId}&search=${search}`
     );
     if (schoolRes && schoolRes.schools) {
       setSchools(schoolRes.schools.map(locationSchoolMap));
+    }
+  };
+
+  const onSearch = async (q) => {
+    if (schoolSearch !== q) {
+      await getSchools(q);
+      await setSchoolSearch(q);
     }
   };
 
@@ -147,7 +156,7 @@ const SignupForm = ({ registerAs }) => {
       case 'cityName':
         setValue('cityId', payload.key);
         setValue('cityName', payload.name);
-        getSchools();
+        getSchools('');
         break;
       case 'schoolName':
         setValue('schoolId', payload.key);
@@ -340,6 +349,10 @@ const SignupForm = ({ registerAs }) => {
                       onSelected={(selected) => {
                         handleSelectDropdown(selected, item.key);
                       }}
+                      withHardSearch={item.key === 'schoolName'}
+                      onHardSearch={(q) => {
+                        onSearch(q);
+                      }}
                     />
                   )}
                   <span className="text-danger">
@@ -357,15 +370,19 @@ const SignupForm = ({ registerAs }) => {
               name="agreement"
               ref={register({ required: true })}
             />
-            <label
-              className={`form-check-label ${
-                errors.agreement && 'text-danger'
-              }`}
-              htmlFor="exampleCheck1"
-            >
-              Dengan mendaftar, saya menyetujui Syarat dan Ketentuan serta
-              Kebijakan Privasi
-            </label>
+            <Link href={tAndCLink}>
+              <a href={tAndCLink} rel="noreferrer" target="_blank">
+                <label
+                  className={`form-check-label ml-4 ${
+                    errors.agreement && 'text-danger'
+                  }`}
+                  htmlFor="exampleCheck1"
+                >
+                  Dengan mendaftar, saya menyetujui Syarat dan Ketentuan serta
+                  Kebijakan Privasi
+                </label>
+              </a>
+            </Link>
           </div>
 
           <div>

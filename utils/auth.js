@@ -15,6 +15,7 @@ export const Login = (context, token, data, backUrl = '/') => {
     const expCookie = 86000;
     const userProfile = profile ? JSON.stringify(profile) : null;
     const userIdea = idea ? JSON.stringify(idea) : null;
+    const userAccount = user ? JSON.stringify(user) : null;
     setCookie([
       { label: 'markodingToken', value: token, age: expCookie },
       { label: 'userName', value: user.name, age: expCookie },
@@ -22,6 +23,7 @@ export const Login = (context, token, data, backUrl = '/') => {
       { label: 'userXID', value: user.externalId, age: expCookie },
       { label: 'userIdea', value: userIdea, age: expCookie },
       { label: 'userProfile', value: userProfile, age: expCookie },
+      { label: 'userAccount', value: userAccount, age: expCookie },
     ]);
     Router.replace(backUrl);
   }
@@ -48,6 +50,7 @@ export const Logout = async (context, back = true) => {
       { label: 'userXID', value: '', age: 0 },
       { label: 'userProfile', value: null, age: 0 },
       { label: 'userIdea', value: null, age: 0 },
+      { label: 'userAccount', value: null, age: 0 },
     ]);
     if (back) {
       await Router.replace(`/`);

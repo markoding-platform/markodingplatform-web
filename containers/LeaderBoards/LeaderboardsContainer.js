@@ -53,7 +53,7 @@ const LeaderboardsContainer = () => {
               <Nav.Item className={styNavItem}>
                 <Nav.Link
                   eventKey="team"
-                  className={styTabTitle`${
+                  className={`${styTabTitle} ${
                     activeKey === 'team' && styActiveTab
                   }`}
                 >
@@ -63,7 +63,7 @@ const LeaderboardsContainer = () => {
               <Nav.Item className={styNavItem}>
                 <Nav.Link
                   eventKey="individual"
-                  className={styTabTitle`${
+                  className={`${styTabTitle} ${
                     activeKey === 'individual' && styActiveTab
                   }`}
                 >

@@ -35,12 +35,12 @@ const navItems = [
     link: '/blog',
     withBadge: false,
   },
-  {
-    id: 6,
-    text: 'Leaderboard',
-    link: '/leaderboards',
-    withBadge: false,
-  },
+  // {
+  //   id: 6,
+  //   text: 'Leaderboard',
+  //   link: '/leaderboards',
+  //   withBadge: false,
+  // },
   {
     id: 7,
     text: 'Tanya Jawab',

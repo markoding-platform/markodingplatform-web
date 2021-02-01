@@ -1,0 +1,12 @@
+@use 'styles/colors';
+
+.styDesc {
+  font-size: 1.28rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: 1.2px;
+  text-align: left;
+  color: colors.$white;
+  padding: 0 50px;
+}

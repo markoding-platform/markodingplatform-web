@@ -13,14 +13,20 @@ import number from 'utils/number';
 import SearchHeader from 'components/SearchHeader';
 import Badge from 'react-bootstrap/Badge';
 import useAnnouncementCount from 'hooks/useAnnouncementCount';
+import canUseDOM from 'utils/canUseDOM';
+import getCookie from 'utils/getCookie';
 import styles from './styles.module.scss';
 
 const PointBadgeWrapper = ({ desktopOnly }) => {
   const { logError } = useErrorHandler();
-  const account = useMySkilvulAccount();
-  const totalBadge = account && account.totalBadge ? account.totalBadge : 0;
-  const totalPoint = account && account.totalPoint ? account.totalPoint : 0;
   const notifCount = useAnnouncementCount();
+  const account = canUseDOM ? JSON.parse(getCookie('userAccount')) : {};
+  const { data } = useMySkilvulAccount();
+  const skilvulPoint = data
+    ? data.totalPoint + (account ? account.markodingPoint : 0)
+    : 0;
+  const skilvulBadge = data ? data.totalBadge : 0;
+
   return (
     <div className={desktopOnly ? 'd-none d-lg-block' : 'd-block'}>
       <div className={styles.pointBadge}>
@@ -28,12 +34,12 @@ const PointBadgeWrapper = ({ desktopOnly }) => {
           <div className={styles.container}>
             <div className="d-flex d-lg-none align-items-center">
               <RiMedalFill size={22} />
-              <span>{`${number(totalBadge)} MBadge`}</span>
+              <span>{`${number(skilvulBadge)} MBadge`}</span>
               <RiArrowRightSLine size={22} />
             </div>
             <div className="d-flex d-lg-none align-items-center ml-4">
               <DiHtml53DEffects size={24} />
-              <span>{`${number(totalPoint)} MPoin`}</span>
+              <span>{`${number(skilvulPoint)} MPoin`}</span>
               <RiArrowRightSLine size={22} />
             </div>
             <div className="d-none d-lg-flex w-100 align-items-center ml-4">
