@@ -39,7 +39,11 @@ const Header = () => {
             >
               <BsList size="1.5rem" color="white" />
             </button>
-            <h1 className={dicLogo}>DIGITAL INNOVATION CHALLENGE</h1>
+            <Link href="/">
+              <a href="/" className="text-decoration-none">
+                <h1 className={dicLogo}>DIGITAL INNOVATION CHALLENGE</h1>
+              </a>
+            </Link>
             <div className="d-flex">
               <Link href="/announcement">
                 <a href="/announcement">

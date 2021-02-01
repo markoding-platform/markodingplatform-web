@@ -8,12 +8,12 @@ const PartnersContainer = () => {
     <div className="mt-4 pb-3">
       <h3 className="text-center">Acara ini terselenggara berkat kerjasama:</h3>
       <div className={logoWrapper}>
-        <MarkodingLogo width="254px" height="39px" className={lumino} />
+        <MarkodingLogo width="254px" height="50px" className={lumino} />
         <div>
           <Image
             src="/assets/unicef.png"
             width={166}
-            height={72}
+            height={90}
             layout="fixed"
             className={lumino}
           />
