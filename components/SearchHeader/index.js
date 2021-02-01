@@ -1,8 +1,10 @@
+import React, { useEffect, useState, useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import Link from 'next/link';
 import { BiSearchAlt2 } from 'react-icons/bi';
+
 import useDebounce from 'hooks/useDebounce';
-import React, { useEffect, useState } from 'react';
+import useOutsideClick from 'hooks/useOutsideClick';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 import styles from './styles.module.scss';
 
@@ -11,6 +13,7 @@ const SearchHeader = () => {
   const [showResult, setShowResult] = useState(false);
   const [result, setResult] = useState(null);
   const debouncedKeyword = useDebounce(keyword, 300);
+  const ref = useRef();
 
   const onSearch = async (value) => {
     const res = await MarkodingFetch(`/search?keyword=${value}`);
@@ -18,6 +21,8 @@ const SearchHeader = () => {
       setResult(res.result);
     }
   };
+
+  useOutsideClick(ref, () => setShowResult(false));
 
   useEffect(() => {
     if (debouncedKeyword) {
@@ -37,12 +42,12 @@ const SearchHeader = () => {
     <div className={styles.searchRoot}>
       <div className={styles.searchGroup}>
         <Form.Control
+          ref={ref}
           type="text"
           placeholder="Search"
           className={styles.search}
           onChange={handleSearch}
           onFocus={() => setShowResult(true)}
-          onBlur={() => setShowResult(false)}
         />
         <BiSearchAlt2 className={styles.searchIcon} />
       </div>
