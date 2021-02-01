@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import { string } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -20,7 +21,7 @@ import {
   styTerm,
   required,
 } from './styles.module.scss';
-import { LIST_FORM, ACCOUNT_TYPE_ENUM } from '../constants';
+import { LIST_FORM, ACCOUNT_TYPE_ENUM, tAndCLink } from '../constants';
 import {
   locationSchoolMap,
   schoolGradeMap,
@@ -357,15 +358,19 @@ const SignupForm = ({ registerAs }) => {
               name="agreement"
               ref={register({ required: true })}
             />
-            <label
-              className={`form-check-label ${
-                errors.agreement && 'text-danger'
-              }`}
-              htmlFor="exampleCheck1"
-            >
-              Dengan mendaftar, saya menyetujui Syarat dan Ketentuan serta
-              Kebijakan Privasi
-            </label>
+            <Link href={tAndCLink}>
+              <a href={tAndCLink} rel="noreferrer" target="_blank">
+                <label
+                  className={`form-check-label ${
+                    errors.agreement && 'text-danger'
+                  }`}
+                  htmlFor="exampleCheck1"
+                >
+                  Dengan mendaftar, saya menyetujui Syarat dan Ketentuan serta
+                  Kebijakan Privasi
+                </label>
+              </a>
+            </Link>
           </div>
 
           <div>

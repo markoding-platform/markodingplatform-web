@@ -1,5 +1,7 @@
 export const WORKBOOK_IDEA_URL =
   'https://docs.google.com/presentation/d/1UyT8hdSid2V32WBp3KZK14SvWuB3IqVE8u9pR0lVQH0/edit?usp=sharing ';
+export const tAndCLink =
+  'https://docs.google.com/document/d/1FMGCtIdrBfxJhxt2PCFwSz7dEixi-LFs5Zu59Ryscwk/edit?usp=sharing';
 export const ACCOUNT_TYPE = ['student', 'mentor', 'teacher', 'supporter'];
 export const ACCOUNT_TYPE_ENUM = {
   student: 'Siswa',
