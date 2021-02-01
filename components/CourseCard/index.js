@@ -1,11 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from 'react-bootstrap/Card';
 import Image from 'next/image';
+
+import Card from 'react-bootstrap/Card';
+
+import getCookie from 'utils/getCookie';
+import canUseDOM from 'utils/canUseDOM';
+import { SSO } from 'utils/auth';
 import styles from './styles.module.scss';
 
 const CourseCard = (props) => {
   const { imageUrl, title, description, link } = props;
+  const userId = canUseDOM && getCookie('userID');
+
+  const authenticate = async () => {
+    await SSO();
+  };
+
+  const handleClickClass = () => {
+    if (userId) {
+      window.open(link, '_blank');
+    }
+    return authenticate();
+  };
   return (
     <Card className={styles.card}>
       <div className={styles.image}>
@@ -15,14 +32,9 @@ const CourseCard = (props) => {
       <Card.Body>
         <Card.Title className={styles.title}>{title}</Card.Title>
         <Card.Text className={styles.text}>{description}</Card.Text>
-        <a
-          href={link}
-          target="_blank"
-          rel="noreferrer"
-          className="btn btn-primary btn-block"
-        >
+        <btn onClick={handleClickClass} className="btn btn-primary btn-block">
           Daftar kelas
-        </a>
+        </btn>
       </Card.Body>
     </Card>
   );
