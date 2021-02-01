@@ -11,6 +11,8 @@
   font-weight: 600;
   text-align: center;
   padding: 6px 16px 0 8px;
+  max-width: 48px;
+  width: 48px;
 }
 
 .styPointsOutline {
@@ -26,10 +28,22 @@
 }
 
 .styName {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
-  text-align: center;
+  text-align: left;
   padding: 6px 0 0 8px;
+  max-height: 80px;
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  line-height: 1.5;
+  display: -webkit-box;
+  display: -moz-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .styItem {
   display: flex;

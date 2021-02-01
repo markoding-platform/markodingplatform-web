@@ -11,6 +11,7 @@ import {
   styNav,
 } from './styles.module.scss';
 import DynamicTeamRank from './TeamRank';
+import DynamicIndividuaRank from './IndividualRank';
 
 const TabsLeaderboard = () => {
   const [activeKey, setActiveKey] = useState('team');
@@ -55,7 +56,7 @@ const TabsLeaderboard = () => {
           )}
           {activeKey === 'individual' && (
             <Tab.Pane eventKey="individual" className="w-100">
-              <DynamicTeamRank desc={individualRankDesc} />
+              <DynamicIndividuaRank desc={individualRankDesc} />
             </Tab.Pane>
           )}
         </Tab.Content>

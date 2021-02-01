@@ -10,14 +10,14 @@ import {
   styItem,
 } from './styles.module.scss';
 
-const TableComponent = ({ position, points, name }) => {
+const TableComponent = ({ position, points, name, imgUrl }) => {
   return (
     <div className={styItem}>
       <div className="d-flex">
         <span className={styPosition}>{position}</span>
         <div>
           <Image
-            src="/assets/avatar-min.png"
+            src={imgUrl}
             width={48}
             height={48}
             layout="fixed"
