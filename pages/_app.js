@@ -46,6 +46,12 @@ export default class MyApp extends App {
             as="font"
             crossOrigin=""
           />
+          <link
+            rel="preload"
+            href="/fonts/Bungee/Bungee-Regular.ttf"
+            as="font"
+            crossOrigin=""
+          />
         </Head>
         <NextNprogress
           color="#2F80ED"

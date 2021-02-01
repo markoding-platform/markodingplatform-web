@@ -13,14 +13,37 @@ import number from 'utils/number';
 import SearchHeader from 'components/SearchHeader';
 import Badge from 'react-bootstrap/Badge';
 import useAnnouncementCount from 'hooks/useAnnouncementCount';
+import { useEffect, useState } from 'react';
+import MarkodingFetch from 'libraries/MarkodingFetch';
 import styles from './styles.module.scss';
 
 const PointBadgeWrapper = ({ desktopOnly }) => {
+  const [internalPoint, setInternalPoint] = useState(0);
   const { logError } = useErrorHandler();
-  const account = useMySkilvulAccount();
-  const totalBadge = account && account.totalBadge ? account.totalBadge : 0;
-  const totalPoint = account && account.totalPoint ? account.totalPoint : 0;
   const notifCount = useAnnouncementCount();
+  const { data } = useMySkilvulAccount();
+  const skilvulPoint = data ? data.totalPoint : 0;
+  const skilvulBadge = data ? data.totalBadge : 0;
+
+  const updateInternalPoint = async (point) => {
+    const updatePoint = await MarkodingFetch('/users/skilvul-point', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
+      body: JSON.stringify({
+        skilvulPoint: point,
+      }),
+    });
+    if (updatePoint && updatePoint.result) {
+      setInternalPoint(updatePoint.result.markodingPoint);
+    }
+  };
+
+  useEffect(() => {
+    updateInternalPoint();
+  }, [data]);
+
   return (
     <div className={desktopOnly ? 'd-none d-lg-block' : 'd-block'}>
       <div className={styles.pointBadge}>
@@ -28,12 +51,12 @@ const PointBadgeWrapper = ({ desktopOnly }) => {
           <div className={styles.container}>
             <div className="d-flex d-lg-none align-items-center">
               <RiMedalFill size={22} />
-              <span>{`${number(totalBadge)} MBadge`}</span>
+              <span>{`${number(skilvulBadge)} MBadge`}</span>
               <RiArrowRightSLine size={22} />
             </div>
             <div className="d-flex d-lg-none align-items-center ml-4">
               <DiHtml53DEffects size={24} />
-              <span>{`${number(totalPoint)} MPoin`}</span>
+              <span>{`${number(skilvulPoint + internalPoint)} MPoin`}</span>
               <RiArrowRightSLine size={22} />
             </div>
             <div className="d-none d-lg-flex w-100 align-items-center ml-4">
