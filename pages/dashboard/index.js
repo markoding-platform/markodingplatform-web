@@ -14,6 +14,7 @@ import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import DashboardContainer from 'containers/Dashboard';
 import { homeContent } from 'styles/home.module.scss';
+import skilvulAccountMap from '../../map/skilvulAccountMap';
 
 const Dashboard = ({ user }) => {
   const { logError } = useErrorHandler();
@@ -31,7 +32,7 @@ const Dashboard = ({ user }) => {
       `/api/skilvul?path=/users/${userXID}`
     );
     if (userSkilvul && userSkilvul.user) {
-      setSkilvulData(userSkilvul.user);
+      setSkilvulData(skilvulAccountMap(userSkilvul.user));
     }
   }, [userXID]);
 
@@ -59,7 +60,8 @@ const Dashboard = ({ user }) => {
             <DashboardContainer
               user={user}
               email={skilvulData.email || ''}
-              skilBadge={skilvulData.skilBadge || []}
+              skilsBadges={skilvulData.badges || []}
+              skillPoint={skilvulData.totalPoint || 0}
             />
           </ErrorBoundary>
         </div>
