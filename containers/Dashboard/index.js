@@ -1,4 +1,4 @@
-import { arrayOf, shape, string } from 'prop-types';
+import { arrayOf, shape, string, number } from 'prop-types';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -12,6 +12,8 @@ import Badges from 'components/Badges';
 import SnippetIdea from 'containers/IdeaAndSolutionContainer/SnippetIdea';
 import CourseCard from 'components/CourseCard';
 import Avatar from 'public/assets/avatar-min.png';
+import canUseDOM from 'utils/canUseDOM';
+import getCookie from 'utils/getCookie';
 import MyStats from './MyStats';
 
 import {
@@ -28,8 +30,11 @@ import {
   styCourses,
 } from './styles.module.scss';
 
-const DashboardContainer = ({ user, skilBadge, email }) => {
+const DashboardContainer = ({ user, email, skillBadges, skillPoint }) => {
   const { idea: ideaUser } = user;
+
+  const account = canUseDOM ? JSON.parse(getCookie('userAccount')) : {};
+  const mPoint = skillPoint + (account ? account.markodingPoint : 0);
 
   const { profileType = '', schoolName } = user?.profile;
   const { push } = useRouter();
@@ -85,15 +90,15 @@ const DashboardContainer = ({ user, skilBadge, email }) => {
             </div>
           </div>
           <div className={wrapperStats}>
-            <MyStats title="MBadge" />
-            <MyStats title="MPoint" />
+            <MyStats title="MBadge" total={skillBadges.length} />
+            <MyStats title="MPoint" total={mPoint} />
           </div>
         </div>
       </div>
       <Panel title="Badges">
-        {skilBadge.length ? (
+        {skillBadges.length ? (
           <div className={badgeContainer}>
-            {skilBadge.map((badge = {}) => (
+            {skillBadges.map((badge = {}) => (
               <Badges
                 key={badge.id}
                 name={badge.name}
@@ -155,13 +160,18 @@ const DashboardContainer = ({ user, skilBadge, email }) => {
   );
 };
 
+DashboardContainer.defaultProps = {
+  skillPoint: 0,
+  skillBadges: [],
+};
+
 DashboardContainer.propTypes = {
   user: shape({
     id: '',
     name: '',
     profile: {},
   }).isRequired,
-  skilBadge: arrayOf(
+  skillBadges: arrayOf(
     shape({
       id: string,
       name: string,
@@ -170,8 +180,9 @@ DashboardContainer.propTypes = {
       badgerUrl: string,
       certificateUrl: string,
     })
-  ).isRequired,
+  ),
   email: string.isRequired,
+  skillPoint: number,
 };
 
 export default DashboardContainer;

@@ -6,6 +6,36 @@ import { toast } from 'react-toastify';
 import { Login } from 'utils/auth';
 import Loading from 'components/Loading';
 import getCookie from 'utils/getCookie';
+import SkilvulFetch from 'libraries/SkilvulFetch';
+import skilvulAccountMap from '../../map/skilvulAccountMap';
+
+const updatePoint = async (token, data) => {
+  const response = data;
+  const skilvulInfo = await SkilvulFetch(
+    `/api/skilvul?path=/users/${response.user.externalId}`
+  );
+  if (skilvulInfo && skilvulInfo.user) {
+    const userInfo = skilvulAccountMap(skilvulInfo.user) || {};
+    const updated = await MarkodingFetch(
+      '/users/skilvul-point',
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+          skilvulPoint: userInfo.totalPoint,
+        }),
+      },
+      {},
+      token
+    );
+    if (updated && updated.ok) {
+      response.user = updated.result;
+    }
+  }
+  return response;
+};
 
 const SsoSuccess = ({ sso, sig }) => {
   const getToken = async () => {
@@ -26,7 +56,8 @@ const SsoSuccess = ({ sso, sig }) => {
       if (!data.profile) {
         backPath = '/signup';
       }
-      await Login({}, token, data, backPath);
+      const updatedData = await updatePoint(token, data);
+      await Login({}, token, updatedData, backPath);
     } else {
       const message = response.message || 'Login gagal diproses';
       toast.error(message);
