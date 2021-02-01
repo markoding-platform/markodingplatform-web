@@ -49,6 +49,8 @@ const DropdownComponent = ({
   dropdownItem,
   withSearch,
   defaultVal,
+  withHardSearch,
+  onHardSearch,
 }) => {
   const [selectedDropdown, setSelectedDropdown] = useState(defaultVal);
 
@@ -70,10 +72,14 @@ const DropdownComponent = ({
 
   const onSearch = useCallback(() => {
     if (!keyword) return;
-    const result = dropdownItem.filter((item) => {
-      return item.name.toLowerCase().match(keyword.toLowerCase());
-    });
-    setSearchedItem(result);
+    if (withHardSearch) {
+      onHardSearch(keyword.toLowerCase());
+    } else {
+      const result = dropdownItem.filter((item) => {
+        return item.name.toLowerCase().match(keyword.toLowerCase());
+      });
+      setSearchedItem(result);
+    }
   }, [dropdownItem, keyword]);
 
   const debouncedKeyword = useDebounce(keyword, 200);
@@ -83,7 +89,8 @@ const DropdownComponent = ({
     }
   }, [debouncedKeyword, onSearch]);
 
-  const items = keyword.length ? searchedItem : dropdownItem;
+  const items =
+    keyword.length && withHardSearch === false ? searchedItem : dropdownItem;
   return (
     <Dropdown>
       <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
@@ -125,6 +132,8 @@ DropdownComponent.defaultProps = {
   dropdownItem: [],
   defaultVal: '',
   withSearch: false,
+  withHardSearch: false,
+  onHardSearch: () => {},
 };
 
 DropdownComponent.propTypes = {
@@ -137,7 +146,9 @@ DropdownComponent.propTypes = {
   defaultVal: string,
   placeholder: string,
   withSearch: bool,
+  withHardSearch: bool,
   onSelected: func.isRequired,
+  onHardSearch: func,
 };
 
 CustomToggle.propTypes = {
