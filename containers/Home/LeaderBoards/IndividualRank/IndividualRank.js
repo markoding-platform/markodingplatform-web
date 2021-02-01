@@ -2,13 +2,13 @@ import { string } from 'prop-types';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import useLeaderboards from 'hooks/useLeaderboardsTeam';
+import useLeaderboards from 'hooks/userLeaderboardIndividual';
 import LeaderBoardList from '../LeadeboardList';
 import { styDesc } from './styles.module.scss';
 
-const TeamRank = ({ desc }) => {
+const IndividualRank = ({ desc }) => {
   const { data, isLoading } = useLeaderboards({
-    url: '/leaderboards/team?sort=-liked',
+    url: '/leaderboards/user',
   });
   return (
     <div className="d-flex pb-4">
@@ -29,8 +29,8 @@ const TeamRank = ({ desc }) => {
   );
 };
 
-TeamRank.propTypes = {
+IndividualRank.propTypes = {
   desc: string.isRequired,
 };
 
-export default TeamRank;
+export default IndividualRank;
