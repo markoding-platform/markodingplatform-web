@@ -13,36 +13,19 @@ import number from 'utils/number';
 import SearchHeader from 'components/SearchHeader';
 import Badge from 'react-bootstrap/Badge';
 import useAnnouncementCount from 'hooks/useAnnouncementCount';
-import { useEffect, useState } from 'react';
-import MarkodingFetch from 'libraries/MarkodingFetch';
+import canUseDOM from 'utils/canUseDOM';
+import getCookie from 'utils/getCookie';
 import styles from './styles.module.scss';
 
 const PointBadgeWrapper = ({ desktopOnly }) => {
-  const [internalPoint, setInternalPoint] = useState(0);
   const { logError } = useErrorHandler();
   const notifCount = useAnnouncementCount();
+  const account = canUseDOM ? JSON.parse(getCookie('userAccount')) : {};
   const { data } = useMySkilvulAccount();
-  const skilvulPoint = data ? data.totalPoint : 0;
+  const skilvulPoint = data
+    ? data.totalPoint + (account ? account.markodingPoint : 0)
+    : 0;
   const skilvulBadge = data ? data.totalBadge : 0;
-
-  const updateInternalPoint = async (point) => {
-    const updatePoint = await MarkodingFetch('/users/skilvul-point', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'PUT',
-      body: JSON.stringify({
-        skilvulPoint: point,
-      }),
-    });
-    if (updatePoint && updatePoint.result) {
-      setInternalPoint(updatePoint.result.markodingPoint);
-    }
-  };
-
-  useEffect(() => {
-    updateInternalPoint();
-  }, [data]);
 
   return (
     <div className={desktopOnly ? 'd-none d-lg-block' : 'd-block'}>
@@ -56,7 +39,7 @@ const PointBadgeWrapper = ({ desktopOnly }) => {
             </div>
             <div className="d-flex d-lg-none align-items-center ml-4">
               <DiHtml53DEffects size={24} />
-              <span>{`${number(skilvulPoint + internalPoint)} MPoin`}</span>
+              <span>{`${number(skilvulPoint)} MPoin`}</span>
               <RiArrowRightSLine size={22} />
             </div>
             <div className="d-none d-lg-flex w-100 align-items-center ml-4">

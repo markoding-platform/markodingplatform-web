@@ -18,9 +18,13 @@ const AuthButton = () => {
   const idea = userIdea ? JSON.parse(userIdea) : {};
   const profile = userProfile ? JSON.parse(userProfile) : {};
   const ideaId = idea?.id || '';
-  const account = useMySkilvulAccount();
-  const totalBadge = account && account.totalBadge ? account.totalBadge : 0;
-  const totalPoint = account && account.totalPoint ? account.totalPoint : 0;
+
+  const account = canUseDOM ? JSON.parse(getCookie('userAccount')) : {};
+  const { data } = useMySkilvulAccount();
+  const mPoint = data
+    ? data.totalPoint + (account ? account.markodingPoint : 0)
+    : 0;
+  const skilvulBadge = data ? data.totalBadge : 0;
 
   const checkAccount = () => {
     const logged = getCookie('markodingToken');
@@ -95,8 +99,8 @@ const AuthButton = () => {
                     <div>
                       <h5 className="mb-1 text-nowrap">{userName}</h5>
                       <span className="text-primary text-nowrap">
-                        {`${number(totalBadge)} MBadge | ${number(
-                          totalPoint
+                        {`${number(skilvulBadge)} MBadge | ${number(
+                          mPoint
                         )} MPoin`}
                       </span>
                     </div>

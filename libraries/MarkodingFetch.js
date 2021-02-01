@@ -1,11 +1,11 @@
 import fetch from 'isomorphic-unfetch';
 import getCookie from '../utils/getCookie';
 
-const MarkodingFetch = async (url, options = {}, ctx) => {
-  const markodingToken = await getCookie(
-    'markodingToken',
-    ctx ? ctx.req : null
-  );
+const MarkodingFetch = async (url, options = {}, ctx, customToken = null) => {
+  let markodingToken = await getCookie('markodingToken', ctx ? ctx.req : null);
+  if (customToken) {
+    markodingToken = customToken;
+  }
   const { headers, ...otherOptions } = options || {};
   return fetch(process.env.MARKODING_API_URL + url, {
     headers: {
