@@ -10,12 +10,12 @@ const schoolsApi = nextConnect()
   .get(async (req, res) => {
     try {
       const {
-        query: { schoolGradeId, provinceId, cityId },
+        query: { schoolGradeId, provinceId, cityId, search },
         headers: { authorization },
       } = req;
 
       const response = await fetch(
-        `${process.env.SKILVUL_API_URL}/schools?schoolGradeId=${schoolGradeId}&provinceId=${provinceId}&cityId=${cityId}`,
+        `${process.env.SKILVUL_API_URL}/schools?schoolGradeId=${schoolGradeId}&provinceId=${provinceId}&cityId=${cityId}&search=${search}`,
         {
           method: 'GET',
           headers: {
