@@ -7,7 +7,7 @@ import WidgetLoader from '../WidgetLoader';
 
 const CourseWidget = () => {
   const { courses = [], isLoading, error } = useCourse({
-    url: '/api/course?limit=6&offset=1',
+    url: '/api/course?limit=6&offset=0',
   });
 
   return (

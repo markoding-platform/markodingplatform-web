@@ -13,7 +13,7 @@ import courseMap from '../map/courseMap';
 const Course = () => {
   let courses;
   const { data: courseRes, isValidating } = useSWR(
-    '/api/course?limit=6&offset=1',
+    '/api/course?limit=6&offset=0',
     SkilvulFetch
   );
   if (courseRes && courseRes.products) {
