@@ -52,7 +52,7 @@ const DashboardContainer = ({ user, email, skillBadges, skillPoint }) => {
   const { solutionVision, solutionName, totalLikes, totalComments } = idea;
 
   const { courses, isLoading: loadingCourses } = useCourse({
-    url: '/api/course?limit=6&offset=1',
+    url: '/api/course?limit=6&offset=0',
   });
 
   const handleClickEditIdea = () => {
