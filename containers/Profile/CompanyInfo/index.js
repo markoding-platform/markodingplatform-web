@@ -122,7 +122,6 @@ const CompanyInfo = ({ profileType, profile }) => {
           schoolTypeId,
           query: q,
         });
-        getSchools(q);
         schoolsKeyword.current = q;
       }
     },
@@ -240,7 +239,6 @@ const CompanyInfo = ({ profileType, profile }) => {
 
   const onSubmit = useCallback(
     async (data) => {
-      console.log({ data });
       updateProfile(data);
     },
     [updateProfile]

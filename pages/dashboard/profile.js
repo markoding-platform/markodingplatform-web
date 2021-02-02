@@ -71,7 +71,7 @@ const Profile = ({ user }) => {
         </div>
         <div className="inner-section pb-5">
           <ErrorBoundary FallbackComponent={ErrorFallback} onError={logError}>
-            <div styles={{ 'min-heigth': '500px' }}>
+            <div style={{ 'min-height': '500px' }}>
               {!errorGetSkilvulUser && Object.keys(skilvulData).length > 0 && (
                 <ProfileContainer
                   user={user}
