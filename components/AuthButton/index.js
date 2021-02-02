@@ -18,6 +18,7 @@ const AuthButton = () => {
   const idea = userIdea ? JSON.parse(userIdea) : {};
   const profile = userProfile ? JSON.parse(userProfile) : {};
   const ideaId = idea?.id || '';
+  const profileType = profile?.profileType || '';
 
   const account = canUseDOM ? JSON.parse(getCookie('userAccount')) : {};
   const { data } = useMySkilvulAccount();
@@ -35,11 +36,11 @@ const AuthButton = () => {
   };
 
   const isStudent = useMemo(() => {
-    if (profile.profileType === 'student') {
+    if (profileType === 'student') {
       return true;
     }
     return false;
-  }, [profile.profileType]);
+  }, [profileType]);
 
   const isAllowedRegisterIdea = useMemo(() => {
     if (isStudent && !ideaId) {
