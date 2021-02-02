@@ -16,7 +16,9 @@ import {
 } from './styles.module.scss';
 
 const CreateTeam = ({ user, isEditIdea }) => {
-  const userSchoolName = user.profile.schoolName;
+  const profile = user?.profile || {};
+  const userName = user?.name || '';
+  const userSchoolName = profile.schoolName || '';
   const [isShowModal, setIsShowModal] = useState(false);
   const {
     inputs: { teamIds = [] },
@@ -71,7 +73,7 @@ const CreateTeam = ({ user, isEditIdea }) => {
           <div>
             <ProfileCard
               title="Ketua Tim"
-              primaryText={user.name}
+              primaryText={userName}
               secondaryText={userSchoolName}
             />
           </div>
