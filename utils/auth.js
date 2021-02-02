@@ -18,7 +18,7 @@ export const Login = (context, token, data, backUrl = '/') => {
     const userIdea = idea ? JSON.stringify(idea) : null;
     const userAccount = user ? JSON.stringify(user) : null;
     console.log({ user });
-    const { externalId } = user;
+    const { externalId } = user || {};
     setCookie([
       { label: 'markodingToken', value: token, age: expCookie },
       { label: 'userName', value: user.name, age: expCookie },
