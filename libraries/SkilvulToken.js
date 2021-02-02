@@ -16,13 +16,11 @@ const SkilvulToken = async (ctx = null) => {
       }
       try {
         const res = await r.json();
-        const date = new Date(res.accessTokenExpiresAt * 1000);
-        const hours = date.getHours();
-        const second = hours * 60 * 60;
+        const expCookie = 86000;
         const data = {
           label: 'skilvulToken',
           value: res.accessToken,
-          age: second,
+          age: expCookie,
         };
         await setCookie([data]);
         return data;

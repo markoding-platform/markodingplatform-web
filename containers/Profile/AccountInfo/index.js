@@ -147,21 +147,23 @@ const AccountInfo = ({
 
   const onSubmit = useCallback(
     async (data) => {
-      const response = await SkilvulFetch(
-        `/api/skilvul?path=/users/${userXID}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'PUT',
-          body: JSON.stringify(data),
-        }
-      );
+      if (userXID && userXID !== 'null') {
+        const response = await SkilvulFetch(
+          `/api/skilvul?path=/users/${userXID}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            method: 'PUT',
+            body: JSON.stringify(data),
+          }
+        );
 
-      if (response.ok && response?.user) {
-        renderToast('Berhasil memperbarui profil');
-      } else {
-        renderToast('Gagal memperbarui profil', true);
+        if (response.ok && response?.user) {
+          renderToast('Berhasil memperbarui profil');
+        } else {
+          renderToast('Gagal memperbarui profil', true);
+        }
       }
     },
     [userXID]
