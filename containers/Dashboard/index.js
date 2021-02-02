@@ -36,7 +36,7 @@ const DashboardContainer = ({ user, email, skillBadges, skillPoint }) => {
   const account = canUseDOM ? JSON.parse(getCookie('userAccount')) : {};
   const mPoint = skillPoint + (account ? account.markodingPoint : 0);
 
-  const { profileType = '', schoolName } = user?.profile;
+  const { profileType = '', schoolName } = user?.profile || {};
   const { push } = useRouter();
 
   const { id } = ideaUser || {};

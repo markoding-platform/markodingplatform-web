@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+  useRef,
+} from 'react';
 import Link from 'next/link';
 import { string } from 'prop-types';
 import Card from 'react-bootstrap/Card';
@@ -71,7 +77,7 @@ const SignupForm = ({ registerAs }) => {
   const [cities, setCities] = useState([]);
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [schoolSearch, setSchoolSearch] = useState('');
+  const schoolsKeyword = useRef('');
 
   const getForm = useMemo(() => {
     if (isStudentSupporter) {
@@ -119,24 +125,31 @@ const SignupForm = ({ registerAs }) => {
     }
   };
 
-  const getSchools = async (search) => {
-    const schoolGradeId = await getValues('schoolGradeId');
-    const provinceId = await getValues('provinceId');
-    const cityId = await getValues('cityId');
-    const schoolRes = await SkilvulFetch(
-      `/api/schools?schoolGradeId=${schoolGradeId}&provinceId=${provinceId}&cityId=${cityId}&search=${search}`
-    );
-    if (schoolRes && schoolRes.schools) {
-      setSchools(schoolRes.schools.map(locationSchoolMap));
-    }
-  };
+  const getSchools = useCallback(
+    async (keyword = '') => {
+      const schoolGradeId = await getValues('schoolGradeId');
+      const provinceId = await getValues('provinceId');
+      const cityId = await getValues('cityId');
 
-  const onSearch = async (q) => {
-    if (schoolSearch !== q) {
-      await getSchools(q);
-      await setSchoolSearch(q);
-    }
-  };
+      const schoolRes = await SkilvulFetch(
+        `/api/schools?schoolGradeId=${schoolGradeId}&provinceId=${provinceId}&cityId=${cityId}&search=${keyword}`
+      );
+      if (schoolRes && schoolRes.schools) {
+        setSchools(schoolRes.schools.map(locationSchoolMap));
+      }
+    },
+    [getValues]
+  );
+
+  const onSearch = useCallback(
+    (q) => {
+      if (schoolsKeyword.current !== q) {
+        getSchools(q);
+        schoolsKeyword.current = q;
+      }
+    },
+    [getSchools]
+  );
 
   const handleSelectDropdown = (payload, key) => {
     switch (key) {
