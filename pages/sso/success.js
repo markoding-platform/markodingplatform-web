@@ -12,28 +12,29 @@ import skilvulAccountMap from '../../map/skilvulAccountMap';
 const updatePoint = async (token, data) => {
   const response = data;
   const { externalId } = response.user || {};
-
-  const skilvulInfo = await SkilvulFetch(
-    `/api/skilvul?path=/users/${externalId}`
-  );
-  if (skilvulInfo && skilvulInfo.user) {
-    const userInfo = skilvulAccountMap(skilvulInfo.user) || {};
-    const updated = await MarkodingFetch(
-      '/users/skilvul-point',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'PUT',
-        body: JSON.stringify({
-          skilvulPoint: userInfo.totalPoint,
-        }),
-      },
-      {},
-      token
+  if (externalId && externalId !== 'null') {
+    const skilvulInfo = await SkilvulFetch(
+      `/api/skilvul?path=/users/${externalId}`
     );
-    if (updated && updated.ok) {
-      response.user = { ...updated.result, externalId };
+    if (skilvulInfo && skilvulInfo.user) {
+      const userInfo = skilvulAccountMap(skilvulInfo.user) || {};
+      const updated = await MarkodingFetch(
+        '/users/skilvul-point',
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'PUT',
+          body: JSON.stringify({
+            skilvulPoint: userInfo.totalPoint,
+          }),
+        },
+        {},
+        token
+      );
+      if (updated && updated.ok) {
+        response.user = { ...updated.result, externalId };
+      }
     }
   }
   return response;

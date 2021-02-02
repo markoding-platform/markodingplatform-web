@@ -26,11 +26,13 @@ const Profile = ({ user }) => {
   }, []);
 
   const getUserSkilvul = useCallback(async () => {
-    const userSkilvul = await SkilvulFetch(
-      `/api/skilvul?path=/users/${userXID}`
-    );
-    if (userSkilvul && userSkilvul.user) {
-      setSkilvulData(userSkilvul.user);
+    if (userXID && userXID !== 'null') {
+      const userSkilvul = await SkilvulFetch(
+        `/api/skilvul?path=/users/${userXID}`
+      );
+      if (userSkilvul && userSkilvul.user) {
+        setSkilvulData(userSkilvul.user);
+      }
     }
   }, [userXID]);
 
