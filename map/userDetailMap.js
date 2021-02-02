@@ -1,5 +1,5 @@
 const userDetailMap = (user) => {
-  const { id, name, email, profile } = user;
+  const { id, name, email, profile = {} } = user;
   let bio = '';
   if (profile.profileType === 'teacher') {
     bio = `Guru di ${profile.schoolName}`;
