@@ -12,10 +12,12 @@ export const Login = (context, token, data, backUrl = '/') => {
     context.res.end();
   } else {
     const { user, profile, idea } = data;
+
     const expCookie = 86000;
     const userProfile = profile ? JSON.stringify(profile) : null;
     const userIdea = idea ? JSON.stringify(idea) : null;
     const userAccount = user ? JSON.stringify(user) : null;
+
     setCookie([
       { label: 'markodingToken', value: token, age: expCookie },
       { label: 'userName', value: user.name, age: expCookie },

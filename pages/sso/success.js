@@ -11,8 +11,10 @@ import skilvulAccountMap from '../../map/skilvulAccountMap';
 
 const updatePoint = async (token, data) => {
   const response = data;
+  const { externalId } = response.user || {};
+
   const skilvulInfo = await SkilvulFetch(
-    `/api/skilvul?path=/users/${response.user.externalId}`
+    `/api/skilvul?path=/users/${externalId}`
   );
   if (skilvulInfo && skilvulInfo.user) {
     const userInfo = skilvulAccountMap(skilvulInfo.user) || {};
@@ -31,7 +33,7 @@ const updatePoint = async (token, data) => {
       token
     );
     if (updated && updated.ok) {
-      response.user = updated.result;
+      response.user = { ...updated.result, externalId };
     }
   }
   return response;
