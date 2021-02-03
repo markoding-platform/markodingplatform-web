@@ -40,7 +40,7 @@ const Profile = ({ user }) => {
         `/api/skilvul?path=/users/${userXID}`
       );
       if (userSkilvul && userSkilvul.user) {
-        setSkilvulData(userSkilvul.user);
+        return setSkilvulData(userSkilvul.user);
       }
     }
     setErrorGetSkilvulUser(true);

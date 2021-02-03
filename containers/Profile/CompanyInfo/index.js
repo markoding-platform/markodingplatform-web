@@ -89,6 +89,7 @@ const CompanyInfo = ({ profileType, profile }) => {
       schoolTypeId,
       query = '',
     }) => {
+      if (!schoolGradeId && !currProvinceId) return;
       const schoolRes = await SkilvulFetch(
         `/api/schools?schoolGradeId=${schoolGradeId}&provinceId=${currProvinceId}&cityId=${cityId}&schoolTypeId=${schoolTypeId}&search=${query}`
       );
