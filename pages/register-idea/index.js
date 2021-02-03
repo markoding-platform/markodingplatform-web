@@ -24,7 +24,7 @@ const RegisterIdea = ({ user }) => {
     if (!id) {
       authenticate();
     }
-    if (profileType === 'teacher') {
+    if (profileType !== 'student') {
       router.push('/');
     }
   }, [authenticate, id, profileType, router]);

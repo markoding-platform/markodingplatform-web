@@ -18,8 +18,8 @@ const ProfileContainer = ({
   gender,
   userXID,
 }) => {
-  const { name, profile = {} } = user;
-  const { profileType } = profile;
+  const { name, profile = {} } = user || {};
+  const { profileType = {}, imageUrl, schoolName } = profile || {};
 
   return (
     <Row>
@@ -27,8 +27,8 @@ const ProfileContainer = ({
         <AccountMenu
           fName={name || ''}
           email={email || ''}
-          imageUrl={profile.imageUrl || ''}
-          schoolName={profile.schoolName || ''}
+          imageUrl={imageUrl || ''}
+          schoolName={schoolName || ''}
         />
       </Col>
       <Col lg="9">

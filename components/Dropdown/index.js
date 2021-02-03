@@ -70,22 +70,22 @@ const DropdownComponent = ({
     setKeyword(value);
   };
 
-  const onSearch = useCallback(() => {
-    if (!keyword) return;
-    if (withHardSearch) {
-      onHardSearch(keyword.toLowerCase());
-    } else {
-      const result = dropdownItem.filter((item) => {
-        return item.name.toLowerCase().match(keyword.toLowerCase());
-      });
-      setSearchedItem(result);
-    }
-  }, [dropdownItem, keyword]);
+  const debouncedKeyword = useDebounce(keyword, 500);
 
-  const debouncedKeyword = useDebounce(keyword, 200);
+  const onSearch = useCallback(() => {
+    if (!debouncedKeyword) return;
+    if (withHardSearch) {
+      return onHardSearch(debouncedKeyword.toLowerCase());
+    }
+    const result = dropdownItem.filter((item) => {
+      return item.name.toLowerCase().match(debouncedKeyword.toLowerCase());
+    });
+    setSearchedItem(result);
+  }, [debouncedKeyword, dropdownItem, onHardSearch, withHardSearch]);
+
   useEffect(() => {
     if (debouncedKeyword) {
-      onSearch(debouncedKeyword);
+      onSearch();
     }
   }, [debouncedKeyword, onSearch]);
 
@@ -111,16 +111,18 @@ const DropdownComponent = ({
               />
             </div>
           )}
-          {items.map((item, idx) => (
-            <Dropdown.Item
-              // eslint-disable-next-line react/no-array-index-key
-              key={idx}
-              className={styDropdownItem}
-              onClick={() => handleOnClick(item)}
-            >
-              {item.name}
-            </Dropdown.Item>
-          ))}
+          <div key={dropdownItem?.[0]?.name}>
+            {items.map((item, idx) => (
+              <Dropdown.Item
+                // eslint-disable-next-line react/no-array-index-key
+                key={idx}
+                className={styDropdownItem}
+                onClick={() => handleOnClick(item)}
+              >
+                {item.name}
+              </Dropdown.Item>
+            ))}
+          </div>
         </>
       </Dropdown.Menu>
     </Dropdown>
