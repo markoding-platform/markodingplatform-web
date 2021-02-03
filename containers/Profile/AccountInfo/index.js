@@ -75,7 +75,7 @@ const AccountInfo = ({
   const [isShowModal, setIsShowModal] = useState(false);
 
   const [cities, setCities] = useState([]);
-  console.log({ cities, cityList });
+
   const account = control?.defaultValuesRef?.current;
 
   const provinceId = getValues('provinceId');
