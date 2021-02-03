@@ -130,7 +130,7 @@ const SignupForm = ({ registerAs }) => {
       const schoolGradeId = await getValues('schoolGradeId');
       const provinceId = await getValues('provinceId');
       const cityId = await getValues('cityId');
-
+      if (!schoolGradeId && !provinceId) return;
       const schoolRes = await SkilvulFetch(
         `/api/schools?schoolGradeId=${schoolGradeId}&provinceId=${provinceId}&cityId=${cityId}&search=${keyword}`
       );
