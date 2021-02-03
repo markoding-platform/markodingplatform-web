@@ -15,7 +15,6 @@ const courseApi = nextConnect()
         query: { limit, offset },
         headers: { authorization },
       } = req;
-
       const response = await fetch(
         `${process.env.SKILVUL_API_URL}/products?limit=${limit}&offset=${offset}`,
         {
