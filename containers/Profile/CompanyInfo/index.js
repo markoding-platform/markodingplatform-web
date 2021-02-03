@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useRef } from 'react';
+import { useCallback, useState, useEffect, useRef, arrayOf, memo } from 'react';
 import { useForm } from 'react-hook-form';
 import { shape, string } from 'prop-types';
 import { toast } from 'react-toastify';
@@ -29,7 +29,7 @@ import {
   cancelBtn,
 } from '../styles.module.scss';
 
-const CompanyInfo = ({ profileType, profile }) => {
+const CompanyInfo = ({ profileType, profile, provinces, cityList }) => {
   const router = useRouter();
   const {
     register,
@@ -46,17 +46,9 @@ const CompanyInfo = ({ profileType, profile }) => {
   const account = control?.defaultValuesRef?.current;
   const [schools, setSchools] = useState([]);
   const [schoolTypes, setSchoolTypes] = useState([]);
-  const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(false);
   const schoolsKeyword = useRef('');
-
-  const getProvinces = useCallback(async () => {
-    const provResult = await SkilvulFetch('/api/skilvul?path=/provinces');
-    if (provResult && provResult.provinces) {
-      setProvinces(provResult.provinces.map(locationSchoolMap));
-    }
-  }, []);
 
   const getCities = useCallback(async (currentProvinceId) => {
     const cityResult = await SkilvulFetch(
@@ -258,16 +250,6 @@ const CompanyInfo = ({ profileType, profile }) => {
       provinceName,
       cityName,
     } = account;
-    getProvinces();
-    getSchoolGrades();
-    getSchoolTypes();
-    getSchools({
-      schoolGradeId,
-      currProvinceId: provinceId,
-      cityId,
-      schoolTypeId,
-    });
-    getCities(provinceId);
     register('provinceId', {
       required: false,
       defaultVal: provinceId,
@@ -315,13 +297,17 @@ const CompanyInfo = ({ profileType, profile }) => {
   }, [
     account,
     getCities,
-    getProvinces,
     getSchoolGrades,
     getSchoolTypes,
     getSchools,
     profileType,
     register,
   ]);
+
+  useEffect(() => {
+    getSchoolGrades();
+    getSchoolTypes();
+  }, [getSchoolGrades, getSchoolTypes]);
 
   return (
     <Panel title="Data Instansi">
@@ -339,7 +325,7 @@ const CompanyInfo = ({ profileType, profile }) => {
               dropdownItems = provinces;
               break;
             case 'cityName':
-              dropdownItems = cities;
+              dropdownItems = cities.length ? cities : cityList;
               break;
             case 'schoolName':
               dropdownItems = schools;
@@ -412,5 +398,7 @@ const CompanyInfo = ({ profileType, profile }) => {
 CompanyInfo.propTypes = {
   profileType: string.isRequired,
   profile: shape({}).isRequired,
+  provinces: arrayOf(shape({})).isRequired,
+  cityList: arrayOf(shape({})).isRequired,
 };
-export default CompanyInfo;
+export default memo(CompanyInfo);

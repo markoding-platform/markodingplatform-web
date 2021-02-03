@@ -28,7 +28,7 @@ const SkilvulFetch = async (
     ...otherOptions,
   }).then(async (r) => {
     let result = await r.json();
-    if (result.status !== 200 && retry === 0) {
+    if ((result.status === 400 || result.status === 401) && retry === 0) {
       await clearSkilvulToken();
       const newToken = await SkilvulToken(ctx);
       return SkilvulFetch(url, options, ctx, newToken, 1);

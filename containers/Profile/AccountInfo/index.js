@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, memo } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-import { shape, string } from 'prop-types';
+import { arrayOf, shape, string } from 'prop-types';
 
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
@@ -15,7 +15,7 @@ import DropdownComponent from 'components/Dropdown';
 import ModalComponent from 'components/Modal';
 // import DatePickerComponent from 'components/DatePicker';
 import SkilvulFetch from 'libraries/SkilvulFetch';
-import { locationSchoolMap, professionsMap } from 'map/dropdownMap';
+import { locationSchoolMap } from 'map/dropdownMap';
 import DynamicPasswordModalContainer from '../PasswordModal';
 import {
   styLabel,
@@ -43,6 +43,9 @@ const AccountInfo = ({
   defaultgender,
   email,
   city,
+  provinces,
+  professions,
+  cityList,
 }) => {
   const router = useRouter();
   const {
@@ -71,9 +74,8 @@ const AccountInfo = ({
 
   const [isShowModal, setIsShowModal] = useState(false);
 
-  const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
-  const [professions, setProfessions] = useState([]);
+
   const account = control?.defaultValuesRef?.current;
 
   const provinceId = getValues('provinceId');
@@ -91,13 +93,6 @@ const AccountInfo = ({
   //   setValue('birthDate', new Date(date).toISOString());
   // };
 
-  const getProvinces = useCallback(async () => {
-    const provResult = await SkilvulFetch('/api/skilvul?path=/provinces');
-    if (provResult && provResult.provinces) {
-      setProvinces(provResult.provinces.map(locationSchoolMap));
-    }
-  }, []);
-
   const getCities = useCallback(async () => {
     const currProvinceId = getValues('provinceId');
     const cityResult = await SkilvulFetch(
@@ -107,15 +102,6 @@ const AccountInfo = ({
       setCities(cityResult.cities.map(locationSchoolMap));
     }
   }, [getValues]);
-
-  const getProfessions = useCallback(async () => {
-    const professionResult = await SkilvulFetch(
-      `/api/skilvul?path=/professions`
-    );
-    if (professionResult && professionResult.professions) {
-      setProfessions(professionResult.professions.map(professionsMap));
-    }
-  }, []);
 
   const handleSelectProvince = (payload) => {
     setValue('provinceId', payload.key);
@@ -168,14 +154,6 @@ const AccountInfo = ({
     },
     [userXID]
   );
-
-  useEffect(() => {
-    getProvinces();
-    getProfessions();
-    if (provinceId) {
-      getCities();
-    }
-  }, [getCities, getProfessions, getProvinces, provinceId]);
 
   useEffect(() => {
     const { cityId, cityName, provinceName, gender } = account || {};
@@ -290,7 +268,7 @@ const AccountInfo = ({
               <div className={isErrorCityField && dropdownError}>
                 <DropdownComponent
                   onSelected={handleSelectCity}
-                  dropdownItem={cities}
+                  dropdownItem={cities.length ? cities : cityList}
                   defaultVal={defaultCityName}
                   name="cityId"
                 />
@@ -349,6 +327,9 @@ AccountInfo.propTypes = {
   defaultgender: string.isRequired,
   email: string.isRequired,
   city: shape({ id: string, name: string }).isRequired,
+  provinces: arrayOf(shape({})).isRequired,
+  professions: arrayOf(shape({})).isRequired,
+  cityList: arrayOf(shape({})).isRequired,
 };
 
-export default AccountInfo;
+export default memo(AccountInfo);
