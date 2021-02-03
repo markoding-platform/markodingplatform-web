@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { shape, string } from 'prop-types';
 import { toast } from 'react-toastify';
@@ -49,6 +49,7 @@ const CompanyInfo = ({ profileType, profile }) => {
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(false);
+  const schoolsKeyword = useRef('');
 
   const getProvinces = useCallback(async () => {
     const provResult = await SkilvulFetch('/api/skilvul?path=/provinces');
@@ -81,9 +82,15 @@ const CompanyInfo = ({ profileType, profile }) => {
   }, []);
 
   const getSchools = useCallback(
-    async ({ schoolGradeId, currProvinceId, cityId, schoolTypeId }) => {
+    async ({
+      schoolGradeId,
+      currProvinceId,
+      cityId,
+      schoolTypeId,
+      query = '',
+    }) => {
       const schoolRes = await SkilvulFetch(
-        `/api/schools?schoolGradeId=${schoolGradeId}&provinceId=${currProvinceId}&cityId=${cityId}&schoolTypeId=${schoolTypeId}`
+        `/api/schools?schoolGradeId=${schoolGradeId}&provinceId=${currProvinceId}&cityId=${cityId}&schoolTypeId=${schoolTypeId}&search=${query}`
       );
       if (schoolRes && schoolRes.schools) {
         setSchools(schoolRes.schools.map(locationSchoolMap));
@@ -99,6 +106,33 @@ const CompanyInfo = ({ profileType, profile }) => {
 
     getCities(key);
   };
+
+  const onSearch = useCallback(
+    (q) => {
+      if (schoolsKeyword.current !== q) {
+        const schoolGradeId =
+          getValues('schoolGradeId') || account.schoolGradeId;
+        const currProvinceId = getValues('provinceId') || account.provinceId;
+        const schoolTypeId = getValues('schoolTypeId') || account.schoolTypeId;
+        const cityId = getValues('cityId') || account.schoolTypeId;
+        getSchools({
+          schoolGradeId,
+          currProvinceId,
+          cityId,
+          schoolTypeId,
+          query: q,
+        });
+        schoolsKeyword.current = q;
+      }
+    },
+    [
+      account.provinceId,
+      account.schoolGradeId,
+      account.schoolTypeId,
+      getSchools,
+      getValues,
+    ]
+  );
 
   const handleSelectCity = (payload) => {
     const { key, name } = payload;
@@ -220,6 +254,8 @@ const CompanyInfo = ({ profileType, profile }) => {
       schoolId,
       schoolTypeId,
       schoolTypeName,
+      provinceName,
+      cityName,
     } = account;
     getProvinces();
     getSchoolGrades();
@@ -231,6 +267,22 @@ const CompanyInfo = ({ profileType, profile }) => {
       schoolTypeId,
     });
     getCities(provinceId);
+    register('provinceId', {
+      required: false,
+      defaultVal: provinceId,
+    });
+    register('provinceName', {
+      required: false,
+      defaultVal: provinceName,
+    });
+    register('cityName', {
+      required: false,
+      defaultVal: cityName,
+    });
+    register('cityId', {
+      required: false,
+      defaultVal: cityId,
+    });
     register('schoolGradeName', {
       required: false,
       defaultVal: schoolGradeName,
@@ -317,8 +369,12 @@ const CompanyInfo = ({ profileType, profile }) => {
                   dropdownItem={dropdownItems}
                   defaultVal={account[item.key]}
                   withSearch={item.key === 'schoolName'}
+                  withHardSearch={item.key === 'schoolName'}
                   onSelected={(selected) => {
                     handleSelectDropdown(selected, item.key);
+                  }}
+                  onHardSearch={(q) => {
+                    onSearch(q);
                   }}
                 />
               )}

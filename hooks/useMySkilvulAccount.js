@@ -7,7 +7,7 @@ import skilvulAccountMap from '../map/skilvulAccountMap';
 const useMySkilvulAccount = () => {
   const userXID = canUseDOM && getCookie('userXID');
   const { data, error } = useSWR(
-    `/api/skilvul?path=/users/${userXID}`,
+    userXID ? `/api/skilvul?path=/users/${userXID}` : null,
     SkilvulFetch
   );
   const user = skilvulAccountMap(data?.user) || {};

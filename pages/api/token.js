@@ -1,6 +1,8 @@
 import nextConnect from 'next-connect';
 import fs from 'fs';
-import moment from 'moment';
+import dayjs from 'dayjs';
+
+dayjs.locale('id');
 
 const dotEnvResult = require('dotenv').config();
 
@@ -62,9 +64,9 @@ const tokenApi = nextConnect()
     const tokenFile = fs.readFileSync('skilvul.token.json', 'utf8');
     if (tokenFile !== '') {
       const obj = JSON.parse(tokenFile);
-      const now = moment(new Date());
-      const end = moment(obj.exp);
-      const duration = now.diff(end, 'hours');
+      const now = dayjs(new Date());
+      const end = dayjs(obj.exp);
+      const duration = now.diff(end, 'hour');
       if (duration > 12) {
         // expired call refreshToken
         const resTokenRef = getRefreshToken(obj.refreshToken);
@@ -83,7 +85,7 @@ const tokenApi = nextConnect()
             const data = {
               accessToken: resToken.accessToken,
               refreshToken: resToken.refreshToken,
-              exp: moment(new Date()),
+              exp: dayjs(new Date()),
             };
             writeFile(data);
             res.status(200).json(data);
@@ -100,7 +102,7 @@ const tokenApi = nextConnect()
         const data = {
           accessToken: resToken.accessToken,
           refreshToken: resToken.refreshToken,
-          exp: moment(new Date()),
+          exp: dayjs(new Date()),
         };
         writeFile(data);
         res.status(200).json(data);

@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { shape } from 'prop-types';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
+import Loading from 'components/Loading';
 import SkilvulFetch from 'libraries/SkilvulFetch';
 import getCookie from 'utils/getCookie';
 import withAuthSync from 'hoc/withAuthSync';
@@ -15,33 +18,46 @@ import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import { homeContent } from 'styles/home.module.scss';
 
 const Profile = ({ user }) => {
+  const { push } = useRouter();
   const { logError } = useErrorHandler();
   const id = user?.id || '';
+  const profile = user.profile || {};
   const userXID = canUseDOM && getCookie('userXID');
+  const [errorGetSkilvulUser, setErrorGetSkilvulUser] = useState(false);
 
-  const [skilvulData, setSkilvulData] = useState();
+  const [skilvulData, setSkilvulData] = useState({});
 
   const authenticate = useCallback(async () => {
     await SSO();
   }, []);
 
+  const renderErrorToast = (errMsg) =>
+    toast.error(<p className="m-0 pl-3">{errMsg}</p>, { autoClose: 5000 });
+
   const getUserSkilvul = useCallback(async () => {
-    const userSkilvul = await SkilvulFetch(
-      `/api/skilvul?path=/users/${userXID}`
-    );
-    if (userSkilvul && userSkilvul.user) {
-      setSkilvulData(userSkilvul.user);
+    if (userXID && userXID !== 'null') {
+      const userSkilvul = await SkilvulFetch(
+        `/api/skilvul?path=/users/${userXID}`
+      );
+      if (userSkilvul && userSkilvul.user) {
+        setSkilvulData(userSkilvul.user);
+      }
     }
+    setErrorGetSkilvulUser(true);
+    renderErrorToast('Ooops!, terjadi kesalahan. Mohon coba lagi');
   }, [userXID]);
 
   useEffect(() => {
     if (!id) {
       return authenticate();
     }
+    if (!profile?.profileType) {
+      return push('/signup');
+    }
     if (userXID) {
       getUserSkilvul();
     }
-  }, [authenticate, getUserSkilvul, id, userXID]);
+  }, [authenticate, getUserSkilvul, id, profile?.profileType, push, userXID]);
 
   if (!id) {
     return null;
@@ -55,22 +71,24 @@ const Profile = ({ user }) => {
         </div>
         <div className="inner-section pb-5">
           <ErrorBoundary FallbackComponent={ErrorFallback} onError={logError}>
-            {skilvulData ? (
-              <ProfileContainer
-                user={user}
-                firstName={skilvulData.firstName || ''}
-                lastName={skilvulData.lastName || ''}
-                email={skilvulData.email || ''}
-                userXID={skilvulData.id}
-                gender={skilvulData.gender || ''}
-                birthDate={skilvulData.birthDate || ''}
-                profession={skilvulData.profession || ''}
-                province={skilvulData.province || {}}
-                city={skilvulData.city || {}}
-              />
-            ) : (
-              <></>
-            )}
+            <div style={{ 'min-height': '500px' }}>
+              {!errorGetSkilvulUser && Object.keys(skilvulData).length > 0 && (
+                <ProfileContainer
+                  user={user}
+                  firstName={skilvulData.firstName || ''}
+                  lastName={skilvulData.lastName || ''}
+                  email={skilvulData.email || ''}
+                  userXID={skilvulData.id}
+                  gender={skilvulData.gender || ''}
+                  birthDate={skilvulData.birthDate || ''}
+                  profession={skilvulData.profession || ''}
+                  province={skilvulData.province || {}}
+                  city={skilvulData.city || {}}
+                />
+              )}
+              {!errorGetSkilvulUser &&
+                Object.keys(skilvulData).length === 0 && <Loading />}
+            </div>
           </ErrorBoundary>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import nextConnect from 'next-connect';
+import { checkAuthorization } from 'middleware/authorization';
 
 const dotEnvResult = require('dotenv').config();
 
@@ -7,6 +8,7 @@ if (dotEnvResult.error) {
 }
 
 const skilvulApi = nextConnect()
+  .use(checkAuthorization)
   .get(async (req, res) => {
     try {
       const {
