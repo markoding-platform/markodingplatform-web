@@ -18,6 +18,7 @@ const SkilvulFetch = async (
   if (customToken && customToken.value) {
     skilvulToken = customToken.value;
   }
+
   const { headers, ...otherOptions } = options || {};
   return fetch(process.env.WEB_URL + url, {
     headers: {
@@ -26,14 +27,13 @@ const SkilvulFetch = async (
     },
     ...otherOptions,
   }).then(async (r) => {
-    if (r.status !== 200 && retry === 0) {
+    let result = await r.json();
+    if (result.status !== 200 && retry === 0) {
       await clearSkilvulToken();
       const newToken = await SkilvulToken(ctx);
       return SkilvulFetch(url, options, ctx, newToken, 1);
     }
-    let result;
     try {
-      result = await r.json();
       if (
         result.error &&
         result.error === 'ACCESS_TOKEN_NOT_VALID' &&
