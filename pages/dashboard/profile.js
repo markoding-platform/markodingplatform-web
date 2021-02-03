@@ -21,7 +21,7 @@ const Profile = ({ user }) => {
   const { push } = useRouter();
   const { logError } = useErrorHandler();
   const id = user?.id || '';
-  const profile = user.profile || {};
+  const profile = user?.profile || {};
   const userXID = canUseDOM && getCookie('userXID');
   const [errorGetSkilvulUser, setErrorGetSkilvulUser] = useState(false);
 
