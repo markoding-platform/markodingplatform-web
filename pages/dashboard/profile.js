@@ -21,7 +21,7 @@ const Profile = ({ user }) => {
   const { push } = useRouter();
   const { logError } = useErrorHandler();
   const id = user?.id || '';
-  const profile = user.profile || {};
+  const profile = user?.profile || {};
   const userXID = canUseDOM && getCookie('userXID');
   const [errorGetSkilvulUser, setErrorGetSkilvulUser] = useState(false);
 
@@ -40,7 +40,7 @@ const Profile = ({ user }) => {
         `/api/skilvul?path=/users/${userXID}`
       );
       if (userSkilvul && userSkilvul.user) {
-        setSkilvulData(userSkilvul.user);
+        return setSkilvulData(userSkilvul.user);
       }
     }
     setErrorGetSkilvulUser(true);
