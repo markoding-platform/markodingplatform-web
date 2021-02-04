@@ -1,6 +1,6 @@
-import { useCallback, useState, useEffect, useRef, arrayOf, memo } from 'react';
+import { useCallback, useState, useEffect, useRef, memo } from 'react';
 import { useForm } from 'react-hook-form';
-import { shape, string } from 'prop-types';
+import { shape, string, arrayOf } from 'prop-types';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
@@ -398,7 +398,7 @@ const CompanyInfo = ({ profileType, profile, provinces, cityList }) => {
 CompanyInfo.propTypes = {
   profileType: string.isRequired,
   profile: shape({}).isRequired,
-  provinces: arrayOf(shape({})).isRequired,
-  cityList: arrayOf(shape({})).isRequired,
+  provinces: arrayOf(shape({ id: string, name: string })).isRequired,
+  cityList: arrayOf(shape({ id: string, name: string })).isRequired,
 };
 export default memo(CompanyInfo);
