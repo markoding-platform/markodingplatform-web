@@ -327,9 +327,9 @@ AccountInfo.propTypes = {
   defaultgender: string.isRequired,
   email: string.isRequired,
   city: shape({ id: string, name: string }).isRequired,
-  provinces: arrayOf(shape({})).isRequired,
-  professions: arrayOf(shape({})).isRequired,
-  cityList: arrayOf(shape({})).isRequired,
+  provinces: arrayOf(shape({ id: string, name: string })).isRequired,
+  professions: arrayOf(shape({ id: string, name: string })).isRequired,
+  cityList: arrayOf(shape({ id: string, name: string })).isRequired,
 };
 
 export default memo(AccountInfo);

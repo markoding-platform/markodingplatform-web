@@ -115,8 +115,8 @@ ProfileContainer.propTypes = {
   birthDate: string.isRequired,
   gender: string.isRequired,
   profession: string.isRequired,
-  province: string.isRequired,
-  city: string.isRequired,
+  province: shape({}).isRequired,
+  city: shape({}).isRequired,
   userXID: string.isRequired,
 };
 

@@ -31,7 +31,15 @@ const CreateTeam = ({ user, isEditIdea }) => {
     setIsShowModal((prevState) => !prevState);
   };
 
+  const isAlreadyInTeam = (studentId) => {
+    return teamIds.includes(studentId);
+  };
+
   const handleSelectStudent = (student) => {
+    if (isAlreadyInTeam(student.id)) {
+      handleOpenModal();
+      return;
+    }
     setInputs({ teamIds: [...teamIds, student?.id] });
     const newMember = {
       userId: student.id,
