@@ -30,13 +30,14 @@ const AlertComponent = ({ variant, children, open, onClose }) => {
 };
 
 AlertComponent.propTypes = {
-  open: bool.isRequired,
+  open: bool,
   variant: string,
   children: node.isRequired,
   onClose: func,
 };
 
 AlertComponent.defaultProps = {
+  open: false,
   variant: 'success', // primary | secondary | warning | info
   onClose: () => {},
 };
