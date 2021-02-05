@@ -7,6 +7,7 @@ import { Login } from 'utils/auth';
 import Loading from 'components/Loading';
 import getCookie from 'utils/getCookie';
 import SkilvulFetch from 'libraries/SkilvulFetch';
+import localforage from 'localforage';
 import skilvulAccountMap from '../../map/skilvulAccountMap';
 
 const updatePoint = async (token, data) => {
@@ -40,6 +41,24 @@ const updatePoint = async (token, data) => {
   return response;
 };
 
+const updateFCMToken = async (token) => {
+  const fcmToken = await localforage.getItem('FCM_TOKEN');
+  await MarkodingFetch(
+    '/users/fcm-token',
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
+      body: JSON.stringify({
+        fcmToken,
+      }),
+    },
+    {},
+    token
+  );
+};
+
 const SsoSuccess = ({ sso, sig }) => {
   const getToken = async () => {
     const response = await MarkodingFetch('/auth/finish', {
@@ -60,6 +79,7 @@ const SsoSuccess = ({ sso, sig }) => {
         backPath = '/signup';
       }
       const updatedData = await updatePoint(token, data);
+      await updateFCMToken(token);
       await Login({}, token, updatedData, backPath);
     } else {
       const message = response.message || 'Login gagal diproses';

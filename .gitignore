@@ -39,5 +39,7 @@ public/sw.js
 public/sw.js.map
 public/workbox-*.*
 
-package-lock.json
+/skilvul.token.json
 skilvul.token.json
+
+package-lock.json

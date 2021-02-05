@@ -6,7 +6,7 @@ export default function questionMap(data) {
   const { id, content, updatedAt, user, comments, likes, channel } = data;
   return {
     id,
-    imageUrl: user?.image || '/assets/avatar-min.png',
+    imageUrl: user?.imageUrl || '/assets/avatar-min.png',
     comment: content,
     userId: user?.id || null,
     name: user?.name || '-',

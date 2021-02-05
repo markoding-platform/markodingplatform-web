@@ -6,7 +6,7 @@ export default function questionMap(data) {
   const { id, content, updatedAt, user } = data;
   return {
     id,
-    avatarUrl: user?.image || '/assets/avatar-min.png',
+    avatarUrl: user?.imageUrl || '/assets/avatar-min.png',
     payload: {
       text: content,
     },
