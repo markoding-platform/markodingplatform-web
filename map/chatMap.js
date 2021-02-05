@@ -6,7 +6,7 @@ export default function chatMap(data) {
   const { id, content, type, updatedAt, user } = data;
   return {
     id,
-    avatarUrl: user?.image || '/assets/avatar-min.png',
+    avatarUrl: user?.imageUrl || '/assets/avatar-min.png',
     name: user?.name || '-',
     time: dayjs(updatedAt).format('DD MMM YYYY, HH:mm:ss'),
     payload: {
