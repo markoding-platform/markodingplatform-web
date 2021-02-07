@@ -1,11 +1,14 @@
 import React from 'react';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
+
 import Media from 'react-bootstrap/Media';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
+
 import number from 'utils/number';
-import Link from 'next/link';
+import Avatar from 'svgs/avatar.svg';
 import { Card } from 'react-bootstrap';
 import styles from './styles.module.scss';
 
@@ -73,10 +76,11 @@ ForumCard.defaultProps = {
   commentCount: 0,
   link: '/',
   onLike: () => {},
+  imageUrl: Avatar,
 };
 
 ForumCard.propTypes = {
-  imageUrl: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
   userId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   comment: PropTypes.string.isRequired,
