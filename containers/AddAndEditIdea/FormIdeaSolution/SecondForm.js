@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { bool } from 'prop-types';
 
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { toast } from 'react-toastify';
 import Form from 'react-bootstrap/Form';
 
@@ -14,10 +15,20 @@ import TextField from 'components/TextField';
 import { useIdeaFormContext } from 'components/context/IdeaContext';
 import UploadComponent from '../Upload';
 import { WORKBOOK_IDEA_URL } from '../../constants';
-import { textArea, styButton } from './styles.module.scss';
+import { textArea, styButton, boxWarning } from './styles.module.scss';
 
 const expCookie = 86000;
 
+const BoxWarningPhotoVideo = () => (
+  <Alert variant="warning">
+    <div className={boxWarning}>
+      <span>
+        Foto/Video yang di-upload harus merupakan murni karya peserta sendiri,
+        dan bukan hasil mengambil dari Google atau Youtube milik orang lain.
+      </span>
+    </div>
+  </Alert>
+);
 const SecondFormIdeaSolution = ({ isEditIdea }) => {
   const { push, query, back } = useRouter();
   const {
@@ -225,6 +236,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
           />
         </Panel>
         <Panel title="Link Video">
+          <BoxWarningPhotoVideo />
           <TextField
             placeholder="Sertakan link video pitch tentang ide solusimu"
             defaultVal={ideaState.solutionPitchUrl}
@@ -236,6 +248,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
           </Form.Text>
         </Panel>
         <Panel title="Foto Ide Solusi">
+          <BoxWarningPhotoVideo />
           <p className="text-muted mb-2">
             Masukan foto ide solusi berdasarkan template yang ada di Workbook
             Mencari Ide - Menggambar Solusi, yang bisa di unduh di &nbsp;
