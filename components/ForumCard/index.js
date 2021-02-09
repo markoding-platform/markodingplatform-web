@@ -33,7 +33,7 @@ const ForumCard = (props) => {
           <Link href={`/user/${userId}`}>
             <a href={`/user/${userId}`}>
               <Image
-                src={imageUrl}
+                src={imageUrl || Avatar}
                 alt={name}
                 width={52}
                 height={52}

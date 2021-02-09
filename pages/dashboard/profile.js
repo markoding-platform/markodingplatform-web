@@ -14,6 +14,7 @@ import ProfileContainer from 'containers/Profile';
 import useErrorHandler from 'hooks/useErrorHandler';
 import ErrorFallback from 'components/ErrorFallback';
 import Layout from 'components/Layout';
+import useUserDetail from 'hooks/useUserDetail';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import { homeContent } from 'styles/home.module.scss';
 
@@ -23,6 +24,11 @@ const Profile = ({ user }) => {
   const id = user?.id || '';
   const profile = user?.profile || {};
   const userXID = canUseDOM && getCookie('userXID');
+  const { data, isLoading } = useUserDetail({
+    url: `/users/detail/${id}`,
+    isSkip: !id,
+  });
+
   const [errorGetSkilvulUser, setErrorGetSkilvulUser] = useState(false);
 
   const [skilvulData, setSkilvulData] = useState({});
@@ -72,20 +78,23 @@ const Profile = ({ user }) => {
         <div className="inner-section pb-5">
           <ErrorBoundary FallbackComponent={ErrorFallback} onError={logError}>
             <div style={{ 'min-height': '500px' }}>
-              {!errorGetSkilvulUser && Object.keys(skilvulData).length > 0 && (
-                <ProfileContainer
-                  user={user}
-                  firstName={skilvulData.firstName || ''}
-                  lastName={skilvulData.lastName || ''}
-                  email={skilvulData.email || ''}
-                  userXID={skilvulData.id}
-                  gender={skilvulData.gender || ''}
-                  birthDate={skilvulData.birthDate || ''}
-                  profession={skilvulData.profession || ''}
-                  province={skilvulData.province || {}}
-                  city={skilvulData.city || {}}
-                />
-              )}
+              {!isLoading &&
+                !errorGetSkilvulUser &&
+                Object.keys(skilvulData).length > 0 && (
+                  <ProfileContainer
+                    user={user}
+                    firstName={skilvulData.firstName || ''}
+                    lastName={skilvulData.lastName || ''}
+                    email={skilvulData.email || ''}
+                    userXID={skilvulData.id}
+                    gender={skilvulData.gender || ''}
+                    birthDate={skilvulData.birthDate || ''}
+                    profession={skilvulData.profession || ''}
+                    province={skilvulData.province || {}}
+                    city={skilvulData.city || {}}
+                    imageUrl={data.imageUrl}
+                  />
+                )}
               {!errorGetSkilvulUser &&
                 Object.keys(skilvulData).length === 0 && <Loading />}
             </div>

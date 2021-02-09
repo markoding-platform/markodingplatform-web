@@ -14,12 +14,18 @@ import Layout from 'components/Layout';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import DashboardContainer from 'containers/Dashboard';
 import { homeContent } from 'styles/home.module.scss';
+import useUserDetail from 'hooks/useUserDetail';
 import skilvulAccountMap from '../../map/skilvulAccountMap';
 
 const Dashboard = ({ user }) => {
   const { logError } = useErrorHandler();
+
   const id = user?.id || '';
   const userXID = canUseDOM && getCookie('userXID');
+  const { data, isLoading } = useUserDetail({
+    url: `/users/detail/${id}`,
+    isSkip: !id,
+  });
 
   const [skilvulData, setSkilvulData] = useState({});
 
@@ -50,7 +56,6 @@ const Dashboard = ({ user }) => {
   if (!id) {
     return null;
   }
-
   return (
     <Layout activeMenu="/idea">
       <div className={homeContent}>
@@ -59,12 +64,18 @@ const Dashboard = ({ user }) => {
         </div>
         <div className="inner-section pb-5">
           <ErrorBoundary FallbackComponent={ErrorFallback} onError={logError}>
-            <DashboardContainer
-              user={user}
-              email={skilvulData.email || ''}
-              skilsBadges={skilvulData.badges || []}
-              skillPoint={skilvulData.totalPoint || 0}
-            />
+            {!isLoading && Object.keys(skilvulData).length > 0 && (
+              <DashboardContainer
+                user={user}
+                name={data.name}
+                bio={data.bio}
+                email={data.email || ''}
+                skilsBadges={skilvulData.badges || []}
+                skillPoint={skilvulData.totalPoint || 0}
+                markodingPoint={data.markodingPoint || 0}
+                imageUrl={data.imageUrl}
+              />
+            )}
           </ErrorBoundary>
         </div>
       </div>

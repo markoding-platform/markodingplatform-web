@@ -7,6 +7,7 @@ import getCookie from 'utils/getCookie';
 import { Logout, SSO } from 'utils/auth';
 import Image from 'next/image';
 import canUseDOM from 'utils/canUseDOM';
+import Avatar from 'svgs/avatar.svg';
 import useMySkilvulAccount from 'hooks/useMySkilvulAccount';
 import number from 'utils/number';
 
@@ -74,7 +75,7 @@ const AuthButton = () => {
           >
             <div className={styles.accountImage}>
               <Image
-                src="/assets/avatar-min.png"
+                src={Avatar}
                 width={32}
                 height={32}
                 layout="fixed"
@@ -90,7 +91,7 @@ const AuthButton = () => {
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="mr-2">
                       <Image
-                        src="/assets/avatar-min.png"
+                        src={Avatar}
                         width={56}
                         height={56}
                         layout="fixed"

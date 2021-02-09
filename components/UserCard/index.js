@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Image from 'next/image';
+import Avatar from 'svgs/avatar.svg';
 import styles from './styles.module.scss';
 
 const UserCard = (props) => {
@@ -11,7 +12,7 @@ const UserCard = (props) => {
       <a href={link} className={styles.link}>
         <div className={styles.card}>
           <Image
-            src={imageUrl}
+            src={imageUrl || Avatar}
             alt={name}
             width={115}
             height={115}
