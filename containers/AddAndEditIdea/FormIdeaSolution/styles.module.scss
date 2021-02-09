@@ -73,3 +73,14 @@
 .styButton {
   font-size: 13px;
 }
+
+.boxWarning {
+  display: flex;
+  &::before {
+    content: '!';
+    font: bold 43px/43px serif;
+    margin-right: 1rem;
+    display: block;
+    float: left;
+  }
+}
