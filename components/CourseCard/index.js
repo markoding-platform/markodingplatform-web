@@ -19,7 +19,7 @@ const CourseCard = (props) => {
 
   const handleClickClass = () => {
     if (userId) {
-      window.open(link, '_blank');
+      return window.open(link, '_blank');
     }
     return authenticate();
   };

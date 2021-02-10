@@ -1,5 +1,5 @@
 const userMap = (user) => {
-  const { id, name, profile = {} } = user;
+  const { id, name, profile = {}, imageUrl } = user;
   let bio = '';
   if (profile.profileType === 'teacher') {
     bio = `Guru di ${profile.schoolName}`;
@@ -12,7 +12,7 @@ const userMap = (user) => {
     id,
     name,
     bio,
-    imageUrl: '/assets/avatar-min.png',
+    imageUrl: imageUrl || '/assets/avatar-min.png',
   };
 };
 
