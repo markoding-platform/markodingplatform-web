@@ -13,23 +13,27 @@ const MarkodingFetch = async (url, options = {}, ctx, customToken = null) => {
       ...headers,
     },
     ...otherOptions,
-  }).then(async (r) => {
-    if (r.status === 401) {
-      // handle relogin or other if token invalid
-      return null;
-    }
-    let result;
-    try {
-      result = await r.json();
-    } catch (e) {
-      result = {};
-    }
-    return {
-      status: r.status,
-      ok: r.ok,
-      result,
-    };
-  });
+  })
+    .then(async (r) => {
+      if (r.status === 401) {
+        // handle relogin or other if token invalid
+        return null;
+      }
+      let result;
+      try {
+        result = await r.json();
+      } catch (e) {
+        result = {};
+      }
+      return {
+        status: r.status,
+        ok: r.ok,
+        result,
+      };
+    })
+    .catch((e) => {
+      console.error(e);
+    });
 };
 
 export default MarkodingFetch;

@@ -18,6 +18,7 @@ import {
 const CreateTeam = ({ user, isEditIdea }) => {
   const profile = user?.profile || {};
   const userName = user?.name || '';
+  const avatarUrl = user?.imageUrl || '';
   const userSchoolName = profile.schoolName || '';
   const [isShowModal, setIsShowModal] = useState(false);
   const {
@@ -62,7 +63,7 @@ const CreateTeam = ({ user, isEditIdea }) => {
     <div>
       <div className={teamWrapper}>
         {isEditIdea && members.length ? (
-          members.map(({ name, schoolName, isLeader, userId }) => {
+          members.map(({ name, schoolName, isLeader, userId, imageUrl }) => {
             if (isLeader) {
               return (
                 <div>
@@ -71,6 +72,7 @@ const CreateTeam = ({ user, isEditIdea }) => {
                     title="Ketua Tim"
                     primaryText={name}
                     secondaryText={schoolName}
+                    imageUrl={imageUrl}
                   />
                 </div>
               );
@@ -83,10 +85,11 @@ const CreateTeam = ({ user, isEditIdea }) => {
               title="Ketua Tim"
               primaryText={userName}
               secondaryText={userSchoolName}
+              imageUrl={avatarUrl}
             />
           </div>
         )}
-        {members.map(({ name, schoolName, isLeader, userId }) => {
+        {members.map(({ name, schoolName, isLeader, userId, imageUrl }) => {
           if (!isLeader) {
             return (
               <ProfileCard
@@ -95,6 +98,7 @@ const CreateTeam = ({ user, isEditIdea }) => {
                 primaryText={name}
                 secondaryText={schoolName}
                 withRemoveBtn={!isEditIdea}
+                imageUrl={imageUrl}
                 onClickRemove={() => handleRemoveStudents(userId)}
               />
             );
