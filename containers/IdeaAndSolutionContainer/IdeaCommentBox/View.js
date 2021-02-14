@@ -8,6 +8,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import { toast } from 'react-toastify';
 import MarkodingFetch from 'libraries/MarkodingFetch';
 
+import { LIMIT_PER_PAGE } from 'containers/IdeaAndSolutionContainer/constant';
 import getCookie from 'utils/getCookie';
 import canUseDOM from 'utils/canUseDOM';
 import Panel from 'components/Panel';
@@ -35,7 +36,14 @@ const IdeaCommentBox = ({ ideaId, onBlockAuth }) => {
           body: JSON.stringify(payload),
         });
         if (commentRes.ok) {
-          await mutate(`/ideas/${ideaId}/comment`);
+          try {
+            await mutate(
+              `/ideas/${ideaId}/comment?offset=0&limit=${LIMIT_PER_PAGE}`
+            );
+          } catch (e) {
+            console.error(e);
+          }
+
           return toast.success(
             <p className="m-0 pl-3">Berhasil mengirimkan komentar</p>,
             {

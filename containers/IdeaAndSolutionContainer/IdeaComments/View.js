@@ -28,22 +28,24 @@ const IdeaCommentsContainer = () => {
 
   return (
     <div className="mt-5">
-      {data && (
+      {data.length > 0 && (
         <>
-          {data.map((idea) => (
-            <div key={idea.id} className="mb-3">
-              <ForumCard
-                userId={idea.userId}
-                imageUrl={idea.imageUrl}
-                comment={idea.comment}
-                name={idea.name}
-                time={dayjs(idea.createdAt).format('dddd, DD MMMM YYYY')}
-                likeCount={idea.likeCount}
-                commentCount={idea.commentCount}
-                onLike={() => {}}
-              />
-            </div>
-          ))}
+          {data.map((idea) => {
+            const { user = {} } = idea || {};
+            return (
+              <div key={idea.id} className="mb-3">
+                <ForumCard
+                  userId={user.id}
+                  imageUrl={user.imageUrl}
+                  comment={idea.comment}
+                  name={user.name}
+                  time={dayjs(idea.createdAt).format('dddd, DD MMMM YYYY')}
+                  onLike={() => {}}
+                  withLikes={false}
+                />
+              </div>
+            );
+          })}
           <div className="d-flex justify-content-center mt-5">
             <Pagination
               totalRecords={pages.count}

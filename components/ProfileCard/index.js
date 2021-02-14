@@ -38,13 +38,24 @@ const ProfileCard = ({
         <p className="text-dark m-0">{title}</p>
       </div>
       <div className={content}>
-        <Image
-          width={114}
-          height={114}
-          layout="fixed"
-          className="rounded-circle"
-          src={imageUrl || Avatar}
-        />
+        {imageUrl !== 'null' && imageUrl !== '' ? (
+          <Image
+            width={114}
+            height={114}
+            layout="fixed"
+            className="rounded-circle"
+            src={imageUrl || Avatar}
+          />
+        ) : (
+          <Image
+            width={114}
+            height={114}
+            layout="fixed"
+            className="rounded-circle"
+            src={Avatar}
+          />
+        )}
+
         <p className={contentTitle}>{primaryText}</p>
         <p className={contentDesc}>{secondaryText}</p>
       </div>
