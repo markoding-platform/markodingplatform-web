@@ -22,6 +22,7 @@ const AuthButton = () => {
   const profileType = profile?.profileType || '';
 
   const account = canUseDOM ? JSON.parse(getCookie('userAccount')) : {};
+  const avatarUrl = account?.imageUrl || '';
   const { data } = useMySkilvulAccount();
   const mPoint = data
     ? data.totalPoint + (account ? account.markodingPoint : 0)
@@ -75,7 +76,7 @@ const AuthButton = () => {
           >
             <div className={styles.accountImage}>
               <Image
-                src={Avatar}
+                src={avatarUrl || Avatar}
                 width={32}
                 height={32}
                 layout="fixed"

@@ -3,6 +3,8 @@ import { bool, shape, string } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { BsPlus } from 'react-icons/bs';
 
+import getCookie from 'utils/getCookie';
+import canUseDOM from 'utils/canUseDOM';
 import { useIdeaFormContext } from 'components/context/IdeaContext';
 import ProfileCard from 'components/ProfileCard';
 import ModalComponent from 'components/Modal';
@@ -17,8 +19,10 @@ import {
 
 const CreateTeam = ({ user, isEditIdea }) => {
   const profile = user?.profile || {};
-  const userName = user?.name || '';
-  const avatarUrl = user?.imageUrl || '';
+
+  const account = canUseDOM ? JSON.parse(getCookie('userAccount')) : {};
+  const userName = account?.name || '';
+  const avatarUrl = account?.imageUrl || '';
   const userSchoolName = profile.schoolName || '';
   const [isShowModal, setIsShowModal] = useState(false);
   const {
@@ -47,6 +51,7 @@ const CreateTeam = ({ user, isEditIdea }) => {
       name: student.name,
       isLeader: false,
       schoolName: student.profile.schoolName,
+      imageUrl: student.imageUrl || '',
     };
     setMembers([...members, ...[newMember]]);
     handleOpenModal();
