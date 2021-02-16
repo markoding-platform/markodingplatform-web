@@ -14,7 +14,7 @@
   grid-gap: 32px;
 
   @media (max-width: breakpoint.$sm) {
-    grid-auto-columns: 133px;
+    grid-auto-columns: 125px;
     grid-gap: 8px;
     overflow: scroll;
   }

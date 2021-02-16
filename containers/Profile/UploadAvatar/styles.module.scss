@@ -1,0 +1,13 @@
+@use "styles/colors";
+
+.imgLoader {
+  position: absolute;
+  left: 43%;
+  top: 38%;
+}
+
+.uploadBtn {
+  text-align: center;
+  color: colors.$text-3rd;
+  cursor: pointer;
+}

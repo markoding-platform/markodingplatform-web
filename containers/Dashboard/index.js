@@ -11,9 +11,7 @@ import Badges from 'components/Badges';
 
 import SnippetIdea from 'containers/IdeaAndSolutionContainer/SnippetIdea';
 import CourseCard from 'components/CourseCard';
-import Avatar from 'public/assets/avatar-min.png';
-import canUseDOM from 'utils/canUseDOM';
-import getCookie from 'utils/getCookie';
+import Avatar from 'svgs/avatar.svg';
 import MyStats from './MyStats';
 
 import {
@@ -30,13 +28,20 @@ import {
   styCourses,
 } from './styles.module.scss';
 
-const DashboardContainer = ({ user, email, skillBadges, skillPoint }) => {
+const DashboardContainer = ({
+  user,
+  email,
+  skillBadges,
+  skillPoint,
+  markodingPoint,
+  bio,
+  name,
+  imageUrl,
+}) => {
   const { idea: ideaUser } = user;
+  const mPoint = skillPoint + markodingPoint;
 
-  const account = canUseDOM ? JSON.parse(getCookie('userAccount')) : {};
-  const mPoint = skillPoint + (account ? account.markodingPoint : 0);
-
-  const { profileType = '', schoolName } = user?.profile || {};
+  const { profileType = '' } = user?.profile || {};
   const { push } = useRouter();
 
   const { id } = ideaUser || {};
@@ -74,12 +79,12 @@ const DashboardContainer = ({ user, email, skillBadges, skillPoint }) => {
                 height={132}
                 layout="fixed"
                 className="rounded-circle"
-                src={Avatar}
+                src={imageUrl || Avatar}
               />
               <div className={`px-3 ${profileSection}`}>
-                <p className={contentTitle}>{user.name}</p>
+                <p className={contentTitle}>{name}</p>
                 <p className="m-0">{email}</p>
-                <p className="m-0 font-weight-bold">{schoolName}</p>
+                <p className="m-0 font-weight-bold">{bio}</p>
                 <Button
                   className={`bg-info ${btnEditProfile}`}
                   onClick={handleGoToProfile}
@@ -162,6 +167,7 @@ const DashboardContainer = ({ user, email, skillBadges, skillPoint }) => {
 
 DashboardContainer.defaultProps = {
   skillPoint: 0,
+  markodingPoint: 0,
   skillBadges: [],
 };
 
@@ -183,6 +189,9 @@ DashboardContainer.propTypes = {
   ),
   email: string.isRequired,
   skillPoint: number,
+  markodingPoint: number,
+  bio: string.isRequired,
+  name: string.isRequired,
 };
 
 export default DashboardContainer;

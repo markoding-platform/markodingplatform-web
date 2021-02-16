@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import Avatar from 'svgs/avatar.svg';
 
 dayjs.locale('id');
 
@@ -6,7 +7,7 @@ export default function questionMap(data) {
   const { id, content, updatedAt, user, comments, likes, channel } = data;
   return {
     id,
-    imageUrl: user?.imageUrl || '/assets/avatar-min.png',
+    imageUrl: user?.imageUrl || Avatar,
     comment: content,
     userId: user?.id || null,
     name: user?.name || '-',
