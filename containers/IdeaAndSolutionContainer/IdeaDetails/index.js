@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { mutate } from 'swr';
@@ -18,6 +18,8 @@ import noImage from 'public/assets/default-idea-img.png';
 import { teamMap } from 'map/teamMap';
 import { ideaMap } from 'map/ideaMap';
 import { profileTypeEnum } from '../constant';
+import IdeaCommentsContainer from '../IdeaComments';
+import DynamicIdeaCommentBox from '../IdeaCommentBox';
 
 import { ideaImage } from '../style.module.scss';
 import {
@@ -37,6 +39,10 @@ const IdeaDetails = () => {
   const { data: teamsResult } = useIdeaSolution({
     url: `/ideas/${ideaId}/users`,
   });
+  const { data: voted } = useIdeaSolution({
+    url: `/ideas/${ideaId}/user-voted `,
+  });
+  const isVoted = voted ? voted.result : false;
   // TODO handle loading state UI
   const idea = ideaMap(data?.result) || {};
   const teams = teamMap(teamsResult?.result || []);
@@ -83,6 +89,10 @@ const IdeaDetails = () => {
     });
   };
 
+  const handleAuth = useCallback((param) => {
+    setShowBlockAccess(param);
+  }, []);
+
   return (
     <>
       <div>
@@ -123,6 +133,7 @@ const IdeaDetails = () => {
               title={t.isLeader ? 'Ketua Tim' : 'Anggota'}
               primaryText={t.name}
               secondaryText={`Siswa ${t.schoolGradeName}`}
+              imageUrl={t.imageUrl}
             />
           ))}
         </div>
@@ -160,6 +171,7 @@ const IdeaDetails = () => {
           {facilitators.map((t) => (
             <ProfileCard
               key={t.id}
+              imageUrl={t.imageUrl}
               title={profileTypeEnum[t.profileType]}
               primaryText={t.name}
               secondaryText={t.companyName}
@@ -203,14 +215,25 @@ const IdeaDetails = () => {
           </div>
         </div>
         <div>
-          <Button className={voteBtn} onClick={handleVoteIdea}>
+          <Button
+            className={voteBtn}
+            onClick={handleVoteIdea}
+            disabled={isVoted}
+          >
             Vote Ide Solusi
           </Button>
+        </div>
+        <div className="mt-5">
+          <DynamicIdeaCommentBox
+            ideaId={ideaId}
+            onBlockAuth={() => handleAuth(true)}
+          />
+          <IdeaCommentsContainer />
         </div>
       </div>
       <BlockAccessModal
         show={showBlockAccess}
-        onHide={() => setShowBlockAccess(false)}
+        onHide={() => handleAuth(false)}
       />
     </>
   );

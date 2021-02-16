@@ -71,7 +71,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
     const userIds = [teacherId, ...teamIds];
     const filterIds = userIds.filter(Boolean);
     try {
-      const { ok } = await MarkodingFetch(`/ideas/${ideaId}/users`, {
+      const { ok, result } = await MarkodingFetch(`/ideas/${ideaId}/users`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -90,6 +90,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
         renderToast(msg);
         push('/idea');
       } else {
+        console.error(result);
         renderToast('Gagal mendaftarkan ide mu', true);
       }
     } catch (e) {
@@ -110,6 +111,7 @@ const SecondFormIdeaSolution = ({ isEditIdea }) => {
       if (ok) {
         handleCreateTeam(result.id, payload.isDraft);
       } else {
+        console.error(result);
         renderToast('Gagal menyimpan ide mu', true);
       }
     } catch (e) {

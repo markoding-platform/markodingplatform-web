@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IdeaFormProvider } from 'components/context/IdeaContext';
 import SkilvulToken from 'libraries/SkilvulToken';
 import FirebaseCloudMessaging from 'libraries/FirebaseCloudMessaging';
+import init from 'libraries/SentryInit';
 
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -27,6 +28,7 @@ export default class MyApp extends App {
   componentDidMount() {
     SkilvulToken();
     FirebaseCloudMessaging();
+    init();
   }
 
   render() {

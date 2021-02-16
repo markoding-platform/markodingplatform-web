@@ -5,6 +5,7 @@ export const teamMap = (data) => {
     return {
       userId: user.id,
       name: user.name || '',
+      imageUrl: user.imageUrl || '',
       schoolName: profile.schoolName || '',
       schoolGradeName: profile.schoolGradeName || '',
       profileType: profile.profileType || '',

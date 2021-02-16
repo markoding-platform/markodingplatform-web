@@ -18,6 +18,7 @@ const ProfileCard = ({
   secondaryText,
   withRemoveBtn,
   onClickRemove,
+  imageUrl,
 }) => {
   return (
     <Card className="border-0">
@@ -37,13 +38,24 @@ const ProfileCard = ({
         <p className="text-dark m-0">{title}</p>
       </div>
       <div className={content}>
-        <Image
-          width={114}
-          height={114}
-          layout="fixed"
-          className="rounded-circle"
-          src={Avatar}
-        />
+        {imageUrl !== 'null' && imageUrl !== '' ? (
+          <Image
+            width={114}
+            height={114}
+            layout="fixed"
+            className="rounded-circle"
+            src={imageUrl || Avatar}
+          />
+        ) : (
+          <Image
+            width={114}
+            height={114}
+            layout="fixed"
+            className="rounded-circle"
+            src={Avatar}
+          />
+        )}
+
         <p className={contentTitle}>{primaryText}</p>
         <p className={contentDesc}>{secondaryText}</p>
       </div>
@@ -60,6 +72,7 @@ ProfileCard.propTypes = {
   primaryText: string.isRequired,
   secondaryText: string.isRequired,
   title: string.isRequired,
+  imageUrl: string.isRequired,
   withRemoveBtn: bool,
   onClickRemove: func,
 };
