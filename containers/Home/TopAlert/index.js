@@ -5,18 +5,21 @@ import AlertComponent from 'components/Alert';
 
 import canUseDOM from 'utils/canUseDOM';
 import getCookie from 'utils/getCookie';
+import useMarkodingSubmission from 'hooks/useMarkodingSubmission';
 
 const TopAlertHome = () => {
   const userIdea = canUseDOM && getCookie('userIdea');
   const userProfile = canUseDOM && getCookie('userProfile');
   const idea = userIdea ? JSON.parse(userIdea) : {};
   const profile = userProfile ? JSON.parse(userProfile) : {};
+  const { isOpenSubmission } = useMarkodingSubmission();
 
   const ideaId = idea?.id || '';
   const isDraft = idea?.isDraft || false;
   const isStudent = profile?.profileType === 'student';
-  const isShowInfoRegisterIdea = !ideaId && isStudent;
-  const isShowInfoCompleteIdea = ideaId && isDraft && isStudent;
+  const isShowInfoRegisterIdea = isOpenSubmission && !ideaId && isStudent;
+  const isShowInfoCompleteIdea =
+    isOpenSubmission && ideaId && isDraft && isStudent;
 
   return (
     <div className="inner-section">

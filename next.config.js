@@ -43,6 +43,8 @@ module.exports = withPWA(
       FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
       FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
       FIREBASE_VAPID_KEY: process.env.FIREBASE_VAPID_KEY,
+      MARKODING_SUBMISSION: process.env.MARKODING_SUBMISSION,
+      NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
     },
     webpack(config) {
       return config;

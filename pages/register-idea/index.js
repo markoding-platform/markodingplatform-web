@@ -9,11 +9,13 @@ import { homeContent } from 'styles/home.module.scss';
 import { SSO } from 'utils/auth';
 
 import withAuthSync from 'hoc/withAuthSync';
+import useMarkodingSubmission from 'hooks/useMarkodingSubmission';
 
 const RegisterIdea = ({ user }) => {
   const router = useRouter();
   const id = user?.id || '';
   const { profileType = '' } = user?.profile || {};
+  const { isOpenSubmission } = useMarkodingSubmission();
 
   const authenticate = useCallback(async () => {
     await SSO();
@@ -27,9 +29,12 @@ const RegisterIdea = ({ user }) => {
     if (profileType !== 'student') {
       router.push('/');
     }
-  }, [authenticate, id, profileType, router]);
+    if (!isOpenSubmission) {
+      router.push('/');
+    }
+  }, [authenticate, id, isOpenSubmission, profileType, router]);
 
-  if (!id) {
+  if (!id || !isOpenSubmission) {
     return null;
   }
 

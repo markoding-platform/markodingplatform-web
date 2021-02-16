@@ -1,4 +1,4 @@
-import { number, string } from 'prop-types';
+import { number, string, bool } from 'prop-types';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Button from 'react-bootstrap/Button';
@@ -15,6 +15,7 @@ const SnippetIdea = ({
   ideaId,
   solutionVision,
   solutionName,
+  isOpenSubmission,
 }) => {
   const { push } = useRouter();
 
@@ -56,9 +57,11 @@ const SnippetIdea = ({
           <Button variant="outline-primary mr-3" onClick={handleClickViewIdea}>
             Lihat
           </Button>
-          <Button className="bg-primary" onClick={handleClickEditIdea}>
-            Edit
-          </Button>
+          {isOpenSubmission && (
+            <Button className="bg-primary" onClick={handleClickEditIdea}>
+              Edit
+            </Button>
+          )}
         </div>
       </div>
     </div>
@@ -81,6 +84,7 @@ SnippetIdea.propTypes = {
   solutionVision: string,
   commentCount: number,
   likeCount: number,
+  isOpenSubmission: bool.isRequired,
 };
 
 export default SnippetIdea;

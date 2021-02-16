@@ -10,10 +10,12 @@ import canUseDOM from 'utils/canUseDOM';
 import Avatar from 'svgs/avatar.svg';
 import useMySkilvulAccount from 'hooks/useMySkilvulAccount';
 import number from 'utils/number';
+import useMarkodingSubmission from 'hooks/useMarkodingSubmission';
 
 const AuthButton = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [userName, setUserName] = useState(null);
+  const { isOpenSubmission } = useMarkodingSubmission();
   const userIdea = canUseDOM && getCookie('userIdea');
   const userProfile = canUseDOM && getCookie('userProfile');
   const idea = userIdea ? JSON.parse(userIdea) : {};
@@ -45,11 +47,11 @@ const AuthButton = () => {
   }, [profileType]);
 
   const isAllowedRegisterIdea = useMemo(() => {
-    if (isStudent && !ideaId) {
+    if (isStudent && !ideaId && isOpenSubmission) {
       return true;
     }
     return false;
-  }, [ideaId, isStudent]);
+  }, [ideaId, isOpenSubmission, isStudent]);
 
   const authenticate = async () => {
     await SSO();
