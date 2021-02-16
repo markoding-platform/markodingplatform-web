@@ -1,20 +1,10 @@
 import { useState, memo } from 'react';
 import { number, func } from 'prop-types';
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
-
 import Pagination from 'react-bootstrap/Pagination';
-import range from 'utils/range';
 
-const PaginationComponent = ({
-  defaultPage,
-  totalRecords,
-  totalPages,
-  pageLimit,
-  onPageChanged,
-}) => {
+const PaginationComponent = ({ defaultPage, totalPages, onPageChanged }) => {
   const [currentPage, setCurrentPage] = useState(defaultPage);
-
-  const pageNumbers = Math.ceil(totalRecords / pageLimit);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -35,17 +25,23 @@ const PaginationComponent = ({
 
   const renderController = () => {
     const blockControl = [];
-    range(1, pageNumbers).forEach((item) => {
+    const spaceCount = 3;
+    const startNumber = defaultPage > spaceCount ? defaultPage - spaceCount : 1;
+    const endNumber =
+      defaultPage < totalPages - spaceCount
+        ? defaultPage + spaceCount
+        : totalPages;
+    for (let n = startNumber; n <= endNumber; n += 1) {
       blockControl.push(
         <Pagination.Item
-          key={item}
-          active={item === currentPage}
-          onClick={() => handlePageChange(item)}
+          key={n}
+          active={n === currentPage}
+          onClick={() => handlePageChange(n)}
         >
-          {item}
+          {n}
         </Pagination.Item>
       );
-    });
+    }
     return blockControl;
   };
   return (
@@ -69,11 +65,12 @@ const PaginationComponent = ({
 PaginationComponent.defaultProps = {
   totalPages: 0,
   totalRecords: 0,
+  pageLimit: 9,
 };
 
 PaginationComponent.propTypes = {
   defaultPage: number.isRequired,
-  pageLimit: number.isRequired,
+  pageLimit: number,
   totalRecords: number,
   totalPages: number,
   onPageChanged: func.isRequired,
