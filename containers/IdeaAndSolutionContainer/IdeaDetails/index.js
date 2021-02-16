@@ -231,10 +231,12 @@ const IdeaDetails = () => {
           <IdeaCommentsContainer />
         </div>
       </div>
-      <BlockAccessModal
-        show={showBlockAccess}
-        onHide={() => handleAuth(false)}
-      />
+      {showBlockAccess && (
+        <BlockAccessModal
+          show={showBlockAccess}
+          onHide={() => handleAuth(false)}
+        />
+      )}
     </>
   );
 };

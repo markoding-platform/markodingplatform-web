@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import SectionCardWrapper from 'components/SectionCardWrapper';
 import IdeaCard from 'components/IdeaCard';
 import useIdeaSolution from 'hooks/useIdeaSolution';
+import BlockAccessModal from 'components/BlockAccessModal';
 
 import WidgetLoader from '../WidgetLoader';
 
 const GalleryIdeaWidget = () => {
   const { data, error } = useIdeaSolution({ url: '/ideas?offset=0&limit=9' });
   const result = data?.result?.data || [];
+  const [showBlockAccess, setShowBlockAccess] = useState(false);
   const isLoading = !data && !error;
+
+  const handleAuth = (param) => {
+    setShowBlockAccess(param);
+  };
 
   return (
     <>
@@ -35,6 +41,7 @@ const GalleryIdeaWidget = () => {
                   description={solutionMission}
                   likeCount={totalLikes}
                   commentCount={totalComments}
+                  onBlockAuth={() => handleAuth(true)}
                 />
               );
             })}
@@ -42,6 +49,12 @@ const GalleryIdeaWidget = () => {
         </div>
       ) : (
         <></>
+      )}
+      {showBlockAccess && (
+        <BlockAccessModal
+          show={showBlockAccess}
+          onHide={() => handleAuth(false)}
+        />
       )}
     </>
   );
