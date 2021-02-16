@@ -36,19 +36,22 @@ const UploadComponent = ({ onUploadImg, defaultVal }) => {
   const handlePostImage = useCallback(
     async (files) => {
       const formData = new FormData();
+      let isError = false;
 
       files.forEach((file, i) => {
         if (types.every((type) => file.type !== type)) {
+          isError = true;
           return renderErrorToast(`tidak support format file ${file.type}`);
         }
 
         if (Math.round(file.size / 1024 / 1024) > 1) {
+          isError = true;
           return renderErrorToast(`Ukuran gambar terlalu besar. max 1 MiB`);
         }
         formData.append(i, file);
       });
 
-      if (Object.keys(formData).length === 0) {
+      if (isError) {
         setIsLoading(false);
         return;
       }
