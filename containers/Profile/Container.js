@@ -20,9 +20,10 @@ const ProfileContainer = ({
   city,
   gender,
   userXID,
+  imageUrl,
 }) => {
   const { name, profile = {} } = user || {};
-  const { profileType = {}, imageUrl, schoolName } = profile || {};
+  const { profileType = {}, schoolName } = profile || {};
   const [provinces, setProvinces] = useState([]);
   const [professions, setProfessions] = useState([]);
   const [cities, setCities] = useState([]);
@@ -118,6 +119,7 @@ ProfileContainer.propTypes = {
   province: shape({}).isRequired,
   city: shape({}).isRequired,
   userXID: string.isRequired,
+  imageUrl: string.isRequired,
 };
 
 export default ProfileContainer;

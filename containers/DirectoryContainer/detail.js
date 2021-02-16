@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Loading from 'components/Loading';
 import userType from 'utils/userType';
 import { Badge } from 'react-bootstrap';
+import Avatar from 'svgs/avatar.svg';
 import userDetailMap from '../../map/userDetailMap';
 
 const DirectoryDetailContainer = ({ userSlug, callBack }) => {
@@ -27,7 +28,7 @@ const DirectoryDetailContainer = ({ userSlug, callBack }) => {
           <div className="position-relative mb-2">
             <div>
               <Image
-                src={result.imageUrl}
+                src={result.imageUrl || Avatar}
                 alt={result.name}
                 width={132}
                 height={132}

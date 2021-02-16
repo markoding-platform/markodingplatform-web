@@ -3,12 +3,14 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { func } from 'prop-types';
 
+import Spinner from 'react-bootstrap/Spinner';
 import { BsTrash } from 'react-icons/bs';
 
 import { RiPencilFill } from 'react-icons/ri';
 
 import MarkodingFetch from 'libraries/MarkodingFetch';
 import Avatar from 'svgs/avatar.svg';
+import { imgLoader, uploadBtn } from './styles.module.scss';
 
 const types = ['image/png', 'image/jpeg'];
 
@@ -78,15 +80,14 @@ const UploadComponent = ({ onUploadImg, defaultVal }) => {
             className="rounded-circle"
             src={imageSrc || Avatar}
           />
-          <div onClick={handleRemoveImage} aria-hidden className="text-3rd">
+          <div onClick={handleRemoveImage} aria-hidden className={uploadBtn}>
             <BsTrash size="20" />
             <span className="ml-2 ">Hapus</span>
           </div>
         </div>
       )}
-
       {!imageSrc && (
-        <div>
+        <div className="position-relative">
           <Image
             width={150}
             height={132}
@@ -94,7 +95,14 @@ const UploadComponent = ({ onUploadImg, defaultVal }) => {
             className="rounded-circle"
             src={Avatar}
           />
-          <div className="text-center text-3rd">
+          {isLoading && (
+            <div className={imgLoader}>
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </div>
+          )}
+          <div className={uploadBtn}>
             <RiPencilFill size="20" />
             <span className="ml-2">
               <input

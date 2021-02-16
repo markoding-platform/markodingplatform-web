@@ -78,12 +78,15 @@ const SearchMember = ({ onSelectStudent }) => {
       </div>
       <p className="text-secondary">Hasil Pencarian</p>
       <div className={listItemWrapper}>
-        {students.map(({ id, name, profile }) => (
+        {students.map(({ id, name, profile, imageUrl }) => (
           <ListItem
             key={id}
             name={name}
             subTitle={`Siswa ${profile.schoolName}`}
-            onSelect={() => handleSelectStudent({ id, name, profile })}
+            onSelect={
+              () => handleSelectStudent({ id, name, profile, imageUrl })
+              // eslint-disable-next-line react/jsx-curly-newline
+            }
           />
         ))}
       </div>

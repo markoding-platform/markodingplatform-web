@@ -44,7 +44,7 @@ const ProfileCard = ({
             height={114}
             layout="fixed"
             className="rounded-circle"
-            src={imageUrl || Avatar}
+            src={imageUrl}
           />
         ) : (
           <Image

@@ -13,7 +13,7 @@ const userDetailMap = (user) => {
     name,
     email,
     title: bio,
-    imageUrl: imageUrl || '/assets/avatar-min.png',
+    imageUrl: imageUrl || '',
     bio: '',
     instagram: 'https://instagram.com',
     linkedin: 'https://linkedin.com',

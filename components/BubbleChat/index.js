@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
+import AvatarDefault from 'svgs/avatar.svg';
 import styles from './styles.module.scss';
 
 const BubbleChat = ({ avatar, name, payload, time, position }) => {
@@ -8,7 +9,7 @@ const BubbleChat = ({ avatar, name, payload, time, position }) => {
     <div className={`${styles.root} ${styles[position]}`}>
       {position === 'left' && (
         <Image
-          src={avatar}
+          src={avatar || AvatarDefault}
           alt={name}
           width={45}
           height={45}
