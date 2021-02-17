@@ -8,11 +8,13 @@ import RegisterIdeaSolutionContainer from 'containers/AddAndEditIdea';
 import { SSO } from 'utils/auth';
 import withAuthSync from 'hoc/withAuthSync';
 import { homeContent } from 'styles/home.module.scss';
+import useMarkodingSubmission from 'hooks/useMarkodingSubmission';
 
 const RegisterIdeaSecondPage = ({ user }) => {
   const router = useRouter();
   const id = user?.id || '';
   const { profileType = '' } = user?.profile;
+  const { isOpenSubmission } = useMarkodingSubmission();
 
   const authenticate = useCallback(async () => {
     await SSO();
@@ -25,7 +27,11 @@ const RegisterIdeaSecondPage = ({ user }) => {
     if (profileType === 'teacher') {
       router.push('/');
     }
-  }, [authenticate, id, profileType, router]);
+
+    if (!isOpenSubmission) {
+      router.push('/');
+    }
+  }, [authenticate, id, isOpenSubmission, profileType, router]);
 
   if (!id) {
     return null;

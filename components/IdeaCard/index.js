@@ -1,39 +1,56 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
-import Link from 'next/link';
 import Image from 'next/image';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { IoMdChatbubbles } from 'react-icons/io';
+
+import getCookie from 'utils/getCookie';
+import canUseDOM from 'utils/canUseDOM';
 import noImage from 'public/assets/default-idea-img.png';
 import styles from './styles.module.scss';
 
 const IdeaCard = (props) => {
-  const { imageUrl, title, description, likeCount, commentCount, link } = props;
+  const router = useRouter();
+  const {
+    imageUrl,
+    title,
+    description,
+    likeCount,
+    commentCount,
+    link,
+    onBlockAuth,
+  } = props;
+  const userId = canUseDOM && getCookie('userID');
+  const handleGoToIdea = (e) => {
+    e.preventDefault();
+    if (!userId) return onBlockAuth();
+    router.push(link);
+  };
   return (
-    <Link href={link}>
-      <a href={link} className={styles.link}>
-        <Card className={styles.card}>
-          <div className={styles.image}>
-            <Image src={imageUrl || noImage} alt={title} layout="fill" />
-          </div>
-          <Card.Body>
-            <Card.Title className={styles.title}>{title}</Card.Title>
-            <Card.Text className={styles.text}>{description}</Card.Text>
-            <div className="d-flex align-items-center justify-content-start">
-              <div className="mr-4">
-                <BsFillHeartFill className={styles.icon} />
-                <span className="text-secondary">{likeCount}</span>
-              </div>
-              <div>
-                <IoMdChatbubbles className={styles.icon} />
-                <span className="text-secondary">{commentCount}</span>
-              </div>
+    // eslint-disable-next-line jsx-a11y/anchor-is-valid
+    <a href={link} onClick={handleGoToIdea} className={styles.link}>
+      <Card className={styles.card}>
+        <div className={styles.image}>
+          <Image src={imageUrl || noImage} alt={title} layout="fill" />
+        </div>
+        <Card.Body>
+          <Card.Title className={styles.title}>{title}</Card.Title>
+          <Card.Text className={styles.text}>{description}</Card.Text>
+          <div className="d-flex align-items-center justify-content-start">
+            <div className="mr-4">
+              <BsFillHeartFill className={styles.icon} />
+              <span className="text-secondary">{likeCount}</span>
             </div>
-          </Card.Body>
-        </Card>
-      </a>
-    </Link>
+            <div>
+              <IoMdChatbubbles className={styles.icon} />
+              <span className="text-secondary">{commentCount}</span>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+    </a>
   );
 };
 
@@ -49,6 +66,7 @@ IdeaCard.propTypes = {
   likeCount: PropTypes.number,
   commentCount: PropTypes.number,
   link: PropTypes.string.isRequired,
+  onBlockAuth: PropTypes.func.isRequired,
 };
 
 export default IdeaCard;
