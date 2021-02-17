@@ -11,7 +11,8 @@ import Badges from 'components/Badges';
 
 import SnippetIdea from 'containers/IdeaAndSolutionContainer/SnippetIdea';
 import CourseCard from 'components/CourseCard';
-import Avatar from 'svgs/avatar.svg';
+import Avatar from 'public/assets/avatar-min.png';
+import useMarkodingSubmission from 'hooks/useMarkodingSubmission';
 import MyStats from './MyStats';
 
 import {
@@ -40,7 +41,7 @@ const DashboardContainer = ({
 }) => {
   const { idea: ideaUser } = user;
   const mPoint = skillPoint + markodingPoint;
-
+  const { isOpenSubmission } = useMarkodingSubmission();
   const { profileType = '' } = user?.profile || {};
   const { push } = useRouter();
 
@@ -119,27 +120,33 @@ const DashboardContainer = ({
         )}
       </Panel>
       {profileType === 'student' && (
-        <Panel title="Ide Solusi Saya">
-          {Object.keys(idea).length ? (
-            <SnippetIdea
-              ideaId={ideaUser.id}
-              imageIdea={imageIdea}
-              solutionVision={solutionVision}
-              solutionName={solutionName}
-              likeCount={totalLikes}
-              totalComments={totalComments}
-            />
-          ) : (
-            <div className={ideaSnippetWrapper}>
-              <h4 className="text-center py-5 text-3rd">
-                Anda Belum Memiliki Ide Solusi
-              </h4>
-              <Button className={btnRegister} onClick={handleClickEditIdea}>
-                Registrasi ide solusi
-              </Button>
-            </div>
+        <>
+          {Object.keys(idea).length > 0 && (
+            <Panel title="Ide Solusi Saya">
+              <SnippetIdea
+                ideaId={ideaUser.id}
+                imageIdea={imageIdea}
+                solutionVision={solutionVision}
+                solutionName={solutionName}
+                likeCount={totalLikes}
+                totalComments={totalComments}
+                isOpenSubmission={isOpenSubmission}
+              />
+            </Panel>
           )}
-        </Panel>
+          {Object.keys(idea).length < 1 && isOpenSubmission && (
+            <Panel title="Ide Solusi Saya">
+              <div className={ideaSnippetWrapper}>
+                <h4 className="text-center py-5 text-3rd">
+                  Anda Belum Memiliki Ide Solusi
+                </h4>
+                <Button className={btnRegister} onClick={handleClickEditIdea}>
+                  Registrasi ide solusi
+                </Button>
+              </div>
+            </Panel>
+          )}
+        </>
       )}
       <Panel title="Kelas Online">
         {!loadingCourses && courses.length > 0 ? (

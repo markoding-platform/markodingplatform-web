@@ -6,6 +6,7 @@ import range from 'utils/range';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import BlockAccessModal from 'components/BlockAccessModal';
 import IdeaCard from 'components/IdeaCard';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import CardLoader from 'components/Shimmer/Card';
@@ -30,6 +31,7 @@ const IdeaAndSolutionContainer = () => {
   const currentOffset = Number(query?.start) || 0;
   const currentPage = Number(query?.page) || 1;
   const [activeSort, setActiveSort] = useState('');
+  const [showBlockAccess, setShowBlockAccess] = useState(false);
 
   const { data: problemAreas } = useProblemArea({
     url: '/ideas/problem-area',
@@ -118,6 +120,10 @@ const IdeaAndSolutionContainer = () => {
     return loaderArr;
   };
 
+  const handleAuth = useCallback((param) => {
+    setShowBlockAccess(param);
+  }, []);
+
   return (
     <>
       <ScrollToTop />
@@ -157,6 +163,7 @@ const IdeaAndSolutionContainer = () => {
                       description={solutionMission}
                       likeCount={totalLikes}
                       commentCount={totalComments}
+                      onBlockAuth={() => handleAuth(true)}
                     />
                   </div>
                 </Col>
@@ -192,6 +199,12 @@ const IdeaAndSolutionContainer = () => {
             </p>
           </div>
         </>
+      )}
+      {showBlockAccess && (
+        <BlockAccessModal
+          show={showBlockAccess}
+          onHide={() => handleAuth(false)}
+        />
       )}
     </>
   );
