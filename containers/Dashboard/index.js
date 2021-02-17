@@ -41,9 +41,7 @@ const DashboardContainer = ({
 }) => {
   const { idea: ideaUser } = user;
   const mPoint = skillPoint + markodingPoint;
-
   const { isOpenSubmission } = useMarkodingSubmission();
-
   const { profileType = '' } = user?.profile || {};
   const { push } = useRouter();
 
