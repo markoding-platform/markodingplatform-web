@@ -39,10 +39,12 @@ const IdeaDetails = () => {
   const { data: teamsResult } = useIdeaSolution({
     url: `/ideas/${ideaId}/users`,
   });
-  const { data: voted } = useIdeaSolution({
+  const { data: voted = {} } = useIdeaSolution({
     url: `/ideas/${ideaId}/user-voted `,
   });
-  const isVoted = voted ? voted.result : false;
+
+  const [isVoted, setIsVoted] = useState(voted.result || false);
+
   // TODO handle loading state UI
   const idea = ideaMap(data?.result) || {};
   const teams = teamMap(teamsResult?.result || []);
@@ -76,10 +78,9 @@ const IdeaDetails = () => {
       }),
     });
     if (voteResult.ok) {
+      setIsVoted(!isVoted);
       await mutate(`/ideas/${ideaId}`);
-      return toast.success(<p className="m-0 pl-3">Berhasil vote ide</p>, {
-        autoClose: 3000,
-      });
+      return;
     }
     if (voteResult.status === 400) {
       return setShowBlockAccess(true);
@@ -215,12 +216,8 @@ const IdeaDetails = () => {
           </div>
         </div>
         <div>
-          <Button
-            className={voteBtn}
-            onClick={handleVoteIdea}
-            disabled={isVoted}
-          >
-            Vote Ide Solusi
+          <Button className={voteBtn} onClick={handleVoteIdea}>
+            {isVoted ? 'Batalkan vote' : 'Vote Ide Solusi'}
           </Button>
         </div>
         <div className="mt-5">

@@ -78,7 +78,7 @@ const AuthButton = () => {
           >
             <div className={styles.accountImage}>
               <Image
-                src={avatarUrl || Avatar}
+                src={avatarUrl || avatarUrl !== 'null' ? avatarUrl : Avatar}
                 width={32}
                 height={32}
                 layout="fixed"
@@ -94,7 +94,9 @@ const AuthButton = () => {
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="mr-2">
                       <Image
-                        src={Avatar}
+                        src={
+                          avatarUrl || avatarUrl !== 'null' ? avatarUrl : Avatar
+                        }
                         width={56}
                         height={56}
                         layout="fixed"
