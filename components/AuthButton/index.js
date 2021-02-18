@@ -78,7 +78,7 @@ const AuthButton = () => {
           >
             <div className={styles.accountImage}>
               <Image
-                src={avatarUrl || avatarUrl !== 'null' ? avatarUrl : Avatar}
+                src={avatarUrl && avatarUrl !== 'null' ? avatarUrl : Avatar}
                 width={32}
                 height={32}
                 layout="fixed"
@@ -95,7 +95,7 @@ const AuthButton = () => {
                     <div className="mr-2">
                       <Image
                         src={
-                          avatarUrl || avatarUrl !== 'null' ? avatarUrl : Avatar
+                          avatarUrl && avatarUrl !== 'null' ? avatarUrl : Avatar
                         }
                         width={56}
                         height={56}
