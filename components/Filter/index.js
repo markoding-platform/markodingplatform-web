@@ -29,7 +29,7 @@ const FilterComponent = ({ placement, filterItems, onClickFilterItem }) => {
       <Popover.Content className="p-0">
         <ul className="list-group">
           {filterItems.map((filter) => (
-            <li className={`list-group-item  ${listItem} `} key={filter.id}>
+            <li className={`list-group-item ${listItem}`} key={filter.id}>
               <Button
                 variant="light"
                 className={`w-100 p-3 text-left ${

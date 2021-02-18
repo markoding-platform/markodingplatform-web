@@ -105,13 +105,11 @@ const IdeaAndSolutionContainer = () => {
   }, []);
 
   const handleClickFilter = useCallback(
-    async (filter) => {
+    (filter) => {
       if (currentOffset > 0 || currentPage > 1) {
         router.replace(`/idea`);
       }
-
       setActiveFilter(filter);
-      // await mutate(`idea/&sort=${activeSort}${queryFilter}`);
     },
     [currentOffset, currentPage, router]
   );
