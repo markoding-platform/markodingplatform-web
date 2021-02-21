@@ -37,7 +37,7 @@ const TermsContainer = () => {
       </Head>
       <Container fluid>
         <div className={styTermsContainer}>
-          <div id="term-condition">
+          <div id="term-condition" className="p-3">
             <h2>Syarat & Ketentuan</h2>
             <p>Berlaku efektif: 31 Januari 2021</p>
             <p>
@@ -302,7 +302,7 @@ const TermsContainer = () => {
               non-eksklusif Pengadilan Jakarta Selatan.
             </p>
           </div>
-          <div id="privacy">
+          <div id="privacy" className="p-3">
             <h2>Kebijakan Privasi</h2>
             <p>Berlaku efektif: Januari, 2021</p>
             <p>
