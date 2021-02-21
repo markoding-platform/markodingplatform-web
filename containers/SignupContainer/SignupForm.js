@@ -383,19 +383,25 @@ const SignupForm = ({ registerAs }) => {
               name="agreement"
               ref={register({ required: true })}
             />
-            <Link href={tAndCLink}>
-              <a href={tAndCLink} rel="noreferrer" target="_blank">
-                <label
-                  className={`form-check-label ml-4 ${
-                    errors.agreement && 'text-danger'
-                  }`}
-                  htmlFor="exampleCheck1"
+
+            <label
+              className={`form-check-label ml-4 ${
+                errors.agreement && 'text-danger'
+              }`}
+              htmlFor="exampleCheck1"
+            >
+              Dengan mendaftar, saya menyetujui &nbsp;
+              <Link href={tAndCLink}>
+                <a
+                  href={tAndCLink}
+                  rel="noreferrer"
+                  target="_blank"
+                  className="font-weight-bold"
                 >
-                  Dengan mendaftar, saya menyetujui Syarat dan Ketentuan serta
-                  Kebijakan Privasi
-                </label>
-              </a>
-            </Link>
+                  Syarat dan Ketentuan serta Kebijakan Privasi
+                </a>
+              </Link>
+            </label>
           </div>
 
           <div>

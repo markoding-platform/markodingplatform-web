@@ -1,12 +1,14 @@
 const userMap = (user) => {
   const { id, name, email, profile = {}, imageUrl, markodingPoint } = user;
+  const { profileType, schoolName, workingPosition, companyName } =
+    profile || {};
   let bio = '';
-  if (profile.profileType === 'teacher') {
-    bio = `Guru di ${profile.schoolName}`;
-  } else if (profile.profileType === 'mentor') {
-    bio = `${profile.expertise} di ${profile.companyName}`;
+  if (profileType === 'teacher') {
+    bio = `Guru di ${schoolName}`;
+  } else if (profileType === 'mentor' && workingPosition && companyName) {
+    bio = `${workingPosition} di ${companyName}`;
   } else {
-    bio = `Siswa di ${profile.schoolName}`;
+    bio = `Siswa di ${schoolName}`;
   }
   return {
     id: id || '',
