@@ -21,7 +21,7 @@ const FilterComponent = ({ placement, filterItems, onClickFilterItem }) => {
 
   const handleClickFilter = (filter) => {
     setShowPopover(false);
-    setActiveFilter(filter.id);
+    setActiveFilter(filter.value);
     onClickFilterItem(filter);
   };
   const popover = (
@@ -33,7 +33,7 @@ const FilterComponent = ({ placement, filterItems, onClickFilterItem }) => {
               <Button
                 variant="light"
                 className={`w-100 p-3 text-left ${
-                  activeFilter === filter.id ? 'active' : ''
+                  activeFilter === filter.value ? 'active' : ''
                 }`}
                 onClick={() => handleClickFilter(filter)}
               >
