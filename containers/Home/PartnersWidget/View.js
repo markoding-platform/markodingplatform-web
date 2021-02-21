@@ -13,7 +13,7 @@ const PartnersContainer = () => {
           <Image
             src="/assets/unicef.png"
             width={166}
-            height={90}
+            height={100}
             layout="fixed"
             className={lumino}
           />
