@@ -13,24 +13,28 @@ import {
 
 const FilterComponent = ({ placement, filterItems, onClickFilterItem }) => {
   const [showPopover, setShowPopover] = useState(false);
+  const [activeFilter, setActiveFilter] = useState('');
 
   const handleShowPopover = () => {
     setShowPopover(!showPopover);
   };
 
-  const handleClickFilter = (sort) => {
+  const handleClickFilter = (filter) => {
     setShowPopover(false);
-    onClickFilterItem(sort);
+    setActiveFilter(filter.value);
+    onClickFilterItem(filter);
   };
   const popover = (
     <Popover className={styPopOverContainer}>
       <Popover.Content className="p-0">
         <ul className="list-group">
           {filterItems.map((filter) => (
-            <li className={`list-group-item  ${listItem}`} key={filter.id}>
+            <li className={`list-group-item ${listItem}`} key={filter.id}>
               <Button
                 variant="light"
-                className="w-100 p-3 text-left"
+                className={`w-100 p-3 text-left ${
+                  activeFilter === filter.value ? 'active' : ''
+                }`}
                 onClick={() => handleClickFilter(filter)}
               >
                 {filter.name}

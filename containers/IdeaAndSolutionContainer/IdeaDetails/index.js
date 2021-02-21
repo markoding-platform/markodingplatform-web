@@ -51,7 +51,7 @@ const IdeaDetails = () => {
   const [showBlockAccess, setShowBlockAccess] = useState(false);
   const { totalLikes, totalComments } = idea;
 
-  const imageIdea = idea.solutionSupportingPhotos?.[0] || '';
+  const imageIdea = idea?.solutionSupportingPhotos?.[0] || '';
 
   const teamMember = useMemo(() => {
     if (teams.length) {
@@ -94,18 +94,36 @@ const IdeaDetails = () => {
     setShowBlockAccess(param);
   }, []);
 
+  const {
+    title,
+    solutionName,
+    status,
+    schoolName,
+    solutionType,
+    problemArea,
+    problemSelection,
+    targetCustomer,
+    problemReasoning,
+    solutionVision,
+    solutionMission,
+    solutionPitchUrl,
+    solutionBenefit,
+    solutionObstacle,
+    potentialCollaboration,
+  } = idea || {};
+
   return (
     <>
       <div>
         <div className="pb-2">
-          <h4>{idea.solutionName}</h4>
+          <h4>{solutionName}</h4>
         </div>
         <div className="py-2">
           <div className="position-relative">
             {Object.keys(idea).length ? (
               <Image
                 src={imageIdea || noImage}
-                alt={idea.title}
+                alt={title}
                 width={500}
                 height={320}
                 className={ideaImage}
@@ -142,29 +160,29 @@ const IdeaDetails = () => {
         <div className={teamInfo}>
           <div className={infoItem}>
             <p className="text-3rd m-0">Status Tim</p>
-            <p className="info__text m-0">{idea.status}</p>
+            <p className="info__text m-0">{status}</p>
           </div>
           <div className={infoItem}>
             <p className="text-3rd m-0">Nama Sekolah</p>
-            <p className="info__text m-0">{idea.schoolName}</p>
+            <p className="info__text m-0">{schoolName}</p>
           </div>
           <div className={infoItem}>
             <p className="text-3rd m-0">Tipe Solusi Digital</p>
-            <p className="info__text m-0">{idea.solutionType}</p>
+            <p className="info__text m-0">{solutionType}</p>
           </div>
           <div className={infoItem}>
             <p className="text-3rd m-0">Bidang Masalah</p>
-            <p className="info__text m-0">{idea.problemArea}</p>
+            <p className="info__text m-0">{problemArea}</p>
           </div>
           <div className={infoItem}>
             <p className="text-3rd m-0">Menentukan Misi</p>
-            <p className="info__text m-0">{idea.problemSelection}</p>
+            <p className="info__text m-0">{problemSelection}</p>
           </div>
           <div className={infoItem}>
             <p className="text-3rd m-0">
               Siapa orang yang paling terbantu jika masalah ini selesai?
             </p>
-            <p className="info__text m-0">{idea.targetCustomer}</p>
+            <p className="info__text m-0">{targetCustomer}</p>
           </div>
         </div>
         <hr />
@@ -183,36 +201,36 @@ const IdeaDetails = () => {
         <div>
           <div className={ideaSection} id="problemReason">
             <h4>Mengapa masalah ini penting?</h4>
-            <p className="text-secondary m-0">{idea.problemReasoning}</p>
+            <p className="text-secondary m-0">{problemReasoning}</p>
           </div>
           <div className={ideaSection} id="solutionSummary">
             <h4>Gambaran Ide Solusi</h4>
-            <p className="text-secondary m-0">{idea.solutionVision}</p>
+            <p className="text-secondary m-0">{solutionVision}</p>
           </div>
           <div className={ideaSection} id="solutionVision">
             <h4>Tentang Ide Solusi</h4>
-            <p className="text-secondary m-0">{idea.solutionMission}</p>
+            <p className="text-secondary m-0">{solutionMission}</p>
           </div>
-          {idea.solutionPitchUrl && (
+          {solutionPitchUrl && (
             <div className={ideaSection}>
               <h4>Link Video</h4>
               <YoutubeIframe
-                solutionPitchUrl={idea.solutionPitchUrl}
+                solutionPitchUrl={solutionPitchUrl}
                 className={videoWrapper}
               />
             </div>
           )}
           <div className={ideaSection}>
             <h4>Kelebihan Ide Solusi</h4>
-            <p className="text-secondary m-0">{idea.solutionBenefit}</p>
+            <p className="text-secondary m-0">{solutionBenefit}</p>
           </div>
           <div className={ideaSection}>
             <h4>Tantangan</h4>
-            <p className="text-secondary m-0">{idea.solutionObstacle}</p>
+            <p className="text-secondary m-0">{solutionObstacle}</p>
           </div>
           <div className={ideaSection}>
             <h4>Potensi Kolaborasi</h4>
-            <p className="text-secondary m-0">{idea.potentialCollaboration}</p>
+            <p className="text-secondary m-0">{potentialCollaboration}</p>
           </div>
         </div>
         <div>

@@ -104,9 +104,15 @@ const IdeaAndSolutionContainer = () => {
     setActiveSort(sort.value);
   }, []);
 
-  const handleClickFilter = useCallback((filter) => {
-    setActiveFilter(filter);
-  }, []);
+  const handleClickFilter = useCallback(
+    (filter) => {
+      if (currentOffset > 0 || currentPage > 1) {
+        router.replace(`/idea`);
+      }
+      setActiveFilter(filter);
+    },
+    [currentOffset, currentPage, router]
+  );
 
   const renderLoader = () => {
     const loaderArr = [];

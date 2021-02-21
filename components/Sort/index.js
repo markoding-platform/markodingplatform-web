@@ -13,6 +13,7 @@ import {
 
 const SortComponent = ({ placement, sortItems, onClickSortItem }) => {
   const [showPopover, setShowPopover] = useState(false);
+  const [activeSort, setActiveSort] = useState('');
 
   const handleShowPopover = () => {
     setShowPopover(!showPopover);
@@ -20,6 +21,7 @@ const SortComponent = ({ placement, sortItems, onClickSortItem }) => {
 
   const handleClickSort = (sort) => {
     setShowPopover(false);
+    setActiveSort(sort.id);
     onClickSortItem(sort);
   };
   const popover = (
@@ -30,7 +32,9 @@ const SortComponent = ({ placement, sortItems, onClickSortItem }) => {
             <li className={`list-group-item  ${listItem}`} key={sort.id}>
               <Button
                 variant="light"
-                className="w-100 p-3 text-left"
+                className={`w-100 p-3 text-left ${
+                  activeSort === sort.id ? 'active' : ''
+                }`}
                 onClick={() => handleClickSort(sort)}
               >
                 {sort.name}
