@@ -6,10 +6,10 @@ export const teamMap = (data) => {
       userId: user.id,
       name: user.name || '',
       imageUrl: user.imageUrl || '',
-      schoolName: profile.schoolName || '',
-      schoolGradeName: profile.schoolGradeName || '',
-      profileType: profile.profileType || '',
-      companyName: profile.companyName || '',
+      schoolName: profile?.schoolName || '',
+      schoolGradeName: profile?.schoolGradeName || '',
+      profileType: profile?.profileType || '',
+      companyName: profile?.companyName || '',
       isLeader,
     };
   });
