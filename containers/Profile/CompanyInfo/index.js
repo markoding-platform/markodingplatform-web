@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect, useRef, memo } from 'react';
 import { useForm } from 'react-hook-form';
-import { shape, string, arrayOf } from 'prop-types';
+import { shape, string, arrayOf, bool } from 'prop-types';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
@@ -29,7 +29,13 @@ import {
   cancelBtn,
 } from '../styles.module.scss';
 
-const CompanyInfo = ({ profileType, profile, provinces, cityList }) => {
+const CompanyInfo = ({
+  profileType,
+  profile,
+  provinces,
+  cityList,
+  isEditProfile,
+}) => {
   const router = useRouter();
   const {
     register,
@@ -349,6 +355,7 @@ const CompanyInfo = ({ profileType, profile, provinces, cityList }) => {
                   ref={register({ required: item.required })}
                   className={styTextfield}
                   defaultVal={account[item.key]}
+                  readOnly={!isEditProfile}
                 />
               )}
               {item.as === 'dropdown' && (
@@ -357,6 +364,7 @@ const CompanyInfo = ({ profileType, profile, provinces, cityList }) => {
                   defaultVal={account[item.key]}
                   withSearch={item.key === 'schoolName'}
                   withHardSearch={item.key === 'schoolName'}
+                  disabled={!isEditProfile}
                   onSelected={(selected) => {
                     handleSelectDropdown(selected, item.key);
                   }}
@@ -372,30 +380,33 @@ const CompanyInfo = ({ profileType, profile, provinces, cityList }) => {
           );
         })}
       </Row>
-      <div className="d-flex justify-content-end">
-        <Button
-          variant="outline-secondary"
-          className={cancelBtn}
-          onClick={() => router.back()}
-        >
-          Batal
-        </Button>
-        <Button
-          className={saveBtn}
-          onClick={handleSubmit(onSubmit)}
-          disabled={loading}
-        >
-          <div className="d-flex align-items-center justify-content-center">
-            {loading && <Loading withText={false} />}
-            <span>Simpan</span>
-          </div>
-        </Button>
-      </div>
+      {isEditProfile && (
+        <div className="d-flex justify-content-end">
+          <Button
+            variant="outline-secondary"
+            className={cancelBtn}
+            onClick={() => router.back()}
+          >
+            Batal
+          </Button>
+          <Button
+            className={saveBtn}
+            onClick={handleSubmit(onSubmit)}
+            disabled={loading}
+          >
+            <div className="d-flex align-items-center justify-content-center">
+              {loading && <Loading withText={false} />}
+              <span>Simpan</span>
+            </div>
+          </Button>
+        </div>
+      )}
     </Panel>
   );
 };
 
 CompanyInfo.propTypes = {
+  isEditProfile: bool.isRequired,
   profileType: string.isRequired,
   profile: shape({}).isRequired,
   provinces: arrayOf(shape({ id: string, name: string })).isRequired,

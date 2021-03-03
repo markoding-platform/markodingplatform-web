@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/router';
 import { shape, string } from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -28,6 +29,12 @@ const ProfileContainer = ({
   const [professions, setProfessions] = useState([]);
   const [cities, setCities] = useState([]);
   const firstLoad = useRef(false);
+
+  const { pathname } = useRouter();
+  let isEditProfile = false;
+  if (pathname.includes('/settings')) {
+    isEditProfile = true;
+  }
 
   const getProvinces = useCallback(async () => {
     const provResult = await SkilvulFetch('/api/skilvul?path=/provinces');
@@ -73,6 +80,7 @@ const ProfileContainer = ({
           email={email || ''}
           imageUrl={imageUrl || ''}
           schoolName={schoolName || ''}
+          isEditProfile={isEditProfile}
         />
       </Col>
       <Col lg="9">
@@ -90,12 +98,14 @@ const ProfileContainer = ({
             email={email}
             provinces={provinces}
             cityList={cities}
+            isEditProfile={isEditProfile}
           />
           <CompanyInfo
             profileType={profileType}
             profile={profile}
             provinces={provinces}
             cityList={cities}
+            isEditProfile={isEditProfile}
           />
         </form>
       </Col>

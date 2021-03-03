@@ -7,9 +7,9 @@
 }
 
 .avatar {
-	position: relative;
+  position: relative;
   min-width: 52px;
-	margin-right: 15px;
+  margin-right: 15px;
 }
 
 .text {
@@ -27,22 +27,28 @@
 .iconLike {
   color: colors.$red;
   margin-right: 12px;
-	cursor: pointer;
-	&:hover {
-		opacity: 0.8;
-	}
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .textLike {
-	margin-right: 3rem;
-	cursor: pointer;
-	&:hover {
-		color: colors.$red;
-		opacity: 0.8;
-	}
+  margin-right: 3rem;
+  cursor: pointer;
+  &:hover {
+    color: colors.$red;
+    opacity: 0.8;
+  }
 }
 
 .iconComment {
   color: colors.$accent;
   margin-right: 12px;
+}
+
+.bio {
+  margin: 0 4px 0 0;
+  color: colors.$text-3rd;
+  font-size: 11px;
 }

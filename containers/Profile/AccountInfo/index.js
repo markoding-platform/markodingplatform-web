@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-import { arrayOf, shape, string } from 'prop-types';
+import { arrayOf, shape, bool, string } from 'prop-types';
 
 import Panel from 'components/Panel';
 import TextField from 'components/TextField';
@@ -46,6 +46,7 @@ const AccountInfo = ({
   provinces,
   professions,
   cityList,
+  isEditProfile,
 }) => {
   const router = useRouter();
   const {
@@ -185,6 +186,7 @@ const AccountInfo = ({
               ref={register({ required: true })}
               error={!!errors.firstName}
               errorTxt="Wajib diisi"
+              readOnly={!isEditProfile}
             />
           </Col>
           <Col lg="6" sm="12" className="pb-4">
@@ -195,6 +197,7 @@ const AccountInfo = ({
               ref={register({ required: true })}
               error={!!errors.lastName}
               errorTxt="Wajib diisi"
+              readOnly={!isEditProfile}
             />
           </Col>
           <Col lg="6" sm="12" className="pb-4">
@@ -209,6 +212,7 @@ const AccountInfo = ({
               })}
               error={!!errors.email}
               errorTxt="Masukkan alamat email yang valid."
+              readOnly={!isEditProfile}
             />
           </Col>
           {/* <Col lg="6" sm="12" className="pb-4">
@@ -237,6 +241,7 @@ const AccountInfo = ({
                 defaultVal={genderEnum[account.gender]}
                 inputName="gender"
                 name="gender"
+                disabled={!isEditProfile}
               />
             </div>
             {isErrorGenderField && (
@@ -254,6 +259,7 @@ const AccountInfo = ({
                 defaultVal={account.provinceName}
                 inputName="provinceId"
                 name="provinceId"
+                disabled={!isEditProfile}
               />
             </div>
             {isErrorProvinceField && (
@@ -271,6 +277,7 @@ const AccountInfo = ({
                   dropdownItem={cities.length ? cities : cityList}
                   defaultVal={defaultCityName}
                   name="cityId"
+                  disabled={!isEditProfile}
                 />
               </div>
               {isErrorCityField && (
@@ -288,22 +295,24 @@ const AccountInfo = ({
               defaultVal={account.profession}
               inputName="profession"
               name="profession"
+              disabled={!isEditProfile}
             />
           </Col>
         </Row>
-
-        <div className="d-flex justify-content-end">
-          <Button
-            variant="outline-secondary"
-            className={cancelBtn}
-            onClick={() => router.back()}
-          >
-            Batal
-          </Button>
-          <Button className={saveBtn} onClick={handleSubmit(onSubmit)}>
-            Simpan
-          </Button>
-        </div>
+        {isEditProfile && (
+          <div className="d-flex justify-content-end">
+            <Button
+              variant="outline-secondary"
+              className={cancelBtn}
+              onClick={() => router.back()}
+            >
+              Batal
+            </Button>
+            <Button className={saveBtn} onClick={handleSubmit(onSubmit)}>
+              Simpan
+            </Button>
+          </div>
+        )}
       </Panel>
 
       <ModalComponent
@@ -319,6 +328,7 @@ const AccountInfo = ({
 
 AccountInfo.propTypes = {
   userXID: string.isRequired,
+  isEditProfile: bool.isRequired,
   firstName: string.isRequired,
   lastName: string.isRequired,
   birthDate: string.isRequired,

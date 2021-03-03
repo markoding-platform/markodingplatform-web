@@ -27,6 +27,7 @@ import {
   ideaSnippetWrapper,
   btnRegister,
   styCourses,
+  btnSeeProfile,
 } from './styles.module.scss';
 
 const DashboardContainer = ({
@@ -65,6 +66,9 @@ const DashboardContainer = ({
     push(`/register-idea`);
   };
 
+  const handleGoToEditProfile = () => {
+    push('/dashboard/profile/settings');
+  };
   const handleGoToProfile = () => {
     push('/dashboard/profile');
   };
@@ -88,9 +92,16 @@ const DashboardContainer = ({
                 <p className="m-0 font-weight-bold">{bio}</p>
                 <Button
                   className={`bg-info ${btnEditProfile}`}
-                  onClick={handleGoToProfile}
+                  onClick={handleGoToEditProfile}
                 >
                   Edit Profile
+                </Button>
+                <Button
+                  // className={`bg-info ${btnEditProfile}`}
+                  variant={`outline-primary ${btnSeeProfile}`}
+                  onClick={handleGoToProfile}
+                >
+                  Lihat Profile
                 </Button>
               </div>
             </div>
@@ -194,6 +205,7 @@ DashboardContainer.propTypes = {
       certificateUrl: string,
     })
   ),
+  imageUrl: string.isRequired,
   email: string.isRequired,
   skillPoint: number,
   markodingPoint: number,
