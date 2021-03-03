@@ -84,7 +84,7 @@ const IdeaCommentBox = ({ ideaId, onBlockAuth }) => {
           value={textValue}
           aria-describedby="inputGroup-sizing"
           onChange={handleOnChange}
-          autocomplete="off"
+          autoComplete="off"
         />
       </InputGroup>
       <div className="d-flex justify-content-end mt-2">

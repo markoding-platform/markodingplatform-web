@@ -24,8 +24,18 @@ const ForumCard = (props) => {
     link,
     onLike,
     withLikes,
+    profile,
   } = props;
 
+  let bio;
+  const { profileType, workingPosition, schoolName } = profile || {};
+  if (profileType === 'teacher') {
+    bio = `Guru | ${schoolName}`;
+  } else if (profileType === 'mentor' && workingPosition) {
+    bio = `Mentor | ${workingPosition}`;
+  } else if (profileType === 'student') {
+    bio = `Siswa | ${schoolName}`;
+  }
   return (
     <div className={styles.root}>
       <Media className="p-3">
@@ -46,9 +56,10 @@ const ForumCard = (props) => {
         <Media.Body>
           <Link href={`/user/${userId}`}>
             <Card.Link href={`/user/${userId}`}>
-              <h5>{name}</h5>
+              <h5 className="m-0">{name}</h5>
             </Card.Link>
           </Link>
+          {bio && <p className={styles.bio}>{bio}</p>}
           <p className={styles.time}>{time}</p>
           <p className={styles.text}>{comment}</p>
         </Media.Body>
@@ -78,6 +89,7 @@ ForumCard.defaultProps = {
   likeCount: 0,
   commentCount: 0,
   link: '/',
+  profile: {},
   withLikes: true,
   onLike: () => {},
   imageUrl: Avatar,
@@ -90,6 +102,7 @@ ForumCard.propTypes = {
   comment: PropTypes.string.isRequired,
   likeCount: PropTypes.number,
   commentCount: PropTypes.number,
+  profile: PropTypes.shape({}),
   time: PropTypes.string.isRequired,
   link: PropTypes.string,
   withLikes: PropTypes.bool,

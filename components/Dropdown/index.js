@@ -19,13 +19,14 @@ import {
   styDropdownItem,
 } from './styles.module.scss';
 
-const CustomToggle = forwardRef(({ children, onClick }, ref) => {
+const CustomToggle = forwardRef(({ children, onClick, disabled }, ref) => {
   const [isClick, setIsClick] = useState(false);
   return (
     <Button
       aria-hidden="true"
       className={`bg-transparent ${dropdownBtn}`}
       ref={ref}
+      disabled={disabled}
       onClick={(e) => {
         e.preventDefault();
         onClick(e);
@@ -51,6 +52,7 @@ const DropdownComponent = ({
   defaultVal,
   withHardSearch,
   onHardSearch,
+  disabled,
 }) => {
   const [selectedDropdown, setSelectedDropdown] = useState(defaultVal);
 
@@ -93,7 +95,11 @@ const DropdownComponent = ({
     keyword.length && withHardSearch === false ? searchedItem : dropdownItem;
   return (
     <Dropdown>
-      <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+      <Dropdown.Toggle
+        as={CustomToggle}
+        id="dropdown-custom-components"
+        disabled={disabled}
+      >
         <span className={`${selectedDropdown ? 'text-dark' : 'text-3rd'}`}>
           {selectedDropdown || placeholder}
         </span>
@@ -133,6 +139,7 @@ DropdownComponent.defaultProps = {
   placeholder: 'Pilih',
   dropdownItem: [],
   defaultVal: '',
+  disabled: false,
   withSearch: false,
   withHardSearch: false,
   onHardSearch: () => {},
@@ -151,10 +158,12 @@ DropdownComponent.propTypes = {
   withHardSearch: bool,
   onSelected: func.isRequired,
   onHardSearch: func,
+  disabled: bool,
 };
 
 CustomToggle.propTypes = {
   children: node.isRequired,
   onClick: func.isRequired,
+  disabled: bool.isRequired,
 };
 export default DropdownComponent;

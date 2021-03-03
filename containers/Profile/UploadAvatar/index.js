@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
-import { func } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 
 import Spinner from 'react-bootstrap/Spinner';
 import { BsTrash } from 'react-icons/bs';
@@ -14,7 +14,7 @@ import { imgLoader, uploadBtn } from './styles.module.scss';
 
 const types = ['image/png', 'image/jpeg'];
 
-const UploadComponent = ({ onUploadImg, defaultVal }) => {
+const UploadComponent = ({ onUploadImg, defaultVal, isEditProfile }) => {
   const inputFileRef = useRef();
   const [imageSrc, setImagesSrc] = useState(defaultVal);
   const [isLoading, setIsLoading] = useState(false);
@@ -102,28 +102,35 @@ const UploadComponent = ({ onUploadImg, defaultVal }) => {
               </Spinner>
             </div>
           )}
-          <div className={uploadBtn}>
-            <RiPencilFill size="20" />
-            <span className="ml-2">
-              <input
-                type="file"
-                multiple
-                accept="image"
-                onChange={handleOnChange}
-                ref={inputFileRef}
-                style={{ display: 'none' }}
-                disabled={isLoading}
-              />
-              Edit
-            </span>
-          </div>
+          {isEditProfile && (
+            <div className={uploadBtn}>
+              <RiPencilFill size="20" />
+              <span className="ml-2">
+                <input
+                  type="file"
+                  multiple
+                  accept="image"
+                  onChange={handleOnChange}
+                  ref={inputFileRef}
+                  style={{ display: 'none' }}
+                  disabled={isLoading}
+                />
+                Edit
+              </span>
+            </div>
+          )}
         </div>
       )}
     </div>
   );
 };
 
+UploadComponent.defaultProps = {
+  defaultVal: '',
+};
 UploadComponent.propTypes = {
+  defaultVal: string,
+  isEditProfile: bool.isRequired,
   onUploadImg: func.isRequired,
 };
 

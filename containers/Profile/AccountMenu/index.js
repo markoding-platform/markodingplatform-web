@@ -9,7 +9,7 @@ import {
   contentTitle,
 } from './styles.module.scss';
 
-const AccountMenu = ({ fName, email, imageUrl, schoolName }) => {
+const AccountMenu = ({ fName, email, imageUrl, schoolName, isEditProfile }) => {
   const renderToast = ({ msg, error = false, time = 3000 }) => {
     if (error) {
       return toast.error(<p className="m-0 pl-3">{msg}</p>, {
@@ -42,6 +42,7 @@ const AccountMenu = ({ fName, email, imageUrl, schoolName }) => {
         <UploadComponent
           onUploadImg={handleUpdateProfileImage}
           defaultVal={imageUrl}
+          isEditProfile={isEditProfile}
         />
       </div>
       <div className={`pt-3 ${profileSection}`}>

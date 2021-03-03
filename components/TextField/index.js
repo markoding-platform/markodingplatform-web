@@ -10,7 +10,17 @@ import { inputField } from './styles.module.scss';
 // eslint-disable-next-line react/display-name
 const TextField = React.forwardRef(
   (
-    { name, placeholder, defaultVal, as, className, error, errorTxt, type },
+    {
+      name,
+      placeholder,
+      defaultVal,
+      as,
+      className,
+      error,
+      errorTxt,
+      type,
+      readOnly,
+    },
     ref
   ) => {
     const [textValue, setTextValue] = useState(defaultVal);
@@ -37,7 +47,8 @@ const TextField = React.forwardRef(
           type={type}
           aria-describedby="inputGroup-sizing"
           onChange={handleOnChange}
-          autocomplete="off"
+          autoComplete="off"
+          readOnly={readOnly}
         />
         {error && <Form.Text className="text-muted pt-1">{errorTxt}</Form.Text>}
       </InputGroup>
@@ -54,6 +65,7 @@ TextField.defaultProps = {
   name: '',
   placeholder: '',
   type: 'text',
+  readOnly: false,
 };
 
 TextField.propTypes = {
@@ -65,6 +77,7 @@ TextField.propTypes = {
   name: string,
   placeholder: string,
   type: string,
+  readOnly: bool,
 };
 
 export default memo(TextField);

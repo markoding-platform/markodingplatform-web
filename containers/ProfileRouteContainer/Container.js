@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { shape } from 'prop-types';
+import { shape, bool } from 'prop-types';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import Loading from 'components/Loading';
 import SkilvulFetch from 'libraries/SkilvulFetch';
 import getCookie from 'utils/getCookie';
-import withAuthSync from 'hoc/withAuthSync';
 import canUseDOM from 'utils/canUseDOM';
 import { SSO } from 'utils/auth';
 import ProfileContainer from 'containers/Profile';
@@ -18,7 +17,7 @@ import useUserDetail from 'hooks/useUserDetail';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import { homeContent } from 'styles/home.module.scss';
 
-const Profile = ({ user }) => {
+const Profile = ({ user, isEditProfile }) => {
   const { push } = useRouter();
   const { logError } = useErrorHandler();
   const id = user?.id || '';
@@ -93,6 +92,7 @@ const Profile = ({ user }) => {
                     province={skilvulData.province || {}}
                     city={skilvulData.city || {}}
                     imageUrl={data.imageUrl}
+                    isEditProfile={isEditProfile}
                   />
                 )}
               {!errorGetSkilvulUser &&
@@ -106,6 +106,7 @@ const Profile = ({ user }) => {
 };
 
 Profile.propTypes = {
+  isEditProfile: bool.isRequired,
   user: shape({
     email: null,
     exId: null,
@@ -114,4 +115,4 @@ Profile.propTypes = {
   }).isRequired,
 };
 
-export default withAuthSync(Profile);
+export default Profile;
