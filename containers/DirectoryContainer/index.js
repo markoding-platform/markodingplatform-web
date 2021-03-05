@@ -32,7 +32,7 @@ const DirectoryContainer = ({ directorySlug }) => {
   });
   const result = response?.result || {};
   const { data, pages = {} } = result;
-  const directories = data.map(userMap) || [];
+  const directories = data ? data.map(userMap) : [];
 
   const isLoading = !response && !error;
 
