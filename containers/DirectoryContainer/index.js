@@ -34,6 +34,9 @@ const DirectoryContainer = ({ directorySlug }) => {
   const { data, pages = {} } = result;
   const directories = data ? data.map(userMap) : [];
 
+  console.log('result', result);
+  console.log('dir', directories);
+
   const isLoading = !response && !error;
 
   const handlePageChanged = useCallback(
