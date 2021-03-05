@@ -9,7 +9,6 @@ import Col from 'react-bootstrap/Col';
 import UserCard from 'components/UserCard';
 import Row from 'react-bootstrap/Row';
 import { useRouter } from 'next/router';
-import { LIMIT_PER_PAGE } from 'containers/IdeaAndSolutionContainer/constant';
 import Pagination from 'components/Pagination';
 import userMap from '../../map/userMap';
 import warningBell from '../../svgs/warning-bell.svg';
@@ -28,14 +27,18 @@ const DirectoryContainer = ({ directorySlug }) => {
     userTypeSlug = 'mentors';
   }
 
-  const { isLoading, data, pages } = useDirectory({
-    path: `/users/${userTypeSlug}?limit=${limit}&offset=${currentOffset}`,
+  const { data: response, error } = useDirectory({
+    url: `/users/${userTypeSlug}?limit=${limit}&offset=${currentOffset}`,
   });
-  const result = data.map(userMap) || [];
+  const result = response?.result || {};
+  const { data, pages = {} } = result;
+  const directories = data.map(userMap) || [];
+
+  const isLoading = !response && !error;
 
   const handlePageChanged = useCallback(
     (page) => {
-      const offset = LIMIT_PER_PAGE * page - LIMIT_PER_PAGE;
+      const offset = limit * page - limit;
       router.replace(
         `/directory/${userTypeSlug}/?page=${page}&start=${offset}`
       );
@@ -58,10 +61,10 @@ const DirectoryContainer = ({ directorySlug }) => {
   return (
     <>
       {isLoading && renderLoader()}
-      {!isLoading && result.length > 0 ? (
+      {!isLoading && directories > 0 ? (
         <>
           <Row>
-            {result.map((dir) => (
+            {directories.map((dir) => (
               <Col key={dir.id} xs={6} lg={4}>
                 <div className={styles.directoryGrid}>
                   <UserCard
@@ -78,7 +81,7 @@ const DirectoryContainer = ({ directorySlug }) => {
             <Pagination
               totalRecords={pages.count}
               totalPages={pages.totalPages}
-              pageLimit={LIMIT_PER_PAGE}
+              pageLimit={limit}
               onPageChanged={handlePageChanged}
               defaultPage={currentPage}
             />
