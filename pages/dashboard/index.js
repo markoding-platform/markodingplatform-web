@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { shape } from 'prop-types';
 import { ErrorBoundary } from 'react-error-boundary';
+import { toast } from 'react-toastify';
 
 import withAuthSync from 'hoc/withAuthSync';
 import { SSO } from 'utils/auth';
@@ -40,6 +41,14 @@ const Dashboard = ({ user }) => {
       );
       if (userSkilvul && userSkilvul.user) {
         setSkilvulData(skilvulAccountMap(userSkilvul.user));
+      }
+      if (userSkilvul.error) {
+        return toast.error(
+          <p className="m-0 pl-3">{`${userSkilvul.error}, Opps! terjadi kesalahan`}</p>,
+          {
+            autoClose: 3000,
+          }
+        );
       }
     }
   }, [userXID]);
