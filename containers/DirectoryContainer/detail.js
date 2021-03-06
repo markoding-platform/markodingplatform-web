@@ -12,7 +12,7 @@ import Avatar from 'svgs/avatar.svg';
 import userDetailMap from '../../map/userDetailMap';
 
 const DirectoryDetailContainer = ({ userSlug, callBack }) => {
-  const { data, error } = useDirectory({ path: `/users/detail/${userSlug}` });
+  const { data, error } = useDirectory({ url: `/users/detail/${userSlug}` });
   const result = data && data.result ? userDetailMap(data.result) : null;
   const isLoading = !data && !error;
 
