@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import Loading from 'components/Loading';
 import SkilvulFetch from 'libraries/SkilvulFetch';
 import getCookie from 'utils/getCookie';
-import withAuthSync from 'hoc/withAuthSync';
 import canUseDOM from 'utils/canUseDOM';
 import { SSO } from 'utils/auth';
 import ProfileContainer from 'containers/Profile';
@@ -114,4 +113,4 @@ Profile.propTypes = {
   }).isRequired,
 };
 
-export default withAuthSync(Profile);
+export default Profile;

@@ -42,6 +42,7 @@ const IdeaCommentsContainer = () => {
                   time={dayjs(idea.createdAt).format('dddd, DD MMMM YYYY')}
                   onLike={() => {}}
                   withLikes={false}
+                  profile={user?.profile || {}}
                 />
               </div>
             );
