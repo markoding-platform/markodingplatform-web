@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { shape, bool } from 'prop-types';
+import { shape } from 'prop-types';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
@@ -17,7 +17,7 @@ import useUserDetail from 'hooks/useUserDetail';
 import PointBadgeWrapper from 'components/PointBadgeWrapper';
 import { homeContent } from 'styles/home.module.scss';
 
-const Profile = ({ user, isEditProfile }) => {
+const Profile = ({ user }) => {
   const { push } = useRouter();
   const { logError } = useErrorHandler();
   const id = user?.id || '';
@@ -92,7 +92,6 @@ const Profile = ({ user, isEditProfile }) => {
                     province={skilvulData.province || {}}
                     city={skilvulData.city || {}}
                     imageUrl={data.imageUrl}
-                    isEditProfile={isEditProfile}
                   />
                 )}
               {!errorGetSkilvulUser &&
@@ -106,7 +105,6 @@ const Profile = ({ user, isEditProfile }) => {
 };
 
 Profile.propTypes = {
-  isEditProfile: bool.isRequired,
   user: shape({
     email: null,
     exId: null,
