@@ -70,7 +70,7 @@ const DashboardContainer = ({
     push('/dashboard/profile/settings');
   };
   const handleGoToProfile = () => {
-    push('/dashboard/profile');
+    push(`/user/${user?.id}`);
   };
 
   return (

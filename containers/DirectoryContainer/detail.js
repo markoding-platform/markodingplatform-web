@@ -1,7 +1,6 @@
 import styles from 'styles/directory.module.scss';
 import Image from 'next/image';
 import { RiInstagramFill, RiLinkedinBoxFill } from 'react-icons/ri';
-import Button from 'react-bootstrap/Button';
 import React from 'react';
 import useDirectory from 'hooks/useDirectory';
 import PropTypes from 'prop-types';
@@ -50,9 +49,6 @@ const DirectoryDetailContainer = ({ userSlug, callBack }) => {
             </a>
           </div>
           <div className="mb-3 text-3rd">{result.title}</div>
-          <Button variant="warning" block className={styles.chatButton}>
-            Kirim Pesan
-          </Button>
         </div>
       )}
     </>

@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState } from 'react';
 import { string, bool } from 'prop-types';
 
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -80,4 +80,4 @@ TextField.propTypes = {
   readOnly: bool,
 };
 
-export default memo(TextField);
+export default TextField;
