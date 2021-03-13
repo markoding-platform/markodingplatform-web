@@ -2,37 +2,46 @@
 @use "styles/breakpoint";
 
 .card {
-	background: colors.$white;
-	border-radius: 6px;
-	border: 0;
+  background: colors.$white;
+  border-radius: 6px;
+  border: 0;
 
-	img {
-		border-radius: 6px 6px 0 0;
-	}
+  img {
+    border-radius: 6px 6px 0 0;
+  }
 }
 
 .image {
-	position: relative;
-	height: 165px;
-	@media (max-width: breakpoint.$lg) {
-		height: 125px;
-	}
+  position: relative;
+  height: 165px;
+  @media (max-width: breakpoint.$lg) {
+    height: 125px;
+  }
 }
 
 .title {
-	height: 24px;
-	overflow: hidden;
+  max-height: 48px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  line-height: 1.5;
+  display: -webkit-box;
+  display: -moz-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .text {
-	font-size: 16px;
-	margin-bottom: 12px;
-	height: 48px;
-	overflow: hidden;
-	color: colors.$secondary;
+  font-size: 16px;
+  margin-bottom: 12px;
+  height: 48px;
+  overflow: hidden;
+  color: colors.$secondary;
 }
 
 .icon {
-	color: colors.$dark;
-	margin-right: 14px;
+  color: colors.$dark;
+  margin-right: 14px;
 }
