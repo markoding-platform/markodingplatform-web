@@ -1,6 +1,7 @@
 const withPWA = require('next-pwa');
 const withImages = require('next-images');
 const dotEnvResult = require('dotenv').config();
+const runtimeCaching = require('./cache');
 
 if (dotEnvResult.error) {
   throw dotEnvResult.error;
@@ -10,6 +11,7 @@ module.exports = withPWA(
   withImages({
     pwa: {
       disable: process.env.STAGE !== 'production',
+      runtimeCaching,
       dest: 'public',
     },
     images: {
